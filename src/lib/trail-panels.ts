@@ -8,6 +8,9 @@ export interface TrailPanel {
   body: string[];
   audioTitle: string;
   relatedRouteLabel?: string;
+  sections?: { title: string; text: string[] }[];
+  facts?: { value: string; label: string }[];
+  relatedPanels?: { title: string; href: string; label: string }[];
 }
 
 export const trailPanels: TrailPanel[] = [
@@ -30,16 +33,48 @@ export const trailPanels: TrailPanel[] = [
     slug: "il-castagno-nella-storia-3-1",
     panelNumber: "06–08",
     qrCodes: ["vr2c7hkppw9uag36fex3", "vr2ype6ec6a5ppyc3hvy", "vr2w87pugpu7qadbqp3r"],
-    title: "Il castagno nella storia",
-    eyebrow: "Castagneti · Cultura",
+    title: "Il castagno nella storia e nelle tradizioni locali",
+    eyebrow: "Circuito del Castagno · Storia e tradizioni",
     summary:
-      "Per secoli il castagno ha accompagnato la vita delle comunità: alimento, risorsa economica e presenza familiare nel paesaggio.",
+      "Per secoli il castagno è stato una risorsa essenziale per le comunità di montagna: cibo, legno, lavoro, scambio e paesaggio. A Roncegno questa storia continua ancora oggi.",
     body: [
-      "I castagneti raccontano un rapporto antico tra uomo e territorio. La loro presenza ha contribuito all’alimentazione, alla gestione dei versanti e alla costruzione di un paesaggio riconoscibile.",
-      "Riscoprire questa storia significa leggere il territorio attraverso le pratiche, i saperi e le stagioni che hanno accompagnato generazioni di abitanti.",
+      "La castanicoltura in Trentino ha una storia antichissima ed un’elevata importanza, rappresentando fino al secondo dopoguerra una importante fonte di sostentamento per la gente di montagna. Durante le lunghe carestie la castagna rappresentava la fonte primaria di cibo per esseri umani, bestiame ed anche animali selvatici.",
+      "Il frutto veniva consumato e non trasformato, parte della produzione veniva venduta o barattata con altri generi di prima necessità. Il legno era utilizzato per paleria in viticoltura, legna da ardere, legname da opera e nell’arredo. Il fogliame veniva raccolto ed era oggetto di compravendita in quanto costituiva la lettiera per gli animali, mentre il tannino era impiegato per la concia delle pelli.",
+    ],
+    sections: [
+      {
+        title: "Dalla crisi al recupero dei castagneti",
+        text: [
+          "Con l’industrializzazione e l’esodo dalle campagne la cura dei castagneti diminuì. Cambiarono le abitudini alimentari e molte superfici vennero destinate ad altre colture o ad altri usi del suolo. Alla fine degli anni Quaranta, inoltre, il cancro della corteccia contribuì a ridurre drasticamente le aree castanicole.",
+          "Negli ultimi decenni il legame delle comunità con il territorio ha favorito un processo di recupero e valorizzazione dei vecchi castagneti, insieme alla nascita di associazioni di castanicoltori.",
+        ],
+      },
+      {
+        title: "Un patrimonio tutelato",
+        text: [
+          "Attualmente la situazione è migliorata grazie anche all’intervento finanziario dell’Ente pubblico, la Provincia Autonoma di Trento. Sin dagli anni ’80 l’Assessorato all’agricoltura della Provincia, affiancato dall’Istituto Agrario di San Michele all’Adige e dall’Ente per lo sviluppo dell’Agricoltura Trentina, ha impostato un programma volto a stimolare le operazioni di risanamento dei castagneti da frutto, contribuendo nel frattempo alla tutela paesaggistica ed ambientale del territorio.",
+        ],
+      },
+      {
+        title: "Roncegno e l’Associazione Produttori Castagne",
+        text: [
+          "A livello locale, nel 1980 è nata l’Associazione Produttori Castagne Roncegno, che aderisce al Consorzio Tutela del Castagno del Trentino e che dedica alla castagna una festa di importante valenza economica per il territorio.",
+          "La coltivazione del castagno rappresenta oggi un’interessante integrazione al reddito delle famiglie contadine: rispetto ad altre colture richiede soprattutto la cura della pianta e del sottobosco, mantenendo nello stesso tempo vivo un paesaggio storico.",
+        ],
+      },
+    ],
+    facts: [
+      { value: "1980", label: "Nasce l’Associazione Produttori Castagne Roncegno" },
+      { value: "11 km", label: "Sviluppo complessivo del Circuito del Castagno" },
+      { value: "3", label: "Anelli che compongono il circuito" },
+    ],
+    relatedPanels: [
+      { title: "Aspetti botanici ed ecosistema", href: "/it/sentieri/aspetti-botanici-3-2", label: "Natura" },
+      { title: "Utilizzo delle castagne", href: "/it/sentieri/utilizzo-delle-castagne-3-3", label: "Tradizioni" },
+      { title: "Conservazione dei castagneti", href: "/it/sentieri/conservazione-castagneti-3-4", label: "Paesaggio" },
     ],
     audioTitle: "Ascolta: il castagno nella storia",
-    relatedRouteLabel: "Le storie del castagno",
+    relatedRouteLabel: "Circuito del Castagno",
   },
   {
     slug: "aspetti-botanici-3-2",
