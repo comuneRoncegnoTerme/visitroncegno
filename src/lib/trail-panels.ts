@@ -13,6 +13,13 @@ export interface TrailPanel {
   relatedPanels?: { title: string; href: string; label: string }[];
 }
 
+const chestnutRelated = [
+  { title: "Il castagno nella storia e nelle tradizioni locali", href: "/it/sentieri/il-castagno-nella-storia-3-1", label: "Storia" },
+  { title: "Aspetti botanici ed ecosistema", href: "/it/sentieri/aspetti-botanici-3-2", label: "Natura" },
+  { title: "Utilizzo delle castagne nell’alimentazione", href: "/it/sentieri/utilizzo-delle-castagne-3-3", label: "Sapori" },
+  { title: "Problematiche legate alla conservazione dei castagneti", href: "/it/sentieri/conservazione-castagneti-3-4", label: "Paesaggio" },
+];
+
 export const trailPanels: TrailPanel[] = [
   {
     slug: "la-tempesta-vaia-11-1",
@@ -68,11 +75,7 @@ export const trailPanels: TrailPanel[] = [
       { value: "11 km", label: "Sviluppo complessivo del Circuito del Castagno" },
       { value: "3", label: "Anelli che compongono il circuito" },
     ],
-    relatedPanels: [
-      { title: "Aspetti botanici ed ecosistema", href: "/it/sentieri/aspetti-botanici-3-2", label: "Natura" },
-      { title: "Utilizzo delle castagne", href: "/it/sentieri/utilizzo-delle-castagne-3-3", label: "Tradizioni" },
-      { title: "Conservazione dei castagneti", href: "/it/sentieri/conservazione-castagneti-3-4", label: "Paesaggio" },
-    ],
+    relatedPanels: chestnutRelated.filter((item) => item.href !== "/it/sentieri/il-castagno-nella-storia-3-1"),
     audioTitle: "Ascolta: il castagno nella storia",
     relatedRouteLabel: "Circuito del Castagno",
   },
@@ -80,46 +83,126 @@ export const trailPanels: TrailPanel[] = [
     slug: "aspetti-botanici-3-2",
     panelNumber: "09–10",
     qrCodes: ["vr2fjxepca7yeng8zd6a", "vr2pamdxb4vmwhrwhaeq"],
-    title: "Aspetti botanici",
-    eyebrow: "Castagneti · Natura",
+    title: "Aspetti botanici ed ecosistema",
+    eyebrow: "Circuito del Castagno · Botanica ed ecosistema",
     summary:
-      "Foglie, fiori, frutti e struttura dell’albero: imparare a riconoscere il castagno è il primo passo per comprenderne il valore.",
+      "Il castagno europeo, Castanea sativa, è un albero imponente e longevo. Conoscerne forma, fioritura, frutto e habitat aiuta a leggere il castagneto come un vero ecosistema.",
     body: [
-      "Il castagno è una specie longeva, capace di caratterizzare interi versanti. La sua biologia è strettamente legata alle condizioni del suolo, all’esposizione e alla gestione del bosco.",
-      "Osservarne corteccia, chioma, foglie e ricci permette di riconoscere le diverse fasi stagionali e comprendere meglio l’ecosistema del castagneto.",
+      "Il castagno europeo è una latifoglia di notevoli dimensioni che può superare i 30 metri di altezza, con una chioma espansa e rotondeggiante. È una pianta molto longeva, capace di raggiungere anche quattro o cinque secoli di vita.",
+      "L’apparato radicale è molto sviluppato, il fusto è eretto e robusto e la corteccia, liscia nelle piante giovani, diventa profondamente screpolata con l’età. Le foglie sono grandi, lanceolate e seghettate; i fiori compaiono verso la fine della primavera e il frutto, la castagna, è racchiuso nel riccio spinoso che si apre a maturazione.",
     ],
+    sections: [
+      {
+        title: "Una specie che cerca luce",
+        text: [
+          "Il castagno è una specie eliofila: ama l’esposizione al sole. Tollera la siccità estiva e anche basse temperature invernali, ma teme le gelate precoci e tardive e le piogge abbondanti durante la fioritura.",
+          "In Trentino la fascia di coltivazione si colloca indicativamente tra i 300 e i 900–1000 metri di quota.",
+        ],
+      },
+      {
+        title: "Il suolo giusto",
+        text: [
+          "Il castagno ha esigenze precise: non tollera bene i terreni calcarei e argillosi e predilige suoli acidi, prevalentemente silicei e sciolti. Per questo la sua distribuzione è strettamente legata alla geologia e alle condizioni locali dei versanti.",
+        ],
+      },
+      {
+        title: "Dal Mediterraneo alle Alpi",
+        text: [
+          "Originario dell’Asia Minore e strettamente legato all’area mediterranea, il castagno è oggi diffuso in gran parte dell’Europa meridionale. In Italia accompagna sia l’Appennino sia l’arco alpino, dove forma paesaggi storici riconoscibili.",
+        ],
+      },
+    ],
+    facts: [
+      { value: ">30 m", label: "Altezza che può raggiungere un castagno adulto" },
+      { value: "4–5 secoli", label: "Longevità possibile della pianta" },
+      { value: "300–1000 m", label: "Fascia altitudinale indicativa in Trentino" },
+    ],
+    relatedPanels: chestnutRelated.filter((item) => item.href !== "/it/sentieri/aspetti-botanici-3-2"),
     audioTitle: "Ascolta: conoscere il castagno",
-    relatedRouteLabel: "Le storie del castagno",
+    relatedRouteLabel: "Circuito del Castagno",
   },
   {
     slug: "utilizzo-delle-castagne-3-3",
     panelNumber: "11–13",
     qrCodes: ["vr2jfhw3exe8hx5v9ndr", "vr2e35p93z2dxezna22n", "vr2vhcufvadq3r89jpar"],
-    title: "Utilizzo delle castagne",
-    eyebrow: "Castagneti · Tradizioni",
+    title: "Utilizzo delle castagne nell’alimentazione tradizionale e nella cucina attuale",
+    eyebrow: "Circuito del Castagno · Alimentazione e cucina",
     summary:
-      "La castagna è stata cibo quotidiano, ingrediente, riserva per l’inverno e parte di una cultura materiale ancora viva.",
+      "Per secoli la castagna è stata un alimento fondamentale delle comunità rurali: nutriente, conservabile e disponibile nei mesi più difficili. Oggi torna protagonista nella cucina d’autunno.",
     body: [
-      "Raccolta, essiccazione, conservazione e trasformazione hanno dato origine a pratiche condivise e ricette locali.",
-      "Oggi queste tradizioni diventano anche un modo per raccontare il territorio, valorizzare i prodotti e trasmettere conoscenze alle nuove generazioni.",
+      "Almeno fino all’inizio della seconda metà del Novecento la castagna ha rappresentato una risorsa alimentare fondamentale per gran parte della popolazione rurale. Poteva sostituire i cereali più pregiati e, nelle comunità di montagna, accompagnava l’alimentazione per molti mesi dell’anno.",
+      "Per conservarla durante l’inverno veniva soprattutto essiccata. Una volta secca poteva essere reidratata, per esempio nel latte, oppure macinata e trasformata in farina.",
     ],
-    audioTitle: "Ascolta: usi e tradizioni della castagna",
-    relatedRouteLabel: "Le storie del castagno",
+    sections: [
+      {
+        title: "Del castagno non si buttava nulla",
+        text: [
+          "Il legname serviva per riscaldare le case, per la paleria, per costruzioni e attrezzi; foglie e lettiera venivano impiegate per il bestiame e le castagne non adatte al consumo umano potevano diventare alimento per gli animali.",
+        ],
+      },
+      {
+        title: "Un frutto nutriente",
+        text: [
+          "La castagna contiene una quota importante di amidi, insieme a grassi, proteine, sali minerali e vitamine. È naturalmente priva di glutine e può essere utilizzata fresca, essiccata o trasformata in farina.",
+        ],
+      },
+      {
+        title: "Dalle caldarroste alla cucina contemporanea",
+        text: [
+          "Le castagne possono essere arrostite sul fuoco, cotte al forno oppure lessate. Oggi entrano in dolci, polente, zuppe, minestre e piatti salati, mantenendo un legame diretto con la cucina autunnale e con le feste del territorio.",
+          "Le caratteristiche organolettiche e le dimensioni delle castagne prodotte a Roncegno e in Valsugana le rendono di fatto paragonabili ai marroni.",
+        ],
+      },
+    ],
+    facts: [
+      { value: "4–5 mesi", label: "Periodo in cui un tempo molte famiglie di montagna vivevano anche di castagne" },
+      { value: "30 min", label: "Tempo indicativo per forno o bollitura nelle preparazioni tradizionali" },
+      { value: "0 glutine", label: "La castagna è naturalmente priva di glutine" },
+    ],
+    relatedPanels: chestnutRelated.filter((item) => item.href !== "/it/sentieri/utilizzo-delle-castagne-3-3"),
+    audioTitle: "Ascolta: la castagna dalla dispensa alla tavola",
+    relatedRouteLabel: "Circuito del Castagno",
   },
   {
     slug: "conservazione-castagneti-3-4",
     panelNumber: "14–15",
     qrCodes: ["vr2wr2erx3kkd8gyk4eh", "vr2gf28jzvmvxurv3kz5"],
-    title: "Conservazione dei castagneti",
-    eyebrow: "Castagneti · Paesaggio",
+    title: "Problematiche legate alla conservazione dei castagneti",
+    eyebrow: "Circuito del Castagno · Cura del paesaggio",
     summary:
-      "Un castagneto curato è insieme ambiente naturale, paesaggio culturale e patrimonio da tramandare.",
+      "Dalla seconda metà del Novecento la castanicoltura ha attraversato una forte crisi. Conservare un castagneto oggi significa tenere insieme salute degli alberi, gestione del sottobosco, biodiversità e memoria del paesaggio.",
     body: [
-      "La conservazione passa dalla manutenzione del sottobosco, dalla cura degli alberi e dal rinnovo delle pratiche di gestione.",
-      "Mantenere vivo un castagneto significa preservare biodiversità, memoria e un paesaggio che continua a raccontare il rapporto tra comunità e montagna.",
+      "La crisi della castanicoltura è stata legata a più fattori: l’abbandono delle campagne, il cambiamento delle attività agricole e delle abitudini alimentari e la diffusione di patologie che hanno colpito le piante e ridotto le superfici coltivate.",
+      "Il recupero dei vecchi castagneti richiede una gestione continua. La cura degli alberi e del sottobosco non serve solo alla produzione: mantiene aperto e leggibile un paesaggio culturale costruito nei secoli.",
     ],
+    sections: [
+      {
+        title: "Abbandono e perdita di paesaggio",
+        text: [
+          "Quando vengono meno manutenzione e raccolta, il castagneto tende progressivamente a trasformarsi. La perdita delle pratiche tradizionali modifica la struttura del bosco e rende meno riconoscibile il paesaggio storico legato alla coltivazione del castagno.",
+        ],
+      },
+      {
+        title: "Malattie e fragilità",
+        text: [
+          "Tra i problemi che hanno segnato la castanicoltura del Novecento c’è il cancro della corteccia, una patologia che ha contribuito alla drastica riduzione delle aree castanicole. La conservazione passa quindi anche dal controllo fitosanitario e dalla cura degli esemplari.",
+        ],
+      },
+      {
+        title: "Curare significa tramandare",
+        text: [
+          "Il recupero promosso negli ultimi decenni, anche con il sostegno pubblico e con il lavoro delle associazioni di castanicoltori, ha restituito valore produttivo e paesaggistico a molti castagneti. Mantenere vivo questo sistema significa conservare biodiversità, memoria e un rapporto ancora attuale tra comunità e montagna.",
+        ],
+      },
+    ],
+    facts: [
+      { value: "Paesaggio", label: "Il castagneto è insieme coltura, ambiente e patrimonio culturale" },
+      { value: "Cura", label: "Potatura, sottobosco e gestione sono essenziali per mantenerlo vivo" },
+      { value: "Futuro", label: "Recuperare i castagneti significa trasmettere saperi e biodiversità" },
+    ],
+    relatedPanels: chestnutRelated.filter((item) => item.href !== "/it/sentieri/conservazione-castagneti-3-4"),
     audioTitle: "Ascolta: custodire i castagneti",
-    relatedRouteLabel: "Le storie del castagno",
+    relatedRouteLabel: "Circuito del Castagno",
   },
 ];
 
