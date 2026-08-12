@@ -1,5 +1,6 @@
 import Link from "next/link";
 import HomeMap from "@/components/HomeMap";
+import FestaHomepageBanner from "@/components/FestaHomepageBanner";
 import {
   getDirectusAssetUrl,
   getExperiences,
@@ -91,6 +92,8 @@ export default async function Home() {
         </div>
         <a className="hero-scroll" href="#scopri"><span>Scorri per scoprire</span><span className="scroll-line" /></a>
       </section>
+
+      <FestaHomepageBanner />
 
       <section className="quick-search" id="scopri">
         <div className="section-shell">
