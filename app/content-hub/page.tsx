@@ -1,22 +1,59 @@
 import Link from "next/link";
-import { getFeaturedPlaces, getUpcomingEvents, getExperiences } from "@/lib/directus";
+import {
+  getExperiences,
+  getFeaturedPlaces,
+  getHomepage,
+  getUpcomingEvents,
+} from "@/lib/directus";
 import { trailPanels } from "@/lib/trail-panels";
+import HomepageEditor from "./HomepageEditor";
 import styles from "./page.module.css";
 
 export default async function ContentHubPage() {
-  const [events, places, experiences] = await Promise.all([
+  const [homepage, events, places, experiences] = await Promise.all([
+    getHomepage(),
     getUpcomingEvents(),
     getFeaturedPlaces(),
     getExperiences(),
   ]);
 
   const sections = [
-    { title: "Homepage", text: "Hero, contenuti in evidenza e messaggi di lancio", count: "1 pagina", href: "/lancio" },
-    { title: "Eventi", text: "Appuntamenti, date, luoghi e pubblicazione", count: `${events.length} in evidenza`, href: "#eventi" },
-    { title: "Percorsi", text: "Schede, GPX, difficoltà e punti di interesse", count: "Percorsi", href: "/percorsi/passeggiata-biotopo-palude-roncegno" },
-    { title: "Pannelli e audioguide", text: "QR esistenti, testi, audio e trascrizioni", count: `${trailPanels.length} prototipi`, href: "#pannelli" },
-    { title: "Luoghi", text: "Luoghi da visitare, mappa e informazioni utili", count: `${places.length} in evidenza`, href: "#luoghi" },
-    { title: "Esperienze", text: "Natura, benessere, cultura e movimento", count: `${experiences.length} attive`, href: "/lancio#scopri" },
+    {
+      title: "Homepage",
+      text: "Hero, contenuti in evidenza e messaggi di lancio",
+      count: "Modifica reale",
+      href: "#homepage-editor",
+    },
+    {
+      title: "Eventi",
+      text: "Appuntamenti, date, luoghi e pubblicazione",
+      count: `${events.length} in evidenza`,
+      href: "#eventi",
+    },
+    {
+      title: "Percorsi",
+      text: "Schede, GPX, difficoltà e punti di interesse",
+      count: "Percorsi",
+      href: "/percorsi/passeggiata-biotopo-palude-roncegno",
+    },
+    {
+      title: "Pannelli e audioguide",
+      text: "QR esistenti, testi, audio e trascrizioni",
+      count: `${trailPanels.length} prototipi`,
+      href: "#pannelli",
+    },
+    {
+      title: "Luoghi",
+      text: "Luoghi da visitare, mappa e informazioni utili",
+      count: `${places.length} in evidenza`,
+      href: "#luoghi",
+    },
+    {
+      title: "Esperienze",
+      text: "Natura, benessere, cultura e movimento",
+      count: `${experiences.length} attive`,
+      href: "/lancio#scopri",
+    },
   ];
 
   return (
@@ -28,11 +65,14 @@ export default async function ContentHubPage() {
         </div>
         <nav>
           <a href="#contenuti">Contenuti</a>
+          <a href="#homepage-editor">Homepage</a>
           <a href="#pannelli">Pannelli e audio</a>
           <a href="#eventi">Eventi</a>
           <a href="#luoghi">Luoghi</a>
         </nav>
-        <Link href="/lancio" className={styles.previewLink}>Apri anteprima sito ↗</Link>
+        <Link href="/lancio" className={styles.previewLink}>
+          Apri anteprima sito ↗
+        </Link>
       </aside>
 
       <section className={styles.main}>
@@ -54,6 +94,8 @@ export default async function ContentHubPage() {
             </Link>
           ))}
         </section>
+
+        <HomepageEditor homepage={homepage} />
 
         <section className={styles.panelSection} id="pannelli">
           <div className={styles.sectionHeading}>
@@ -82,22 +124,49 @@ export default async function ContentHubPage() {
 
         <section className={styles.simpleSection} id="eventi">
           <div className={styles.sectionHeading}>
-            <div><p className={styles.eyebrow}>Agenda</p><h2>Prossimi eventi</h2></div>
+            <div>
+              <p className={styles.eyebrow}>Agenda</p>
+              <h2>Prossimi eventi</h2>
+            </div>
           </div>
           <div className={styles.list}>
             {events.map((event) => (
               <article key={event.id}>
-                <div><strong>{event.title}</strong><small>{event.location_name ?? event.place?.title ?? "Roncegno Terme"}</small></div>
-                <time>{new Intl.DateTimeFormat("it-IT", { day: "2-digit", month: "long", timeZone: "Europe/Rome" }).format(new Date(event.start_date))}</time>
+                <div>
+                  <strong>{event.title}</strong>
+                  <small>
+                    {event.location_name ?? event.place?.title ?? "Roncegno Terme"}
+                  </small>
+                </div>
+                <time>
+                  {new Intl.DateTimeFormat("it-IT", {
+                    day: "2-digit",
+                    month: "long",
+                    timeZone: "Europe/Rome",
+                  }).format(new Date(event.start_date))}
+                </time>
               </article>
             ))}
           </div>
         </section>
 
         <section className={styles.simpleSection} id="luoghi">
-          <div className={styles.sectionHeading}><div><p className={styles.eyebrow}>Territorio</p><h2>Luoghi in evidenza</h2></div></div>
+          <div className={styles.sectionHeading}>
+            <div>
+              <p className={styles.eyebrow}>Territorio</p>
+              <h2>Luoghi in evidenza</h2>
+            </div>
+          </div>
           <div className={styles.list}>
-            {places.map((place) => <article key={place.id}><div><strong>{place.title}</strong><small>{place.category?.name ?? place.map_label ?? "Luogo"}</small></div><span>Pubblicato</span></article>)}
+            {places.map((place) => (
+              <article key={place.id}>
+                <div>
+                  <strong>{place.title}</strong>
+                  <small>{place.category?.name ?? place.map_label ?? "Luogo"}</small>
+                </div>
+                <span>Pubblicato</span>
+              </article>
+            ))}
           </div>
         </section>
       </section>
