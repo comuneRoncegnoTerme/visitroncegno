@@ -5,5 +5,9 @@ services:
       dockerfile: Dockerfile
     container_name: visitroncegno-web
     restart: unless-stopped
+    environment:
+      DIRECTUS_URL: ${DIRECTUS_URL:-http://164.132.85.146:8055}
+      DIRECTUS_TOKEN: ${DIRECTUS_TOKEN:-}
+      CONTENT_HUB_EDITOR_KEY: ${CONTENT_HUB_EDITOR_KEY:-}
     ports:
       - "3000:3000"
