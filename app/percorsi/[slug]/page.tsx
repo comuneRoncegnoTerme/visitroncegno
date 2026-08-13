@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import RouteMap from "@/components/RouteMap";
 
 import {
@@ -80,12 +81,12 @@ export default async function RoutePage({
         <div className="route-hero-overlay" />
 
         <div className="route-hero-content">
-          <a
+          <Link
             className="route-back"
             href="/#esperienze"
           >
             ← Percorsi
-          </a>
+          </Link>
 
           <p className="eyebrow">
             {route.category?.name ?? "Percorso"}
