@@ -2,17 +2,20 @@ import Link from "next/link";
 import { getDirectusAssetUrl } from "@/lib/directus";
 import { plainText, type EditorialItem } from "@/lib/editorial";
 import EditorialHeader from "./EditorialHeader";
+import SiteFooter from "./SiteFooter";
+import { getSiteSettings } from "@/lib/directus";
 import styles from "./Editorial.module.css";
 
 type Props = { item: EditorialItem; type: "place" | "event" };
 
-export default function EditorialDetail({ item, type }: Props) {
+export default async function EditorialDetail({ item, type }: Props) {
+  const settings = await getSiteSettings();
   const image = getDirectusAssetUrl(item.image);
   const paragraphs = plainText(item.content ?? item.description ?? item.summary);
   const location = item.location_name ?? item.place?.title ?? "Roncegno Terme";
   return (
     <main className={styles.page}>
-      <EditorialHeader />
+      <EditorialHeader settings={settings} />
       <section className={styles.detailHero} style={image ? { backgroundImage: `linear-gradient(90deg,rgba(8,35,28,.82),rgba(8,35,28,.18)),url('${image}')` } : undefined}>
         <Link href={type === "place" ? "/luoghi" : "/eventi"}>← {type === "place" ? "Tutti i luoghi" : "Tutti gli eventi"}</Link>
         <p>{item.category?.name ?? (type === "place" ? "Luogo da conoscere" : "Agenda")}</p>
@@ -36,6 +39,7 @@ export default function EditorialDetail({ item, type }: Props) {
         <Link href="/percorsi"><small>Muoversi</small><strong>Scopri percorsi e sentieri →</strong></Link>
         <Link href={type === "place" ? "/eventi" : "/luoghi"}><small>Continua a esplorare</small><strong>{type === "place" ? "Vedi i prossimi eventi" : "Conosci i luoghi"} →</strong></Link>
       </section>
+      <SiteFooter settings={settings} />
     </main>
   );
 }

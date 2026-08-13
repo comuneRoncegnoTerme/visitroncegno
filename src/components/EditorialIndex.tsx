@@ -2,6 +2,8 @@ import Link from "next/link";
 import { getDirectusAssetUrl } from "@/lib/directus";
 import type { EditorialItem } from "@/lib/editorial";
 import EditorialHeader from "./EditorialHeader";
+import SiteFooter from "./SiteFooter";
+import { getSiteSettings } from "@/lib/directus";
 import styles from "./Editorial.module.css";
 
 type Props = {
@@ -23,10 +25,11 @@ function meta(item: EditorialItem, basePath: string) {
   return item.category?.name ?? "Roncegno Terme";
 }
 
-export default function EditorialIndex(props: Props) {
+export default async function EditorialIndex(props: Props) {
+  const settings = await getSiteSettings();
   return (
     <main className={styles.page}>
-      <EditorialHeader />
+      <EditorialHeader settings={settings} />
       <section className={styles.indexHero}>
         <p>{props.eyebrow}</p>
         <h1>{props.title}</h1>
@@ -57,6 +60,7 @@ export default function EditorialIndex(props: Props) {
         ) : <p className={styles.empty}>{props.emptyMessage}</p>}
       </section>
       <section className={styles.visitCta}><div><small>Prepara la visita</small><h2>Lasciati guidare dal territorio.</h2></div><Link href="/#mappa">Esplora la mappa →</Link></section>
+      <SiteFooter settings={settings} />
     </main>
   );
 }
