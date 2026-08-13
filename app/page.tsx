@@ -73,7 +73,7 @@ export default async function Home() {
           )}
         </a>
         <nav className="main-nav" aria-label="Navigazione principale">
-          <a href="#scopri">Scopri</a><a href="#esperienze">Cosa fare</a><a href="#eventi">Eventi</a><a href="#luoghi">Luoghi</a><a href="#mappa">Mappa</a>
+          <a href="#scopri">Scopri</a><Link href="/percorsi">Cosa fare</Link><Link href="/eventi">Eventi</Link><Link href="/luoghi">Luoghi</Link><a href="#mappa">Mappa</a>
         </nav>
         <a className="header-cta" href="#organizza">Organizza la visita</a>
       </header>
@@ -100,8 +100,8 @@ export default async function Home() {
           <div className="quick-search-heading"><p className="eyebrow dark">Inizia da qui</p><h2>Cosa vuoi fare oggi?</h2></div>
           <div className="quick-links">
             <Link href="/festa-della-castagna#programma"><span className="quick-number">01</span><span><strong>Vivere la Festa della Castagna</strong><small>Programma, sapori e informazioni utili</small></span><ArrowIcon /></Link>
-            <a href="#natura"><span className="quick-number">02</span><span><strong>Camminare</strong><small>Sentieri, boschi e panorami</small></span><ArrowIcon /></a>
-            <a href="#luoghi"><span className="quick-number">03</span><span><strong>Scoprire i luoghi</strong><small>Paese, terme e montagna</small></span><ArrowIcon /></a>
+            <Link href="/percorsi"><span className="quick-number">02</span><span><strong>Camminare</strong><small>Sentieri, boschi e panorami</small></span><ArrowIcon /></Link>
+            <Link href="/luoghi"><span className="quick-number">03</span><span><strong>Scoprire i luoghi</strong><small>Paese, terme e montagna</small></span><ArrowIcon /></Link>
             <a href="#organizza"><span className="quick-number">04</span><span><strong>Mangiare e dormire</strong><small>Ospitalità e sapori locali</small></span><ArrowIcon /></a>
           </div>
         </div>
