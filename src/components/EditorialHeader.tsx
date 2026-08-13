@@ -1,16 +1,6 @@
-import Link from "next/link";
-import styles from "./Editorial.module.css";
+import type { SiteSettings } from "@/lib/directus";
+import SiteHeader from "./SiteHeader";
 
-export default function EditorialHeader() {
-  return (
-    <header className={styles.header}>
-      <Link className={styles.brand} href="/">Visit Roncegno</Link>
-      <nav aria-label="Navigazione principale">
-        <Link href="/luoghi">Luoghi</Link>
-        <Link href="/percorsi">Percorsi</Link>
-        <Link href="/eventi">Eventi</Link>
-      </nav>
-      <Link className={styles.homeLink} href="/">Torna alla home</Link>
-    </header>
-  );
+export default function EditorialHeader({ settings }: { settings: SiteSettings }) {
+  return <SiteHeader settings={settings} />;
 }

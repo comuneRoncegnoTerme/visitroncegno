@@ -1,6 +1,8 @@
 import Link from "next/link";
 import HomeMap from "@/components/HomeMap";
 import FestaHomepageBanner from "@/components/FestaHomepageBanner";
+import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
 import {
   getDirectusAssetUrl,
   getExperiences,
@@ -47,8 +49,6 @@ export default async function Home() {
   }
 
   const heroImage = getDirectusAssetUrl(homepage.hero_image) ?? "/images/hero/roncegno-hero.jpg";
-  const siteLogo = getDirectusAssetUrl(siteSettings.logo);
-  const siteLogoLight = getDirectusAssetUrl(siteSettings.logo_light);
   const homeMapPlaces = mapPlaces
     .filter((place) => place.latitude !== null && place.longitude !== null)
     .map((place) => ({
@@ -64,19 +64,7 @@ export default async function Home() {
 
   return (
     <main>
-      <header className="site-header">
-        <a className="brand" href="#top" aria-label={siteSettings.site_name ?? "Visit Roncegno"}>
-          {siteLogo ? (
-            <img className="brand-logo brand-logo-header" src={siteLogo} alt={siteSettings.site_name ?? "Visit Roncegno"} />
-          ) : (
-            <><span className="brand-mark">R</span><span className="brand-copy"><strong>{siteSettings.site_name ?? "Visit Roncegno"}</strong><small>{siteSettings.tagline ?? "Roncegno Terme · Valsugana"}</small></span></>
-          )}
-        </a>
-        <nav className="main-nav" aria-label="Navigazione principale">
-          <a href="#scopri">Scopri</a><Link href="/percorsi">Cosa fare</Link><Link href="/eventi">Eventi</Link><Link href="/luoghi">Luoghi</Link><a href="#mappa">Mappa</a>
-        </nav>
-        <a className="header-cta" href="#organizza">Organizza la visita</a>
-      </header>
+      <SiteHeader settings={siteSettings} overlay />
 
       <section className="hero" id="top">
         <div className="hero-image" style={{ backgroundImage: `url('${heroImage}')` }} />
@@ -121,7 +109,7 @@ export default async function Home() {
 
       <section className="planning-section" id="organizza"><div className="section-shell planning-grid"><div><p className="eyebrow dark">Organizza la visita</p><h2 className="display-heading">Tutto ciò che serve<br />per partire.</h2></div><div className="planning-links"><a href="#dormire"><span><small>Ospitalità</small><strong>Dove dormire</strong></span><ArrowIcon /></a><a href="#mangiare"><span><small>Sapori</small><strong>Dove mangiare</strong></span><ArrowIcon /></a><a href="#servizi"><span><small>Informazioni</small><strong>Servizi utili</strong></span><ArrowIcon /></a><a href="#come-arrivare"><span><small>Mobilità</small><strong>Come arrivare</strong></span><ArrowIcon /></a></div></div></section>
 
-      <footer className="site-footer"><div className="footer-main"><div><a className="brand footer-brand" href="#top" aria-label={siteSettings.site_name ?? "Visit Roncegno"}>{siteLogoLight || siteLogo ? (<img className="brand-logo brand-logo-footer" src={siteLogoLight ?? siteLogo ?? ""} alt={siteSettings.site_name ?? "Visit Roncegno"} />) : (<><span className="brand-mark">R</span><span className="brand-copy"><strong>{siteSettings.site_name ?? "Visit Roncegno"}</strong><small>{siteSettings.tagline ?? "Roncegno Terme · Valsugana"}</small></span></>)}</a><p className="footer-description">{siteSettings.footer_description ?? "Il portale turistico del territorio di Roncegno Terme."}</p>{(siteSettings.instagram_url || siteSettings.facebook_url) && (<div className="footer-social">{siteSettings.instagram_url && <a href={siteSettings.instagram_url} target="_blank" rel="noreferrer">Instagram</a>}{siteSettings.facebook_url && <a href={siteSettings.facebook_url} target="_blank" rel="noreferrer">Facebook</a>}</div>)}</div><div className="footer-column"><strong>Esplora</strong><a href="#esperienze">Cosa fare</a><a href="#eventi">Eventi</a><a href="#luoghi">Luoghi</a><a href="#mappa">Mappa</a></div><div className="footer-column"><strong>Organizza</strong><a href="#dormire">Dove dormire</a><a href="#mangiare">Dove mangiare</a><a href="#servizi">Servizi</a><a href="#come-arrivare">Come arrivare</a></div><div className="footer-column"><strong>Contatti</strong>{siteSettings.address && <span>{siteSettings.address}</span>}{siteSettings.contact_phone && <a href={`tel:${siteSettings.contact_phone}`}>{siteSettings.contact_phone}</a>}{siteSettings.contact_email && <a href={`mailto:${siteSettings.contact_email}`}>{siteSettings.contact_email}</a>}</div></div><div className="footer-bottom"><span>© {new Date().getFullYear()} {siteSettings.site_name ?? "Visit Roncegno"}</span><div><a href="#privacy">Privacy</a><a href="#cookie">Cookie</a><a href="#accessibilita">Accessibilità</a></div></div></footer>
+      <SiteFooter settings={siteSettings} />
     </main>
   );
 }

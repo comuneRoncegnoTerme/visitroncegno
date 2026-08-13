@@ -83,6 +83,21 @@ a {
   pointer-events: none;
 }
 
+.site-header-inner {
+  position: relative;
+  color: var(--forest);
+  background: var(--paper);
+  border-bottom-color: var(--line);
+}
+
+.site-header-inner::before {
+  display: none;
+}
+
+.site-header-inner .header-cta {
+  border-color: currentColor;
+}
+
 .brand-copy {
   display: flex;
   flex-direction: column;

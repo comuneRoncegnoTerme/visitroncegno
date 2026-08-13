@@ -1,10 +1,13 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import RouteMap from "@/components/RouteMap";
+import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
 
 import {
   getDirectusAssetUrl,
   getRouteBySlug,
+  getSiteSettings,
 } from "@/lib/directus";
 
 interface RoutePageProps {
@@ -51,7 +54,7 @@ export default async function RoutePage({
 }: RoutePageProps) {
   const { slug } = await params;
 
-  const route = await getRouteBySlug(slug);
+  const [route, siteSettings] = await Promise.all([getRouteBySlug(slug), getSiteSettings()]);
 
   if (!route) {
     notFound();
@@ -68,6 +71,7 @@ export default async function RoutePage({
 
   return (
     <main>
+      <SiteHeader settings={siteSettings} />
       <section className="route-hero">
         {heroImage && (
           <div
@@ -282,6 +286,7 @@ export default async function RoutePage({
             </div>
           </section>
         )}
+      <SiteFooter settings={siteSettings} />
     </main>
   );
 }
