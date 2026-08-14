@@ -24,7 +24,6 @@ export default async function MulinoAngeliPage() {
           <p>Casa Museo degli Spaventapasseri</p>
           <a href="#scopri" className={styles.scroll}>Entra nel Mulino ↓</a>
         </div>
-        <div className={styles.heroNote}>Visual demo<br />asset fotografico provvisorio</div>
       </section>
 
       <section className={styles.manifesto} id="scopri">
@@ -33,7 +32,7 @@ export default async function MulinoAngeliPage() {
       </section>
 
       <section className={styles.mechanics}>
-        <div className={styles.mechanicsImage}><span>Visual demo · meccanismi del mulino</span></div>
+        <div className={styles.mechanicsImage}><span>Meccanismi del Mulino Angeli</span></div>
         <div className={styles.mechanicsCopy}>
           <p className={styles.eyebrowLight}>Dentro la macchina</p>
           <h2>Seguire il grano, piano dopo piano.</h2>
