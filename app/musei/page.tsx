@@ -23,8 +23,8 @@ export default async function MuseumsPage() {
           <a href="#musei" className={styles.heroCta}>Scopri i due musei ↓</a>
         </div>
         <div className={styles.heroCollage} aria-hidden="true">
-          <div className={styles.heroPhotoOne}><span>Immagine demo · Mulino</span></div>
-          <div className={styles.heroPhotoTwo}><span>Immagine demo · Musica</span></div>
+          <div className={styles.heroPhotoOne}><span>Mulino Angeli</span></div>
+          <div className={styles.heroPhotoTwo}><span>Museo della Musica</span></div>
         </div>
       </section>
 
@@ -51,7 +51,7 @@ export default async function MuseumsPage() {
             <p>Suono · Mondo · Famiglie</p>
             <h2>Museo degli Strumenti Musicali Popolari</h2>
             <p>Un museo “da vedere e da suonare”, con strumenti popolari provenienti da tutto il mondo e un percorso pensato anche per famiglie, scuole e attività guidate.</p>
-            <a href="https://www.museodellamusicaroncegno.it/" target="_blank" rel="noreferrer" className={styles.link}>Visita il sito del Museo <span>↗</span></a>
+            <Link href="/musei/museo-della-musica" className={styles.link}>Entra nel Museo <span>→</span></Link>
           </div>
         </article>
       </section>
