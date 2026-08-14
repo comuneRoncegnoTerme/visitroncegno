@@ -65,7 +65,7 @@ export default function FestaDellaCastagnaPage() {
         <div className={styles.heroOverlay} />
         <div className={styles.heroContent}>
           <p className={styles.kicker}>23–25 ottobre 2026 · Roncegno Terme</p>
-          <img className={styles.officialLogo} src="/images/festa-castagna/logo-festa.webp" alt="Logo ufficiale Festa della Castagna Roncegno Terme" />
+          <img className={styles.officialLogo} src="/images/festa-castagna/logo-festa.png" alt="Logo ufficiale Festa della Castagna Roncegno Terme" />
           <p className={styles.lead}>Caldarroste sul fuoco, bancarelle tra gli alberi, musica, famiglie e un paese intero che si ritrova. Tre giorni per vivere l’autunno di Roncegno.</p>
           <div className={styles.heroActions}>
             <a href="#programma" className={styles.primaryButton}>Scopri il programma →</a>
@@ -93,22 +93,24 @@ export default function FestaDellaCastagnaPage() {
 
       <section className={styles.moments}>
         <div className={styles.momentsHeading}>
-          <p className={styles.eyebrow}>Dentro la Festa</p>
-          <h2>Una giornata fatta di piazze, profumi e incontri.</h2>
+          <div className={styles.momentsTitle}>
+            <p className={styles.eyebrow}>Dentro la Festa</p>
+            <h2>Una giornata fatta di piazze, profumi e incontri.</h2>
+          </div>
           <p>Le immagini della Festa raccontano meglio di qualsiasi slogan ciò che succede a Roncegno: il paese diventa spazio pubblico, mercato, tavola e luogo d’incontro.</p>
         </div>
         <div className={styles.photoGrid}>
           <figure className={styles.photoTall}>
-            <img src="/images/festa-castagna/mercatino-viale.webp" alt="Bancarelle del mercatino della Festa della Castagna tra gli alberi di Roncegno" />
-            <figcaption><span>Mercatino</span><strong>Artigianato, prodotti locali e colori d’autunno</strong></figcaption>
+            <img src="/images/festa-castagna/caldarroste.jpg" alt="Caldarroste durante la Festa della Castagna di Roncegno" />
+            <figcaption><span>Il fuoco</span><strong>Caldarroste, profumi e sapori d’autunno</strong></figcaption>
           </figure>
           <figure className={styles.photoWide}>
-            <img src="/images/festa-castagna/gallery-festa.webp" alt="Momenti della Festa della Castagna: piazza, mercatino e caldarroste" />
-            <figcaption><span>Roncegno in festa</span><strong>Il paese diventa il cuore della manifestazione</strong></figcaption>
+            <img src="/images/festa-castagna/benvenuti.jpg" alt="Momenti della Festa della Castagna a Roncegno Terme" />
+            <figcaption><span>Roncegno in festa</span><strong>Persone, musica e il paese che si incontra</strong></figcaption>
           </figure>
           <figure className={styles.photoCake}>
-            <img src="/images/festa-castagna/torta-gigante.webp" alt="La tradizionale torta gigante della Festa della Castagna" />
-            <figcaption><span>Tradizione</span><strong>Il taglio della Torta Gigante</strong></figcaption>
+            <img src="/images/festa-castagna/caldarroste.jpg" alt="Dettaglio delle caldarroste alla Festa della Castagna" />
+            <figcaption><span>Atmosfera</span><strong>La tradizione diventa esperienza</strong></figcaption>
           </figure>
         </div>
       </section>
