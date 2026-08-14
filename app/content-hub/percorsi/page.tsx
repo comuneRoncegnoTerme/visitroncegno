@@ -14,6 +14,7 @@ const fields: EditorField[] = [
   { name: "slug", label: "Slug URL", required: true, full: true },
   { name: "summary", label: "Descrizione breve", type: "textarea", full: true },
   { name: "description", label: "Descrizione completa", type: "textarea", full: true },
+  { name: "image", label: "ID immagine Directus", full: true, help: "Carica il file dalla sezione Media e incolla qui il suo ID." },
   { name: "difficulty", label: "Difficoltà" },
   { name: "distance_km", label: "Distanza (km)", type: "number", step: "0.1" },
   { name: "duration_minutes", label: "Durata (minuti)", type: "number", step: "1" },
