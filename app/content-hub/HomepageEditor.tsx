@@ -9,7 +9,6 @@ interface HomepageEditorProps {
 }
 
 export default function HomepageEditor({ homepage }: HomepageEditorProps) {
-  const [editorKey, setEditorKey] = useState("");
   const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [message, setMessage] = useState("");
 
@@ -38,14 +37,16 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
 
     const response = await fetch("/api/content-hub/homepage", {
       method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        "x-editor-key": editorKey,
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
 
     const result = await response.json().catch(() => null);
+
+    if (response.status === 401) {
+      window.location.href = "/content-hub/login";
+      return;
+    }
 
     if (!response.ok) {
       setStatus("error");
@@ -54,18 +55,16 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
     }
 
     setStatus("saved");
-    setMessage("Modifiche salvate in Directus. La homepage pubblica usa già questi contenuti.");
+    setMessage("Modifiche salvate. La homepage pubblica usa già questi contenuti.");
   }
 
   return (
     <section className={styles.editor} id="homepage-editor">
       <div className={styles.heading}>
         <div>
-          <p className={styles.eyebrow}>Homepage · modifica reale</p>
+          <p className={styles.eyebrow}>Homepage · modifica diretta</p>
           <h2>Contenuti di apertura</h2>
-          <p>
-            Modifica i testi principali senza entrare nell’interfaccia tecnica di Directus.
-          </p>
+          <p>Modifica i testi principali senza entrare nell’interfaccia tecnica di Directus.</p>
         </div>
         <a href="/" target="_blank" rel="noreferrer" className={styles.preview}>
           Apri homepage ↗
@@ -73,19 +72,6 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
       </div>
 
       <form className={styles.form} onSubmit={handleSubmit}>
-        <label className={styles.full}>
-          <span>Codice redazione</span>
-          <input
-            type="password"
-            value={editorKey}
-            onChange={(event) => setEditorKey(event.target.value)}
-            autoComplete="off"
-            required
-            placeholder="Inserisci il codice editoriale"
-          />
-          <small>Serve solo per autorizzare il salvataggio dal prototipo.</small>
-        </label>
-
         <label>
           <span>Soprattitolo</span>
           <input name="hero_eyebrow" defaultValue={initialValues.hero_eyebrow} />
@@ -98,11 +84,7 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
 
         <label className={styles.full}>
           <span>Descrizione</span>
-          <textarea
-            name="hero_description"
-            rows={5}
-            defaultValue={initialValues.hero_description}
-          />
+          <textarea name="hero_description" rows={5} defaultValue={initialValues.hero_description} />
         </label>
 
         <label>
@@ -129,9 +111,7 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
           <button type="submit" disabled={status === "saving"}>
             {status === "saving" ? "Salvataggio…" : "Salva modifiche"}
           </button>
-          {message && (
-            <p className={status === "error" ? styles.error : styles.success}>{message}</p>
-          )}
+          {message && <p className={status === "error" ? styles.error : styles.success}>{message}</p>}
         </div>
       </form>
     </section>
