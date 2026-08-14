@@ -24,9 +24,15 @@ type DirectusMeResponse = {
     status?: string;
     role?: {
       name?: string | null;
-      admin_access?: boolean;
     } | null;
   };
+};
+
+type DirectusPermissionsResponse = {
+  data?: Record<
+    string,
+    Record<string, { access?: "none" | "partial" | "full" } | undefined>
+  >;
 };
 
 function getSessionSecret() {
@@ -74,12 +80,35 @@ function parseSessionToken(token: string): SessionPayload | null {
   }
 }
 
-function allowedRole(roleName: string, adminAccess: boolean) {
-  if (adminAccess) return true;
+function isConfiguredRoleAllowed(roleName: string) {
   const configured = process.env.CONTENT_HUB_ALLOWED_ROLES;
   if (!configured) return false;
-  const roles = configured.split(",").map((role) => role.trim().toLowerCase()).filter(Boolean);
+  const roles = configured
+    .split(",")
+    .map((role) => role.trim().toLowerCase())
+    .filter(Boolean);
   return roles.includes(roleName.toLowerCase());
+}
+
+async function hasAdministratorLevelAccess(accessToken: string) {
+  const permissionsResponse = await fetch(`${DIRECTUS_URL}/permissions/me`, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+    cache: "no-store",
+  });
+
+  if (!permissionsResponse.ok) return false;
+
+  const permissions = (await permissionsResponse.json()) as DirectusPermissionsResponse;
+  const data = permissions.data ?? {};
+
+  // Directus 11+ moved admin_access from roles to policies. Rather than
+  // depending on internal policy relation shapes, verify the effective
+  // permissions Directus calculates for the authenticated user.
+  const requiredUpdates = ["homepage", "events", "places", "routes", "site_settings"];
+
+  return requiredUpdates.every(
+    (collection) => data[collection]?.update?.access === "full"
+  );
 }
 
 export async function authenticateContentHub(email: string, password: string) {
@@ -96,7 +125,7 @@ export async function authenticateContentHub(email: string, password: string) {
   if (!accessToken) return null;
 
   const meResponse = await fetch(
-    `${DIRECTUS_URL}/users/me?fields=email,first_name,last_name,status,role.name,role.admin_access`,
+    `${DIRECTUS_URL}/users/me?fields=email,first_name,last_name,status,role.name`,
     {
       headers: { Authorization: `Bearer ${accessToken}` },
       cache: "no-store",
@@ -109,7 +138,13 @@ export async function authenticateContentHub(email: string, password: string) {
   const roleName = user?.role?.name ?? "Redazione";
 
   if (!user?.email || user.status !== "active") return null;
-  if (!allowedRole(roleName, user.role?.admin_access === true)) return null;
+
+  const roleAllowed = isConfiguredRoleAllowed(roleName);
+  const administratorAccess = roleAllowed
+    ? false
+    : await hasAdministratorLevelAccess(accessToken);
+
+  if (!roleAllowed && !administratorAccess) return null;
 
   const name = [user.first_name, user.last_name].filter(Boolean).join(" ") || user.email;
   return { email: user.email, name, role: roleName };
