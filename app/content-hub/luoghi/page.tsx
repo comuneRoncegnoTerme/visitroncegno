@@ -12,6 +12,7 @@ const fields: EditorField[] = [
   { name: "title", label: "Nome del luogo", required: true, full: true },
   { name: "slug", label: "Slug URL", required: true, full: true },
   { name: "summary", label: "Descrizione breve", type: "textarea", full: true },
+  { name: "image", label: "ID immagine Directus", full: true, help: "Carica il file dalla sezione Media e incolla qui il suo ID." },
   { name: "show_on_map", label: "Mostra sulla mappa", type: "checkbox", help: "Richiede latitudine e longitudine." },
   { name: "map_label", label: "Etichetta mappa" },
   { name: "map_icon", label: "Icona mappa", help: "Esempi: museum, nature, mountain, church, lake." },
