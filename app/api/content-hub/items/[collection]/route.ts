@@ -24,6 +24,11 @@ export async function GET(
     return NextResponse.json({ error: "Non autorizzato" }, { status: 401 });
   }
 
+  const token = getToken();
+  if (!token) {
+    return NextResponse.json({ error: "DIRECTUS_TOKEN non configurato" }, { status: 503 });
+  }
+
   const { collection } = await context.params;
   if (!isContentHubCollection(collection)) {
     return NextResponse.json({ error: "Collezione non consentita" }, { status: 404 });
@@ -37,6 +42,7 @@ export async function GET(
   });
 
   const response = await fetch(`${DIRECTUS_URL}/items/${collection}?${params.toString()}`, {
+    headers: { Authorization: `Bearer ${token}` },
     cache: "no-store",
   });
   const result = await response.json().catch(() => null);
