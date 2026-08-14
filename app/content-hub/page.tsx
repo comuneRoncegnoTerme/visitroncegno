@@ -31,15 +31,33 @@ export default async function ContentHubPage() {
     },
     {
       title: "Eventi",
-      text: "Appuntamenti, date, luoghi e pubblicazione",
-      count: `${events.length} prossimi`,
-      href: "#eventi",
+      text: "Crea, modifica, pubblica e archivia appuntamenti",
+      count: `${events.length} prossimi in homepage`,
+      href: "/content-hub/eventi",
+    },
+    {
+      title: "Luoghi",
+      text: "Schede territoriali, coordinate e presenza sulla mappa",
+      count: `${places.length} in evidenza`,
+      href: "/content-hub/luoghi",
     },
     {
       title: "Percorsi",
-      text: "Schede, GPX, difficoltà e punti di interesse",
-      count: "Contenuti Directus",
-      href: "/percorsi",
+      text: "Dati tecnici, accessibilità, punto di partenza e GPX",
+      count: "Gestione completa",
+      href: "/content-hub/percorsi",
+    },
+    {
+      title: "Media",
+      text: "Carica immagini, audio e tracce GPX in Directus",
+      count: "Libreria Directus",
+      href: "/content-hub/media",
+    },
+    {
+      title: "Qualità contenuti",
+      text: "Trova immagini, coordinate, GPX e dati mancanti",
+      count: "Controllo automatico",
+      href: "/content-hub/qualita",
     },
     {
       title: "Pannelli e audioguide",
@@ -48,16 +66,16 @@ export default async function ContentHubPage() {
       href: "#pannelli",
     },
     {
-      title: "Luoghi",
-      text: "Luoghi da visitare, mappa e informazioni utili",
-      count: `${places.length} in evidenza`,
-      href: "#luoghi",
-    },
-    {
       title: "Esperienze",
       text: "Natura, benessere, cultura e movimento",
       count: `${experiences.length} attive`,
       href: "/#esperienze",
+    },
+    {
+      title: "Impostazioni sito",
+      text: "Contatti, footer, social, logo e SEO predefinito",
+      count: "Configurazione Directus",
+      href: "/content-hub/impostazioni",
     },
   ];
 
@@ -69,16 +87,17 @@ export default async function ContentHubPage() {
           <span className={styles.product}>Content Hub</span>
         </div>
         <nav>
-          <a href="#contenuti">Contenuti</a>
+          <a href="#contenuti">Dashboard</a>
           <a href="#homepage-editor">Homepage</a>
-          <a href="#pannelli">Pannelli e audio</a>
-          <a href="#eventi">Eventi</a>
-          <a href="#luoghi">Luoghi</a>
+          <Link href="/content-hub/eventi">Eventi</Link>
+          <Link href="/content-hub/luoghi">Luoghi</Link>
+          <Link href="/content-hub/percorsi">Percorsi</Link>
+          <Link href="/content-hub/media">Media</Link>
+          <Link href="/content-hub/qualita">Qualità</Link>
+          <Link href="/content-hub/impostazioni">Impostazioni</Link>
         </nav>
         <div className={styles.sidebarActions}>
-          <Link href="/" className={styles.previewLink}>
-            Apri sito ↗
-          </Link>
+          <Link href="/" className={styles.previewLink}>Apri sito ↗</Link>
           <form action="/api/content-hub/logout" method="post">
             <button type="submit" className={styles.logoutButton}>Esci</button>
           </form>
@@ -114,10 +133,10 @@ export default async function ContentHubPage() {
           <div className={styles.sectionHeading}>
             <div>
               <p className={styles.eyebrow}>Segnaletica sul territorio</p>
-              <h2>Pannelli e audioguide</h2>
+              <h2>Pannelli e audioguide legacy</h2>
             </div>
           </div>
-
+          <p className={styles.sectionIntro}>Gli URL già stampati sui QR restano invariati. Questa sezione mostra gli endpoint storici attualmente serviti dal sito.</p>
           <div className={styles.table}>
             {trailPanels.map((panel) => (
               <div className={styles.row} key={panel.slug}>
@@ -136,10 +155,8 @@ export default async function ContentHubPage() {
 
         <section className={styles.simpleSection} id="eventi">
           <div className={styles.sectionHeading}>
-            <div>
-              <p className={styles.eyebrow}>Agenda</p>
-              <h2>Prossimi eventi</h2>
-            </div>
+            <div><p className={styles.eyebrow}>Agenda</p><h2>Prossimi eventi in homepage</h2></div>
+            <Link href="/content-hub/eventi">Gestisci eventi →</Link>
           </div>
           <div className={styles.list}>
             {events.map((event) => (
@@ -148,13 +165,7 @@ export default async function ContentHubPage() {
                   <strong>{event.title}</strong>
                   <small>{event.location_name ?? event.place?.title ?? "Roncegno Terme"}</small>
                 </div>
-                <time>
-                  {new Intl.DateTimeFormat("it-IT", {
-                    day: "2-digit",
-                    month: "long",
-                    timeZone: "Europe/Rome",
-                  }).format(new Date(event.start_date))}
-                </time>
+                <time>{new Intl.DateTimeFormat("it-IT", { day: "2-digit", month: "long", timeZone: "Europe/Rome" }).format(new Date(event.start_date))}</time>
               </article>
             ))}
           </div>
@@ -162,10 +173,8 @@ export default async function ContentHubPage() {
 
         <section className={styles.simpleSection} id="luoghi">
           <div className={styles.sectionHeading}>
-            <div>
-              <p className={styles.eyebrow}>Territorio</p>
-              <h2>Luoghi in evidenza</h2>
-            </div>
+            <div><p className={styles.eyebrow}>Territorio</p><h2>Luoghi in evidenza</h2></div>
+            <Link href="/content-hub/luoghi">Gestisci luoghi →</Link>
           </div>
           <div className={styles.list}>
             {places.map((place) => (
@@ -174,7 +183,7 @@ export default async function ContentHubPage() {
                   <strong>{place.title}</strong>
                   <small>{place.category?.name ?? place.map_label ?? "Luogo"}</small>
                 </div>
-                <span>Pubblicato</span>
+                <span>{place.latitude != null && place.longitude != null ? "Coordinate presenti" : "Coordinate mancanti"}</span>
               </article>
             ))}
           </div>
