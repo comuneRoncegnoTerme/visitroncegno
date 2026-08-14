@@ -24,7 +24,7 @@ export default async function MulinoAngeliPage() {
           <p>Casa Museo degli Spaventapasseri</p>
           <a href="#scopri" className={styles.scroll}>Entra nel Mulino ↓</a>
         </div>
-        <div className={styles.heroNote}>Immagine demo<br />da sostituire con archivio museo</div>
+        <div className={styles.heroNote}>Visual demo<br />asset fotografico provvisorio</div>
       </section>
 
       <section className={styles.manifesto} id="scopri">
@@ -33,12 +33,12 @@ export default async function MulinoAngeliPage() {
       </section>
 
       <section className={styles.mechanics}>
-        <div className={styles.mechanicsImage}><span>Immagine demo · meccanismi del mulino</span></div>
+        <div className={styles.mechanicsImage}><span>Visual demo · meccanismi del mulino</span></div>
         <div className={styles.mechanicsCopy}>
           <p className={styles.eyebrowLight}>Dentro la macchina</p>
           <h2>Seguire il grano, piano dopo piano.</h2>
-          <p>La visita è un piccolo viaggio verticale: si segue il percorso delle granaglie dentro una macchina complessa, leggibile e sorprendentemente contemporanea nella sua logica.</p>
-          <div className={styles.stats}><div><strong>1909</strong><span>prime notizie documentate</span></div><div><strong>2</strong><span>sistemi molitori conservati</span></div><div><strong>4</strong><span>fasi da raccontare</span></div></div>
+          <p>La visita segue il percorso delle granaglie dentro una macchina complessa e leggibile: dai piani di carico alla lavorazione, fino alla farina pronta per essere insaccata.</p>
+          <div className={styles.stats}><div><strong>1909</strong><span>prime notizie documentate</span></div><div><strong>2</strong><span>sistemi molitori conservati</span></div><div><strong>4</strong><span>fasi della lavorazione raccontate</span></div></div>
         </div>
       </section>
 
@@ -46,16 +46,16 @@ export default async function MulinoAngeliPage() {
         <div className={styles.scareCopy}>
           <p className={styles.eyebrowDark}>Casa Museo degli Spaventapasseri</p>
           <h2>Il mondo rurale attraverso lo sguardo di Flavio Faganello.</h2>
-          <p>Negli ambienti dell’abitazione del mugnaio è ospitata la collezione di spaventapasseri legata al fotografo reporter e giornalista trentino Flavio Faganello. Un secondo racconto, più umano e poetico, che completa quello della macchina.</p>
+          <p>Negli ambienti dell’abitazione del mugnaio è ospitata la collezione di spaventapasseri di Flavio Faganello, fotografo reporter e giornalista trentino. Un secondo racconto, umano e poetico, che completa quello della macchina e del lavoro.</p>
         </div>
         <div className={styles.scareGrid} aria-hidden="true"><div /><div /><div /></div>
       </section>
 
       <section className={styles.visit}>
-        <div className={styles.visitIntro}><p className={styles.eyebrowDark}>Organizza la visita</p><h2>Vieni a vedere<br />il Mulino in funzione.</h2><p>Informazioni aggiornate al calendario 2026 pubblicato dal museo. Per gruppi e visite speciali è consigliato il contatto diretto.</p></div>
+        <div className={styles.visitIntro}><p className={styles.eyebrowDark}>Organizza la visita</p><h2>Vieni a scoprire<br />il Mulino Angeli.</h2><p>Orari 2026 riportati dal sito del museo. Per gruppi e visite speciali è consigliato verificare disponibilità e aperture prima della visita.</p></div>
         <div className={styles.visitCard}>
           <div><span>18 aprile — 14 giugno</span><strong>Sabato e domenica · 09:00–12:00</strong></div>
-          <div><span>16 giugno — 13 settembre</span><strong>Martedì · 15:30–18:30<br />Sabato e domenica · 09:00–12:00</strong></div>
+          <div><span>16 giugno — 13 settembre</span><strong>Martedì e giovedì · 15:30–18:30<br />Sabato e domenica · 09:00–12:00</strong></div>
           <div><span>19 settembre — 25 ottobre</span><strong>Sabato e domenica · 09:00–12:00</strong></div>
           <div className={styles.offer}><span>Ingresso</span><strong>Offerta libera</strong></div>
           <a href="mailto:polomusealeroncegno@gmail.com">polomusealeroncegno@gmail.com</a>
