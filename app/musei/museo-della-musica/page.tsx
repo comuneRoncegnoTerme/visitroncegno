@@ -21,11 +21,10 @@ export default async function MusicMuseumPage() {
         <div className={styles.heroShade} />
         <div className={styles.heroCopy}>
           <p className={styles.eyebrow}>Santa Brigida · Roncegno Terme</p>
-          <h1>Museo<br />della Musica</h1>
+          <h1>Museo degli<br />Strumenti Musicali Popolari</h1>
           <p>Un museo da vedere e da suonare.</p>
           <a href="#scopri" className={styles.scroll}>Entra nel museo ↓</a>
         </div>
-        <div className={styles.heroNote}>Visual demo<br />da sostituire con archivio museo</div>
       </section>
 
       <section className={styles.manifesto} id="scopri">
@@ -40,7 +39,7 @@ export default async function MusicMuseumPage() {
       </section>
 
       <section className={styles.experience}>
-        <div className={styles.experienceVisual}><span>Visual demo · collezione strumenti</span></div>
+        <div className={styles.experienceVisual}><span>La collezione degli strumenti</span></div>
         <div className={styles.experienceCopy}>
           <p className={styles.eyebrowLight}>Vedere · ascoltare · provare</p>
           <h2>Qui il museo non si guarda soltanto.</h2>
@@ -68,8 +67,11 @@ export default async function MusicMuseumPage() {
           <h2>Il percorso continua all’aperto.</h2>
           <p>Accanto al museo, cinque aree verdi compongono un itinerario tra suoni della natura, strumenti e paesaggio: frutteto, giardino musicale, giardino fiorito, erbe aromatiche e roseto.</p>
         </div>
-        <div className={styles.parkList}>
-          <span>01 · Frutteto</span><span>02 · Giardino musicale</span><span>03 · Giardino fiorito</span><span>04 · Erbe aromatiche</span><span>05 · Roseto</span>
+        <div className={styles.parkSide}>
+          <div className={styles.parkVisual} aria-hidden="true" />
+          <div className={styles.parkList}>
+            <span>01 · Frutteto</span><span>02 · Giardino musicale</span><span>03 · Giardino fiorito</span><span>04 · Erbe aromatiche</span><span>05 · Roseto</span>
+          </div>
         </div>
       </section>
 

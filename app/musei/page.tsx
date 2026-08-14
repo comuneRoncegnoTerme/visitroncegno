@@ -24,7 +24,7 @@ export default async function MuseumsPage() {
         </div>
         <div className={styles.heroCollage} aria-hidden="true">
           <div className={styles.heroPhotoOne}><span>Mulino Angeli</span></div>
-          <div className={styles.heroPhotoTwo}><span>Museo della Musica</span></div>
+          <div className={styles.heroPhotoTwo}><span>Museo degli Strumenti Musicali Popolari</span></div>
         </div>
       </section>
 
