@@ -28,7 +28,7 @@ CONTENT_HUB_COOKIE_SECURE=false
 
 `CONTENT_HUB_SESSION_SECRET` deve contenere almeno 32 caratteri casuali. Con HTTPS, impostare `CONTENT_HUB_COOKIE_SECURE=true`.
 
-`DIRECTUS_TOKEN` rimane solo lato server e viene usato dalle API interne del Content Hub per leggere anche bozze e scrivere su Directus.
+`DIRECTUS_TOKEN` rimane solo lato server e viene usato dalle API interne del Content Hub per leggere anche bozze e scrivere su Directus. L'accesso all'Hub resta limitato agli amministratori Directus e agli eventuali ruoli esplicitamente indicati in `CONTENT_HUB_ALLOWED_ROLES`.
 
 ## Sviluppo
 
