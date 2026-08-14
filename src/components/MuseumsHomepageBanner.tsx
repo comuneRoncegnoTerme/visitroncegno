@@ -16,7 +16,7 @@ export default function MuseumsHomepageBanner() {
         </div>
         <Link href="/musei" className={styles.visual} aria-label="Scopri i musei di Roncegno">
           <div className={styles.tileA}><span>Mulino Angeli</span></div>
-          <div className={styles.tileB}><span>Museo della Musica</span></div>
+          <div className={styles.tileB}><span>Museo degli Strumenti Musicali Popolari</span></div>
           <div className={styles.badge}>Roncegno<br />da ascoltare<br />e ricordare</div>
         </Link>
       </div>
