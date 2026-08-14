@@ -28,15 +28,16 @@
   display: inline-flex;
   align-items: center;
   width: fit-content;
+  height: 64px;
   min-width: 0;
+  overflow: hidden;
 }
 
 .logo {
   display: block;
-  width: clamp(170px, 15vw, 245px);
-  height: 52px;
-  object-fit: contain;
-  object-position: left center;
+  width: clamp(230px, 20vw, 315px);
+  height: auto;
+  flex: none;
 }
 
 .wordmark {
@@ -59,36 +60,50 @@
 }
 
 .nav {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 6px;
-  border: 1px solid rgba(255,255,255,.15);
-  border-radius: 999px;
-  background: rgba(8,29,23,.18);
-  backdrop-filter: blur(12px);
+  gap: 26px;
+  padding: 8px 12px 10px;
+  background: linear-gradient(90deg, transparent, rgba(8,29,23,.2) 18%, rgba(8,29,23,.2) 82%, transparent);
+  backdrop-filter: blur(6px);
+}
+
+.nav::after {
+  position: absolute;
+  right: 10%;
+  bottom: 0;
+  left: 10%;
+  height: 1px;
+  content: "";
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.42), transparent);
+  pointer-events: none;
 }
 
 .inner .nav {
-  border-color: rgba(22,61,50,.1);
-  background: rgba(22,61,50,.04);
+  background: linear-gradient(90deg, transparent, rgba(22,61,50,.05) 18%, rgba(22,61,50,.05) 82%, transparent);
+}
+
+.inner .nav::after {
+  background: linear-gradient(90deg, transparent, rgba(22,61,50,.28), transparent);
 }
 
 .nav a {
-  padding: 10px 15px;
-  border-radius: 999px;
+  position: relative;
+  padding: 8px 2px;
   font-size: 13px;
   font-weight: 700;
-  transition: background .18s ease, color .18s ease, opacity .18s ease;
+  transition: opacity .18s ease, transform .18s ease;
 }
 
 .nav a:hover {
-  background: rgba(255,255,255,.14);
+  opacity: .72;
+  transform: translateY(-1px);
 }
 
 .inner .nav a:hover {
-  background: rgba(22,61,50,.08);
+  opacity: .68;
 }
 
 .cta {
@@ -139,8 +154,12 @@
   }
 
   .logo {
-    width: 165px;
-    height: 42px;
+    width: 215px;
+    height: auto;
+  }
+
+  .brand {
+    height: 48px;
   }
 
   .cta {
@@ -156,6 +175,7 @@
     transition: none;
   }
 
+  .nav a:hover,
   .cta:hover {
     transform: none;
   }
