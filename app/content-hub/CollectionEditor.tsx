@@ -1,0 +1,226 @@
+"use client";
+
+import { FormEvent, useEffect, useMemo, useState } from "react";
+import styles from "./collection-editor.module.css";
+
+type FieldType = "text" | "textarea" | "number" | "datetime-local" | "checkbox" | "select";
+
+export type EditorField = {
+  name: string;
+  label: string;
+  type?: FieldType;
+  full?: boolean;
+  required?: boolean;
+  step?: string;
+  help?: string;
+  options?: { label: string; value: string }[];
+};
+
+type Item = Record<string, unknown> & { id: number; title?: string; slug?: string; status?: string };
+
+type Props = {
+  collection: "events" | "places" | "routes";
+  title: string;
+  description: string;
+  fields: EditorField[];
+  previewBase?: string;
+};
+
+function slugify(value: string) {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+function toInputDate(value: unknown) {
+  if (!value || typeof value !== "string") return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value.slice(0, 16);
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
+export default function CollectionEditor({ collection, title, description, fields, previewBase }: Props) {
+  const [items, setItems] = useState<Item[]>([]);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [draft, setDraft] = useState<Record<string, unknown>>({ status: "draft" });
+  const [loading, setLoading] = useState(true);
+  const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
+  const [message, setMessage] = useState("");
+  const selected = useMemo(() => items.find((item) => item.id === selectedId) ?? null, [items, selectedId]);
+
+  async function load() {
+    setLoading(true);
+    const response = await fetch(`/api/content-hub/items/${collection}`, { cache: "no-store" });
+    const result = await response.json().catch(() => null);
+    if (!response.ok) {
+      setMessage(result?.error ?? "Impossibile caricare i contenuti");
+      setStatus("error");
+      setLoading(false);
+      return;
+    }
+    setItems(result.data ?? []);
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    void load();
+  }, [collection]);
+
+  function selectItem(item: Item) {
+    setSelectedId(item.id);
+    setDraft({ ...item });
+    setStatus("idle");
+    setMessage("");
+  }
+
+  function createNew() {
+    setSelectedId(null);
+    setDraft({ status: "draft" });
+    setStatus("idle");
+    setMessage("");
+  }
+
+  function setField(name: string, value: unknown) {
+    setDraft((current) => {
+      const next = { ...current, [name]: value };
+      if (name === "title" && !selectedId && !String(current.slug ?? "").trim()) {
+        next.slug = slugify(String(value ?? ""));
+      }
+      return next;
+    });
+  }
+
+  async function save(event: FormEvent) {
+    event.preventDefault();
+    setStatus("saving");
+    setMessage("");
+
+    const url = selectedId
+      ? `/api/content-hub/items/${collection}/${selectedId}`
+      : `/api/content-hub/items/${collection}`;
+    const response = await fetch(url, {
+      method: selectedId ? "PATCH" : "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(draft),
+    });
+    const result = await response.json().catch(() => null);
+
+    if (!response.ok) {
+      setStatus("error");
+      setMessage(result?.error ?? "Salvataggio non riuscito");
+      return;
+    }
+
+    setStatus("saved");
+    setMessage(selectedId ? "Modifiche salvate." : "Contenuto creato.");
+    const newId = result?.data?.id;
+    await load();
+    if (!selectedId && newId) setSelectedId(Number(newId));
+  }
+
+  return (
+    <div className={styles.workspace}>
+      <aside className={styles.listPane}>
+        <div className={styles.listHeader}>
+          <div><span>{items.length} contenuti</span><h2>{title}</h2></div>
+          <button type="button" onClick={createNew}>+ Nuovo</button>
+        </div>
+        <div className={styles.items}>
+          {loading && <p className={styles.muted}>Caricamento…</p>}
+          {!loading && items.map((item) => (
+            <button
+              type="button"
+              key={item.id}
+              className={selectedId === item.id ? styles.activeItem : styles.item}
+              onClick={() => selectItem(item)}
+            >
+              <strong>{item.title || `#${item.id}`}</strong>
+              <span>{item.status === "published" ? "Pubblicato" : "Bozza"} · {item.slug}</span>
+            </button>
+          ))}
+        </div>
+      </aside>
+
+      <section className={styles.editorPane}>
+        <div className={styles.editorHeading}>
+          <div>
+            <p>{selected ? `Modifica #${selected.id}` : "Nuovo contenuto"}</p>
+            <h1>{selected?.title || title}</h1>
+            <span>{description}</span>
+          </div>
+          {selected && previewBase && selected.slug && (
+            <a href={`${previewBase}/${selected.slug}`} target="_blank" rel="noreferrer">Anteprima ↗</a>
+          )}
+        </div>
+
+        <form className={styles.form} onSubmit={save}>
+          {fields.map((field) => {
+            const value = draft[field.name];
+            const className = field.full ? styles.full : undefined;
+
+            if (field.type === "checkbox") {
+              return (
+                <label key={field.name} className={`${styles.checkbox} ${className ?? ""}`}>
+                  <input
+                    type="checkbox"
+                    checked={Boolean(value)}
+                    onChange={(event) => setField(field.name, event.target.checked)}
+                  />
+                  <span>{field.label}</span>
+                  {field.help && <small>{field.help}</small>}
+                </label>
+              );
+            }
+
+            return (
+              <label key={field.name} className={className}>
+                <span>{field.label}</span>
+                {field.type === "textarea" ? (
+                  <textarea
+                    rows={5}
+                    required={field.required}
+                    value={String(value ?? "")}
+                    onChange={(event) => setField(field.name, event.target.value)}
+                  />
+                ) : field.type === "select" ? (
+                  <select
+                    required={field.required}
+                    value={String(value ?? "")}
+                    onChange={(event) => setField(field.name, event.target.value)}
+                  >
+                    {field.options?.map((option) => <option value={option.value} key={option.value}>{option.label}</option>)}
+                  </select>
+                ) : (
+                  <input
+                    type={field.type ?? "text"}
+                    step={field.step}
+                    required={field.required}
+                    value={field.type === "datetime-local" ? toInputDate(value) : String(value ?? "")}
+                    onChange={(event) => {
+                      if (field.type === "number") {
+                        setField(field.name, event.target.value === "" ? null : Number(event.target.value));
+                      } else {
+                        setField(field.name, event.target.value);
+                      }
+                    }}
+                  />
+                )}
+                {field.help && <small>{field.help}</small>}
+              </label>
+            );
+          })}
+
+          <div className={styles.actions}>
+            <button type="submit" disabled={status === "saving"}>{status === "saving" ? "Salvataggio…" : selectedId ? "Salva modifiche" : "Crea contenuto"}</button>
+            {message && <p className={status === "error" ? styles.error : styles.success}>{message}</p>}
+          </div>
+        </form>
+      </section>
+    </div>
+  );
+}

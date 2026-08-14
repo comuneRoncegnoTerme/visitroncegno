@@ -1,5 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { DIRECTUS_URL } from "@/lib/directus";
+import { getContentHubSession } from "@/lib/content-hub-auth";
 
 const editableFields = [
   "hero_eyebrow",
@@ -14,15 +15,10 @@ const editableFields = [
 type EditableField = (typeof editableFields)[number];
 type HomepagePatch = Partial<Record<EditableField, string | null>>;
 
-function isAuthorized(request: NextRequest) {
-  const configuredKey = process.env.CONTENT_HUB_EDITOR_KEY;
-  if (!configuredKey) return false;
-  return request.headers.get("x-editor-key") === configuredKey;
-}
-
-export async function PATCH(request: NextRequest) {
-  if (!isAuthorized(request)) {
-    return NextResponse.json({ error: "Non autorizzato" }, { status: 401 });
+export async function PATCH(request: Request) {
+  const session = await getContentHubSession();
+  if (!session) {
+    return NextResponse.json({ error: "Sessione scaduta o non valida" }, { status: 401 });
   }
 
   const directusToken = process.env.DIRECTUS_TOKEN;
@@ -51,10 +47,7 @@ export async function PATCH(request: NextRequest) {
     if (!(field in input)) continue;
     const value = input[field];
     if (value !== null && typeof value !== "string") {
-      return NextResponse.json(
-        { error: `Campo ${field} non valido` },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: `Campo ${field} non valido` }, { status: 400 });
     }
     patch[field] = value as string | null;
   }
