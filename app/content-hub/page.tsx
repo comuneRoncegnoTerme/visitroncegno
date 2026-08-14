@@ -1,15 +1,20 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import {
   getExperiences,
   getFeaturedPlaces,
   getHomepage,
   getUpcomingEvents,
 } from "@/lib/directus";
+import { getContentHubSession } from "@/lib/content-hub-auth";
 import { trailPanels } from "@/lib/trail-panels";
 import HomepageEditor from "./HomepageEditor";
 import styles from "./page.module.css";
 
 export default async function ContentHubPage() {
+  const session = await getContentHubSession();
+  if (!session) redirect("/content-hub/login");
+
   const [homepage, events, places, experiences] = await Promise.all([
     getHomepage(),
     getUpcomingEvents(),
@@ -20,26 +25,26 @@ export default async function ContentHubPage() {
   const sections = [
     {
       title: "Homepage",
-      text: "Hero, contenuti in evidenza e messaggi di lancio",
-      count: "Modifica reale",
+      text: "Hero, messaggi principali e call to action",
+      count: "Modifica diretta",
       href: "#homepage-editor",
     },
     {
       title: "Eventi",
       text: "Appuntamenti, date, luoghi e pubblicazione",
-      count: `${events.length} in evidenza`,
+      count: `${events.length} prossimi`,
       href: "#eventi",
     },
     {
       title: "Percorsi",
       text: "Schede, GPX, difficoltà e punti di interesse",
-      count: "Percorsi",
-      href: "/percorsi/passeggiata-biotopo-palude-roncegno",
+      count: "Contenuti Directus",
+      href: "/percorsi",
     },
     {
       title: "Pannelli e audioguide",
-      text: "QR esistenti, testi, audio e trascrizioni",
-      count: `${trailPanels.length} prototipi`,
+      text: "URL storici, testi, audio e trascrizioni",
+      count: `${trailPanels.length} URL legacy`,
       href: "#pannelli",
     },
     {
@@ -52,7 +57,7 @@ export default async function ContentHubPage() {
       title: "Esperienze",
       text: "Natura, benessere, cultura e movimento",
       count: `${experiences.length} attive`,
-      href: "/lancio#scopri",
+      href: "/#esperienze",
     },
   ];
 
@@ -70,18 +75,26 @@ export default async function ContentHubPage() {
           <a href="#eventi">Eventi</a>
           <a href="#luoghi">Luoghi</a>
         </nav>
-        <Link href="/lancio" className={styles.previewLink}>
-          Apri anteprima sito ↗
-        </Link>
+        <div className={styles.sidebarActions}>
+          <Link href="/" className={styles.previewLink}>
+            Apri sito ↗
+          </Link>
+          <form action="/api/content-hub/logout" method="post">
+            <button type="submit" className={styles.logoutButton}>Esci</button>
+          </form>
+        </div>
       </aside>
 
       <section className={styles.main}>
         <header className={styles.topbar}>
           <div>
-            <p className={styles.eyebrow}>Prototipo editoriale</p>
-            <h1>Buongiorno, cosa vuoi aggiornare?</h1>
+            <p className={styles.eyebrow}>Area redazione</p>
+            <h1>Cosa vuoi aggiornare?</h1>
           </div>
-          <div className={styles.userBadge}>Redazione turismo</div>
+          <div className={styles.userBadge}>
+            <strong>{session.name}</strong>
+            <span>{session.role}</span>
+          </div>
         </header>
 
         <section className={styles.cards} id="contenuti">
@@ -103,7 +116,6 @@ export default async function ContentHubPage() {
               <p className={styles.eyebrow}>Segnaletica sul territorio</p>
               <h2>Pannelli e audioguide</h2>
             </div>
-            <button type="button">+ Nuovo contenuto</button>
           </div>
 
           <div className={styles.table}>
@@ -134,9 +146,7 @@ export default async function ContentHubPage() {
               <article key={event.id}>
                 <div>
                   <strong>{event.title}</strong>
-                  <small>
-                    {event.location_name ?? event.place?.title ?? "Roncegno Terme"}
-                  </small>
+                  <small>{event.location_name ?? event.place?.title ?? "Roncegno Terme"}</small>
                 </div>
                 <time>
                   {new Intl.DateTimeFormat("it-IT", {
