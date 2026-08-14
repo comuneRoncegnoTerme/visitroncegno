@@ -9,7 +9,7 @@ export default function FestaHomepageBanner() {
         <div className={styles.overlay} />
         <img
           className={styles.logo}
-          src="/images/festa-castagna/logo-festa.webp"
+          src="/images/festa-castagna/logo-festa.png"
           alt="Festa della Castagna – Roncegno Terme"
         />
       </div>

@@ -21,8 +21,8 @@ export default async function MusicMuseumPage() {
         <div className={styles.heroShade} />
         <div className={styles.heroCopy}>
           <p className={styles.eyebrow}>Santa Brigida · Roncegno Terme</p>
-          <h1>Museo degli<br />Strumenti Musicali Popolari</h1>
-          <p>Un museo da vedere e da suonare.</p>
+          <h1>Museo degli Strumenti<br />Musicali Popolari</h1>
+          <p className={styles.heroLead}>Un museo da vedere e da suonare.</p>
           <a href="#scopri" className={styles.scroll}>Entra nel museo ↓</a>
         </div>
       </section>
