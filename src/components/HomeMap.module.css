@@ -4,6 +4,10 @@
   height: 100%;
 }
 
+.compact {
+  min-height: 620px;
+}
+
 .shell :global(.roncegno-map-marker) {
   position: relative;
   width: 44px;
@@ -71,7 +75,8 @@
 }
 
 @media (max-width: 760px) {
-  .shell {
+  .shell,
+  .compact {
     min-height: 500px;
   }
 
