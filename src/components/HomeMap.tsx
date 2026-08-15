@@ -10,6 +10,7 @@ import {
 } from "maplibre-gl";
 
 import "maplibre-gl/dist/maplibre-gl.css";
+import styles from "./HomeMap.module.css";
 
 interface HomeMapPlace {
   id: number;
@@ -210,13 +211,13 @@ export default function HomeMap({ places, compact = false }: HomeMapProps) {
   }, [places]);
 
   return (
-    <div className={`home-map-shell${compact ? " home-map-shell-compact" : ""}`}>
+    <div className={`${styles.shell}${compact ? ` ${styles.compact}` : ""}`}>
       <div
         ref={containerRef}
         className="home-map"
         aria-label="Mappa interattiva di Roncegno Terme"
       />
-      <div className="home-map-mobile-hint" aria-hidden="true">
+      <div className={styles.mobileHint} aria-hidden="true">
         Trascina la mappa · usa due dita per lo zoom
       </div>
     </div>
