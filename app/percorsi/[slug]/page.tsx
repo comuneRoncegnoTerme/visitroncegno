@@ -3,6 +3,7 @@ import Link from "next/link";
 import RouteMap from "@/components/RouteMap";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import mobileStyles from "@/components/RouteMobile.module.css";
 
 import {
   getDirectusAssetUrl,
@@ -70,7 +71,7 @@ export default async function RoutePage({
     formatDuration(route.duration_minutes);
 
   return (
-    <main>
+    <main className={mobileStyles.routePage}>
       <SiteHeader settings={siteSettings} />
       <section className="route-hero">
         {heroImage && (
