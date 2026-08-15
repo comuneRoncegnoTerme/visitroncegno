@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getDirectusAssetUrl, type SiteSettings } from "@/lib/directus";
+import MobileMenu from "./MobileMenu";
 import styles from "./SiteHeader.module.css";
 
 type Props = { settings: SiteSettings; overlay?: boolean };
@@ -29,9 +30,11 @@ export default function SiteHeader({ settings, overlay = false }: Props) {
         <Link href="/#mappa">Mappa</Link>
       </nav>
 
-      <Link className={styles.cta} href="/#organizza">
+      <Link className={styles.cta} href="/organizza-la-visita">
         Organizza la visita
       </Link>
+
+      <MobileMenu />
     </header>
   );
 }
