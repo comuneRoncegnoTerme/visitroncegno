@@ -3,7 +3,7 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import styles from "./collection-editor.module.css";
 
-type FieldType = "text" | "textarea" | "number" | "datetime-local" | "checkbox" | "select";
+type FieldType = "text" | "textarea" | "number" | "datetime-local" | "checkbox" | "select" | "email" | "url" | "tel";
 
 export type EditorField = {
   name: string;
@@ -46,6 +46,7 @@ function toInputDate(value: unknown) {
 
 export default function CollectionEditor({ collection, title, description, fields, previewBase }: Props) {
   const [items, setItems] = useState<Item[]>([]);
+  const [availableFields, setAvailableFields] = useState<string[] | null>(null);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [draft, setDraft] = useState<Record<string, unknown>>({ status: "draft" });
   const [loading, setLoading] = useState(true);
@@ -53,6 +54,12 @@ export default function CollectionEditor({ collection, title, description, field
   const [message, setMessage] = useState("");
   const [query, setQuery] = useState("");
   const selected = useMemo(() => items.find((item) => item.id === selectedId) ?? null, [items, selectedId]);
+  const visibleFields = useMemo(() => {
+    if (!availableFields) return fields;
+    const available = new Set(availableFields);
+    return fields.filter((field) => available.has(field.name));
+  }, [availableFields, fields]);
+  const hiddenFieldCount = fields.length - visibleFields.length;
   const filteredItems = useMemo(() => {
     const normalizedQuery = query.trim().toLocaleLowerCase("it-IT");
     if (!normalizedQuery) return items;
@@ -75,6 +82,7 @@ export default function CollectionEditor({ collection, title, description, field
       return;
     }
     setItems(result.data ?? []);
+    setAvailableFields(Array.isArray(result.fields) ? result.fields : null);
     setLoading(false);
   }
 
@@ -181,8 +189,14 @@ export default function CollectionEditor({ collection, title, description, field
           )}
         </div>
 
+        {availableFields && hiddenFieldCount > 0 && (
+          <p className={styles.schemaNotice}>
+            {hiddenFieldCount} campi avanzati non sono ancora presenti nello schema Directus di questa installazione e vengono nascosti automaticamente.
+          </p>
+        )}
+
         <form className={styles.form} onSubmit={save}>
-          {fields.map((field) => {
+          {visibleFields.map((field) => {
             const value = draft[field.name];
             const className = field.full ? styles.full : undefined;
 
