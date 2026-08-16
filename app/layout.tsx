@@ -20,16 +20,12 @@ export const metadata: Metadata = {
   },
   description: "Scopri Roncegno Terme in Valsugana: natura, percorsi, eventi, musei, memoria, ristoranti e ospitalità.",
   applicationName: "Visit Roncegno",
-  alternates: {
-    canonical: "/",
-  },
   openGraph: {
     type: "website",
     locale: "it_IT",
     siteName: "Visit Roncegno",
     title: "Visit Roncegno Terme",
     description: "Natura, percorsi, eventi, musei, memoria e informazioni utili per vivere Roncegno Terme.",
-    url: "/",
   },
   twitter: {
     card: "summary_large_image",
