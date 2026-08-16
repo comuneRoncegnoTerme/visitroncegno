@@ -9,6 +9,7 @@ import {
   getSiteSettings,
   type MapPlace,
 } from "@/lib/directus";
+import { isEatingPlace, isSleepingPlace } from "@/lib/place-taxonomy";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
@@ -22,20 +23,6 @@ function ArrowIcon() {
       <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
-}
-
-function normalizeLabel(place: MapPlace) {
-  return (place.map_label ?? "").toLocaleLowerCase("it-IT");
-}
-
-function isSleeping(place: MapPlace) {
-  const label = normalizeLabel(place);
-  return ["hotel", "b&b", "bed", "agritur", "allogg", "ospital", "dormire", "appartament"].some((term) => label.includes(term));
-}
-
-function isEating(place: MapPlace) {
-  const label = normalizeLabel(place);
-  return ["ristor", "pizzer", "bar", "oster", "trattor", "mangiare", "enotec", "locale"].some((term) => label.includes(term));
 }
 
 function PlaceStrip({ places, emptyText }: { places: MapPlace[]; emptyText: string }) {
@@ -80,10 +67,11 @@ export default async function OrganizzaLaVisitaPage() {
       latitude: place.latitude as number,
       longitude: place.longitude as number,
       mapLabel: place.map_label,
+      mapIcon: place.map_icon,
     }));
 
-  const sleeping = mapPlaces.filter(isSleeping);
-  const eating = mapPlaces.filter(isEating);
+  const sleeping = mapPlaces.filter(isSleepingPlace);
+  const eating = mapPlaces.filter(isEatingPlace);
 
   return (
     <main className={styles.page}>
@@ -138,7 +126,7 @@ export default async function OrganizzaLaVisitaPage() {
       <section className={styles.contentSection} id="dormire">
         <div className={styles.sectionHeading}>
           <div><p className={styles.eyebrow}>Ospitalità</p><h2>Dove dormire</h2></div>
-          <p>Le strutture pubblicate nel Content Hub compaiono qui automaticamente quando sono indicate come hotel, B&B, agriturismo, appartamento o altra forma di ospitalità.</p>
+          <p>Le strutture pubblicate nel Content Hub compaiono qui automaticamente quando sono classificate come hotel, B&B, agriturismo, appartamento o altra forma di ospitalità.</p>
         </div>
         <PlaceStrip places={sleeping} emptyText="Le strutture ricettive saranno pubblicate qui dal Content Hub." />
       </section>
@@ -155,7 +143,7 @@ export default async function OrganizzaLaVisitaPage() {
         <div className={styles.mapHeading}>
           <p className={styles.eyebrow}>Orientati sul territorio</p>
           <h2>Tutto sulla mappa.</h2>
-          <p>I punti vengono inquadrati automaticamente in base alla loro distanza. Tocca un marker per aprire la scheda del luogo.</p>
+          <p>Filtra luoghi, ristorazione, ospitalità e servizi. La mappa si adatta automaticamente ai punti visibili.</p>
         </div>
         <div className={styles.mapFrame}>
           <HomeMap places={placesWithCoordinates} compact />

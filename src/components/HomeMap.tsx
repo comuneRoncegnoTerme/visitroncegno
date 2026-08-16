@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   LngLatBounds,
   Map,
@@ -10,6 +10,7 @@ import {
 } from "maplibre-gl";
 
 import "maplibre-gl/dist/maplibre-gl.css";
+import { placeCategory, type PlaceCategory } from "@/lib/place-taxonomy";
 import styles from "./HomeMap.module.css";
 
 interface HomeMapPlace {
@@ -21,11 +22,27 @@ interface HomeMapPlace {
   latitude: number;
   longitude: number;
   mapLabel: string | null;
+  mapIcon?: string | null;
 }
 
 interface HomeMapProps {
   places: HomeMapPlace[];
   compact?: boolean;
+  showFilters?: boolean;
+}
+
+type MapFilter = "all" | PlaceCategory;
+
+const FILTERS: { value: MapFilter; label: string }[] = [
+  { value: "all", label: "Tutto" },
+  { value: "places", label: "Luoghi" },
+  { value: "food", label: "Mangiare" },
+  { value: "sleep", label: "Dormire" },
+  { value: "services", label: "Servizi" },
+];
+
+function categoryForPlace(place: HomeMapPlace) {
+  return placeCategory({ map_icon: place.mapIcon, map_label: place.mapLabel });
 }
 
 function placeHref(place: HomeMapPlace) {
@@ -45,14 +62,21 @@ function placeHref(place: HomeMapPlace) {
   return `/luoghi/${place.slug}`;
 }
 
-export default function HomeMap({ places, compact = false }: HomeMapProps) {
+export default function HomeMap({ places, compact = false, showFilters = compact }: HomeMapProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<Map | null>(null);
+  const [activeFilter, setActiveFilter] = useState<MapFilter>("all");
+
+  const visiblePlaces = useMemo(
+    () => activeFilter === "all" ? places : places.filter((place) => categoryForPlace(place) === activeFilter),
+    [activeFilter, places]
+  );
 
   useEffect(() => {
-    if (!containerRef.current || mapRef.current) {
-      return;
-    }
+    if (!containerRef.current) return;
+
+    mapRef.current?.remove();
+    mapRef.current = null;
 
     const isMobile = window.matchMedia("(max-width: 760px)").matches;
 
@@ -70,13 +94,7 @@ export default function HomeMap({ places, compact = false }: HomeMapProps) {
             attribution: "© OpenStreetMap contributors",
           },
         },
-        layers: [
-          {
-            id: "osm",
-            type: "raster",
-            source: "osm-tiles",
-          },
-        ],
+        layers: [{ id: "osm", type: "raster", source: "osm-tiles" }],
       },
       center: [11.405, 46.047],
       zoom: 13.3,
@@ -86,14 +104,7 @@ export default function HomeMap({ places, compact = false }: HomeMapProps) {
     });
 
     mapRef.current = map;
-
-    map.addControl(
-      new NavigationControl({
-        showCompass: false,
-        showZoom: true,
-      }),
-      "top-right"
-    );
+    map.addControl(new NavigationControl({ showCompass: false, showZoom: true }), "top-right");
 
     if (isMobile) {
       map.scrollZoom.disable();
@@ -102,11 +113,11 @@ export default function HomeMap({ places, compact = false }: HomeMapProps) {
 
     const bounds = new LngLatBounds();
 
-    places.forEach((place) => {
+    visiblePlaces.forEach((place) => {
       bounds.extend([place.longitude, place.latitude]);
 
       const markerElement = document.createElement("button");
-      markerElement.className = "roncegno-map-marker";
+      markerElement.className = `roncegno-map-marker roncegno-map-marker-${categoryForPlace(place)}`;
       markerElement.type = "button";
       markerElement.setAttribute("aria-label", `Apri ${place.title}`);
 
@@ -125,10 +136,8 @@ export default function HomeMap({ places, compact = false }: HomeMapProps) {
 
       const label = document.createElement("span");
       label.textContent = place.mapLabel ?? "Luogo";
-
       const title = document.createElement("strong");
       title.textContent = place.title;
-
       content.appendChild(label);
       content.appendChild(title);
 
@@ -141,7 +150,6 @@ export default function HomeMap({ places, compact = false }: HomeMapProps) {
       const link = document.createElement("a");
       link.href = placeHref(place);
       link.textContent = "Scopri il luogo →";
-
       content.appendChild(link);
       popupContent.appendChild(content);
 
@@ -163,10 +171,7 @@ export default function HomeMap({ places, compact = false }: HomeMapProps) {
         });
       });
 
-      new Marker({
-        element: markerElement,
-        anchor: "center",
-      })
+      new Marker({ element: markerElement, anchor: "center" })
         .setLngLat([place.longitude, place.latitude])
         .setPopup(popup)
         .addTo(map);
@@ -179,17 +184,13 @@ export default function HomeMap({ places, compact = false }: HomeMapProps) {
       map.setPaintProperty("osm", "raster-brightness-max", 0.92);
 
       if (!bounds.isEmpty()) {
-        if (places.length === 1) {
-          map.easeTo({
-            center: bounds.getCenter(),
-            zoom: 14.4,
-            duration: 0,
-          });
+        if (visiblePlaces.length === 1) {
+          map.easeTo({ center: bounds.getCenter(), zoom: 14.4, duration: 0 });
         } else {
           map.fitBounds(bounds, {
             padding: isMobile
-              ? { top: 70, right: 42, bottom: 70, left: 42 }
-              : { top: 86, right: 86, bottom: 86, left: 86 },
+              ? { top: showFilters ? 110 : 70, right: 42, bottom: 70, left: 42 }
+              : { top: showFilters ? 110 : 86, right: 86, bottom: 86, left: 86 },
             maxZoom: 14.8,
             duration: 0,
           });
@@ -197,26 +198,41 @@ export default function HomeMap({ places, compact = false }: HomeMapProps) {
       }
     });
 
-    const resizeObserver = new ResizeObserver(() => {
-      map.resize();
-    });
-
+    const resizeObserver = new ResizeObserver(() => map.resize());
     resizeObserver.observe(containerRef.current);
 
     return () => {
       resizeObserver.disconnect();
       map.remove();
-      mapRef.current = null;
+      if (mapRef.current === map) mapRef.current = null;
     };
-  }, [places]);
+  }, [showFilters, visiblePlaces]);
 
   return (
     <div className={`${styles.shell}${compact ? ` ${styles.compact}` : ""}`}>
+      {showFilters && (
+        <div className={styles.filters} role="group" aria-label="Filtra i punti sulla mappa">
+          {FILTERS.map((filter) => (
+            <button
+              type="button"
+              key={filter.value}
+              className={activeFilter === filter.value ? styles.activeFilter : undefined}
+              aria-pressed={activeFilter === filter.value}
+              onClick={() => setActiveFilter(filter.value)}
+            >
+              {filter.label}
+            </button>
+          ))}
+        </div>
+      )}
       <div
         ref={containerRef}
         className="home-map"
-        aria-label="Mappa interattiva di Roncegno Terme"
+        aria-label={`Mappa interattiva di Roncegno Terme. ${visiblePlaces.length} punti visibili.`}
       />
+      <span className={styles.srStatus} aria-live="polite">
+        {visiblePlaces.length} punti visibili sulla mappa
+      </span>
       <div className={styles.mobileHint} aria-hidden="true">
         Trascina la mappa · usa due dita per lo zoom
       </div>

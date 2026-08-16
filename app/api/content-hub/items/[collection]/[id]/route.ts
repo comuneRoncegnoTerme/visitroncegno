@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { DIRECTUS_URL } from "@/lib/directus";
 import { getContentHubSession } from "@/lib/content-hub-auth";
 import { isContentHubCollection, sanitizeContentHubPayload } from "@/lib/content-hub-collections";
+import { getDirectusCollectionFields } from "@/lib/content-hub-directus-schema";
 
 export async function PATCH(
   request: NextRequest,
@@ -26,7 +27,13 @@ export async function PATCH(
     return NextResponse.json({ error: "Payload non valido" }, { status: 400 });
   }
 
-  const payload = sanitizeContentHubPayload(collection, body as Record<string, unknown>);
+  const directusFields = await getDirectusCollectionFields(collection, token);
+  const payload = sanitizeContentHubPayload(
+    collection,
+    body as Record<string, unknown>,
+    directusFields ?? undefined
+  );
+
   if (Object.keys(payload).length === 0) {
     return NextResponse.json({ error: "Nessuna modifica ricevuta" }, { status: 400 });
   }

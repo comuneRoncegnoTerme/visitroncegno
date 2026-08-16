@@ -21,6 +21,16 @@ export type EditorialItem = {
   accessible?: boolean;
   public_transport?: boolean;
   route_highlight?: string | null;
+  map_label?: string | null;
+  map_icon?: string | null;
+  address?: string | null;
+  phone?: string | null;
+  email?: string | null;
+  website_url?: string | null;
+  booking_url?: string | null;
+  access_notes?: string | null;
+  parking_notes?: string | null;
+  public_transport_notes?: string | null;
   category?: { name?: string | null } | null;
   place?: { title?: string | null } | null;
 };

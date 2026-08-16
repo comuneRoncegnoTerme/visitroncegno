@@ -3,9 +3,11 @@ import { DIRECTUS_URL } from "@/lib/directus";
 import { getContentHubSession } from "@/lib/content-hub-auth";
 import {
   contentHubCollections,
+  contentHubFieldsForSchema,
   isContentHubCollection,
   sanitizeContentHubPayload,
 } from "@/lib/content-hub-collections";
+import { getDirectusCollectionFields } from "@/lib/content-hub-directus-schema";
 
 async function requireSession() {
   const session = await getContentHubSession();
@@ -35,8 +37,22 @@ export async function GET(
   }
 
   const config = contentHubCollections[collection];
+  const directusFields = await getDirectusCollectionFields(collection, token);
+  const fields = directusFields
+    ? contentHubFieldsForSchema(collection, directusFields)
+    : config.fields.filter((field) => ![
+        "address",
+        "phone",
+        "email",
+        "website_url",
+        "booking_url",
+        "access_notes",
+        "parking_notes",
+        "public_transport_notes",
+      ].includes(field));
+
   const params = new URLSearchParams({
-    fields: config.fields.join(","),
+    fields: fields.join(","),
     sort: config.sort,
     limit: String(config.limit),
   });
@@ -54,7 +70,7 @@ export async function GET(
     );
   }
 
-  return NextResponse.json({ data: result?.data ?? [] });
+  return NextResponse.json({ data: result?.data ?? [], fields });
 }
 
 export async function POST(
@@ -80,7 +96,13 @@ export async function POST(
     return NextResponse.json({ error: "Payload non valido" }, { status: 400 });
   }
 
-  const payload = sanitizeContentHubPayload(collection, body as Record<string, unknown>);
+  const directusFields = await getDirectusCollectionFields(collection, token);
+  const payload = sanitizeContentHubPayload(
+    collection,
+    body as Record<string, unknown>,
+    directusFields ?? undefined
+  );
+
   if (!payload.title || !payload.slug) {
     return NextResponse.json({ error: "Titolo e slug sono obbligatori" }, { status: 400 });
   }

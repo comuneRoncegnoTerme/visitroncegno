@@ -3,7 +3,7 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import styles from "./collection-editor.module.css";
 
-type FieldType = "text" | "textarea" | "number" | "datetime-local" | "checkbox" | "select";
+type FieldType = "text" | "textarea" | "number" | "datetime-local" | "checkbox" | "select" | "email" | "url" | "tel";
 
 export type EditorField = {
   name: string;
@@ -16,7 +16,7 @@ export type EditorField = {
   options?: { label: string; value: string }[];
 };
 
-type Item = Record<string, unknown> & { id: number; title?: string; slug?: string; status?: string };
+type Item = Record<string, unknown> & { id: number; title?: string; slug?: string; status?: string; map_label?: string };
 
 type Props = {
   collection: "events" | "places" | "routes";
@@ -46,12 +46,30 @@ function toInputDate(value: unknown) {
 
 export default function CollectionEditor({ collection, title, description, fields, previewBase }: Props) {
   const [items, setItems] = useState<Item[]>([]);
+  const [availableFields, setAvailableFields] = useState<string[] | null>(null);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [draft, setDraft] = useState<Record<string, unknown>>({ status: "draft" });
   const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [message, setMessage] = useState("");
+  const [query, setQuery] = useState("");
   const selected = useMemo(() => items.find((item) => item.id === selectedId) ?? null, [items, selectedId]);
+  const visibleFields = useMemo(() => {
+    if (!availableFields) return fields;
+    const available = new Set(availableFields);
+    return fields.filter((field) => available.has(field.name));
+  }, [availableFields, fields]);
+  const hiddenFieldCount = fields.length - visibleFields.length;
+  const filteredItems = useMemo(() => {
+    const normalizedQuery = query.trim().toLocaleLowerCase("it-IT");
+    if (!normalizedQuery) return items;
+
+    return items.filter((item) =>
+      [item.title, item.slug, item.status, item.map_label]
+        .filter(Boolean)
+        .some((value) => String(value).toLocaleLowerCase("it-IT").includes(normalizedQuery))
+    );
+  }, [items, query]);
 
   async function load() {
     setLoading(true);
@@ -64,6 +82,7 @@ export default function CollectionEditor({ collection, title, description, field
       return;
     }
     setItems(result.data ?? []);
+    setAvailableFields(Array.isArray(result.fields) ? result.fields : null);
     setLoading(false);
   }
 
@@ -130,9 +149,20 @@ export default function CollectionEditor({ collection, title, description, field
           <div><span>{items.length} contenuti</span><h2>{title}</h2></div>
           <button type="button" onClick={createNew}>+ Nuovo</button>
         </div>
+        <div className={styles.searchBox}>
+          <label htmlFor={`content-search-${collection}`}>Cerca</label>
+          <input
+            id={`content-search-${collection}`}
+            type="search"
+            value={query}
+            placeholder="Titolo, slug, stato o tipologia"
+            onChange={(event) => setQuery(event.target.value)}
+          />
+          {query && <span>{filteredItems.length} risultati</span>}
+        </div>
         <div className={styles.items}>
           {loading && <p className={styles.muted}>Caricamento…</p>}
-          {!loading && items.map((item) => (
+          {!loading && filteredItems.map((item) => (
             <button
               type="button"
               key={item.id}
@@ -140,9 +170,10 @@ export default function CollectionEditor({ collection, title, description, field
               onClick={() => selectItem(item)}
             >
               <strong>{item.title || `#${item.id}`}</strong>
-              <span>{item.status === "published" ? "Pubblicato" : "Bozza"} · {item.slug}</span>
+              <span>{item.status === "published" ? "Pubblicato" : item.status === "archived" ? "Archiviato" : "Bozza"} · {item.map_label ? `${item.map_label} · ` : ""}{item.slug}</span>
             </button>
           ))}
+          {!loading && filteredItems.length === 0 && <p className={styles.muted}>Nessun contenuto corrisponde alla ricerca.</p>}
         </div>
       </aside>
 
@@ -158,8 +189,14 @@ export default function CollectionEditor({ collection, title, description, field
           )}
         </div>
 
+        {availableFields && hiddenFieldCount > 0 && (
+          <p className={styles.schemaNotice}>
+            {hiddenFieldCount} campi avanzati non sono ancora presenti nello schema Directus di questa installazione e vengono nascosti automaticamente.
+          </p>
+        )}
+
         <form className={styles.form} onSubmit={save}>
-          {fields.map((field) => {
+          {visibleFields.map((field) => {
             const value = draft[field.name];
             const className = field.full ? styles.full : undefined;
 
