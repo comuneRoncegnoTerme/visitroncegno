@@ -10,6 +10,7 @@ import {
 } from "maplibre-gl";
 
 import "maplibre-gl/dist/maplibre-gl.css";
+import { placeCategory, type PlaceCategory } from "@/lib/place-taxonomy";
 import styles from "./HomeMap.module.css";
 
 interface HomeMapPlace {
@@ -21,6 +22,7 @@ interface HomeMapPlace {
   latitude: number;
   longitude: number;
   mapLabel: string | null;
+  mapIcon?: string | null;
 }
 
 interface HomeMapProps {
@@ -29,7 +31,7 @@ interface HomeMapProps {
   showFilters?: boolean;
 }
 
-type MapFilter = "all" | "places" | "food" | "sleep" | "services";
+type MapFilter = "all" | PlaceCategory;
 
 const FILTERS: { value: MapFilter; label: string }[] = [
   { value: "all", label: "Tutto" },
@@ -39,26 +41,8 @@ const FILTERS: { value: MapFilter; label: string }[] = [
   { value: "services", label: "Servizi" },
 ];
 
-function normalizeLabel(place: HomeMapPlace) {
-  return (place.mapLabel ?? "").toLocaleLowerCase("it-IT");
-}
-
-function categoryForPlace(place: HomeMapPlace): Exclude<MapFilter, "all"> {
-  const label = normalizeLabel(place);
-
-  if (["ristor", "pizzer", "bar", "oster", "trattor", "enotec", "mangiare"].some((term) => label.includes(term))) {
-    return "food";
-  }
-
-  if (["hotel", "b&b", "bed", "agritur", "allogg", "ospital", "dormire", "appartament"].some((term) => label.includes(term))) {
-    return "sleep";
-  }
-
-  if (["parchegg", "servizio", "info", "farmacia", "stazione"].some((term) => label.includes(term))) {
-    return "services";
-  }
-
-  return "places";
+function categoryForPlace(place: HomeMapPlace) {
+  return placeCategory({ map_icon: place.mapIcon, map_label: place.mapLabel });
 }
 
 function placeHref(place: HomeMapPlace) {
@@ -227,7 +211,7 @@ export default function HomeMap({ places, compact = false, showFilters = compact
   return (
     <div className={`${styles.shell}${compact ? ` ${styles.compact}` : ""}`}>
       {showFilters && (
-        <div className={styles.filters} aria-label="Filtra i punti sulla mappa">
+        <div className={styles.filters} role="group" aria-label="Filtra i punti sulla mappa">
           {FILTERS.map((filter) => (
             <button
               type="button"
@@ -246,6 +230,9 @@ export default function HomeMap({ places, compact = false, showFilters = compact
         className="home-map"
         aria-label={`Mappa interattiva di Roncegno Terme. ${visiblePlaces.length} punti visibili.`}
       />
+      <span className={styles.srStatus} aria-live="polite">
+        {visiblePlaces.length} punti visibili sulla mappa
+      </span>
       <div className={styles.mobileHint} aria-hidden="true">
         Trascina la mappa · usa due dita per lo zoom
       </div>
