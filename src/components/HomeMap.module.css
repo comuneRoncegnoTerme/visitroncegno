@@ -9,6 +9,52 @@
   min-height: 620px;
 }
 
+.filters {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  max-width: calc(100% - 110px);
+  padding: 7px;
+  background: rgba(250, 249, 245, 0.9);
+  border: 1px solid rgba(22, 61, 50, 0.12);
+  border-radius: 999px;
+  box-shadow: 0 10px 28px rgba(13, 42, 34, 0.14);
+  backdrop-filter: blur(12px);
+}
+
+.filters button {
+  min-height: 34px;
+  padding: 0 13px;
+  color: #29483e;
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.filters button:hover,
+.filters button:focus-visible {
+  background: rgba(22, 61, 50, 0.08);
+}
+
+.filters button:focus-visible {
+  outline: 3px solid #d66b2c;
+  outline-offset: 2px;
+}
+
+.filters .activeFilter {
+  color: #fff;
+  background: #163d32;
+}
+
 .shell :global(.roncegno-map-marker) {
   position: relative;
   width: 44px;
@@ -44,6 +90,18 @@
   pointer-events: none;
 }
 
+.shell :global(.roncegno-map-marker-food)::after {
+  background: #b9572c;
+}
+
+.shell :global(.roncegno-map-marker-sleep)::after {
+  background: #355f77;
+}
+
+.shell :global(.roncegno-map-marker-services)::after {
+  background: #6d694f;
+}
+
 .shell :global(.roncegno-map-marker:hover)::before,
 .shell :global(.roncegno-map-marker:focus-visible)::before {
   transform: scale(1.12);
@@ -77,12 +135,34 @@
     min-height: 500px;
   }
 
+  .filters {
+    top: 12px;
+    right: 12px;
+    left: 12px;
+    flex-wrap: nowrap;
+    max-width: none;
+    overflow-x: auto;
+    padding: 6px;
+    border-radius: 16px;
+    scrollbar-width: none;
+  }
+
+  .filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filters button {
+    flex: 0 0 auto;
+    min-height: 38px;
+    padding: 0 14px;
+  }
+
   .shell :global(.home-map) {
     min-height: 500px;
   }
 
   .shell :global(.maplibregl-ctrl-top-right) {
-    top: 10px;
+    top: 68px;
     right: 10px;
   }
 
@@ -134,7 +214,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .shell :global(.roncegno-map-marker)::before {
+  .shell :global(.roncegno-map-marker)::before,
+  .filters button {
     transition: none;
   }
 }
