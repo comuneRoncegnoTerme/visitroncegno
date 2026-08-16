@@ -31,6 +31,14 @@ export const contentHubCollections: Record<
       "summary",
       "image",
       "featured",
+      "address",
+      "phone",
+      "email",
+      "website_url",
+      "booking_url",
+      "access_notes",
+      "parking_notes",
+      "public_transport_notes",
       "latitude",
       "longitude",
       "map_label",
@@ -75,11 +83,22 @@ export function isContentHubCollection(value: string): value is ContentHubCollec
   return value in contentHubCollections;
 }
 
+export function contentHubFieldsForSchema(
+  collection: ContentHubCollection,
+  availableFields: Iterable<string>
+) {
+  const available = new Set(availableFields);
+  return contentHubCollections[collection].fields.filter((field) => available.has(field));
+}
+
 export function sanitizeContentHubPayload(
   collection: ContentHubCollection,
-  input: Record<string, unknown>
+  input: Record<string, unknown>,
+  availableFields?: Iterable<string>
 ) {
-  const allowed = new Set(contentHubCollections[collection].fields.filter((field) => field !== "id"));
+  const configured = contentHubCollections[collection].fields.filter((field) => field !== "id");
+  const available = availableFields ? new Set(availableFields) : null;
+  const allowed = new Set(configured.filter((field) => !available || available.has(field)));
   const output: Record<string, unknown> = {};
 
   for (const [key, value] of Object.entries(input)) {
