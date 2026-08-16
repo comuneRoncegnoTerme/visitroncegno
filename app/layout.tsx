@@ -13,8 +13,29 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Visit Roncegno Terme",
-  description: "Sito di promozione turistica del comune di Roncegno Terme",
+  metadataBase: new URL("https://www.visitroncegno.it"),
+  title: {
+    default: "Visit Roncegno Terme",
+    template: "%s | Visit Roncegno",
+  },
+  description: "Scopri Roncegno Terme in Valsugana: natura, percorsi, eventi, musei, memoria, ristoranti e ospitalità.",
+  applicationName: "Visit Roncegno",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "it_IT",
+    siteName: "Visit Roncegno",
+    title: "Visit Roncegno Terme",
+    description: "Natura, percorsi, eventi, musei, memoria e informazioni utili per vivere Roncegno Terme.",
+    url: "/",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Visit Roncegno Terme",
+    description: "Scopri Roncegno Terme e organizza la tua visita in Valsugana.",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
