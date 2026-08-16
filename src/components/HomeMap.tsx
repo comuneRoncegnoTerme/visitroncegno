@@ -78,7 +78,7 @@ function placeHref(place: HomeMapPlace) {
   return `/luoghi/${place.slug}`;
 }
 
-export default function HomeMap({ places, compact = false, showFilters = false }: HomeMapProps) {
+export default function HomeMap({ places, compact = false, showFilters = compact }: HomeMapProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<Map | null>(null);
   const [activeFilter, setActiveFilter] = useState<MapFilter>("all");
