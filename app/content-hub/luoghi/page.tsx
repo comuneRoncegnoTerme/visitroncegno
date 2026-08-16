@@ -17,37 +17,12 @@ const fields: EditorField[] = [
   {
     name: "map_label",
     label: "Tipologia per sito e mappa",
-    type: "select",
-    help: "Questa scelta alimenta i filtri della mappa e le sezioni Mangiare/Dormire.",
-    options: [
-      { label: "Luogo", value: "Luogo" },
-      { label: "Museo", value: "Museo" },
-      { label: "Natura", value: "Natura" },
-      { label: "Ristorante", value: "Ristorante" },
-      { label: "Pizzeria", value: "Pizzeria" },
-      { label: "Bar", value: "Bar" },
-      { label: "Hotel", value: "Hotel" },
-      { label: "B&B", value: "B&B" },
-      { label: "Agriturismo", value: "Agriturismo" },
-      { label: "Appartamento", value: "Appartamento" },
-      { label: "Parcheggio", value: "Parcheggio" },
-      { label: "Servizio", value: "Servizio" },
-    ],
+    help: "Usa etichette coerenti: Luogo, Museo, Natura, Ristorante, Pizzeria, Bar, Hotel, B&B, Agriturismo, Appartamento, Parcheggio o Servizio. Alimenta automaticamente i filtri della mappa e le sezioni Mangiare/Dormire.",
   },
   {
     name: "map_icon",
     label: "Icona mappa",
-    type: "select",
-    help: "Usata per mantenere coerente la rappresentazione cartografica.",
-    options: [
-      { label: "Generica", value: "place" },
-      { label: "Museo", value: "museum" },
-      { label: "Natura", value: "nature" },
-      { label: "Mangiare", value: "food" },
-      { label: "Dormire", value: "sleep" },
-      { label: "Parcheggio", value: "parking" },
-      { label: "Servizio", value: "service" },
-    ],
+    help: "Valori consigliati: place, museum, nature, food, sleep, parking, service. I valori esistenti restano compatibili.",
   },
   { name: "latitude", label: "Latitudine", type: "number", step: "0.000001" },
   { name: "longitude", label: "Longitudine", type: "number", step: "0.000001" },
@@ -61,7 +36,7 @@ export default async function ContentHubPlacesPage() {
     <CollectionEditor
       collection="places"
       title="Luoghi, mangiare e dormire"
-      description="Gestisci luoghi, ristoranti, strutture ricettive, servizi, coordinate e presenza sulla mappa. La tipologia scelta qui alimenta automaticamente Organizza la visita e i filtri della mappa."
+      description="Gestisci luoghi, ristoranti, strutture ricettive, servizi, coordinate e presenza sulla mappa. La tipologia inserita qui alimenta automaticamente Organizza la visita e i filtri cartografici."
       fields={fields}
       previewBase="/luoghi"
     />
