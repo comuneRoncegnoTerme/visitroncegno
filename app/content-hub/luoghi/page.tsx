@@ -13,6 +13,16 @@ const fields: EditorField[] = [
   { name: "slug", label: "Slug URL", required: true, full: true },
   { name: "summary", label: "Descrizione breve", type: "textarea", full: true },
   { name: "image", label: "ID immagine Directus", full: true, help: "Carica il file dalla sezione Media e incolla qui il suo ID." },
+
+  { name: "address", label: "Indirizzo", full: true },
+  { name: "phone", label: "Telefono", type: "tel" },
+  { name: "email", label: "Email", type: "email" },
+  { name: "website_url", label: "Sito web", type: "url", full: true },
+  { name: "booking_url", label: "Prenotazione / contatto online", type: "url", full: true },
+  { name: "access_notes", label: "Indicazioni di accesso", type: "textarea", full: true },
+  { name: "parking_notes", label: "Parcheggio", type: "textarea", full: true },
+  { name: "public_transport_notes", label: "Trasporto pubblico", type: "textarea", full: true },
+
   { name: "show_on_map", label: "Mostra sulla mappa", type: "checkbox", help: "Richiede latitudine e longitudine." },
   {
     name: "map_label",
@@ -36,7 +46,7 @@ export default async function ContentHubPlacesPage() {
     <CollectionEditor
       collection="places"
       title="Luoghi, mangiare e dormire"
-      description="Gestisci luoghi, ristoranti, strutture ricettive, servizi, coordinate e presenza sulla mappa. La tipologia inserita qui alimenta automaticamente Organizza la visita e i filtri cartografici."
+      description="Gestisci luoghi, ristoranti, strutture ricettive, servizi, contatti, coordinate e presenza sulla mappa. Il Content Hub mostra automaticamente solo i campi realmente disponibili nello schema Directus installato."
       fields={fields}
       previewBase="/luoghi"
     />
