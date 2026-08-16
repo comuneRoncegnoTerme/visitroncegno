@@ -40,7 +40,16 @@ export async function GET(
   const directusFields = await getDirectusCollectionFields(collection, token);
   const fields = directusFields
     ? contentHubFieldsForSchema(collection, directusFields)
-    : config.fields;
+    : config.fields.filter((field) => ![
+        "address",
+        "phone",
+        "email",
+        "website_url",
+        "booking_url",
+        "access_notes",
+        "parking_notes",
+        "public_transport_notes",
+      ].includes(field));
 
   const params = new URLSearchParams({
     fields: fields.join(","),
