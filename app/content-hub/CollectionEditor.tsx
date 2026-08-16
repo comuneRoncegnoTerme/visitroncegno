@@ -16,7 +16,7 @@ export type EditorField = {
   options?: { label: string; value: string }[];
 };
 
-type Item = Record<string, unknown> & { id: number; title?: string; slug?: string; status?: string };
+type Item = Record<string, unknown> & { id: number; title?: string; slug?: string; status?: string; map_label?: string };
 
 type Props = {
   collection: "events" | "places" | "routes";
@@ -51,7 +51,18 @@ export default function CollectionEditor({ collection, title, description, field
   const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [message, setMessage] = useState("");
+  const [query, setQuery] = useState("");
   const selected = useMemo(() => items.find((item) => item.id === selectedId) ?? null, [items, selectedId]);
+  const filteredItems = useMemo(() => {
+    const normalizedQuery = query.trim().toLocaleLowerCase("it-IT");
+    if (!normalizedQuery) return items;
+
+    return items.filter((item) =>
+      [item.title, item.slug, item.status, item.map_label]
+        .filter(Boolean)
+        .some((value) => String(value).toLocaleLowerCase("it-IT").includes(normalizedQuery))
+    );
+  }, [items, query]);
 
   async function load() {
     setLoading(true);
@@ -130,9 +141,20 @@ export default function CollectionEditor({ collection, title, description, field
           <div><span>{items.length} contenuti</span><h2>{title}</h2></div>
           <button type="button" onClick={createNew}>+ Nuovo</button>
         </div>
+        <div className={styles.searchBox}>
+          <label htmlFor={`content-search-${collection}`}>Cerca</label>
+          <input
+            id={`content-search-${collection}`}
+            type="search"
+            value={query}
+            placeholder="Titolo, slug, stato o tipologia"
+            onChange={(event) => setQuery(event.target.value)}
+          />
+          {query && <span>{filteredItems.length} risultati</span>}
+        </div>
         <div className={styles.items}>
           {loading && <p className={styles.muted}>Caricamento…</p>}
-          {!loading && items.map((item) => (
+          {!loading && filteredItems.map((item) => (
             <button
               type="button"
               key={item.id}
@@ -140,9 +162,10 @@ export default function CollectionEditor({ collection, title, description, field
               onClick={() => selectItem(item)}
             >
               <strong>{item.title || `#${item.id}`}</strong>
-              <span>{item.status === "published" ? "Pubblicato" : "Bozza"} · {item.slug}</span>
+              <span>{item.status === "published" ? "Pubblicato" : item.status === "archived" ? "Archiviato" : "Bozza"} · {item.map_label ? `${item.map_label} · ` : ""}{item.slug}</span>
             </button>
           ))}
+          {!loading && filteredItems.length === 0 && <p className={styles.muted}>Nessun contenuto corrisponde alla ricerca.</p>}
         </div>
       </aside>
 
