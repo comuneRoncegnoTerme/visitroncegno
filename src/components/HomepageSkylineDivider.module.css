@@ -1,0 +1,88 @@
+.divider {
+  position: relative;
+  min-height: 340px;
+  overflow: hidden;
+  background: var(--paper);
+  isolation: isolate;
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url('/images/homepage/roncegno-skyline.webp');
+  background-position: center 58%;
+  background-size: cover;
+  transform: scale(1.015);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.18) 18%, rgba(0,0,0,.72) 43%, #000 66%, #000 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.18) 18%, rgba(0,0,0,.72) 43%, #000 66%, #000 100%);
+}
+
+.fade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, var(--paper) 0%, rgba(250,249,245,.72) 15%, rgba(250,249,245,.1) 43%, transparent 67%),
+    linear-gradient(90deg, rgba(13,42,34,.14), transparent 38%, transparent 72%, rgba(13,42,34,.08));
+}
+
+.caption {
+  position: absolute;
+  top: 62px;
+  left: 5vw;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  color: var(--forest-dark);
+}
+
+.caption span {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(22px, 2vw, 31px);
+  line-height: 1;
+}
+
+.caption small {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  opacity: .7;
+}
+
+@media (max-width: 800px) {
+  .divider {
+    min-height: 230px;
+  }
+
+  .image {
+    background-position: 59% 55%;
+    transform: scale(1.04);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.2) 16%, rgba(0,0,0,.86) 45%, #000 66%, #000 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.2) 16%, rgba(0,0,0,.86) 45%, #000 66%, #000 100%);
+  }
+
+  .caption {
+    top: 34px;
+    left: 6vw;
+  }
+
+  .caption span {
+    font-size: 22px;
+  }
+
+  .caption small {
+    max-width: 220px;
+    font-size: 9px;
+    line-height: 1.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image {
+    transform: none;
+  }
+}
