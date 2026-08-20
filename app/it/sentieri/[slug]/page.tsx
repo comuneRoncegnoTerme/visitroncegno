@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { DIRECTUS_URL } from "@/lib/directus";
-import { plainText } from "@/lib/editorial";
+import { getStoryBySlug, storyParagraphs } from "@/lib/stories";
 import { getTrailPanel, trailPanels, type TrailPanel } from "@/lib/trail-panels";
 import styles from "./page.module.css";
 
@@ -9,89 +8,24 @@ interface LegacyTrailPageProps {
   params: Promise<{ slug: string }>;
 }
 
-interface DirectusStory {
-  id: number;
-  title: string;
-  slug: string;
-  excerpt: string | null;
-  body: string | null;
-  source_url: string | null;
-  category?: {
-    name: string;
-  } | null;
-}
-
-function normalizeLegacyPath(value: string | null) {
-  if (!value) return null;
-
-  try {
-    const url = new URL(value, "https://www.visitroncegno.it");
-    return url.pathname.replace(/\/+$/, "");
-  } catch {
-    return null;
-  }
-}
-
 async function getDirectusTrailPanel(slug: string): Promise<TrailPanel | null> {
-  const params = new URLSearchParams();
-  params.set("filter[status][_eq]", "published");
-  params.set("limit", "500");
-  params.set(
-    "fields",
-    [
-      "id",
-      "title",
-      "slug",
-      "excerpt",
-      "body",
-      "source_url",
-      "category.name",
-    ].join(",")
-  );
+  const story = await getStoryBySlug(slug);
+  if (!story) return null;
 
-  const token = process.env.DIRECTUS_TOKEN;
+  const body = storyParagraphs(story.body);
+  const summary = story.excerpt?.trim() || body[0] || "Approfondimento sul territorio di Roncegno Terme.";
 
-  try {
-    const response = await fetch(
-      `${DIRECTUS_URL}/items/stories?${params.toString()}`,
-      {
-        cache: "no-store",
-        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
-      }
-    );
-
-    if (!response.ok) {
-      console.error(`Directus legacy story error: ${response.status}`);
-      return null;
-    }
-
-    const result = (await response.json()) as { data?: DirectusStory[] };
-    const requestedPath = `/it/sentieri/${slug}`;
-    const story = (result.data ?? []).find((item) => {
-      const sourcePath = normalizeLegacyPath(item.source_url);
-      return sourcePath === requestedPath || item.slug === slug;
-    });
-
-    if (!story) return null;
-
-    const body = plainText(story.body);
-    const summary = story.excerpt?.trim() || body[0] || "Approfondimento sul territorio di Roncegno Terme.";
-
-    return {
-      slug,
-      panelNumber: "Approfondimento",
-      qrCodes: [],
-      title: story.title,
-      eyebrow: story.category?.name ?? "Storie lungo il cammino",
-      summary,
-      body: body.length > 0 ? body : [summary],
-      audioTitle: `Ascolta: ${story.title}`,
-      relatedRouteLabel: "Circuito del Castagno",
-    };
-  } catch (error) {
-    console.error("Directus legacy story error:", error);
-    return null;
-  }
+  return {
+    slug,
+    panelNumber: "Approfondimento",
+    qrCodes: [],
+    title: story.title,
+    eyebrow: story.category?.name ?? "Storie lungo il cammino",
+    summary,
+    body: body.length > 0 ? body : [summary],
+    audioTitle: `Ascolta: ${story.title}`,
+    relatedRouteLabel: story.route?.title ?? "Sentieri di Roncegno",
+  };
 }
 
 export function generateStaticParams() {
