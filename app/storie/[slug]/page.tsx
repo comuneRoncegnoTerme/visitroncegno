@@ -1,0 +1,90 @@
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
+import { getDirectusAssetUrl, getSiteSettings } from "@/lib/directus";
+import { getStoryBySlug, storyParagraphs } from "@/lib/stories";
+import styles from "./page.module.css";
+
+interface StoryPageProps {
+  params: Promise<{ slug: string }>;
+}
+
+const FALLBACK_IMAGE = "/images/hero/roncegno-hero.jpg";
+
+export default async function StoryPage({ params }: StoryPageProps) {
+  const { slug } = await params;
+  const [story, settings] = await Promise.all([
+    getStoryBySlug(slug),
+    getSiteSettings(),
+  ]);
+
+  if (!story) notFound();
+
+  const storyImage = getDirectusAssetUrl(story.image);
+  const heroImage = storyImage ?? FALLBACK_IMAGE;
+  const paragraphs = storyParagraphs(story.body);
+  const routeHref = story.route?.slug ? `/percorsi/${story.route.slug}` : "/percorsi";
+  const routeLabel = story.route?.title ?? "Scopri i percorsi";
+
+  return (
+    <main className={styles.page}>
+      <SiteHeader settings={settings} />
+
+      <section className={styles.hero}>
+        <div className={styles.heroImage} style={{ backgroundImage: `url('${heroImage}')` }} />
+        <div className={styles.heroOverlay} />
+        <div className={styles.heroContent}>
+          <Link className={styles.backLink} href={routeHref}>← Torna al percorso</Link>
+          <p className={styles.eyebrow}>{story.category?.name ?? "Storia del territorio"}</p>
+          <h1>{story.title}</h1>
+          {story.excerpt && <p className={styles.lead}>{story.excerpt}</p>}
+        </div>
+      </section>
+
+      <section className={styles.contentSection}>
+        <div className={styles.contentGrid}>
+          <article className={styles.article}>
+            <p className={styles.kicker}>Approfondimento</p>
+            {paragraphs.length > 0 ? (
+              paragraphs.map((paragraph, index) => <p key={`${index}-${paragraph.slice(0, 24)}`}>{paragraph}</p>)
+            ) : (
+              <p>{story.excerpt ?? "Questo approfondimento sarà completato a breve."}</p>
+            )}
+          </article>
+
+          <aside className={styles.aside}>
+            <div className={styles.asideCard}>
+              <p className={styles.kicker}>Lungo il cammino</p>
+              <h2>Continua a esplorare.</h2>
+              <p>Questa storia fa parte del racconto diffuso di Roncegno: luoghi, paesaggio, memoria e percorsi sono collegati tra loro.</p>
+              <Link href={routeHref}>{routeLabel} →</Link>
+            </div>
+
+            {story.source_url && (
+              <div className={styles.sourceCard}>
+                <small>Fonte e approfondimenti</small>
+                <a href={story.source_url} target="_blank" rel="noreferrer">
+                  {story.source_label ?? "Consulta la fonte"} ↗
+                </a>
+              </div>
+            )}
+          </aside>
+        </div>
+      </section>
+
+      <section className={styles.endLinks}>
+        <Link href={routeHref}>
+          <small>Torna sul territorio</small>
+          <strong>{routeLabel} →</strong>
+        </Link>
+        <Link href="/luoghi">
+          <small>Continua a conoscere Roncegno</small>
+          <strong>Esplora i luoghi →</strong>
+        </Link>
+      </section>
+
+      <SiteFooter settings={settings} />
+    </main>
+  );
+}
