@@ -1,6 +1,6 @@
 .divider {
   position: relative;
-  min-height: 340px;
+  min-height: 300px;
   overflow: hidden;
   background: var(--paper);
   isolation: isolate;
@@ -8,14 +8,14 @@
 
 .image {
   position: absolute;
-  inset: 0;
+  inset: 34px 0 0;
   z-index: 0;
   background-image: url('/images/homepage/roncegno-skyline.webp');
-  background-position: center 58%;
+  background-position: center 61%;
   background-size: cover;
-  transform: scale(1.015);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.18) 18%, rgba(0,0,0,.72) 43%, #000 66%, #000 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.18) 18%, rgba(0,0,0,.72) 43%, #000 66%, #000 100%);
+  transform: scale(1.01);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.52) 14%, #000 31%, #000 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.52) 14%, #000 31%, #000 100%);
 }
 
 .fade {
@@ -23,20 +23,19 @@
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background:
-    linear-gradient(180deg, var(--paper) 0%, rgba(250,249,245,.72) 15%, rgba(250,249,245,.1) 43%, transparent 67%),
-    linear-gradient(90deg, rgba(13,42,34,.14), transparent 38%, transparent 72%, rgba(13,42,34,.08));
+  background: linear-gradient(90deg, rgba(13,42,34,.08), transparent 30%, transparent 76%, rgba(13,42,34,.06));
 }
 
 .caption {
   position: absolute;
-  top: 62px;
+  top: 34px;
   left: 5vw;
   z-index: 2;
   display: flex;
   flex-direction: column;
   gap: 7px;
   color: var(--forest-dark);
+  text-shadow: 0 1px 18px rgba(250,249,245,.8);
 }
 
 .caption span {
@@ -50,23 +49,24 @@
   font-weight: 700;
   letter-spacing: .18em;
   text-transform: uppercase;
-  opacity: .7;
+  opacity: .72;
 }
 
 @media (max-width: 800px) {
   .divider {
-    min-height: 230px;
+    min-height: 220px;
   }
 
   .image {
-    background-position: 59% 55%;
-    transform: scale(1.04);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.2) 16%, rgba(0,0,0,.86) 45%, #000 66%, #000 100%);
-    mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.2) 16%, rgba(0,0,0,.86) 45%, #000 66%, #000 100%);
+    inset-top: 28px;
+    background-position: 58% 60%;
+    transform: scale(1.025);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.58) 13%, #000 30%, #000 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.58) 13%, #000 30%, #000 100%);
   }
 
   .caption {
-    top: 34px;
+    top: 24px;
     left: 6vw;
   }
 
