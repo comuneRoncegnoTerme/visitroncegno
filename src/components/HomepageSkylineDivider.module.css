@@ -1,8 +1,10 @@
 .divider {
   position: relative;
-  min-height: 300px;
+  z-index: 2;
+  min-height: 280px;
+  margin-top: -110px;
   overflow: hidden;
-  background: var(--paper);
+  background: transparent;
   isolation: isolate;
 }
 
@@ -11,11 +13,26 @@
   inset: 0;
   z-index: 0;
   background-image: url('/images/homepage/APT_Valsugana_Roncegno_2025_10_07_Luca_Matassoni_HD_12.jpg');
-  background-position: center 62%;
+  background-position: center 57%;
   background-size: cover;
-  transform: scale(1.01);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.42) 14%, #000 34%, #000 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.42) 14%, #000 34%, #000 100%);
+  transform: scale(1.015);
+  transform-origin: center bottom;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, .14) 10%,
+    rgba(0, 0, 0, .58) 27%,
+    #000 48%,
+    #000 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, .14) 10%,
+    rgba(0, 0, 0, .58) 27%,
+    #000 48%,
+    #000 100%
+  );
 }
 
 .fade {
@@ -23,19 +40,23 @@
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(90deg, rgba(13,42,34,.07), transparent 30%, transparent 76%, rgba(13,42,34,.05));
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, .12) 0%, transparent 42%),
+    linear-gradient(90deg, rgba(13, 42, 34, .08), transparent 28%, transparent 76%, rgba(13, 42, 34, .05));
 }
 
 .caption {
   position: absolute;
-  top: 30px;
+  top: 94px;
   left: 5vw;
   z-index: 2;
   display: flex;
   flex-direction: column;
   gap: 7px;
   color: var(--forest-dark);
-  text-shadow: 0 1px 18px rgba(250,249,245,.92);
+  text-shadow:
+    0 1px 18px rgba(250, 249, 245, .95),
+    0 0 3px rgba(250, 249, 245, .9);
 }
 
 .caption span {
@@ -54,18 +75,33 @@
 
 @media (max-width: 800px) {
   .divider {
-    min-height: 230px;
+    min-height: 210px;
+    margin-top: -70px;
   }
 
   .image {
-    background-position: 59% 61%;
-    transform: scale(1.025);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.5) 13%, #000 32%, #000 100%);
-    mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.5) 13%, #000 32%, #000 100%);
+    background-position: 61% 58%;
+    transform: scale(1.035);
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, .18) 9%,
+      rgba(0, 0, 0, .68) 28%,
+      #000 49%,
+      #000 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, .18) 9%,
+      rgba(0, 0, 0, .68) 28%,
+      #000 49%,
+      #000 100%
+    );
   }
 
   .caption {
-    top: 24px;
+    top: 66px;
     left: 6vw;
   }
 
