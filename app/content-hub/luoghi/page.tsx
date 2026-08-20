@@ -12,7 +12,7 @@ const fields: EditorField[] = [
   { name: "title", label: "Nome del luogo / attività", required: true, full: true },
   { name: "slug", label: "Slug URL", required: true, full: true },
   { name: "summary", label: "Descrizione breve", type: "textarea", full: true },
-  { name: "image", label: "ID immagine Directus", full: true, help: "Carica il file dalla sezione Media e incolla qui il suo ID." },
+  { name: "image", label: "Immagine", type: "media", mediaKind: "image", full: true, help: "Scegli una foto già presente oppure caricane una nuova direttamente da questa scheda." },
 
   { name: "address", label: "Indirizzo", full: true },
   { name: "phone", label: "Telefono", type: "tel" },
