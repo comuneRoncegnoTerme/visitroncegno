@@ -8,6 +8,7 @@ export interface TrailPanel {
   body: string[];
   audioTitle: string;
   relatedRouteLabel?: string;
+  relatedRouteHref?: string;
   sections?: { title: string; text: string[] }[];
   facts?: { value: string; label: string }[];
   relatedPanels?: { title: string; href: string; label: string }[];
@@ -78,6 +79,7 @@ export const trailPanels: TrailPanel[] = [
     relatedPanels: chestnutRelated.filter((item) => item.href !== "/it/sentieri/il-castagno-nella-storia-3-1"),
     audioTitle: "Ascolta: il castagno nella storia",
     relatedRouteLabel: "Circuito del Castagno",
+    relatedRouteHref: "/percorsi/circuito-del-castagno",
   },
   {
     slug: "aspetti-botanici-3-2",
@@ -120,6 +122,7 @@ export const trailPanels: TrailPanel[] = [
     relatedPanels: chestnutRelated.filter((item) => item.href !== "/it/sentieri/aspetti-botanici-3-2"),
     audioTitle: "Ascolta: conoscere il castagno",
     relatedRouteLabel: "Circuito del Castagno",
+    relatedRouteHref: "/percorsi/circuito-del-castagno",
   },
   {
     slug: "utilizzo-delle-castagne-3-3",
@@ -162,6 +165,7 @@ export const trailPanels: TrailPanel[] = [
     relatedPanels: chestnutRelated.filter((item) => item.href !== "/it/sentieri/utilizzo-delle-castagne-3-3"),
     audioTitle: "Ascolta: la castagna dalla dispensa alla tavola",
     relatedRouteLabel: "Circuito del Castagno",
+    relatedRouteHref: "/percorsi/circuito-del-castagno",
   },
   {
     slug: "conservazione-castagneti-3-4",
@@ -203,6 +207,7 @@ export const trailPanels: TrailPanel[] = [
     relatedPanels: chestnutRelated.filter((item) => item.href !== "/it/sentieri/conservazione-castagneti-3-4"),
     audioTitle: "Ascolta: custodire i castagneti",
     relatedRouteLabel: "Circuito del Castagno",
+    relatedRouteHref: "/percorsi/circuito-del-castagno",
   },
 ];
 
