@@ -8,14 +8,14 @@
 
 .image {
   position: absolute;
-  inset: 34px 0 0;
+  inset: 0;
   z-index: 0;
-  background-image: url('/images/homepage/roncegno-skyline.webp');
-  background-position: center 61%;
+  background-image: url('/images/homepage/APT_Valsugana_Roncegno_2025_10_07_Luca_Matassoni_HD_12.jpg');
+  background-position: center 62%;
   background-size: cover;
   transform: scale(1.01);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.52) 14%, #000 31%, #000 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.52) 14%, #000 31%, #000 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.42) 14%, #000 34%, #000 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.42) 14%, #000 34%, #000 100%);
 }
 
 .fade {
@@ -23,19 +23,19 @@
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(90deg, rgba(13,42,34,.08), transparent 30%, transparent 76%, rgba(13,42,34,.06));
+  background: linear-gradient(90deg, rgba(13,42,34,.07), transparent 30%, transparent 76%, rgba(13,42,34,.05));
 }
 
 .caption {
   position: absolute;
-  top: 34px;
+  top: 30px;
   left: 5vw;
   z-index: 2;
   display: flex;
   flex-direction: column;
   gap: 7px;
   color: var(--forest-dark);
-  text-shadow: 0 1px 18px rgba(250,249,245,.8);
+  text-shadow: 0 1px 18px rgba(250,249,245,.92);
 }
 
 .caption span {
@@ -54,15 +54,14 @@
 
 @media (max-width: 800px) {
   .divider {
-    min-height: 220px;
+    min-height: 230px;
   }
 
   .image {
-    inset: 28px 0 0;
-    background-position: 58% 60%;
+    background-position: 59% 61%;
     transform: scale(1.025);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.58) 13%, #000 30%, #000 100%);
-    mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.58) 13%, #000 30%, #000 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.5) 13%, #000 32%, #000 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.5) 13%, #000 32%, #000 100%);
   }
 
   .caption {
