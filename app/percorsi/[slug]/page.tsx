@@ -71,6 +71,21 @@ function humanize(value: string | null) {
   return value.replaceAll("-", " ");
 }
 
+function storyHref(story: RouteStory) {
+  if (story.source_url) {
+    try {
+      const source = new URL(story.source_url, "https://www.visitroncegno.it");
+      if (source.pathname.startsWith("/it/sentieri/")) {
+        return source.pathname;
+      }
+    } catch {
+      // Fall back to the Directus story slug below.
+    }
+  }
+
+  return `/it/sentieri/${story.slug}`;
+}
+
 async function loadGpxText(gpxUrl: string | null) {
   if (!gpxUrl) return null;
 
@@ -356,6 +371,7 @@ export default async function RoutePage({ params }: RoutePageProps) {
                 const storyClass = story.featured
                   ? "route-story-card route-story-card-featured"
                   : "route-story-card";
+                const href = storyHref(story);
 
                 return (
                   <article className={storyClass} key={story.id}>
@@ -372,11 +388,7 @@ export default async function RoutePage({ params }: RoutePageProps) {
                       </div>
                       <h3>{story.title}</h3>
                       {story.excerpt && <p>{story.excerpt}</p>}
-                      {story.source_url && (
-                        <a href={story.source_url} target="_blank" rel="noreferrer">
-                          {story.source_label ?? "Fonte"} ↗
-                        </a>
-                      )}
+                      <Link href={href}>Leggi la storia →</Link>
                     </div>
                   </article>
                 );

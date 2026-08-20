@@ -1,10 +1,97 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getTrailPanel, trailPanels } from "@/lib/trail-panels";
+import { DIRECTUS_URL } from "@/lib/directus";
+import { plainText } from "@/lib/editorial";
+import { getTrailPanel, trailPanels, type TrailPanel } from "@/lib/trail-panels";
 import styles from "./page.module.css";
 
 interface LegacyTrailPageProps {
   params: Promise<{ slug: string }>;
+}
+
+interface DirectusStory {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  body: string | null;
+  source_url: string | null;
+  category?: {
+    name: string;
+  } | null;
+}
+
+function normalizeLegacyPath(value: string | null) {
+  if (!value) return null;
+
+  try {
+    const url = new URL(value, "https://www.visitroncegno.it");
+    return url.pathname.replace(/\/+$/, "");
+  } catch {
+    return null;
+  }
+}
+
+async function getDirectusTrailPanel(slug: string): Promise<TrailPanel | null> {
+  const params = new URLSearchParams();
+  params.set("filter[status][_eq]", "published");
+  params.set("limit", "500");
+  params.set(
+    "fields",
+    [
+      "id",
+      "title",
+      "slug",
+      "excerpt",
+      "body",
+      "source_url",
+      "category.name",
+    ].join(",")
+  );
+
+  const token = process.env.DIRECTUS_TOKEN;
+
+  try {
+    const response = await fetch(
+      `${DIRECTUS_URL}/items/stories?${params.toString()}`,
+      {
+        cache: "no-store",
+        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+      }
+    );
+
+    if (!response.ok) {
+      console.error(`Directus legacy story error: ${response.status}`);
+      return null;
+    }
+
+    const result = (await response.json()) as { data?: DirectusStory[] };
+    const requestedPath = `/it/sentieri/${slug}`;
+    const story = (result.data ?? []).find((item) => {
+      const sourcePath = normalizeLegacyPath(item.source_url);
+      return sourcePath === requestedPath || item.slug === slug;
+    });
+
+    if (!story) return null;
+
+    const body = plainText(story.body);
+    const summary = story.excerpt?.trim() || body[0] || "Approfondimento sul territorio di Roncegno Terme.";
+
+    return {
+      slug,
+      panelNumber: "Approfondimento",
+      qrCodes: [],
+      title: story.title,
+      eyebrow: story.category?.name ?? "Storie lungo il cammino",
+      summary,
+      body: body.length > 0 ? body : [summary],
+      audioTitle: `Ascolta: ${story.title}`,
+      relatedRouteLabel: "Circuito del Castagno",
+    };
+  } catch (error) {
+    console.error("Directus legacy story error:", error);
+    return null;
+  }
 }
 
 export function generateStaticParams() {
@@ -13,7 +100,7 @@ export function generateStaticParams() {
 
 export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) {
   const { slug } = await params;
-  const panel = getTrailPanel(slug);
+  const panel = getTrailPanel(slug) ?? await getDirectusTrailPanel(slug);
 
   if (!panel) notFound();
 
@@ -25,7 +112,7 @@ export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) 
         <Link href="/" className={styles.brand}>Visit Roncegno</Link>
         <nav className={styles.headerNav}>
           <Link href="/festa-della-castagna">Festa della Castagna</Link>
-          <Link href="/festa-della-castagna#storie">Circuito del Castagno</Link>
+          <Link href="/percorsi/circuito-del-castagno">Circuito del Castagno</Link>
         </nav>
       </header>
 
@@ -57,7 +144,7 @@ export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) 
 
       <section className={styles.contentGrid}>
         <article className={styles.article}>
-          <p className={styles.articleKicker}>Storia e tradizioni locali</p>
+          <p className={styles.articleKicker}>Storia e territorio</p>
           {panel.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
 
           {panel.sections?.map((section) => (
@@ -110,26 +197,30 @@ export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) 
         </section>
       )}
 
-      <section className={styles.metaSection}>
-        <div>
-          <p className={styles.metaLabel}>QR esistenti associati</p>
-          <p>{panel.qrCodes.join(" · ")}</p>
-        </div>
-        {panel.relatedRouteLabel && (
-          <div>
-            <p className={styles.metaLabel}>Percorso</p>
-            <p>{panel.relatedRouteLabel}</p>
-          </div>
-        )}
-      </section>
+      {(panel.qrCodes.length > 0 || panel.relatedRouteLabel) && (
+        <section className={styles.metaSection}>
+          {panel.qrCodes.length > 0 && (
+            <div>
+              <p className={styles.metaLabel}>QR esistenti associati</p>
+              <p>{panel.qrCodes.join(" · ")}</p>
+            </div>
+          )}
+          {panel.relatedRouteLabel && (
+            <div>
+              <p className={styles.metaLabel}>Percorso</p>
+              <p>{panel.relatedRouteLabel}</p>
+            </div>
+          )}
+        </section>
+      )}
 
       <section className={styles.footerCta}>
         <div>
           <p className={styles.eyebrowLight}>Dalla storia al paesaggio</p>
           <h2>Cammina dentro il racconto.</h2>
-          <p>La Festa della Castagna e il Circuito del Castagno collegano il centro di Roncegno ai luoghi, alle persone e alle tradizioni che hanno costruito questo paesaggio.</p>
+          <p>Il Circuito del Castagno collega il centro di Roncegno ai luoghi, alle persone, alle acque e alle tradizioni che hanno costruito questo paesaggio.</p>
         </div>
-        <Link href="/festa-della-castagna#storie" className={styles.ctaButton}>Esplora il Circuito del Castagno</Link>
+        <Link href="/percorsi/circuito-del-castagno" className={styles.ctaButton}>Torna al Circuito del Castagno</Link>
       </section>
     </main>
   );
