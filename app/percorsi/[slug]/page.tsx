@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import RouteMap from "@/components/RouteMap";
+import RouteElevationProfile from "@/components/RouteElevationProfile";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import mobileStyles from "@/components/RouteMobile.module.css";
@@ -163,6 +164,7 @@ export default async function RoutePage({ params }: RoutePageProps) {
               <p>Consulta il tracciato completo, individua partenza e arrivo e orientati lungo il percorso.</p>
             </div>
             <RouteMap gpxText={gpxText} />
+            <RouteElevationProfile gpxText={gpxText} />
           </div>
         </section>
       )}
