@@ -88,7 +88,7 @@ export default async function RoutePage({
         <div className="route-hero-content">
           <Link
             className="route-back"
-            href="/#esperienze"
+            href="/percorsi"
           >
             ← Percorsi
           </Link>
@@ -263,13 +263,18 @@ export default async function RoutePage({
                       <div>
                         <small>
                           {point.place
-                            ? "Luogo"
+                            ? "Luogo collegato"
                             : "Tappa"}
                         </small>
 
                         <h3>
-                          {point.place?.title ??
-                            point.title}
+                          {point.place ? (
+                            <Link href={`/luoghi/${point.place.slug}`}>
+                              {point.place.title}
+                            </Link>
+                          ) : (
+                            point.title
+                          )}
                         </h3>
 
                         {point.description && (
@@ -278,6 +283,12 @@ export default async function RoutePage({
                               point.description
                             }
                           </p>
+                        )}
+
+                        {point.place && (
+                          <Link className="text-link" href={`/luoghi/${point.place.slug}`}>
+                            Apri la scheda del luogo →
+                          </Link>
                         )}
                       </div>
                     </article>
