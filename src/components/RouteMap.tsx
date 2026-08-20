@@ -10,45 +10,33 @@ import {
 
 import "maplibre-gl/dist/maplibre-gl.css";
 
+import {
+  flattenGpxSegments,
+  haversineDistanceKm,
+  parseGpxSegments,
+  thinPoints,
+} from "@/lib/gpx-client";
+import styles from "./RouteMap.module.css";
+
 interface RouteMapProps {
   gpxText: string;
 }
 
-interface RouteCoordinate {
-  longitude: number;
-  latitude: number;
-}
-
-function readPoints(xml: Document, tagName: "trkpt" | "rtept") {
-  return Array.from(xml.getElementsByTagNameNS("*", tagName));
-}
-
-function parseGpx(gpxText: string): RouteCoordinate[] {
-  const parser = new DOMParser();
-  const xml = parser.parseFromString(gpxText, "application/xml");
-
-  if (xml.getElementsByTagName("parsererror").length > 0) {
-    throw new Error("GPX non valido");
-  }
-
-  const trackPoints = readPoints(xml, "trkpt");
-  const routePoints = readPoints(xml, "rtept");
-  const points = trackPoints.length > 0 ? trackPoints : routePoints;
-
-  return points
-    .map((point) => ({
-      latitude: Number(point.getAttribute("lat")),
-      longitude: Number(point.getAttribute("lon")),
-    }))
-    .filter(
-      (point) =>
-        Number.isFinite(point.latitude) &&
-        Number.isFinite(point.longitude)
-    );
+function markerElement(label: string, variant: "start" | "end") {
+  const element = document.createElement("div");
+  element.className = `route-map-marker route-map-marker-${variant}`;
+  element.innerHTML = `
+    <span class="route-map-marker-dot"></span>
+    <span class="route-map-marker-label">${label}</span>
+  `;
+  return element;
 }
 
 export default function RouteMap({ gpxText }: RouteMapProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const overlayRef = useRef<SVGSVGElement | null>(null);
+  const shadowPathRef = useRef<SVGPathElement | null>(null);
+  const routePathRef = useRef<SVGPathElement | null>(null);
   const mapRef = useRef<Map | null>(null);
 
   useEffect(() => {
@@ -56,19 +44,19 @@ export default function RouteMap({ gpxText }: RouteMapProps) {
       return;
     }
 
-    const coordinates = parseGpx(gpxText);
+    const segments = parseGpxSegments(gpxText).filter(
+      (segment) => segment.length >= 2
+    );
+    const allPoints = flattenGpxSegments(segments);
 
-    if (coordinates.length < 2) {
+    if (allPoints.length < 2) {
       console.error("Il GPX non contiene abbastanza punti");
       return;
     }
 
-    const lineCoordinates = coordinates.map(
-      (point) => [point.longitude, point.latitude] as [number, number]
-    );
-
-    const first = lineCoordinates[0];
-    const last = lineCoordinates[lineCoordinates.length - 1];
+    const first = allPoints[0];
+    const last = allPoints[allPoints.length - 1];
+    const isMobile = window.matchMedia("(max-width: 800px)").matches;
 
     const map = new Map({
       container: containerRef.current,
@@ -83,17 +71,6 @@ export default function RouteMap({ gpxText }: RouteMapProps) {
             maxzoom: 19,
             attribution: "© OpenStreetMap contributors",
           },
-          route: {
-            type: "geojson",
-            data: {
-              type: "Feature",
-              properties: {},
-              geometry: {
-                type: "LineString",
-                coordinates: lineCoordinates,
-              },
-            },
-          },
         },
         layers: [
           {
@@ -101,37 +78,9 @@ export default function RouteMap({ gpxText }: RouteMapProps) {
             type: "raster",
             source: "osm-tiles",
           },
-          {
-            id: "route-shadow",
-            type: "line",
-            source: "route",
-            layout: {
-              "line-join": "round",
-              "line-cap": "round",
-            },
-            paint: {
-              "line-color": "#ffffff",
-              "line-width": 9,
-              "line-opacity": 0.94,
-            },
-          },
-          {
-            id: "route-line",
-            type: "line",
-            source: "route",
-            layout: {
-              "line-join": "round",
-              "line-cap": "round",
-            },
-            paint: {
-              "line-color": "#c6532f",
-              "line-width": 6,
-              "line-opacity": 1,
-            },
-          },
         ],
       },
-      center: first,
+      center: [first.longitude, first.latitude],
       zoom: 13,
       minZoom: 10,
       maxZoom: 18,
@@ -151,75 +100,139 @@ export default function RouteMap({ gpxText }: RouteMapProps) {
       "top-right"
     );
 
-    map.on("load", () => {
-      map.setPaintProperty("osm", "raster-saturation", -0.45);
-      map.setPaintProperty("osm", "raster-contrast", -0.08);
-      map.setPaintProperty("osm", "raster-brightness-min", 0.08);
-      map.setPaintProperty("osm", "raster-brightness-max", 0.92);
+    const bounds = new LngLatBounds();
+    allPoints.forEach((point) => {
+      bounds.extend([point.longitude, point.latitude]);
+    });
 
-      const startMarker = document.createElement("div");
-      startMarker.className = "route-map-marker route-map-marker-start";
-      startMarker.innerHTML = `
-        <span class="route-map-marker-dot"></span>
-        <span class="route-map-marker-label">Partenza</span>
-      `;
-
-      new Marker({
-        element: startMarker,
-        anchor: "center",
-      })
-        .setLngLat(first)
-        .addTo(map);
-
-      const deltaLongitude = first[0] - last[0];
-      const deltaLatitude = first[1] - last[1];
-      const distanceBetweenStartAndEnd = Math.sqrt(
-        deltaLongitude * deltaLongitude + deltaLatitude * deltaLatitude
-      );
-
-      if (distanceBetweenStartAndEnd > 0.0002) {
-        const endMarker = document.createElement("div");
-        endMarker.className = "route-map-marker route-map-marker-end";
-        endMarker.innerHTML = `
-          <span class="route-map-marker-dot"></span>
-          <span class="route-map-marker-label">Arrivo</span>
-        `;
-
-        new Marker({
-          element: endMarker,
-          anchor: "center",
-        })
-          .setLngLat(last)
-          .addTo(map);
-      }
-
-      const bounds = lineCoordinates.reduce(
-        (currentBounds, coordinate) => currentBounds.extend(coordinate),
-        new LngLatBounds(first, first)
-      );
+    const fitRoute = () => {
+      if (bounds.isEmpty()) return;
 
       map.fitBounds(bounds, {
-        padding: 70,
+        padding: isMobile ? 36 : 70,
         maxZoom: 16,
         duration: 0,
       });
+    };
+
+    new Marker({
+      element: markerElement("Partenza", "start"),
+      anchor: "center",
+    })
+      .setLngLat([first.longitude, first.latitude])
+      .addTo(map);
+
+    if (haversineDistanceKm(first, last) > 0.025) {
+      new Marker({
+        element: markerElement("Arrivo", "end"),
+        anchor: "center",
+      })
+        .setLngLat([last.longitude, last.latitude])
+        .addTo(map);
+    }
+
+    const maxPointsPerSegment = Math.max(
+      80,
+      Math.floor(700 / Math.max(segments.length, 1))
+    );
+    const displaySegments = segments.map((segment) =>
+      thinPoints(segment, maxPointsPerSegment)
+    );
+
+    const renderRouteOverlay = () => {
+      const container = containerRef.current;
+      const overlay = overlayRef.current;
+      const shadowPath = shadowPathRef.current;
+      const routePath = routePathRef.current;
+
+      if (!container || !overlay || !shadowPath || !routePath) {
+        return;
+      }
+
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+
+      if (width <= 0 || height <= 0) {
+        return;
+      }
+
+      overlay.setAttribute("viewBox", `0 0 ${width} ${height}`);
+
+      const path = displaySegments
+        .map((segment) =>
+          segment
+            .map((point, index) => {
+              const projected = map.project([
+                point.longitude,
+                point.latitude,
+              ]);
+              return `${index === 0 ? "M" : "L"} ${projected.x.toFixed(
+                1
+              )} ${projected.y.toFixed(1)}`;
+            })
+            .join(" ")
+        )
+        .join(" ");
+
+      shadowPath.setAttribute("d", path);
+      routePath.setAttribute("d", path);
+    };
+
+    map.on("load", () => {
+      map.setPaintProperty("osm", "raster-saturation", -0.38);
+      map.setPaintProperty("osm", "raster-contrast", -0.06);
+      map.setPaintProperty("osm", "raster-brightness-min", 0.06);
+      map.setPaintProperty("osm", "raster-brightness-max", 0.94);
+
+      map.resize();
+      fitRoute();
+      renderRouteOverlay();
     });
 
-    const resizeObserver = new ResizeObserver(() => map.resize());
+    // L'overlay SVG viene proiettato usando la stessa trasformazione della
+    // mappa. In questo modo il tracciato resta visibile anche se il browser
+    // non renderizza correttamente un layer GeoJSON WebGL.
+    map.on("render", renderRouteOverlay);
+    map.on("resize", renderRouteOverlay);
+
+    const resizeObserver = new ResizeObserver(() => {
+      map.resize();
+      fitRoute();
+      renderRouteOverlay();
+    });
     resizeObserver.observe(containerRef.current);
+
+    requestAnimationFrame(() => {
+      map.resize();
+      fitRoute();
+      renderRouteOverlay();
+    });
 
     return () => {
       resizeObserver.disconnect();
+      map.off("render", renderRouteOverlay);
+      map.off("resize", renderRouteOverlay);
       map.remove();
       mapRef.current = null;
     };
   }, [gpxText]);
 
   return (
-    <div
-      ref={containerRef}
-      className="route-map"
-      aria-label="Mappa interattiva del percorso"
-    />
+    <div className={styles.wrapper}>
+      <div
+        ref={containerRef}
+        className="route-map"
+        aria-label="Mappa interattiva del percorso"
+      />
+      <svg
+        ref={overlayRef}
+        className={styles.overlay}
+        aria-hidden="true"
+        preserveAspectRatio="none"
+      >
+        <path ref={shadowPathRef} className={styles.routeShadow} />
+        <path ref={routePathRef} className={styles.routeLine} />
+      </svg>
+    </div>
   );
 }
