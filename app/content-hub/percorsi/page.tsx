@@ -14,7 +14,7 @@ const fields: EditorField[] = [
   { name: "slug", label: "Slug URL", required: true, full: true },
   { name: "summary", label: "Descrizione breve", type: "textarea", full: true },
   { name: "description", label: "Descrizione completa", type: "textarea", full: true },
-  { name: "image", label: "ID immagine Directus", full: true, help: "Carica il file dalla sezione Media e incolla qui il suo ID." },
+  { name: "image", label: "Immagine del percorso", type: "media", mediaKind: "image", full: true, help: "Scegli una foto già presente oppure caricane una nuova direttamente da questa scheda." },
   { name: "difficulty", label: "Difficoltà" },
   { name: "distance_km", label: "Distanza (km)", type: "number", step: "0.1" },
   { name: "duration_minutes", label: "Durata (minuti)", type: "number", step: "1" },
@@ -26,7 +26,7 @@ const fields: EditorField[] = [
   { name: "public_transport", label: "Raggiungibile con trasporto pubblico", type: "checkbox" },
   { name: "loop_route", label: "Percorso ad anello", type: "checkbox" },
   { name: "route_highlight", label: "Punto di forza", type: "textarea", full: true },
-  { name: "gpx_file", label: "ID file GPX Directus", full: true, help: "Puoi caricare il GPX dalla sezione Media e incollare qui l'ID del file." },
+  { name: "gpx_file", label: "File GPX", type: "media", mediaKind: "file", full: true, help: "Scegli un GPX esistente oppure caricalo direttamente dalla scheda del percorso." },
 ];
 
 export default async function ContentHubRoutesPage() {
@@ -36,7 +36,7 @@ export default async function ContentHubRoutesPage() {
     <CollectionEditor
       collection="routes"
       title="Percorsi"
-      description="Gestisci schede, dati tecnici, accessibilità e file GPX dei percorsi."
+      description="Gestisci schede, dati tecnici, accessibilità, immagini e file GPX dei percorsi."
       fields={fields}
       previewBase="/percorsi"
     />
