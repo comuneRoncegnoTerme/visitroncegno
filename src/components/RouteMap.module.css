@@ -1,0 +1,47 @@
+.wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.routeShadow,
+.routeLine {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.routeShadow {
+  stroke: rgba(255, 255, 255, 0.96);
+  stroke-width: 10px;
+}
+
+.routeLine {
+  stroke: #c6532f;
+  stroke-width: 5.5px;
+}
+
+.wrapper :global(.maplibregl-control-container) {
+  position: relative;
+  z-index: 4;
+}
+
+@media (max-width: 800px) {
+  .routeShadow {
+    stroke-width: 8px;
+  }
+
+  .routeLine {
+    stroke-width: 4.5px;
+  }
+}
