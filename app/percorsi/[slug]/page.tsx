@@ -5,6 +5,7 @@ import RouteElevationProfile from "@/components/RouteElevationProfile";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import mobileStyles from "@/components/RouteMobile.module.css";
+import storyStyles from "@/components/RouteStories.module.css";
 
 import {
   DIRECTUS_URL,
@@ -339,7 +340,7 @@ export default async function RoutePage({ params }: RoutePageProps) {
       )}
 
       {stories.length > 0 && (
-        <section className="route-stories-section">
+        <section className={`${storyStyles.section} route-stories-section`}>
           <div className="section-shell">
             <div className="route-stories-heading">
               <div>
