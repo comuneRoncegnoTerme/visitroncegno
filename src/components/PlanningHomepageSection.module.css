@@ -1,0 +1,181 @@
+.section {
+  padding: 110px 0;
+  background: var(--cream);
+}
+
+.shell {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 28px;
+  width: min(1400px, 90vw);
+  margin: 0 auto;
+}
+
+.visual {
+  position: relative;
+  min-height: 520px;
+  overflow: hidden;
+  color: white;
+  background: var(--forest-dark);
+}
+
+.image,
+.overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.image {
+  background-image: url('/images/homepage/APT_Valsugana_Roncegno_2025_10_07_Luca_Matassoni_HD_12.jpg');
+  background-position: 58% 57%;
+  background-size: cover;
+  transform: scale(1.015);
+  transition: transform 700ms ease;
+}
+
+.visual:hover .image {
+  transform: scale(1.035);
+}
+
+.overlay {
+  background:
+    linear-gradient(90deg, rgba(7,27,22,.76) 0%, rgba(7,27,22,.38) 48%, rgba(7,27,22,.08) 100%),
+    linear-gradient(0deg, rgba(7,27,22,.48) 0%, transparent 52%);
+}
+
+.copy {
+  position: absolute;
+  inset: auto auto 48px 48px;
+  z-index: 2;
+  max-width: 540px;
+}
+
+.copy p {
+  margin: 0 0 18px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  opacity: .76;
+}
+
+.copy h2 {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(48px, 5vw, 78px);
+  font-weight: 400;
+  line-height: .98;
+  letter-spacing: -.05em;
+}
+
+.copy a {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 30px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid rgba(255,255,255,.72);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.links {
+  align-self: stretch;
+  padding: 18px 34px;
+  background: rgba(255,255,255,.46);
+  border: 1px solid var(--line);
+}
+
+.links a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 118px;
+  padding: 18px 8px;
+  border-bottom: 1px solid var(--line);
+  transition: padding 180ms ease, background 180ms ease;
+}
+
+.links a:last-child {
+  border-bottom: 0;
+}
+
+.links a:hover {
+  padding-right: 0;
+  padding-left: 16px;
+}
+
+.links small {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--orange);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.links strong {
+  font-family: Georgia, serif;
+  font-size: 30px;
+  font-weight: 400;
+}
+
+@media (max-width: 900px) {
+  .section {
+    padding: 70px 0;
+  }
+
+  .shell {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .visual {
+    min-height: 430px;
+  }
+
+  .image {
+    background-position: 64% 56%;
+  }
+
+  .copy {
+    right: 28px;
+    bottom: 32px;
+    left: 28px;
+  }
+
+  .links {
+    padding: 8px 24px;
+  }
+}
+
+@media (max-width: 560px) {
+  .visual {
+    min-height: 360px;
+  }
+
+  .image {
+    background-position: 67% 55%;
+  }
+
+  .copy h2 {
+    font-size: 46px;
+  }
+
+  .links a {
+    min-height: 96px;
+  }
+
+  .links strong {
+    font-size: 25px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image,
+  .visual:hover .image {
+    transform: none;
+    transition: none;
+  }
+}
