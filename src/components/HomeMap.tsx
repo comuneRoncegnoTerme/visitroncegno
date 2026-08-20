@@ -32,6 +32,7 @@ interface HomeMapProps {
 }
 
 type MapFilter = "all" | PlaceCategory;
+type MapTheme = "editorial" | "terrain";
 
 const FILTERS: { value: MapFilter; label: string }[] = [
   { value: "all", label: "Tutto" },
@@ -39,6 +40,11 @@ const FILTERS: { value: MapFilter; label: string }[] = [
   { value: "food", label: "Mangiare" },
   { value: "sleep", label: "Dormire" },
   { value: "services", label: "Servizi" },
+];
+
+const THEMES: { value: MapTheme; label: string }[] = [
+  { value: "editorial", label: "Mappa" },
+  { value: "terrain", label: "Rilievo" },
 ];
 
 function categoryForPlace(place: HomeMapPlace) {
@@ -62,10 +68,45 @@ function placeHref(place: HomeMapPlace) {
   return `/luoghi/${place.slug}`;
 }
 
-export default function HomeMap({ places, compact = false, showFilters = compact }: HomeMapProps) {
+function mapStyle(theme: MapTheme) {
+  if (theme === "terrain") {
+    return {
+      version: 8 as const,
+      sources: {
+        terrain: {
+          type: "raster" as const,
+          tiles: ["https://tile.opentopomap.org/{z}/{x}/{y}.png"],
+          tileSize: 256,
+          minzoom: 0,
+          maxzoom: 17,
+          attribution: "© OpenStreetMap contributors · SRTM | OpenTopoMap",
+        },
+      },
+      layers: [{ id: "terrain", type: "raster" as const, source: "terrain" }],
+    };
+  }
+
+  return {
+    version: 8 as const,
+    sources: {
+      editorial: {
+        type: "raster" as const,
+        tiles: ["https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png"],
+        tileSize: 256,
+        minzoom: 0,
+        maxzoom: 19,
+        attribution: "© OpenStreetMap contributors © CARTO",
+      },
+    },
+    layers: [{ id: "editorial", type: "raster" as const, source: "editorial" }],
+  };
+}
+
+export default function HomeMap({ places, compact = false, showFilters = true }: HomeMapProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<Map | null>(null);
   const [activeFilter, setActiveFilter] = useState<MapFilter>("all");
+  const [mapTheme, setMapTheme] = useState<MapTheme>("editorial");
 
   const visiblePlaces = useMemo(
     () => activeFilter === "all" ? places : places.filter((place) => categoryForPlace(place) === activeFilter),
@@ -82,20 +123,7 @@ export default function HomeMap({ places, compact = false, showFilters = compact
 
     const map = new Map({
       container: containerRef.current,
-      style: {
-        version: 8,
-        sources: {
-          "osm-tiles": {
-            type: "raster",
-            tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
-            tileSize: 256,
-            minzoom: 0,
-            maxzoom: 19,
-            attribution: "© OpenStreetMap contributors",
-          },
-        },
-        layers: [{ id: "osm", type: "raster", source: "osm-tiles" }],
-      },
+      style: mapStyle(mapTheme),
       center: [11.405, 46.047],
       zoom: 13.3,
       attributionControl: false,
@@ -157,19 +185,22 @@ export default function HomeMap({ places, compact = false, showFilters = compact
         offset: isMobile ? 18 : 24,
         closeButton: true,
         closeOnClick: true,
-        maxWidth: isMobile ? "calc(100vw - 44px)" : "320px",
+        maxWidth: isMobile ? "calc(100vw - 36px)" : "330px",
         focusAfterOpen: false,
       }).setDOMContent(popupContent);
 
       markerElement.addEventListener("click", () => {
+        markerElement.classList.add("is-active");
         map.easeTo({
           center: [place.longitude, place.latitude],
           duration: 450,
           padding: isMobile
-            ? { top: 80, right: 24, bottom: 210, left: 24 }
-            : { top: 80, right: 80, bottom: 80, left: 80 },
+            ? { top: 120, right: 24, bottom: 220, left: 24 }
+            : { top: 110, right: 90, bottom: 90, left: 90 },
         });
       });
+
+      popup.on("close", () => markerElement.classList.remove("is-active"));
 
       new Marker({ element: markerElement, anchor: "center" })
         .setLngLat([place.longitude, place.latitude])
@@ -178,10 +209,18 @@ export default function HomeMap({ places, compact = false, showFilters = compact
     });
 
     map.on("load", () => {
-      map.setPaintProperty("osm", "raster-saturation", -0.45);
-      map.setPaintProperty("osm", "raster-contrast", -0.08);
-      map.setPaintProperty("osm", "raster-brightness-min", 0.08);
-      map.setPaintProperty("osm", "raster-brightness-max", 0.92);
+      const rasterLayer = mapTheme === "terrain" ? "terrain" : "editorial";
+
+      if (mapTheme === "editorial") {
+        map.setPaintProperty(rasterLayer, "raster-saturation", -0.22);
+        map.setPaintProperty(rasterLayer, "raster-contrast", -0.05);
+        map.setPaintProperty(rasterLayer, "raster-brightness-min", 0.04);
+        map.setPaintProperty(rasterLayer, "raster-brightness-max", 0.94);
+      } else {
+        map.setPaintProperty(rasterLayer, "raster-saturation", -0.08);
+        map.setPaintProperty(rasterLayer, "raster-contrast", -0.04);
+        map.setPaintProperty(rasterLayer, "raster-brightness-max", 0.96);
+      }
 
       if (!bounds.isEmpty()) {
         if (visiblePlaces.length === 1) {
@@ -189,8 +228,8 @@ export default function HomeMap({ places, compact = false, showFilters = compact
         } else {
           map.fitBounds(bounds, {
             padding: isMobile
-              ? { top: showFilters ? 110 : 70, right: 42, bottom: 70, left: 42 }
-              : { top: showFilters ? 110 : 86, right: 86, bottom: 86, left: 86 },
+              ? { top: showFilters ? 126 : 76, right: 42, bottom: 74, left: 42 }
+              : { top: showFilters ? 118 : 86, right: 86, bottom: 86, left: 86 },
             maxZoom: 14.8,
             duration: 0,
           });
@@ -206,25 +245,42 @@ export default function HomeMap({ places, compact = false, showFilters = compact
       map.remove();
       if (mapRef.current === map) mapRef.current = null;
     };
-  }, [showFilters, visiblePlaces]);
+  }, [mapTheme, showFilters, visiblePlaces]);
 
   return (
     <div className={`${styles.shell}${compact ? ` ${styles.compact}` : ""}`}>
-      {showFilters && (
-        <div className={styles.filters} role="group" aria-label="Filtra i punti sulla mappa">
-          {FILTERS.map((filter) => (
+      <div className={styles.toolbar}>
+        {showFilters && (
+          <div className={styles.filters} role="group" aria-label="Filtra i punti sulla mappa">
+            {FILTERS.map((filter) => (
+              <button
+                type="button"
+                key={filter.value}
+                className={activeFilter === filter.value ? styles.activeFilter : undefined}
+                aria-pressed={activeFilter === filter.value}
+                onClick={() => setActiveFilter(filter.value)}
+              >
+                {filter.label}
+              </button>
+            ))}
+          </div>
+        )}
+
+        <div className={styles.themes} role="group" aria-label="Aspetto della mappa">
+          {THEMES.map((theme) => (
             <button
               type="button"
-              key={filter.value}
-              className={activeFilter === filter.value ? styles.activeFilter : undefined}
-              aria-pressed={activeFilter === filter.value}
-              onClick={() => setActiveFilter(filter.value)}
+              key={theme.value}
+              className={mapTheme === theme.value ? styles.activeTheme : undefined}
+              aria-pressed={mapTheme === theme.value}
+              onClick={() => setMapTheme(theme.value)}
             >
-              {filter.label}
+              {theme.label}
             </button>
           ))}
         </div>
-      )}
+      </div>
+
       <div
         ref={containerRef}
         className="home-map"
