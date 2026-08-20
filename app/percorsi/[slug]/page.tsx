@@ -41,6 +41,26 @@ function humanize(value: string | null) {
   return value.replaceAll("-", " ");
 }
 
+async function loadGpxText(gpxUrl: string | null) {
+  if (!gpxUrl) return null;
+
+  try {
+    const response = await fetch(gpxUrl, {
+      cache: "no-store",
+    });
+
+    if (!response.ok) {
+      console.error(`GPX asset error: ${response.status}`);
+      return null;
+    }
+
+    return await response.text();
+  } catch (error) {
+    console.error("GPX asset error:", error);
+    return null;
+  }
+}
+
 export default async function RoutePage({ params }: RoutePageProps) {
   const { slug } = await params;
   const [route, siteSettings] = await Promise.all([
@@ -53,6 +73,7 @@ export default async function RoutePage({ params }: RoutePageProps) {
   const directusHeroImage = getDirectusAssetUrl(route.image);
   const heroImage = directusHeroImage ?? FALLBACK_ROUTE_IMAGE;
   const gpxUrl = getDirectusAssetUrl(route.gpx_file);
+  const gpxText = await loadGpxText(gpxUrl);
   const duration = formatDuration(route.duration_minutes);
 
   const primaryStats = [
@@ -62,13 +83,19 @@ export default async function RoutePage({ params }: RoutePageProps) {
     route.elevation_gain_m !== null ? ["Dislivello", `+${route.elevation_gain_m} m`] : null,
   ].filter(Boolean) as [string, string][];
 
+  const audience = route.audience
+    ? humanize(route.audience)
+    : route.family_friendly
+      ? "Famiglie"
+      : null;
+
   const secondaryStats = [
-    route.duration_class ? ["Impegno", humanize(route.duration_class)] : null,
-    route.audience ? ["Per chi", humanize(route.audience)] : null,
+    audience ? ["Adatto a", audience] : null,
     route.season ? ["Periodo", humanize(route.season)] : null,
     route.loop_route ? ["Tracciato", "Ad anello"] : null,
-    route.public_transport ? ["Mobilità", "Trasporto pubblico"] : null,
-    route.family_friendly ? ["Ideale per", "Famiglie"] : null,
+    route.public_transport
+      ? ["Come arrivare", "Anche con trasporto pubblico"]
+      : null,
   ].filter(Boolean) as [string, string][];
 
   return (
@@ -125,7 +152,7 @@ export default async function RoutePage({ params }: RoutePageProps) {
         </div>
       </section>
 
-      {gpxUrl && (
+      {gpxText && (
         <section className="route-map-section route-map-section-v2">
           <div className="section-shell">
             <div className="route-map-heading">
@@ -135,7 +162,7 @@ export default async function RoutePage({ params }: RoutePageProps) {
               </div>
               <p>Consulta il tracciato completo, individua partenza e arrivo e orientati lungo il percorso.</p>
             </div>
-            <RouteMap gpxUrl={gpxUrl} />
+            <RouteMap gpxText={gpxText} />
           </div>
         </section>
       )}
@@ -187,8 +214,8 @@ export default async function RoutePage({ params }: RoutePageProps) {
         <section className="route-platforms route-platforms-v2">
           <div className="section-shell route-platform-inner">
             <div>
-              <p className="eyebrow dark">Porta il percorso con te</p>
-              <h2>Continua sull&apos;app che preferisci.</h2>
+              <p className="eyebrow light">Sul telefono</p>
+              <h2>Porta il percorso con te.</h2>
             </div>
             <div className="route-platform-buttons">
               {route.komoot_url && <a href={route.komoot_url} target="_blank" rel="noreferrer" className="button button-dark-outline">Komoot ↗</a>}
