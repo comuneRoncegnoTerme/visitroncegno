@@ -6,12 +6,9 @@ import {
   Map,
   Marker,
   NavigationControl,
-  setWorkerUrl,
 } from "maplibre-gl";
 
 import "maplibre-gl/dist/maplibre-gl.css";
-
-setWorkerUrl("/maplibre-gl-worker.mjs");
 
 interface RouteMapProps {
   gpxText: string;
@@ -59,6 +56,20 @@ export default function RouteMap({ gpxText }: RouteMapProps) {
       return;
     }
 
+    const coordinates = parseGpx(gpxText);
+
+    if (coordinates.length < 2) {
+      console.error("Il GPX non contiene abbastanza punti");
+      return;
+    }
+
+    const lineCoordinates = coordinates.map(
+      (point) => [point.longitude, point.latitude] as [number, number]
+    );
+
+    const first = lineCoordinates[0];
+    const last = lineCoordinates[lineCoordinates.length - 1];
+
     const map = new Map({
       container: containerRef.current,
       style: {
@@ -72,6 +83,17 @@ export default function RouteMap({ gpxText }: RouteMapProps) {
             maxzoom: 19,
             attribution: "© OpenStreetMap contributors",
           },
+          route: {
+            type: "geojson",
+            data: {
+              type: "Feature",
+              properties: {},
+              geometry: {
+                type: "LineString",
+                coordinates: lineCoordinates,
+              },
+            },
+          },
         },
         layers: [
           {
@@ -79,15 +101,47 @@ export default function RouteMap({ gpxText }: RouteMapProps) {
             type: "raster",
             source: "osm-tiles",
           },
+          {
+            id: "route-shadow",
+            type: "line",
+            source: "route",
+            layout: {
+              "line-join": "round",
+              "line-cap": "round",
+            },
+            paint: {
+              "line-color": "#ffffff",
+              "line-width": 9,
+              "line-opacity": 0.94,
+            },
+          },
+          {
+            id: "route-line",
+            type: "line",
+            source: "route",
+            layout: {
+              "line-join": "round",
+              "line-cap": "round",
+            },
+            paint: {
+              "line-color": "#c6532f",
+              "line-width": 6,
+              "line-opacity": 1,
+            },
+          },
         ],
       },
-      center: [11.408, 46.05],
+      center: first,
       zoom: 13,
       minZoom: 10,
       maxZoom: 18,
     });
 
     mapRef.current = map;
+
+    map.on("error", (event) => {
+      console.error("Errore MapLibre:", event.error);
+    });
 
     map.addControl(
       new NavigationControl({
@@ -98,119 +152,64 @@ export default function RouteMap({ gpxText }: RouteMapProps) {
     );
 
     map.on("load", () => {
-      try {
-        map.setPaintProperty("osm", "raster-saturation", -0.45);
-        map.setPaintProperty("osm", "raster-contrast", -0.08);
-        map.setPaintProperty("osm", "raster-brightness-min", 0.08);
-        map.setPaintProperty("osm", "raster-brightness-max", 0.92);
+      map.setPaintProperty("osm", "raster-saturation", -0.45);
+      map.setPaintProperty("osm", "raster-contrast", -0.08);
+      map.setPaintProperty("osm", "raster-brightness-min", 0.08);
+      map.setPaintProperty("osm", "raster-brightness-max", 0.92);
 
-        const coordinates = parseGpx(gpxText);
+      const startMarker = document.createElement("div");
+      startMarker.className = "route-map-marker route-map-marker-start";
+      startMarker.innerHTML = `
+        <span class="route-map-marker-dot"></span>
+        <span class="route-map-marker-label">Partenza</span>
+      `;
 
-        if (coordinates.length < 2) {
-          throw new Error("Il GPX non contiene abbastanza punti");
-        }
+      new Marker({
+        element: startMarker,
+        anchor: "center",
+      })
+        .setLngLat(first)
+        .addTo(map);
 
-        const lineCoordinates = coordinates.map(
-          (point) => [point.longitude, point.latitude] as [number, number]
-        );
+      const deltaLongitude = first[0] - last[0];
+      const deltaLatitude = first[1] - last[1];
+      const distanceBetweenStartAndEnd = Math.sqrt(
+        deltaLongitude * deltaLongitude + deltaLatitude * deltaLatitude
+      );
 
-        map.addSource("route", {
-          type: "geojson",
-          data: {
-            type: "Feature",
-            properties: {},
-            geometry: {
-              type: "LineString",
-              coordinates: lineCoordinates,
-            },
-          },
-        });
-
-        map.addLayer({
-          id: "route-shadow",
-          type: "line",
-          source: "route",
-          layout: {
-            "line-join": "round",
-            "line-cap": "round",
-          },
-          paint: {
-            "line-color": "#ffffff",
-            "line-width": 9,
-            "line-opacity": 0.92,
-          },
-        });
-
-        map.addLayer({
-          id: "route-line",
-          type: "line",
-          source: "route",
-          layout: {
-            "line-join": "round",
-            "line-cap": "round",
-          },
-          paint: {
-            "line-color": "#d66b2c",
-            "line-width": 5,
-            "line-opacity": 1,
-          },
-        });
-
-        const first = lineCoordinates[0];
-        const last = lineCoordinates[lineCoordinates.length - 1];
-
-        const startMarker = document.createElement("div");
-        startMarker.className = "route-map-marker route-map-marker-start";
-        startMarker.innerHTML = `
+      if (distanceBetweenStartAndEnd > 0.0002) {
+        const endMarker = document.createElement("div");
+        endMarker.className = "route-map-marker route-map-marker-end";
+        endMarker.innerHTML = `
           <span class="route-map-marker-dot"></span>
-          <span class="route-map-marker-label">Partenza</span>
+          <span class="route-map-marker-label">Arrivo</span>
         `;
 
         new Marker({
-          element: startMarker,
+          element: endMarker,
           anchor: "center",
         })
-          .setLngLat(first)
+          .setLngLat(last)
           .addTo(map);
-
-        const deltaLongitude = first[0] - last[0];
-        const deltaLatitude = first[1] - last[1];
-        const distanceBetweenStartAndEnd = Math.sqrt(
-          deltaLongitude * deltaLongitude + deltaLatitude * deltaLatitude
-        );
-
-        if (distanceBetweenStartAndEnd > 0.0002) {
-          const endMarker = document.createElement("div");
-          endMarker.className = "route-map-marker route-map-marker-end";
-          endMarker.innerHTML = `
-            <span class="route-map-marker-dot"></span>
-            <span class="route-map-marker-label">Arrivo</span>
-          `;
-
-          new Marker({
-            element: endMarker,
-            anchor: "center",
-          })
-            .setLngLat(last)
-            .addTo(map);
-        }
-
-        const bounds = lineCoordinates.reduce(
-          (currentBounds, coordinate) => currentBounds.extend(coordinate),
-          new LngLatBounds(first, first)
-        );
-
-        map.fitBounds(bounds, {
-          padding: 70,
-          maxZoom: 16,
-          duration: 0,
-        });
-      } catch (error) {
-        console.error("Errore caricamento GPX:", error);
       }
+
+      const bounds = lineCoordinates.reduce(
+        (currentBounds, coordinate) => currentBounds.extend(coordinate),
+        new LngLatBounds(first, first)
+      );
+
+      map.fitBounds(bounds, {
+        padding: 70,
+        maxZoom: 16,
+        duration: 0,
+      });
     });
 
+    const resizeObserver = new ResizeObserver(() => map.resize());
+    resizeObserver.observe(containerRef.current);
+
     return () => {
+      resizeObserver.disconnect();
       map.remove();
       mapRef.current = null;
     };
