@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { getSiteSettings } from "@/lib/directus";
-import { getStoryBySlug, storyParagraphs } from "@/lib/stories";
+import { getStoryByLegacySlug, storyParagraphs } from "@/lib/stories";
 import { getTrailPanel, trailPanels, type TrailPanel } from "@/lib/trail-panels";
 import styles from "./page.module.css";
 
@@ -12,7 +12,7 @@ interface LegacyTrailPageProps {
 }
 
 async function getDirectusTrailPanel(slug: string): Promise<TrailPanel | null> {
-  const story = await getStoryBySlug(slug);
+  const story = await getStoryByLegacySlug(slug);
   if (!story) return null;
 
   const body = storyParagraphs(story.body);
