@@ -72,18 +72,7 @@ function humanize(value: string | null) {
 }
 
 function storyHref(story: RouteStory) {
-  if (story.source_url) {
-    try {
-      const source = new URL(story.source_url, "https://www.visitroncegno.it");
-      if (source.pathname.startsWith("/it/sentieri/")) {
-        return source.pathname;
-      }
-    } catch {
-      // Fall back to the Directus story slug below.
-    }
-  }
-
-  return `/it/sentieri/${story.slug}`;
+  return `/storie/${story.slug}`;
 }
 
 async function loadGpxText(gpxUrl: string | null) {
