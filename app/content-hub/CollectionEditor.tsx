@@ -1,9 +1,10 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
+import MediaField from "./MediaField";
 import styles from "./collection-editor.module.css";
 
-type FieldType = "text" | "textarea" | "number" | "datetime-local" | "checkbox" | "select" | "email" | "url" | "tel";
+type FieldType = "text" | "textarea" | "number" | "datetime-local" | "checkbox" | "select" | "email" | "url" | "tel" | "media";
 
 export type EditorField = {
   name: string;
@@ -13,6 +14,7 @@ export type EditorField = {
   required?: boolean;
   step?: string;
   help?: string;
+  mediaKind?: "image" | "file";
   options?: { label: string; value: string }[];
 };
 
@@ -209,6 +211,20 @@ export default function CollectionEditor({ collection, title, description, field
                     onChange={(event) => setField(field.name, event.target.checked)}
                   />
                   <span>{field.label}</span>
+                  {field.help && <small>{field.help}</small>}
+                </label>
+              );
+            }
+
+            if (field.type === "media") {
+              return (
+                <label key={field.name} className={className}>
+                  <span>{field.label}</span>
+                  <MediaField
+                    value={String(value ?? "")}
+                    kind={field.mediaKind ?? "image"}
+                    onChange={(nextValue) => setField(field.name, nextValue)}
+                  />
                   {field.help && <small>{field.help}</small>}
                 </label>
               );
