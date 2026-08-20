@@ -1,5 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
+import { getSiteSettings } from "@/lib/directus";
 import { getStoryBySlug, storyParagraphs } from "@/lib/stories";
 import { getTrailPanel, trailPanels, type TrailPanel } from "@/lib/trail-panels";
 import styles from "./page.module.css";
@@ -25,6 +28,7 @@ async function getDirectusTrailPanel(slug: string): Promise<TrailPanel | null> {
     body: body.length > 0 ? body : [summary],
     audioTitle: `Ascolta: ${story.title}`,
     relatedRouteLabel: story.route?.title ?? "Sentieri di Roncegno",
+    relatedRouteHref: story.route?.slug ? `/percorsi/${story.route.slug}` : "/percorsi",
   };
 }
 
@@ -34,25 +38,28 @@ export function generateStaticParams() {
 
 export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) {
   const { slug } = await params;
-  const panel = getTrailPanel(slug) ?? await getDirectusTrailPanel(slug);
+  const staticPanel = getTrailPanel(slug);
+  const [settings, directusPanel] = await Promise.all([
+    getSiteSettings(),
+    staticPanel ? Promise.resolve(null) : getDirectusTrailPanel(slug),
+  ]);
+  const panel = staticPanel ?? directusPanel;
 
   if (!panel) notFound();
 
   const isChestnutHistory = slug === "il-castagno-nella-storia-3-1";
+  const routeHref = panel.relatedRouteHref ??
+    (panel.relatedRouteLabel === "Circuito del Castagno" ? "/percorsi/circuito-del-castagno" : "/percorsi");
+  const routeLabel = panel.relatedRouteLabel ?? "Scopri i percorsi";
 
   return (
     <main className={`${styles.page} ${isChestnutHistory ? styles.chestnutPage : ""}`}>
-      <header className={styles.header}>
-        <Link href="/" className={styles.brand}>Visit Roncegno</Link>
-        <nav className={styles.headerNav}>
-          <Link href="/festa-della-castagna">Festa della Castagna</Link>
-          <Link href="/percorsi/circuito-del-castagno">Circuito del Castagno</Link>
-        </nav>
-      </header>
+      <SiteHeader settings={settings} overlay />
 
       <section className={styles.hero}>
         <div className={styles.heroTexture} />
         <div className={styles.heroContent}>
+          <Link href={routeHref} className={styles.backLink}>← {routeLabel}</Link>
           <div className={styles.heroMeta}>
             <p className={styles.eyebrow}>{panel.eyebrow}</p>
             <span className={styles.panelLabel}>Pannello {panel.panelNumber}</span>
@@ -90,16 +97,11 @@ export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) 
         </article>
 
         <aside className={styles.sideColumn}>
-          <div className={styles.audioCard}>
-            <span className={styles.audioIcon}>▶</span>
-            <div>
-              <p className={styles.audioKicker}>Audioguida</p>
-              <h2>{panel.audioTitle}</h2>
-              <p className={styles.audioNote}>
-                Questa pagina è raggiungibile dagli stessi QR già presenti sul territorio. Testi, audio e approfondimenti possono evolvere senza cambiare il codice stampato.
-              </p>
-            </div>
-            <button type="button" className={styles.audioButton} aria-label="Riproduci audioguida">Riproduci</button>
+          <div className={styles.routeCard}>
+            <p className={styles.routeKicker}>Lungo il territorio</p>
+            <h2>Continua il percorso.</h2>
+            <p>Ritrova questa storia nel paesaggio di Roncegno e scopri le altre tappe collegate.</p>
+            <Link href={routeHref}>{routeLabel} →</Link>
           </div>
 
           {isChestnutHistory && (
@@ -131,31 +133,16 @@ export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) 
         </section>
       )}
 
-      {(panel.qrCodes.length > 0 || panel.relatedRouteLabel) && (
-        <section className={styles.metaSection}>
-          {panel.qrCodes.length > 0 && (
-            <div>
-              <p className={styles.metaLabel}>QR esistenti associati</p>
-              <p>{panel.qrCodes.join(" · ")}</p>
-            </div>
-          )}
-          {panel.relatedRouteLabel && (
-            <div>
-              <p className={styles.metaLabel}>Percorso</p>
-              <p>{panel.relatedRouteLabel}</p>
-            </div>
-          )}
-        </section>
-      )}
-
       <section className={styles.footerCta}>
         <div>
           <p className={styles.eyebrowLight}>Dalla storia al paesaggio</p>
           <h2>Cammina dentro il racconto.</h2>
-          <p>Il Circuito del Castagno collega il centro di Roncegno ai luoghi, alle persone, alle acque e alle tradizioni che hanno costruito questo paesaggio.</p>
+          <p>Ogni approfondimento è una porta sul territorio: continua a esplorare i luoghi, i percorsi e le storie di Roncegno.</p>
         </div>
-        <Link href="/percorsi/circuito-del-castagno" className={styles.ctaButton}>Torna al Circuito del Castagno</Link>
+        <Link href={routeHref} className={styles.ctaButton}>Torna a {routeLabel}</Link>
       </section>
+
+      <SiteFooter settings={settings} />
     </main>
   );
 }
