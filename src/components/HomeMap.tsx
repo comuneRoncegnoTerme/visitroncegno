@@ -7,6 +7,7 @@ import {
   Marker,
   NavigationControl,
   Popup,
+  type StyleSpecification,
 } from "maplibre-gl";
 
 import "maplibre-gl/dist/maplibre-gl.css";
@@ -68,13 +69,13 @@ function placeHref(place: HomeMapPlace) {
   return `/luoghi/${place.slug}`;
 }
 
-function mapStyle(theme: MapTheme) {
+function mapStyle(theme: MapTheme): StyleSpecification {
   if (theme === "terrain") {
     return {
-      version: 8 as const,
+      version: 8,
       sources: {
         terrain: {
-          type: "raster" as const,
+          type: "raster",
           tiles: ["https://tile.opentopomap.org/{z}/{x}/{y}.png"],
           tileSize: 256,
           minzoom: 0,
@@ -82,15 +83,15 @@ function mapStyle(theme: MapTheme) {
           attribution: "© OpenStreetMap contributors · SRTM | OpenTopoMap",
         },
       },
-      layers: [{ id: "terrain", type: "raster" as const, source: "terrain" }],
+      layers: [{ id: "terrain", type: "raster", source: "terrain" }],
     };
   }
 
   return {
-    version: 8 as const,
+    version: 8,
     sources: {
       editorial: {
-        type: "raster" as const,
+        type: "raster",
         tiles: ["https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png"],
         tileSize: 256,
         minzoom: 0,
@@ -98,7 +99,7 @@ function mapStyle(theme: MapTheme) {
         attribution: "© OpenStreetMap contributors © CARTO",
       },
     },
-    layers: [{ id: "editorial", type: "raster" as const, source: "editorial" }],
+    layers: [{ id: "editorial", type: "raster", source: "editorial" }],
   };
 }
 
