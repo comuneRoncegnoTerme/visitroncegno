@@ -3,30 +3,47 @@
   z-index: 2;
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  background: #dfe7dc;
 }
 
 .compact {
   min-height: 620px;
 }
 
-.filters {
+.toolbar {
   position: absolute;
   top: 18px;
+  right: 18px;
   left: 18px;
   z-index: 5;
   display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-  max-width: calc(100% - 110px);
-  padding: 7px;
-  background: rgba(250, 249, 245, 0.9);
-  border: 1px solid rgba(22, 61, 50, 0.12);
-  border-radius: 999px;
-  box-shadow: 0 10px 28px rgba(13, 42, 34, 0.14);
-  backdrop-filter: blur(12px);
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  pointer-events: none;
 }
 
-.filters button {
+.filters,
+.themes {
+  display: flex;
+  gap: 7px;
+  padding: 7px;
+  background: rgba(250, 249, 245, 0.91);
+  border: 1px solid rgba(22, 61, 50, 0.12);
+  border-radius: 999px;
+  box-shadow: 0 12px 34px rgba(13, 42, 34, 0.14);
+  backdrop-filter: blur(14px);
+  pointer-events: auto;
+}
+
+.filters {
+  flex-wrap: wrap;
+  max-width: calc(100% - 210px);
+}
+
+.filters button,
+.themes button {
   min-height: 34px;
   padding: 0 13px;
   color: #29483e;
@@ -37,22 +54,40 @@
   font: inherit;
   font-size: 11px;
   font-weight: 700;
-  transition: background 160ms ease, color 160ms ease;
+  white-space: nowrap;
+  transition: background 160ms ease, color 160ms ease, transform 160ms ease;
 }
 
 .filters button:hover,
-.filters button:focus-visible {
+.filters button:focus-visible,
+.themes button:hover,
+.themes button:focus-visible {
   background: rgba(22, 61, 50, 0.08);
 }
 
-.filters button:focus-visible {
+.filters button:focus-visible,
+.themes button:focus-visible {
   outline: 3px solid #d66b2c;
   outline-offset: 2px;
 }
 
-.filters .activeFilter {
+.filters .activeFilter,
+.themes .activeTheme {
   color: #fff;
   background: #163d32;
+}
+
+.themes {
+  flex: 0 0 auto;
+}
+
+.themes::before {
+  align-self: center;
+  width: 1px;
+  height: 18px;
+  margin: 0 2px;
+  content: "";
+  background: rgba(22, 61, 50, 0.14);
 }
 
 .srStatus {
@@ -67,10 +102,39 @@
   border: 0;
 }
 
+.shell :global(.home-map) {
+  width: 100%;
+  height: 100%;
+  min-height: 620px;
+  filter: saturate(0.92) contrast(0.98);
+}
+
+.shell :global(.maplibregl-canvas) {
+  outline: none;
+}
+
+.shell :global(.maplibregl-ctrl-top-right) {
+  top: 72px;
+  right: 18px;
+}
+
+.shell :global(.maplibregl-ctrl-group) {
+  overflow: hidden;
+  border: 1px solid rgba(22, 61, 50, 0.12);
+  border-radius: 14px;
+  box-shadow: 0 10px 26px rgba(13, 42, 34, 0.12);
+}
+
+.shell :global(.maplibregl-ctrl-group button) {
+  width: 38px;
+  height: 38px;
+  background-color: rgba(250, 249, 245, 0.94);
+}
+
 .shell :global(.roncegno-map-marker) {
   position: relative;
-  width: 44px;
-  height: 44px;
+  width: 46px;
+  height: 46px;
   padding: 0;
   cursor: pointer;
   background: transparent;
@@ -82,24 +146,25 @@
 
 .shell :global(.roncegno-map-marker)::before {
   position: absolute;
-  inset: 7px;
+  inset: 6px;
   content: "";
-  background: #f2efe6;
-  border: 1px solid rgba(19, 57, 45, 0.45);
+  background: #fbfaf6;
+  border: 1px solid rgba(19, 57, 45, 0.32);
   border-radius: 50%;
   box-shadow:
-    0 4px 16px rgba(16, 43, 34, 0.24),
-    0 0 0 5px rgba(242, 239, 230, 0.28);
+    0 8px 22px rgba(16, 43, 34, 0.24),
+    0 0 0 5px rgba(250, 249, 245, 0.38);
   transition: transform 180ms ease, box-shadow 180ms ease;
 }
 
 .shell :global(.roncegno-map-marker)::after {
   position: absolute;
-  inset: 17px;
+  inset: 16px;
   content: "";
   background: #d66a39;
   border-radius: 50%;
   pointer-events: none;
+  transition: transform 180ms ease;
 }
 
 .shell :global(.roncegno-map-marker-food)::after {
@@ -115,11 +180,16 @@
 }
 
 .shell :global(.roncegno-map-marker:hover)::before,
-.shell :global(.roncegno-map-marker:focus-visible)::before {
-  transform: scale(1.12);
+.shell :global(.roncegno-map-marker:focus-visible)::before,
+.shell :global(.roncegno-map-marker.is-active)::before {
+  transform: scale(1.13);
   box-shadow:
-    0 8px 24px rgba(16, 43, 34, 0.3),
-    0 0 0 7px rgba(242, 239, 230, 0.34);
+    0 10px 28px rgba(16, 43, 34, 0.3),
+    0 0 0 8px rgba(250, 249, 245, 0.44);
+}
+
+.shell :global(.roncegno-map-marker.is-active)::after {
+  transform: scale(1.35);
 }
 
 .shell :global(.roncegno-map-marker:focus-visible) {
@@ -127,32 +197,124 @@
   outline-offset: 2px;
 }
 
+.shell :global(.maplibregl-popup-content) {
+  overflow: hidden;
+  padding: 0;
+  background: #f6f2e9;
+  border: 1px solid rgba(22, 61, 50, 0.12);
+  border-radius: 18px;
+  box-shadow: 0 24px 70px rgba(13, 42, 34, 0.23);
+}
+
+.shell :global(.maplibregl-popup-tip) {
+  border-top-color: #f6f2e9;
+  border-bottom-color: #f6f2e9;
+}
+
+.shell :global(.roncegno-map-popup) {
+  width: 320px;
+}
+
+.shell :global(.roncegno-map-popup img) {
+  display: block;
+  width: 100%;
+  height: 136px;
+  object-fit: cover;
+}
+
+.shell :global(.roncegno-map-popup-content) {
+  padding: 18px 20px 20px;
+}
+
+.shell :global(.roncegno-map-popup-content span) {
+  display: block;
+  margin-bottom: 8px;
+  color: #c45f2d;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.shell :global(.roncegno-map-popup-content strong) {
+  display: block;
+  color: #17201d;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.08;
+}
+
+.shell :global(.roncegno-map-popup-content p) {
+  margin: 12px 0 0;
+  color: #59615d;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.shell :global(.roncegno-map-popup-content a) {
+  display: inline-flex;
+  margin-top: 16px;
+  padding-bottom: 4px;
+  color: #163d32;
+  border-bottom: 1px solid rgba(22, 61, 50, 0.45);
+  font-size: 12px;
+  font-weight: 800;
+}
+
 .shell :global(.maplibregl-popup-close-button) {
   z-index: 2;
+  top: 9px;
+  right: 9px;
   width: 34px;
   height: 34px;
   color: #163d32;
-  background: rgba(250, 249, 245, 0.92);
+  background: rgba(250, 249, 245, 0.94);
+  border: 1px solid rgba(22, 61, 50, 0.1);
   border-radius: 50%;
-  font-size: 22px;
+  font-size: 21px;
+  line-height: 1;
+  box-shadow: 0 5px 16px rgba(13, 42, 34, 0.12);
 }
 
 .mobileHint {
   display: none;
 }
 
-@media (max-width: 760px) {
-  .shell,
-  .compact {
-    min-height: 500px;
+@media (max-width: 900px) {
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .filters {
+    max-width: none;
+  }
+
+  .themes {
+    align-self: flex-end;
+  }
+
+  .shell :global(.maplibregl-ctrl-top-right) {
+    top: 118px;
+  }
+}
+
+@media (max-width: 760px) {
+  .shell,
+  .compact {
+    min-height: 520px;
+  }
+
+  .toolbar {
     top: 12px;
     right: 12px;
     left: 12px;
+    gap: 8px;
+  }
+
+  .filters {
     flex-wrap: nowrap;
-    max-width: none;
     overflow-x: auto;
     padding: 6px;
     border-radius: 16px;
@@ -163,18 +325,28 @@
     display: none;
   }
 
-  .filters button {
+  .filters button,
+  .themes button {
     flex: 0 0 auto;
     min-height: 38px;
     padding: 0 14px;
   }
 
+  .themes {
+    padding: 5px;
+    border-radius: 14px;
+  }
+
+  .themes::before {
+    display: none;
+  }
+
   .shell :global(.home-map) {
-    min-height: 500px;
+    min-height: 520px;
   }
 
   .shell :global(.maplibregl-ctrl-top-right) {
-    top: 68px;
+    top: 114px;
     right: 10px;
   }
 
@@ -184,23 +356,23 @@
   }
 
   .shell :global(.maplibregl-popup) {
-    max-width: calc(100vw - 36px) !important;
+    max-width: calc(100vw - 30px) !important;
   }
 
   .shell :global(.roncegno-map-popup) {
-    width: min(330px, calc(100vw - 44px));
+    width: min(340px, calc(100vw - 38px));
   }
 
   .shell :global(.roncegno-map-popup img) {
-    height: 118px;
+    height: 128px;
   }
 
   .shell :global(.roncegno-map-popup-content) {
-    padding: 15px 17px 17px;
+    padding: 16px 18px 18px;
   }
 
   .shell :global(.roncegno-map-popup-content strong) {
-    font-size: 21px;
+    font-size: 22px;
   }
 
   .mobileHint {
@@ -227,7 +399,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   .shell :global(.roncegno-map-marker)::before,
-  .filters button {
+  .shell :global(.roncegno-map-marker)::after,
+  .filters button,
+  .themes button {
     transition: none;
   }
 }
