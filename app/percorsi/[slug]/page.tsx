@@ -26,6 +26,23 @@ interface PointPlaceMedia {
   map_label: string | null;
 }
 
+interface RouteStory {
+  id: number;
+  sort: number | null;
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  body: string | null;
+  image: string | null;
+  featured: boolean;
+  source_url: string | null;
+  source_label: string | null;
+  category?: {
+    id: number;
+    name: string;
+  } | null;
+}
+
 const FALLBACK_ROUTE_IMAGE =
   "/images/homepage/APT_Valsugana_Roncegno_2025_10_07_Luca_Matassoni_HD_12.jpg";
 
@@ -110,6 +127,54 @@ async function loadPointPlaceMedia(points: RoutePoint[] | undefined) {
   }
 }
 
+async function loadRouteStories(routeId: number) {
+  const params = new URLSearchParams();
+  params.set("filter[status][_eq]", "published");
+  params.set("filter[route][_eq]", String(routeId));
+  params.set("sort", "sort");
+  params.set("limit", "100");
+  params.set(
+    "fields",
+    [
+      "id",
+      "sort",
+      "title",
+      "slug",
+      "excerpt",
+      "body",
+      "image",
+      "featured",
+      "source_url",
+      "source_label",
+      "category.id",
+      "category.name",
+    ].join(",")
+  );
+
+  const token = process.env.DIRECTUS_TOKEN;
+
+  try {
+    const response = await fetch(
+      `${DIRECTUS_URL}/items/stories?${params.toString()}`,
+      {
+        cache: "no-store",
+        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+      }
+    );
+
+    if (!response.ok) {
+      console.error(`Directus route stories error: ${response.status}`);
+      return [] as RouteStory[];
+    }
+
+    const result = (await response.json()) as { data?: RouteStory[] };
+    return result.data ?? [];
+  } catch (error) {
+    console.error("Directus route stories error:", error);
+    return [] as RouteStory[];
+  }
+}
+
 export default async function RoutePage({ params }: RoutePageProps) {
   const { slug } = await params;
   const [route, siteSettings] = await Promise.all([
@@ -119,8 +184,9 @@ export default async function RoutePage({ params }: RoutePageProps) {
 
   if (!route) notFound();
 
-  const [pointPlaceMedia] = await Promise.all([
+  const [pointPlaceMedia, stories] = await Promise.all([
     loadPointPlaceMedia(route.points),
+    loadRouteStories(route.id),
   ]);
 
   const directusHeroImage = getDirectusAssetUrl(route.image);
@@ -265,6 +331,53 @@ export default async function RoutePage({ params }: RoutePageProps) {
                   <Link className="route-point-link" href={href} key={point.id}>{card}</Link>
                 ) : (
                   <div key={point.id}>{card}</div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {stories.length > 0 && (
+        <section className="route-stories-section">
+          <div className="section-shell">
+            <div className="route-stories-heading">
+              <div>
+                <p className="eyebrow light">Storie lungo il cammino</p>
+                <h2>Capire il territorio<br />mentre lo attraversi.</h2>
+              </div>
+              <p>Approfondimenti su natura, memoria, tradizioni e paesaggio legati direttamente a questo percorso.</p>
+            </div>
+
+            <div className="route-stories-grid">
+              {stories.map((story, index) => {
+                const storyImage = getDirectusAssetUrl(story.image);
+                const storyClass = story.featured
+                  ? "route-story-card route-story-card-featured"
+                  : "route-story-card";
+
+                return (
+                  <article className={storyClass} key={story.id}>
+                    {storyImage && (
+                      <div
+                        className="route-story-image"
+                        style={{ backgroundImage: `url('${storyImage}')` }}
+                      />
+                    )}
+                    <div className="route-story-copy">
+                      <div className="route-story-meta">
+                        <span>{String(index + 1).padStart(2, "0")}</span>
+                        <small>{story.category?.name ?? "Approfondimento"}</small>
+                      </div>
+                      <h3>{story.title}</h3>
+                      {story.excerpt && <p>{story.excerpt}</p>}
+                      {story.source_url && (
+                        <a href={story.source_url} target="_blank" rel="noreferrer">
+                          {story.source_label ?? "Fonte"} ↗
+                        </a>
+                      )}
+                    </div>
+                  </article>
                 );
               })}
             </div>
