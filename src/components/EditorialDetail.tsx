@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getDirectusAssetUrl, getSiteSettings } from "@/lib/directus";
 import { getEditorialList, plainText, type EditorialItem } from "@/lib/editorial";
+import { getRoutesForPlace } from "@/lib/place-routes";
 import { placeCategory } from "@/lib/place-taxonomy";
 import EditorialHeader from "./EditorialHeader";
 import HomeMap from "./HomeMap";
@@ -42,9 +43,10 @@ function formatDateTime(value?: string | null) {
 }
 
 export default async function EditorialDetail({ item, type }: Props) {
-  const [settings, relatedItems] = await Promise.all([
+  const [settings, relatedItems, relatedRoutes] = await Promise.all([
     getSiteSettings(),
     getEditorialList(type === "place" ? "places" : "events"),
+    type === "place" ? getRoutesForPlace(item.id) : Promise.resolve([]),
   ]);
 
   const directusImage = getDirectusAssetUrl(item.image);
@@ -138,6 +140,35 @@ export default async function EditorialDetail({ item, type }: Props) {
                 mapIcon: item.map_icon ?? null,
               }]}
             />
+          </div>
+        </section>
+      )}
+
+      {type === "place" && relatedRoutes.length > 0 && (
+        <section className={styles.relatedEditorial}>
+          <div className={styles.sectionHeading}>
+            <div><p className={styles.kicker}>Da qui puoi partire</p><h2>Percorsi collegati a questo luogo.</h2></div>
+            <Link href="/percorsi">Vedi tutti i percorsi →</Link>
+          </div>
+          <div className={styles.relatedGrid}>
+            {relatedRoutes.slice(0, 3).map((route) => {
+              const routeImage = getDirectusAssetUrl(route.image) ?? FALLBACK_HERO;
+              const routeMeta = [
+                route.category?.name ?? "Percorso",
+                route.distance_km !== null ? `${route.distance_km} km` : null,
+              ].filter(Boolean).join(" · ");
+
+              return (
+                <Link className={styles.relatedCard} key={route.id} href={`/percorsi/${route.slug}`}>
+                  <div className={styles.relatedImage} style={{ backgroundImage: `url('${routeImage}')` }} />
+                  <div>
+                    <small>{routeMeta}</small>
+                    <strong>{route.title}</strong>
+                    {route.summary && <p>{route.summary}</p>}
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </section>
       )}
