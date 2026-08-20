@@ -12,6 +12,19 @@ interface StoryPageProps {
 
 const FALLBACK_IMAGE = "/images/hero/roncegno-hero.jpg";
 
+function publicSourceUrl(value: string | null) {
+  if (!value) return null;
+
+  try {
+    const url = new URL(value);
+    const host = url.hostname.replace(/^www\./, "").toLowerCase();
+    if (host === "visitroncegno.it") return null;
+    return url.toString();
+  } catch {
+    return null;
+  }
+}
+
 export default async function StoryPage({ params }: StoryPageProps) {
   const { slug } = await params;
   const [story, settings] = await Promise.all([
@@ -26,6 +39,7 @@ export default async function StoryPage({ params }: StoryPageProps) {
   const paragraphs = storyParagraphs(story.body);
   const routeHref = story.route?.slug ? `/percorsi/${story.route.slug}` : "/percorsi";
   const routeLabel = story.route?.title ?? "Scopri i percorsi";
+  const sourceUrl = publicSourceUrl(story.source_url);
 
   return (
     <main className={styles.page}>
@@ -61,10 +75,10 @@ export default async function StoryPage({ params }: StoryPageProps) {
               <Link href={routeHref}>{routeLabel} →</Link>
             </div>
 
-            {story.source_url && (
+            {sourceUrl && (
               <div className={styles.sourceCard}>
                 <small>Fonte e approfondimenti</small>
-                <a href={story.source_url} target="_blank" rel="noreferrer">
+                <a href={sourceUrl} target="_blank" rel="noreferrer">
                   {story.source_label ?? "Consulta la fonte"} ↗
                 </a>
               </div>
