@@ -12,7 +12,7 @@ const fields: EditorField[] = [
   { name: "title", label: "Titolo", required: true, full: true },
   { name: "slug", label: "Slug URL", required: true, full: true, help: "Viene proposto automaticamente quando crei un nuovo evento." },
   { name: "summary", label: "Descrizione breve", type: "textarea", full: true },
-  { name: "image", label: "ID immagine Directus", full: true, help: "Carica o scegli il file dalla sezione Media e incolla qui il suo ID." },
+  { name: "image", label: "Immagine", type: "media", mediaKind: "image", full: true, help: "Scegli una foto già presente oppure caricane una nuova direttamente da questa scheda." },
   { name: "start_date", label: "Inizio", type: "datetime-local", required: true },
   { name: "end_date", label: "Fine", type: "datetime-local" },
   { name: "all_day", label: "Evento tutto il giorno", type: "checkbox" },
