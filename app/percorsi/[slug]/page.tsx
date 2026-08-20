@@ -14,6 +14,7 @@ import {
   getSiteSettings,
   type RoutePoint,
 } from "@/lib/directus";
+import { getLegacyStoryPath } from "@/lib/stories";
 
 interface RoutePageProps {
   params: Promise<{ slug: string }>;
@@ -72,7 +73,7 @@ function humanize(value: string | null) {
 }
 
 function storyHref(story: RouteStory) {
-  return `/storie/${story.slug}`;
+  return getLegacyStoryPath(story) ?? `/storie/${story.slug}`;
 }
 
 async function loadGpxText(gpxUrl: string | null) {
