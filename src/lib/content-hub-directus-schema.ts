@@ -1,25 +1,19 @@
-import { DIRECTUS_URL } from "@/lib/directus";
+import { directusFetch } from "@/lib/directus-client";
 
 export async function getDirectusCollectionFields(
-  collection: string,
-  token: string
+  collection: string
 ): Promise<string[] | null> {
-  const response = await fetch(`${DIRECTUS_URL}/fields/${collection}`, {
-    headers: { Authorization: `Bearer ${token}` },
-    cache: "no-store",
+  const response = await directusFetch(`/fields/${collection}`, {
+    authenticated: true,
   });
 
-  if (!response.ok) {
-    return null;
-  }
+  if (!response.ok) return null;
 
   const result = (await response.json().catch(() => null)) as
     | { data?: Array<{ field?: string }> }
     | null;
 
-  if (!Array.isArray(result?.data)) {
-    return null;
-  }
+  if (!Array.isArray(result?.data)) return null;
 
   return result.data
     .map((field) => field.field)
