@@ -1,6 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { DIRECTUS_URL } from "@/lib/directus";
-import { getContentHubSession } from "@/lib/content-hub-auth";
+import {
+  contentHubDirectusFetch,
+  contentHubUnavailableResponse,
+  logContentHubUpstreamError,
+  readJsonSafely,
+  requireContentHubSession,
+  unauthorizedContentHubResponse,
+  upstreamFailureResponse,
+} from "@/lib/content-hub-api";
 import { isContentHubCollection, sanitizeContentHubPayload } from "@/lib/content-hub-collections";
 import { getDirectusCollectionFields } from "@/lib/content-hub-directus-schema";
 
@@ -8,14 +15,7 @@ export async function PATCH(
   request: NextRequest,
   context: { params: Promise<{ collection: string; id: string }> }
 ) {
-  if (!(await getContentHubSession())) {
-    return NextResponse.json({ error: "Non autorizzato" }, { status: 401 });
-  }
-
-  const token = process.env.DIRECTUS_TOKEN;
-  if (!token) {
-    return NextResponse.json({ error: "DIRECTUS_TOKEN non configurato" }, { status: 503 });
-  }
+  if (!(await requireContentHubSession())) return unauthorizedContentHubResponse();
 
   const { collection, id } = await context.params;
   if (!isContentHubCollection(collection) || !/^\d+$/.test(id)) {
@@ -27,34 +27,34 @@ export async function PATCH(
     return NextResponse.json({ error: "Payload non valido" }, { status: 400 });
   }
 
-  const directusFields = await getDirectusCollectionFields(collection, token);
-  const payload = sanitizeContentHubPayload(
-    collection,
-    body as Record<string, unknown>,
-    directusFields ?? undefined
-  );
+  try {
+    const token = process.env.DIRECTUS_TOKEN?.trim();
+    if (!token) return contentHubUnavailableResponse();
 
-  if (Object.keys(payload).length === 0) {
-    return NextResponse.json({ error: "Nessuna modifica ricevuta" }, { status: 400 });
-  }
-
-  const response = await fetch(`${DIRECTUS_URL}/items/${collection}/${id}`, {
-    method: "PATCH",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-    cache: "no-store",
-  });
-  const result = await response.json().catch(() => null);
-
-  if (!response.ok) {
-    return NextResponse.json(
-      { error: "Directus ha rifiutato la modifica", details: result },
-      { status: response.status }
+    const directusFields = await getDirectusCollectionFields(collection, token);
+    const payload = sanitizeContentHubPayload(
+      collection,
+      body as Record<string, unknown>,
+      directusFields ?? undefined
     );
-  }
 
-  return NextResponse.json({ ok: true, data: result?.data ?? result });
+    if (Object.keys(payload).length === 0) {
+      return NextResponse.json({ error: "Nessuna modifica ricevuta" }, { status: 400 });
+    }
+
+    const response = await contentHubDirectusFetch(`/items/${collection}/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    if (!response.ok) {
+      return upstreamFailureResponse("update-item", response, { collection, id });
+    }
+
+    const result = await readJsonSafely(response);
+    return NextResponse.json({ ok: true, data: result?.data ?? result });
+  } catch (error) {
+    logContentHubUpstreamError("update-item", error, { collection, id });
+    return contentHubUnavailableResponse();
+  }
 }
