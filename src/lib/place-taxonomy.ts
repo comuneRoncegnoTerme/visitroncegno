@@ -22,11 +22,11 @@ export function placeCategory(place: PlaceTaxonomyInput): PlaceCategory {
     return "food";
   }
 
-  if (["hotel", "b&b", "bed", "agritur", "allogg", "ospital", "dormire", "appartament"].some((term) => label.includes(term))) {
+  if (["hotel", "b&b", "bed", "agritur", "allogg", "ospital", "dormire", "appartament", "campegg"].some((term) => label.includes(term))) {
     return "sleep";
   }
 
-  if (["parchegg", "servizio", "info", "farmacia", "stazione"].some((term) => label.includes(term))) {
+  if (["parchegg", "servizio", "info", "farmacia", "stazione", "municip", "ufficio", "trasporto"].some((term) => label.includes(term))) {
     return "services";
   }
 
@@ -39,4 +39,8 @@ export function isEatingPlace(place: PlaceTaxonomyInput) {
 
 export function isSleepingPlace(place: PlaceTaxonomyInput) {
   return placeCategory(place) === "sleep";
+}
+
+export function isServicePlace(place: PlaceTaxonomyInput) {
+  return placeCategory(place) === "services";
 }

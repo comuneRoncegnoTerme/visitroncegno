@@ -7,14 +7,27 @@ import {
   getDirectusAssetUrl,
   getMapPlaces,
   getSiteSettings,
-  type MapPlace,
 } from "@/lib/directus";
-import { isEatingPlace, isSleepingPlace } from "@/lib/place-taxonomy";
+import { getEditorialList, type EditorialItem } from "@/lib/editorial";
+import {
+  isEatingPlace,
+  isServicePlace,
+  isSleepingPlace,
+} from "@/lib/place-taxonomy";
 import styles from "./page.module.css";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Organizza la visita | Visit Roncegno",
   description: "Dove dormire, dove mangiare, come arrivare e servizi utili per vivere Roncegno Terme.",
+};
+
+const OFFICIAL_TRAVEL_LINKS = {
+  valsugana: "https://www.visitvalsugana.it/it/come-arrivare/",
+  trentinoTrasporti: "https://www.trentinotrasporti.it/it/",
+  railway: "https://www.trentinotrasporti.it/it/viaggia-con-noi/ferrovia?app_v2=true%2F",
+  muoversi: "https://www.trentinotrasporti.it/it/viaggia-con-noi/app-muoversi",
 };
 
 function ArrowIcon() {
@@ -25,7 +38,7 @@ function ArrowIcon() {
   );
 }
 
-function PlaceStrip({ places, emptyText }: { places: MapPlace[]; emptyText: string }) {
+function PlaceStrip({ places, emptyText }: { places: EditorialItem[]; emptyText: string }) {
   if (places.length === 0) {
     return <p className={styles.empty}>{emptyText}</p>;
   }
@@ -38,7 +51,7 @@ function PlaceStrip({ places, emptyText }: { places: MapPlace[]; emptyText: stri
           <Link className={styles.placeCard} href={`/luoghi/${place.slug}`} key={place.id}>
             <div className={styles.placeImage} style={{ backgroundImage: image ? `url('${image}')` : undefined }} />
             <div className={styles.placeCopy}>
-              <small>{place.map_label ?? "Roncegno Terme"}</small>
+              <small>{place.map_label ?? place.category?.name ?? "Roncegno Terme"}</small>
               <strong>{place.title}</strong>
               {place.summary && <p>{place.summary}</p>}
               <span>Scopri <ArrowIcon /></span>
@@ -51,9 +64,10 @@ function PlaceStrip({ places, emptyText }: { places: MapPlace[]; emptyText: stri
 }
 
 export default async function OrganizzaLaVisitaPage() {
-  const [siteSettings, mapPlaces] = await Promise.all([
+  const [siteSettings, mapPlaces, allPlaces] = await Promise.all([
     getSiteSettings(),
     getMapPlaces(),
+    getEditorialList("places"),
   ]);
 
   const placesWithCoordinates = mapPlaces
@@ -70,8 +84,9 @@ export default async function OrganizzaLaVisitaPage() {
       mapIcon: place.map_icon,
     }));
 
-  const sleeping = mapPlaces.filter(isSleepingPlace);
-  const eating = mapPlaces.filter(isEatingPlace);
+  const sleeping = allPlaces.filter(isSleepingPlace);
+  const eating = allPlaces.filter(isEatingPlace);
+  const services = allPlaces.filter(isServicePlace);
 
   return (
     <main className={styles.page}>
@@ -82,13 +97,13 @@ export default async function OrganizzaLaVisitaPage() {
           <p className={styles.eyebrow}>Pianifica il soggiorno</p>
           <h1>Organizza la tua visita.</h1>
           <p className={styles.lead}>
-            Dormire, mangiare, arrivare e orientarsi sul territorio: tutte le informazioni pratiche in un unico punto, senza rimbalzare tra sezioni diverse del sito.
+            Trova dove dormire e mangiare, orientati sulla mappa e raccogli in un solo posto le informazioni utili per vivere Roncegno Terme con semplicità.
           </p>
           <nav className={styles.jumpNav} aria-label="Sezioni della pagina">
             <a href="#dormire">Dormire</a>
             <a href="#mangiare">Mangiare</a>
-            <a href="#mappa-visita">Mappa</a>
             <a href="#come-arrivare">Come arrivare</a>
+            <a href="#mappa-visita">Mappa</a>
             <a href="#servizi">Servizi</a>
           </nav>
         </div>
@@ -99,25 +114,25 @@ export default async function OrganizzaLaVisitaPage() {
           <a href="#dormire" className={styles.gatewayCard}>
             <span>01 · Ospitalità</span>
             <strong>Dove dormire</strong>
-            <p>Hotel, B&B, agriturismi, appartamenti e altre strutture ricettive.</p>
+            <p>Strutture ricettive e soluzioni per fermarsi a Roncegno e nei dintorni.</p>
             <ArrowIcon />
           </a>
           <a href="#mangiare" className={styles.gatewayCard}>
             <span>02 · Sapori</span>
             <strong>Dove mangiare</strong>
-            <p>Ristoranti, pizzerie, bar e luoghi dove scoprire i sapori locali.</p>
+            <p>Ristoranti, pizzerie, bar e locali per una pausa o una cena sul territorio.</p>
             <ArrowIcon />
           </a>
           <a href="#come-arrivare" className={styles.gatewayCard}>
             <span>03 · Mobilità</span>
             <strong>Come arrivare</strong>
-            <p>Indicazioni essenziali per raggiungere Roncegno e muoversi sul territorio.</p>
+            <p>Auto, treno, autobus e indicazioni utili per pianificare il viaggio.</p>
             <ArrowIcon />
           </a>
           <a href="#servizi" className={styles.gatewayCard}>
             <span>04 · Informazioni</span>
             <strong>Servizi utili</strong>
-            <p>Parcheggi, informazioni, servizi e riferimenti utili durante il soggiorno.</p>
+            <p>Parcheggi, punti informativi e altri riferimenti pratici durante la visita.</p>
             <ArrowIcon />
           </a>
         </div>
@@ -126,42 +141,99 @@ export default async function OrganizzaLaVisitaPage() {
       <section className={styles.contentSection} id="dormire">
         <div className={styles.sectionHeading}>
           <div><p className={styles.eyebrow}>Ospitalità</p><h2>Dove dormire</h2></div>
-          <p>Le strutture pubblicate nel Content Hub compaiono qui automaticamente quando sono classificate come hotel, B&B, agriturismo, appartamento o altra forma di ospitalità.</p>
+          <p>Una selezione delle strutture ricettive pubblicate sul territorio. Apri una scheda per trovare descrizione, contatti e informazioni disponibili.</p>
         </div>
-        <PlaceStrip places={sleeping} emptyText="Le strutture ricettive saranno pubblicate qui dal Content Hub." />
+        <PlaceStrip places={sleeping} emptyText="Le strutture ricettive saranno disponibili presto." />
       </section>
 
       <section className={`${styles.contentSection} ${styles.alt}`} id="mangiare">
         <div className={styles.sectionHeading}>
           <div><p className={styles.eyebrow}>Sapori</p><h2>Dove mangiare</h2></div>
-          <p>Ristoranti e locali entrano nella stessa struttura dei luoghi: una sola scheda alimenta pagina, mappa e questa landing.</p>
+          <p>Locali e ristorazione a Roncegno Terme: consulta le schede per scegliere dove fermarti durante la giornata.</p>
         </div>
-        <PlaceStrip places={eating} emptyText="Ristoranti e locali saranno pubblicati qui dal Content Hub." />
+        <PlaceStrip places={eating} emptyText="Ristoranti e locali saranno disponibili presto." />
+      </section>
+
+      <section className={styles.travelSection} id="come-arrivare">
+        <div className={styles.travelHeading}>
+          <div>
+            <p className={styles.eyebrow}>Come arrivare</p>
+            <h2>Raggiungere Roncegno.</h2>
+          </div>
+          <p>Le indicazioni qui sotto restano volutamente essenziali. Per orari, coincidenze e variazioni del servizio consulta sempre i canali ufficiali prima della partenza.</p>
+        </div>
+
+        <div className={styles.travelGrid}>
+          <article className={styles.travelCard}>
+            <span>01</span>
+            <h3>In auto</h3>
+            <p>Roncegno Terme si trova in Valsugana ed è raggiungibile attraverso la SS47. Per chi arriva dall’autostrada A22, il collegamento indicato dall’APT Valsugana passa da Trento Sud verso la Valsugana.</p>
+            <a href={OFFICIAL_TRAVEL_LINKS.valsugana} target="_blank" rel="noreferrer">Indicazioni APT Valsugana ↗</a>
+          </article>
+
+          <article className={styles.travelCard}>
+            <span>02</span>
+            <h3>In treno</h3>
+            <p>La ferrovia della Valsugana serve il territorio con la stazione Roncegno Bagni-Marter, sulla direttrice Trento–Borgo Valsugana–Bassano.</p>
+            <a href={OFFICIAL_TRAVEL_LINKS.railway} target="_blank" rel="noreferrer">Consulta ferrovia e avvisi ↗</a>
+          </article>
+
+          <article className={styles.travelCard}>
+            <span>03</span>
+            <h3>In autobus</h3>
+            <p>Roncegno è servita anche dal trasporto pubblico extraurbano. Linee e frequenze possono cambiare tra periodo scolastico, feriale e stagionale.</p>
+            <a href={OFFICIAL_TRAVEL_LINKS.trentinoTrasporti} target="_blank" rel="noreferrer">Orari Trentino Trasporti ↗</a>
+          </article>
+
+          <article className={styles.travelCard}>
+            <span>04</span>
+            <h3>Muoversi sul posto</h3>
+            <p>Per pianificare spostamenti, verificare fermate e tempi reali di attesa puoi usare il servizio ufficiale Muoversi in Trentino. Per parcheggi e servizi locali usa anche la mappa qui sotto.</p>
+            <div className={styles.travelLinks}>
+              <a href={OFFICIAL_TRAVEL_LINKS.muoversi} target="_blank" rel="noreferrer">Muoversi in Trentino ↗</a>
+              <a href="#mappa-visita">Apri la mappa ↓</a>
+            </div>
+          </article>
+        </div>
       </section>
 
       <section className={styles.mapSection} id="mappa-visita">
         <div className={styles.mapHeading}>
           <p className={styles.eyebrow}>Orientati sul territorio</p>
           <h2>Tutto sulla mappa.</h2>
-          <p>Filtra luoghi, ristorazione, ospitalità e servizi. La mappa si adatta automaticamente ai punti visibili.</p>
+          <p>Filtra luoghi, ristorazione, ospitalità e servizi per capire subito cosa trovi vicino a te e come distribuire la visita.</p>
         </div>
         <div className={styles.mapFrame}>
           <HomeMap places={placesWithCoordinates} compact />
         </div>
       </section>
 
+      <section className={`${styles.contentSection} ${styles.alt}`} id="servizi">
+        <div className={styles.sectionHeading}>
+          <div><p className={styles.eyebrow}>Durante la visita</p><h2>Servizi utili</h2></div>
+          <p>Parcheggi, punti informativi, stazione e altri servizi pratici raccolti in un unico elenco e, quando disponibili, anche sulla mappa.</p>
+        </div>
+        <PlaceStrip places={services} emptyText="I servizi utili saranno disponibili presto." />
+      </section>
+
       <section className={styles.practicalGrid}>
-        <article className={styles.practicalCard} id="come-arrivare">
-          <p className={styles.eyebrow}>Mobilità</p>
-          <h2>Come arrivare</h2>
-          <p>Roncegno Terme si trova in Valsugana. Questa sezione è predisposta per raccogliere indicazioni in auto, trasporto pubblico, parcheggi e mobilità locale dal Content Hub.</p>
-          <Link href="/#mappa">Apri la mappa del territorio <ArrowIcon /></Link>
+        <article className={styles.practicalCard}>
+          <p className={styles.eyebrow}>Prima di partire</p>
+          <h2>Controlla gli aggiornamenti.</h2>
+          <p>Orari ferroviari e autobus, deviazioni e avvisi possono cambiare. Per il viaggio usa sempre le informazioni aggiornate degli operatori ufficiali.</p>
+          <a href={OFFICIAL_TRAVEL_LINKS.trentinoTrasporti} target="_blank" rel="noreferrer">Apri Trentino Trasporti <ArrowIcon /></a>
         </article>
-        <article className={styles.practicalCard} id="servizi">
-          <p className={styles.eyebrow}>Durante la visita</p>
-          <h2>Servizi utili</h2>
-          <p>Info point, parcheggi, servizi pubblici e riferimenti pratici possono essere gestiti come luoghi e visualizzati sia qui sia sulla mappa.</p>
-          <Link href="/luoghi">Vedi i luoghi pubblicati <ArrowIcon /></Link>
+        <article className={styles.practicalCard}>
+          <p className={styles.eyebrow}>Hai bisogno di aiuto?</p>
+          <h2>Contatti utili</h2>
+          <p>Per informazioni sul territorio puoi utilizzare i riferimenti ufficiali pubblicati nel sito.</p>
+          {siteSettings.contact_email ? (
+            <a href={`mailto:${siteSettings.contact_email}`}>Scrivi a {siteSettings.contact_email} <ArrowIcon /></a>
+          ) : siteSettings.contact_phone ? (
+            <a href={`tel:${siteSettings.contact_phone.replace(/\s+/g, "")}`}>Chiama {siteSettings.contact_phone} <ArrowIcon /></a>
+          ) : (
+            <Link href="/luoghi">Esplora i luoghi <ArrowIcon /></Link>
+          )}
         </article>
       </section>
 
