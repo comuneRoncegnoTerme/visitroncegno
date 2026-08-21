@@ -9,6 +9,7 @@ import {
   getSiteSettings,
 } from "@/lib/directus";
 import { getEditorialList, type EditorialItem } from "@/lib/editorial";
+import { placeHref } from "@/lib/place-detail";
 import {
   isEatingPlace,
   isServicePlace,
@@ -48,7 +49,7 @@ function PlaceStrip({ places, emptyText }: { places: EditorialItem[]; emptyText:
       {places.slice(0, 6).map((place) => {
         const image = getDirectusAssetUrl(place.image);
         return (
-          <Link className={styles.placeCard} href={`/luoghi/${place.slug}`} key={place.id}>
+          <Link className={styles.placeCard} href={placeHref(place)} key={place.id}>
             <div className={styles.placeImage} style={{ backgroundImage: image ? `url('${image}')` : undefined }} />
             <div className={styles.placeCopy}>
               <small>{place.map_label ?? place.category?.name ?? "Roncegno Terme"}</small>
@@ -70,19 +71,27 @@ export default async function OrganizzaLaVisitaPage() {
     getEditorialList("places"),
   ]);
 
+  const editorialById = new Map(allPlaces.map((place) => [place.id, place]));
   const placesWithCoordinates = mapPlaces
     .filter((place) => place.latitude !== null && place.longitude !== null)
-    .map((place) => ({
-      id: place.id,
-      title: place.title,
-      slug: place.slug,
-      summary: place.summary,
-      imageUrl: getDirectusAssetUrl(place.image),
-      latitude: place.latitude as number,
-      longitude: place.longitude as number,
-      mapLabel: place.map_label,
-      mapIcon: place.map_icon,
-    }));
+    .map((place) => {
+      const editorial = editorialById.get(place.id);
+      return {
+        id: place.id,
+        title: place.title,
+        slug: place.slug,
+        summary: place.summary,
+        imageUrl: getDirectusAssetUrl(place.image),
+        latitude: place.latitude as number,
+        longitude: place.longitude as number,
+        mapLabel: place.map_label,
+        mapIcon: place.map_icon,
+        placeType: editorial?.place_type,
+        detailMode: editorial?.detail_mode,
+        canonicalPath: editorial?.canonical_path,
+        externalDetailUrl: editorial?.external_detail_url,
+      };
+    });
 
   const sleeping = allPlaces.filter(isSleepingPlace);
   const eating = allPlaces.filter(isEatingPlace);
