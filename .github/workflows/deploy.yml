@@ -5,13 +5,22 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
       - name: Prepare SSH key
         run: |
+          set -euo pipefail
           mkdir -p ~/.ssh
           echo "${{ secrets.VPS_SSH_KEY_B64 }}" | base64 -d > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
@@ -21,10 +30,23 @@ jobs:
           ssh -o StrictHostKeyChecking=no \
             -i ~/.ssh/id_ed25519 \
             ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
-              set -e
+              set -euo pipefail
               cd /opt/roncegno/visitroncegno
-              git fetch origin
+
+              git fetch --prune origin
               git reset --hard origin/main
+
+              # The VPS has limited disk space. BuildKit cache previously grew
+              # until it exhausted the root filesystem, so clear build cache
+              # before each production build. This does not remove volumes or
+              # running images/containers.
+              docker builder prune -af
+
+              docker compose config --quiet
               docker compose build
-              docker compose up -d
+              docker compose up -d --remove-orphans
               docker compose ps
+
+              # Remove only dangling images left by the deployment.
+              docker image prune -f
+          EOF
