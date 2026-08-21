@@ -1,6 +1,6 @@
 import crypto from "node:crypto";
 import { cookies } from "next/headers";
-import { DIRECTUS_URL } from "@/lib/directus";
+import { directusFetch } from "@/lib/directus-client";
 
 const SESSION_COOKIE = "roncegno_content_hub_session";
 const SESSION_TTL_SECONDS = 60 * 60 * 8;
@@ -22,17 +22,12 @@ type DirectusMeResponse = {
     first_name?: string | null;
     last_name?: string | null;
     status?: string;
-    role?: {
-      name?: string | null;
-    } | null;
+    role?: { name?: string | null } | null;
   };
 };
 
 type DirectusPermissionsResponse = {
-  data?: Record<
-    string,
-    Record<string, { access?: "none" | "partial" | "full" } | undefined>
-  >;
+  data?: Record<string, Record<string, { access?: "none" | "partial" | "full" } | undefined>>;
 };
 
 function getSessionSecret() {
@@ -91,9 +86,8 @@ function isConfiguredRoleAllowed(roleName: string) {
 }
 
 async function hasAdministratorLevelAccess(accessToken: string) {
-  const permissionsResponse = await fetch(`${DIRECTUS_URL}/permissions/me`, {
+  const permissionsResponse = await directusFetch("/permissions/me", {
     headers: { Authorization: `Bearer ${accessToken}` },
-    cache: "no-store",
   });
 
   if (!permissionsResponse.ok) return false;
@@ -101,22 +95,15 @@ async function hasAdministratorLevelAccess(accessToken: string) {
   const permissions = (await permissionsResponse.json()) as DirectusPermissionsResponse;
   const data = permissions.data ?? {};
 
-  // Directus 11+ moved admin_access from roles to policies. Rather than
-  // depending on internal policy relation shapes, verify the effective
-  // permissions Directus calculates for the authenticated user.
   const requiredUpdates = ["homepage", "events", "places", "routes", "site_settings"];
-
-  return requiredUpdates.every(
-    (collection) => data[collection]?.update?.access === "full"
-  );
+  return requiredUpdates.every((collection) => data[collection]?.update?.access === "full");
 }
 
 export async function authenticateContentHub(email: string, password: string) {
-  const loginResponse = await fetch(`${DIRECTUS_URL}/auth/login`, {
+  const loginResponse = await directusFetch("/auth/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password, mode: "json" }),
-    cache: "no-store",
   });
 
   if (!loginResponse.ok) return null;
@@ -124,12 +111,9 @@ export async function authenticateContentHub(email: string, password: string) {
   const accessToken = login.data?.access_token;
   if (!accessToken) return null;
 
-  const meResponse = await fetch(
-    `${DIRECTUS_URL}/users/me?fields=email,first_name,last_name,status,role.name`,
-    {
-      headers: { Authorization: `Bearer ${accessToken}` },
-      cache: "no-store",
-    }
+  const meResponse = await directusFetch(
+    "/users/me?fields=email,first_name,last_name,status,role.name",
+    { headers: { Authorization: `Bearer ${accessToken}` } }
   );
 
   if (!meResponse.ok) return null;
@@ -140,10 +124,7 @@ export async function authenticateContentHub(email: string, password: string) {
   if (!user?.email || user.status !== "active") return null;
 
   const roleAllowed = isConfiguredRoleAllowed(roleName);
-  const administratorAccess = roleAllowed
-    ? false
-    : await hasAdministratorLevelAccess(accessToken);
-
+  const administratorAccess = roleAllowed ? false : await hasAdministratorLevelAccess(accessToken);
   if (!roleAllowed && !administratorAccess) return null;
 
   const name = [user.first_name, user.last_name].filter(Boolean).join(" ") || user.email;
