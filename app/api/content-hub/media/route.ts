@@ -1,40 +1,37 @@
 import { NextRequest, NextResponse } from "next/server";
-import { DIRECTUS_URL } from "@/lib/directus";
-import { getContentHubSession } from "@/lib/content-hub-auth";
-
-async function guard() {
-  const session = await getContentHubSession();
-  const token = process.env.DIRECTUS_TOKEN;
-  return { session, token };
-}
+import {
+  contentHubDirectusFetch,
+  contentHubUnavailableResponse,
+  logContentHubUpstreamError,
+  readJsonSafely,
+  requireContentHubSession,
+  unauthorizedContentHubResponse,
+  upstreamFailureResponse,
+} from "@/lib/content-hub-api";
 
 export async function GET() {
-  const { session, token } = await guard();
-  if (!session) return NextResponse.json({ error: "Non autorizzato" }, { status: 401 });
-  if (!token) return NextResponse.json({ error: "DIRECTUS_TOKEN non configurato" }, { status: 503 });
+  if (!(await requireContentHubSession())) return unauthorizedContentHubResponse();
 
   const params = new URLSearchParams({
     fields: "id,title,filename_download,type,filesize,width,height,uploaded_on",
     sort: "-uploaded_on",
     limit: "100",
   });
-  const response = await fetch(`${DIRECTUS_URL}/files?${params.toString()}`, {
-    headers: { Authorization: `Bearer ${token}` },
-    cache: "no-store",
-  });
-  const result = await response.json().catch(() => null);
 
-  if (!response.ok) {
-    return NextResponse.json({ error: "Impossibile leggere la libreria media", details: result }, { status: response.status });
+  try {
+    const response = await contentHubDirectusFetch(`/files?${params.toString()}`);
+    if (!response.ok) return upstreamFailureResponse("list-media", response);
+
+    const result = await readJsonSafely(response);
+    return NextResponse.json({ data: result?.data ?? [] });
+  } catch (error) {
+    logContentHubUpstreamError("list-media", error);
+    return contentHubUnavailableResponse();
   }
-
-  return NextResponse.json({ data: result?.data ?? [] });
 }
 
 export async function POST(request: NextRequest) {
-  const { session, token } = await guard();
-  if (!session) return NextResponse.json({ error: "Non autorizzato" }, { status: 401 });
-  if (!token) return NextResponse.json({ error: "DIRECTUS_TOKEN non configurato" }, { status: 503 });
+  if (!(await requireContentHubSession())) return unauthorizedContentHubResponse();
 
   const form = await request.formData().catch(() => null);
   const file = form?.get("file");
@@ -68,17 +65,25 @@ export async function POST(request: NextRequest) {
   const title = String(form?.get("title") ?? "").trim();
   if (title) upstream.append("title", title);
 
-  const response = await fetch(`${DIRECTUS_URL}/files`, {
-    method: "POST",
-    headers: { Authorization: `Bearer ${token}` },
-    body: upstream,
-    cache: "no-store",
-  });
-  const result = await response.json().catch(() => null);
+  try {
+    const response = await contentHubDirectusFetch("/files", {
+      method: "POST",
+      body: upstream,
+    });
+    if (!response.ok) {
+      return upstreamFailureResponse("upload-media", response, {
+        filename: file.name,
+        size: file.size,
+      });
+    }
 
-  if (!response.ok) {
-    return NextResponse.json({ error: "Directus ha rifiutato il file", details: result }, { status: response.status });
+    const result = await readJsonSafely(response);
+    return NextResponse.json({ ok: true, data: result?.data ?? result }, { status: 201 });
+  } catch (error) {
+    logContentHubUpstreamError("upload-media", error, {
+      filename: file.name,
+      size: file.size,
+    });
+    return contentHubUnavailableResponse();
   }
-
-  return NextResponse.json({ ok: true, data: result?.data ?? result }, { status: 201 });
 }
