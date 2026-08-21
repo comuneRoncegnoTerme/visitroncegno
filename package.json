@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "directus:ensure-place-model": "node scripts/directus-place-model.mjs"
   },
   "dependencies": {
     "maplibre-gl": "^6.2.0",
