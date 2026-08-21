@@ -28,10 +28,7 @@ export async function PATCH(
   }
 
   try {
-    const token = process.env.DIRECTUS_TOKEN?.trim();
-    if (!token) return contentHubUnavailableResponse();
-
-    const directusFields = await getDirectusCollectionFields(collection, token);
+    const directusFields = await getDirectusCollectionFields(collection);
     const payload = sanitizeContentHubPayload(
       collection,
       body as Record<string, unknown>,
