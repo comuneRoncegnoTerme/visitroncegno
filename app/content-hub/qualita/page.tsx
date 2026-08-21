@@ -4,5 +4,5 @@ import QualityDashboard from "./QualityDashboard";
 
 export default async function ContentHubQualityPage() {
   if (!(await getContentHubSession())) redirect("/content-hub/login");
-  return <QualityDashboard referenceTime={Date.now()} />;
+  return <QualityDashboard />;
 }
