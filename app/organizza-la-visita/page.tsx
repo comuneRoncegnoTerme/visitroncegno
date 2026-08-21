@@ -23,6 +23,13 @@ export const metadata: Metadata = {
   description: "Dove dormire, dove mangiare, come arrivare e servizi utili per vivere Roncegno Terme.",
 };
 
+const OFFICIAL_TRAVEL_LINKS = {
+  valsugana: "https://www.visitvalsugana.it/it/come-arrivare/",
+  trentinoTrasporti: "https://www.trentinotrasporti.it/it/",
+  railway: "https://www.trentinotrasporti.it/it/viaggia-con-noi/ferrovia?app_v2=true%2F",
+  muoversi: "https://www.trentinotrasporti.it/it/viaggia-con-noi/app-muoversi",
+};
+
 function ArrowIcon() {
   return (
     <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none">
@@ -95,8 +102,8 @@ export default async function OrganizzaLaVisitaPage() {
           <nav className={styles.jumpNav} aria-label="Sezioni della pagina">
             <a href="#dormire">Dormire</a>
             <a href="#mangiare">Mangiare</a>
-            <a href="#mappa-visita">Mappa</a>
             <a href="#come-arrivare">Come arrivare</a>
+            <a href="#mappa-visita">Mappa</a>
             <a href="#servizi">Servizi</a>
           </nav>
         </div>
@@ -119,7 +126,7 @@ export default async function OrganizzaLaVisitaPage() {
           <a href="#come-arrivare" className={styles.gatewayCard}>
             <span>03 · Mobilità</span>
             <strong>Come arrivare</strong>
-            <p>Indicazioni essenziali per raggiungere Roncegno e orientarsi una volta arrivati.</p>
+            <p>Auto, treno, autobus e indicazioni utili per pianificare il viaggio.</p>
             <ArrowIcon />
           </a>
           <a href="#servizi" className={styles.gatewayCard}>
@@ -147,6 +154,49 @@ export default async function OrganizzaLaVisitaPage() {
         <PlaceStrip places={eating} emptyText="Ristoranti e locali saranno disponibili presto." />
       </section>
 
+      <section className={styles.travelSection} id="come-arrivare">
+        <div className={styles.travelHeading}>
+          <div>
+            <p className={styles.eyebrow}>Come arrivare</p>
+            <h2>Raggiungere Roncegno.</h2>
+          </div>
+          <p>Le indicazioni qui sotto restano volutamente essenziali. Per orari, coincidenze e variazioni del servizio consulta sempre i canali ufficiali prima della partenza.</p>
+        </div>
+
+        <div className={styles.travelGrid}>
+          <article className={styles.travelCard}>
+            <span>01</span>
+            <h3>In auto</h3>
+            <p>Roncegno Terme si trova in Valsugana ed è raggiungibile attraverso la SS47. Per chi arriva dall’autostrada A22, il collegamento indicato dall’APT Valsugana passa da Trento Sud verso la Valsugana.</p>
+            <a href={OFFICIAL_TRAVEL_LINKS.valsugana} target="_blank" rel="noreferrer">Indicazioni APT Valsugana ↗</a>
+          </article>
+
+          <article className={styles.travelCard}>
+            <span>02</span>
+            <h3>In treno</h3>
+            <p>La ferrovia della Valsugana serve il territorio con la stazione Roncegno Bagni-Marter, sulla direttrice Trento–Borgo Valsugana–Bassano.</p>
+            <a href={OFFICIAL_TRAVEL_LINKS.railway} target="_blank" rel="noreferrer">Consulta ferrovia e avvisi ↗</a>
+          </article>
+
+          <article className={styles.travelCard}>
+            <span>03</span>
+            <h3>In autobus</h3>
+            <p>Roncegno è servita anche dal trasporto pubblico extraurbano. Linee e frequenze possono cambiare tra periodo scolastico, feriale e stagionale.</p>
+            <a href={OFFICIAL_TRAVEL_LINKS.trentinoTrasporti} target="_blank" rel="noreferrer">Orari Trentino Trasporti ↗</a>
+          </article>
+
+          <article className={styles.travelCard}>
+            <span>04</span>
+            <h3>Muoversi sul posto</h3>
+            <p>Per pianificare spostamenti, verificare fermate e tempi reali di attesa puoi usare il servizio ufficiale Muoversi in Trentino. Per parcheggi e servizi locali usa anche la mappa qui sotto.</p>
+            <div className={styles.travelLinks}>
+              <a href={OFFICIAL_TRAVEL_LINKS.muoversi} target="_blank" rel="noreferrer">Muoversi in Trentino ↗</a>
+              <a href="#mappa-visita">Apri la mappa ↓</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
       <section className={styles.mapSection} id="mappa-visita">
         <div className={styles.mapHeading}>
           <p className={styles.eyebrow}>Orientati sul territorio</p>
@@ -167,11 +217,11 @@ export default async function OrganizzaLaVisitaPage() {
       </section>
 
       <section className={styles.practicalGrid}>
-        <article className={styles.practicalCard} id="come-arrivare">
-          <p className={styles.eyebrow}>Mobilità</p>
-          <h2>Come arrivare</h2>
-          <p>Prima di partire usa la mappa per individuare il centro di Roncegno, i parcheggi e i servizi collegati alla mobilità. Le singole schede possono contenere indicazioni di accesso e trasporto pubblico.</p>
-          <a href="#mappa-visita">Apri la mappa della visita <ArrowIcon /></a>
+        <article className={styles.practicalCard}>
+          <p className={styles.eyebrow}>Prima di partire</p>
+          <h2>Controlla gli aggiornamenti.</h2>
+          <p>Orari ferroviari e autobus, deviazioni e avvisi possono cambiare. Per il viaggio usa sempre le informazioni aggiornate degli operatori ufficiali.</p>
+          <a href={OFFICIAL_TRAVEL_LINKS.trentinoTrasporti} target="_blank" rel="noreferrer">Apri Trentino Trasporti <ArrowIcon /></a>
         </article>
         <article className={styles.practicalCard}>
           <p className={styles.eyebrow}>Hai bisogno di aiuto?</p>
