@@ -15,6 +15,8 @@ import {
   getUpcomingEvents,
 } from "@/lib/directus";
 
+export const dynamic = "force-dynamic";
+
 function ArrowIcon() {
   return (
     <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none">
