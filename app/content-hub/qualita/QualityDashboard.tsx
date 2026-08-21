@@ -110,7 +110,7 @@ export default function QualityDashboard() {
         group,
         title: String(item.title ?? item.slug ?? `#${item.id}`),
         detail,
-        href,
+        href: `${href}?id=${item.id}`,
       });
     };
 
