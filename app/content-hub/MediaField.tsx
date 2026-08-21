@@ -97,11 +97,9 @@ export default function MediaField({ value, onChange, kind = "image" }: Props) {
   }
 
   function toggleLibrary() {
-    setOpen((currentOpen) => {
-      const nextOpen = !currentOpen;
-      if (nextOpen && items.length === 0) void loadMedia();
-      return nextOpen;
-    });
+    const nextOpen = !open;
+    setOpen(nextOpen);
+    if (nextOpen && items.length === 0) void loadMedia();
   }
 
   async function upload(event: ChangeEvent<HTMLInputElement>) {
