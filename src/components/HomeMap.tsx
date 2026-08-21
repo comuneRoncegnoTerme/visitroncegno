@@ -11,6 +11,7 @@ import {
 } from "maplibre-gl";
 
 import "maplibre-gl/dist/maplibre-gl.css";
+import { placeHref, type PlaceDetailMode, type PlaceType } from "@/lib/place-detail";
 import { placeCategory, type PlaceCategory } from "@/lib/place-taxonomy";
 import styles from "./HomeMap.module.css";
 
@@ -24,6 +25,10 @@ interface HomeMapPlace {
   longitude: number;
   mapLabel: string | null;
   mapIcon?: string | null;
+  placeType?: PlaceType | null;
+  detailMode?: PlaceDetailMode | null;
+  canonicalPath?: string | null;
+  externalDetailUrl?: string | null;
 }
 
 interface HomeMapProps {
@@ -49,24 +54,18 @@ const THEMES: { value: MapTheme; label: string }[] = [
 ];
 
 function categoryForPlace(place: HomeMapPlace) {
-  return placeCategory({ map_icon: place.mapIcon, map_label: place.mapLabel });
+  return placeCategory({ place_type: place.placeType, map_icon: place.mapIcon, map_label: place.mapLabel });
 }
 
-function placeHref(place: HomeMapPlace) {
-  const normalizedTitle = place.title.toLowerCase();
-
-  if (normalizedTitle.includes("mulino angeli")) {
-    return "/musei/mulino-angeli";
-  }
-
-  if (
-    normalizedTitle.includes("strumenti musicali") ||
-    normalizedTitle.includes("museo della musica")
-  ) {
-    return "/musei/museo-della-musica";
-  }
-
-  return `/luoghi/${place.slug}`;
+function hrefForPlace(place: HomeMapPlace) {
+  return placeHref({
+    slug: place.slug,
+    title: place.title,
+    place_type: place.placeType,
+    detail_mode: place.detailMode,
+    canonical_path: place.canonicalPath,
+    external_detail_url: place.externalDetailUrl,
+  });
 }
 
 function mapStyle(theme: MapTheme): StyleSpecification {
@@ -177,7 +176,7 @@ export default function HomeMap({ places, compact = false, showFilters = true }:
       }
 
       const link = document.createElement("a");
-      link.href = placeHref(place);
+      link.href = hrefForPlace(place);
       link.textContent = "Scopri il luogo →";
       content.appendChild(link);
       popupContent.appendChild(content);
