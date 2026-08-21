@@ -13,6 +13,7 @@
 .heroInner,
 .gatewayGrid,
 .contentSection,
+.travelSection,
 .mapSection,
 .practicalGrid {
   width: min(1400px, 90vw);
@@ -30,6 +31,7 @@
 
 .hero h1,
 .sectionHeading h2,
+.travelHeading h2,
 .mapHeading h2,
 .practicalCard h2 {
   font-family: Georgia, "Times New Roman", serif;
@@ -140,7 +142,8 @@
   padding-top: 0;
 }
 
-.sectionHeading {
+.sectionHeading,
+.travelHeading {
   display: grid;
   grid-template-columns: 1fr minmax(320px, 0.7fr);
   gap: 8vw;
@@ -149,6 +152,7 @@
 }
 
 .sectionHeading h2,
+.travelHeading h2,
 .mapHeading h2,
 .practicalCard h2 {
   margin: 0;
@@ -159,6 +163,7 @@
 }
 
 .sectionHeading > p,
+.travelHeading > p,
 .mapHeading > p,
 .practicalCard > p {
   margin: 0;
@@ -233,6 +238,73 @@
   line-height: 1.6;
 }
 
+.travelSection {
+  padding: 0 0 118px;
+}
+
+.travelGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(23, 32, 29, 0.14);
+  border: 1px solid rgba(23, 32, 29, 0.14);
+}
+
+.travelCard {
+  display: flex;
+  flex-direction: column;
+  min-height: 360px;
+  padding: 30px;
+  background: #f3f0e8;
+}
+
+.travelCard > span {
+  color: #b85e35;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
+
+.travelCard h3 {
+  margin: 56px 0 14px;
+  color: #163d32;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 31px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.travelCard p {
+  margin: 0 0 26px;
+  color: #5d6762;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.travelCard > a,
+.travelLinks a {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: auto;
+  padding-bottom: 5px;
+  color: #163d32;
+  border-bottom: 1px solid rgba(22, 61, 50, 0.55);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.travelLinks {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.travelLinks a {
+  margin-top: 0;
+}
+
 .mapSection {
   display: grid;
   grid-template-columns: minmax(280px, 0.55fr) 1.4fr;
@@ -284,7 +356,8 @@
 }
 
 @media (max-width: 1050px) {
-  .gatewayGrid {
+  .gatewayGrid,
+  .travelGrid {
     grid-template-columns: 1fr 1fr;
   }
 
@@ -297,6 +370,7 @@
   }
 
   .sectionHeading,
+  .travelHeading,
   .mapSection {
     grid-template-columns: 1fr;
   }
@@ -318,6 +392,7 @@
   .heroInner,
   .gatewayGrid,
   .contentSection,
+  .travelSection,
   .mapSection,
   .practicalGrid {
     width: min(100% - 32px, 1400px);
@@ -353,6 +428,7 @@
 
   .gatewayGrid,
   .placeGrid,
+  .travelGrid,
   .practicalGrid {
     grid-template-columns: 1fr;
   }
@@ -381,15 +457,36 @@
     padding-top: 0;
   }
 
-  .sectionHeading {
+  .sectionHeading,
+  .travelHeading {
     gap: 22px;
     margin-bottom: 30px;
   }
 
   .sectionHeading h2,
+  .travelHeading h2,
   .mapHeading h2,
   .practicalCard h2 {
     font-size: 46px;
+  }
+
+  .travelSection {
+    padding-bottom: 76px;
+  }
+
+  .travelCard {
+    min-height: auto;
+    padding: 26px 24px 30px;
+  }
+
+  .travelCard h3 {
+    margin-top: 34px;
+    font-size: 28px;
+  }
+
+  .travelCard > a,
+  .travelLinks {
+    margin-top: 8px;
   }
 
   .mapSection {
