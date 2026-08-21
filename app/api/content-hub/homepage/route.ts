@@ -1,6 +1,13 @@
 import { NextResponse } from "next/server";
-import { DIRECTUS_URL } from "@/lib/directus";
-import { getContentHubSession } from "@/lib/content-hub-auth";
+import {
+  contentHubDirectusFetch,
+  contentHubUnavailableResponse,
+  logContentHubUpstreamError,
+  readJsonSafely,
+  requireContentHubSession,
+  unauthorizedContentHubResponse,
+  upstreamFailureResponse,
+} from "@/lib/content-hub-api";
 
 const editableFields = [
   "hero_eyebrow",
@@ -16,18 +23,7 @@ type EditableField = (typeof editableFields)[number];
 type HomepagePatch = Partial<Record<EditableField, string | null>>;
 
 export async function PATCH(request: Request) {
-  const session = await getContentHubSession();
-  if (!session) {
-    return NextResponse.json({ error: "Sessione scaduta o non valida" }, { status: 401 });
-  }
-
-  const directusToken = process.env.DIRECTUS_TOKEN;
-  if (!directusToken) {
-    return NextResponse.json(
-      { error: "DIRECTUS_TOKEN non configurato sul server" },
-      { status: 503 }
-    );
-  }
+  if (!(await requireContentHubSession())) return unauthorizedContentHubResponse();
 
   let body: unknown;
   try {
@@ -56,24 +52,18 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ error: "Nessuna modifica ricevuta" }, { status: 400 });
   }
 
-  const response = await fetch(`${DIRECTUS_URL}/items/homepage`, {
-    method: "PATCH",
-    headers: {
-      Authorization: `Bearer ${directusToken}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(patch),
-    cache: "no-store",
-  });
+  try {
+    const response = await contentHubDirectusFetch("/items/homepage", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(patch),
+    });
+    if (!response.ok) return upstreamFailureResponse("update-homepage", response);
 
-  const result = await response.json().catch(() => null);
-
-  if (!response.ok) {
-    return NextResponse.json(
-      { error: "Directus ha rifiutato la modifica", details: result },
-      { status: response.status }
-    );
+    const result = await readJsonSafely(response);
+    return NextResponse.json({ ok: true, data: result?.data ?? result });
+  } catch (error) {
+    logContentHubUpstreamError("update-homepage", error);
+    return contentHubUnavailableResponse();
   }
-
-  return NextResponse.json({ ok: true, data: result?.data ?? result });
 }

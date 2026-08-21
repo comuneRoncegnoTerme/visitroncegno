@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import MediaField from "./MediaField";
 import styles from "./collection-editor.module.css";
 
@@ -89,6 +89,8 @@ export default function CollectionEditor({
   previewBase,
 }: Props) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const requestedId = searchParams.get("id");
   const [items, setItems] = useState<Item[]>([]);
   const [availableFields, setAvailableFields] = useState<string[] | null>(null);
   const [selectedId, setSelectedId] = useState<number | null>(null);
@@ -140,8 +142,19 @@ export default function CollectionEditor({
           return;
         }
 
-        setItems(result?.data ?? []);
+        const loadedItems = result?.data ?? [];
+        setItems(loadedItems);
         setAvailableFields(Array.isArray(result?.fields) ? result.fields : null);
+
+        if (requestedId && /^\d+$/.test(requestedId)) {
+          const requestedItem = loadedItems.find((item) => item.id === Number(requestedId));
+          if (requestedItem) {
+            setSelectedId(requestedItem.id);
+            setDraft({ ...requestedItem });
+            setStatus("idle");
+            setMessage("");
+          }
+        }
       })
       .catch((error: unknown) => {
         if (error instanceof DOMException && error.name === "AbortError") return;
@@ -153,7 +166,7 @@ export default function CollectionEditor({
       });
 
     return () => controller.abort();
-  }, [collection, router]);
+  }, [collection, requestedId, router]);
 
   function selectItem(item: Item) {
     setSelectedId(item.id);
