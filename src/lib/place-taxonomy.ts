@@ -1,6 +1,9 @@
+import type { PlaceType } from "@/lib/place-detail";
+
 export type PlaceCategory = "places" | "food" | "sleep" | "services";
 
 type PlaceTaxonomyInput = {
+  place_type?: PlaceType | null;
   map_icon?: string | null;
   map_label?: string | null;
 };
@@ -10,6 +13,10 @@ function normalize(value: string | null | undefined) {
 }
 
 export function placeCategory(place: PlaceTaxonomyInput): PlaceCategory {
+  if (place.place_type === "food") return "food";
+  if (place.place_type === "sleep") return "sleep";
+  if (["parking", "station", "service", "institution"].includes(place.place_type ?? "")) return "services";
+
   const icon = normalize(place.map_icon);
 
   if (icon === "food") return "food";
