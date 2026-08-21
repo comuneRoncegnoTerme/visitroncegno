@@ -38,6 +38,13 @@ function getSessionSecret() {
   return secret;
 }
 
+function cookieIsSecure() {
+  const configured = process.env.CONTENT_HUB_COOKIE_SECURE?.trim().toLowerCase();
+  if (configured === "true") return true;
+  if (configured === "false") return false;
+  return process.env.NODE_ENV === "production";
+}
+
 function encode(value: string) {
   return Buffer.from(value, "utf8").toString("base64url");
 }
@@ -137,8 +144,8 @@ export async function setContentHubSession(user: { email: string; name: string; 
   const store = await cookies();
   store.set(SESSION_COOKIE, token, {
     httpOnly: true,
-    sameSite: "lax",
-    secure: process.env.CONTENT_HUB_COOKIE_SECURE === "true",
+    sameSite: "strict",
+    secure: cookieIsSecure(),
     path: "/",
     maxAge: SESSION_TTL_SECONDS,
   });
@@ -148,8 +155,8 @@ export async function clearContentHubSession() {
   const store = await cookies();
   store.set(SESSION_COOKIE, "", {
     httpOnly: true,
-    sameSite: "lax",
-    secure: process.env.CONTENT_HUB_COOKIE_SECURE === "true",
+    sameSite: "strict",
+    secure: cookieIsSecure(),
     path: "/",
     maxAge: 0,
   });
