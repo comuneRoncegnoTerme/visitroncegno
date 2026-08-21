@@ -1,6 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { DIRECTUS_URL } from "@/lib/directus";
-import { getContentHubSession } from "@/lib/content-hub-auth";
+import {
+  contentHubDirectusFetch,
+  contentHubUnavailableResponse,
+  logContentHubUpstreamError,
+  readJsonSafely,
+  requireContentHubSession,
+  unauthorizedContentHubResponse,
+  upstreamFailureResponse,
+} from "@/lib/content-hub-api";
 
 const editableFields = [
   "site_name",
@@ -18,24 +25,27 @@ const editableFields = [
   "default_social_image",
 ] as const;
 
-async function auth() {
-  return await getContentHubSession();
-}
-
 export async function GET() {
-  if (!(await auth())) return NextResponse.json({ error: "Non autorizzato" }, { status: 401 });
+  if (!(await requireContentHubSession())) return unauthorizedContentHubResponse();
 
   const params = new URLSearchParams({ fields: ["id", ...editableFields].join(",") });
-  const response = await fetch(`${DIRECTUS_URL}/items/site_settings?${params.toString()}`, { cache: "no-store" });
-  const result = await response.json().catch(() => null);
-  if (!response.ok) return NextResponse.json({ error: "Impossibile leggere le impostazioni", details: result }, { status: response.status });
-  return NextResponse.json({ data: result?.data ?? {} });
+
+  try {
+    const response = await contentHubDirectusFetch(
+      `/items/site_settings?${params.toString()}`
+    );
+    if (!response.ok) return upstreamFailureResponse("read-settings", response);
+
+    const result = await readJsonSafely(response);
+    return NextResponse.json({ data: result?.data ?? {} });
+  } catch (error) {
+    logContentHubUpstreamError("read-settings", error);
+    return contentHubUnavailableResponse();
+  }
 }
 
 export async function PATCH(request: NextRequest) {
-  if (!(await auth())) return NextResponse.json({ error: "Non autorizzato" }, { status: 401 });
-  const token = process.env.DIRECTUS_TOKEN;
-  if (!token) return NextResponse.json({ error: "DIRECTUS_TOKEN non configurato" }, { status: 503 });
+  if (!(await requireContentHubSession())) return unauthorizedContentHubResponse();
 
   const body = await request.json().catch(() => null);
   if (!body || typeof body !== "object" || Array.isArray(body)) {
@@ -53,13 +63,22 @@ export async function PATCH(request: NextRequest) {
     patch[field] = value === "" ? null : (value as string | null);
   }
 
-  const response = await fetch(`${DIRECTUS_URL}/items/site_settings`, {
-    method: "PATCH",
-    headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-    body: JSON.stringify(patch),
-    cache: "no-store",
-  });
-  const result = await response.json().catch(() => null);
-  if (!response.ok) return NextResponse.json({ error: "Directus ha rifiutato la modifica", details: result }, { status: response.status });
-  return NextResponse.json({ ok: true, data: result?.data ?? result });
+  if (Object.keys(patch).length === 0) {
+    return NextResponse.json({ error: "Nessuna modifica ricevuta" }, { status: 400 });
+  }
+
+  try {
+    const response = await contentHubDirectusFetch("/items/site_settings", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(patch),
+    });
+    if (!response.ok) return upstreamFailureResponse("update-settings", response);
+
+    const result = await readJsonSafely(response);
+    return NextResponse.json({ ok: true, data: result?.data ?? result });
+  } catch (error) {
+    logContentHubUpstreamError("update-settings", error);
+    return contentHubUnavailableResponse();
+  }
 }
