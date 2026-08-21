@@ -6,7 +6,7 @@ services:
     container_name: visitroncegno-web
     restart: unless-stopped
     environment:
-      DIRECTUS_URL: ${DIRECTUS_URL:-http://164.132.85.146:8055}
+      DIRECTUS_URL: ${DIRECTUS_URL:?DIRECTUS_URL must be configured}
       DIRECTUS_TOKEN: ${DIRECTUS_TOKEN:-}
       CONTENT_HUB_SESSION_SECRET: ${CONTENT_HUB_SESSION_SECRET:-}
       CONTENT_HUB_ALLOWED_ROLES: ${CONTENT_HUB_ALLOWED_ROLES:-}
