@@ -1,4 +1,5 @@
 import { DIRECTUS_URL } from "@/lib/directus";
+import type { PlaceDetailMode, PlaceType } from "@/lib/place-detail";
 
 export type EditorialItem = {
   id: number;
@@ -31,6 +32,16 @@ export type EditorialItem = {
   access_notes?: string | null;
   parking_notes?: string | null;
   public_transport_notes?: string | null;
+  place_type?: PlaceType | null;
+  detail_mode?: PlaceDetailMode | null;
+  canonical_path?: string | null;
+  external_detail_url?: string | null;
+  opening_hours?: string | null;
+  ticket_info?: string | null;
+  visit_duration?: string | null;
+  services_notes?: string | null;
+  capacity_notes?: string | null;
+  restrictions_notes?: string | null;
   category?: { name?: string | null } | null;
   place?: { title?: string | null } | null;
 };
