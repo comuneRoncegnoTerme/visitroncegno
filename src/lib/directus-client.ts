@@ -68,7 +68,6 @@ export async function directusFetch(
 
   try {
     return await fetch(url, {
-      cache: "no-store",
       ...requestOptions,
       headers: buildHeaders(headers, authenticated),
       signal: controller.signal,
