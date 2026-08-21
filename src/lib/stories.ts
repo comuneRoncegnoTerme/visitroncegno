@@ -1,4 +1,4 @@
-import { DIRECTUS_URL } from "@/lib/directus";
+import { directusJson } from "@/lib/directus-client";
 
 export interface StoryItem {
   id: number;
@@ -9,22 +9,13 @@ export interface StoryItem {
   image: string | null;
   source_url: string | null;
   source_label: string | null;
-  category?: {
-    name: string;
-  } | null;
-  route?: {
-    id: number;
-    title: string;
-    slug: string;
-  } | null;
+  category?: { name: string } | null;
+  route?: { id: number; title: string; slug: string } | null;
 }
 
 type StoryLinkInput = Pick<StoryItem, "slug" | "source_url">;
-
-type LegacyStoryCopy = {
-  excerpt?: string;
-  body?: string;
-};
+type LegacyStoryCopy = { excerpt?: string; body?: string };
+type StoryResponse = { data?: StoryItem[] };
 
 const LEGACY_PATH_BY_STORY_SLUG: Record<string, string> = {
   "tempesta-vaia-cinque-valli": "/it/sentieri/la-tempesta-vaia-11-1",
@@ -76,10 +67,7 @@ function normalizeVisitRoncegnoLegacyPath(value: string | null) {
 }
 
 export function getLegacyStoryPath(story: StoryLinkInput): string | null {
-  return (
-    LEGACY_PATH_BY_STORY_SLUG[story.slug] ??
-    normalizeVisitRoncegnoLegacyPath(story.source_url)
-  );
+  return LEGACY_PATH_BY_STORY_SLUG[story.slug] ?? normalizeVisitRoncegnoLegacyPath(story.source_url);
 }
 
 export function storyParagraphs(value: unknown): string[] {
@@ -113,20 +101,11 @@ function storyFields() {
 }
 
 async function fetchStory(params: URLSearchParams): Promise<StoryItem | null> {
-  const token = process.env.DIRECTUS_TOKEN;
-
   try {
-    const response = await fetch(`${DIRECTUS_URL}/items/stories?${params.toString()}`, {
-      cache: "no-store",
-      headers: token ? { Authorization: `Bearer ${token}` } : undefined,
-    });
-
-    if (!response.ok) {
-      console.error(`Directus story error: ${response.status}`);
-      return null;
-    }
-
-    const result = (await response.json()) as { data?: StoryItem[] };
+    const result = await directusJson<StoryResponse>(
+      `/items/stories?${params.toString()}`,
+      { authenticated: true }
+    );
     return result.data?.[0] ?? null;
   } catch (error) {
     console.error("Directus story error:", error);
@@ -140,7 +119,6 @@ export async function getStoryBySlug(slug: string): Promise<StoryItem | null> {
   params.set("filter[slug][_eq]", slug);
   params.set("limit", "1");
   params.set("fields", storyFields());
-
   return fetchStory(params);
 }
 
@@ -157,10 +135,7 @@ export async function getStoryByLegacySlug(legacySlug: string): Promise<StoryIte
     story = await fetchStory(params);
   }
 
-  if (!story) {
-    story = await getStoryBySlug(legacySlug);
-  }
-
+  if (!story) story = await getStoryBySlug(legacySlug);
   if (!story) return null;
 
   const legacyCopy = LEGACY_STORY_COPY[legacySlug];
