@@ -147,15 +147,56 @@ export interface RouteItem {
   points?: RoutePoint[];
 }
 
+const EMPTY_HOMEPAGE: HomepageContent = {
+  id: 0,
+  hero_eyebrow: null,
+  hero_title: null,
+  hero_description: null,
+  hero_image: null,
+  hero_primary_label: null,
+  hero_primary_url: null,
+  hero_secondary_label: null,
+  hero_secondary_url: null,
+};
+
+const DEFAULT_SITE_SETTINGS: SiteSettings = {
+  id: 0,
+  site_name: "Visit Roncegno",
+  tagline: null,
+  logo: null,
+  logo_light: null,
+  footer_description: null,
+  contact_email: null,
+  contact_phone: null,
+  address: null,
+  facebook_url: null,
+  instagram_url: null,
+  default_seo_title: "Visit Roncegno",
+  default_seo_description: null,
+  default_social_image: null,
+};
+
 function queryPath(collection: string, params: URLSearchParams) {
   return `/items/${collection}?${params.toString()}`;
 }
 
+function reportPublicReadFallback(scope: string, error: unknown) {
+  console.warn("Directus public read unavailable; using fallback", {
+    scope,
+    message: error instanceof Error ? error.message : "Unknown error",
+  });
+}
+
 export async function getHomepage(): Promise<HomepageContent> {
-  const result = await directusJson<DirectusResponse<HomepageContent>>(
-    "/items/homepage"
-  );
-  return result.data;
+  try {
+    const result = await directusJson<DirectusResponse<HomepageContent>>(
+      "/items/homepage"
+    );
+    return result.data;
+  } catch (error) {
+    reportPublicReadFallback("homepage", error);
+    return EMPTY_HOMEPAGE;
+  }
 }
 
 export async function getExperiences(): Promise<Experience[]> {
@@ -165,10 +206,15 @@ export async function getExperiences(): Promise<Experience[]> {
   params.set("sort", "sort");
   params.set("fields", "id,status,sort,title,slug,description,image,link,featured");
 
-  const result = await directusJson<DirectusResponse<Experience[]>>(
-    queryPath("experiences", params)
-  );
-  return result.data;
+  try {
+    const result = await directusJson<DirectusResponse<Experience[]>>(
+      queryPath("experiences", params)
+    );
+    return result.data;
+  } catch (error) {
+    reportPublicReadFallback("experiences", error);
+    return [];
+  }
 }
 
 export function getDirectusAssetUrl(fileId: string | null | undefined): string | null {
@@ -185,10 +231,15 @@ export async function getMapPlaces(): Promise<MapPlace[]> {
     "id,title,slug,summary,image,latitude,longitude,map_label,map_icon,map_priority"
   );
 
-  const result = await directusJson<DirectusResponse<MapPlace[]>>(
-    queryPath("places", params)
-  );
-  return result.data;
+  try {
+    const result = await directusJson<DirectusResponse<MapPlace[]>>(
+      queryPath("places", params)
+    );
+    return result.data;
+  } catch (error) {
+    reportPublicReadFallback("map-places", error);
+    return [];
+  }
 }
 
 export async function getUpcomingEvents(): Promise<EventItem[]> {
@@ -216,10 +267,15 @@ export async function getUpcomingEvents(): Promise<EventItem[]> {
     ].join(",")
   );
 
-  const result = await directusJson<DirectusResponse<EventItem[]>>(
-    queryPath("events", params)
-  );
-  return result.data;
+  try {
+    const result = await directusJson<DirectusResponse<EventItem[]>>(
+      queryPath("events", params)
+    );
+    return result.data;
+  } catch (error) {
+    reportPublicReadFallback("upcoming-events", error);
+    return [];
+  }
 }
 
 export async function getFeaturedPlaces(): Promise<PlaceItem[]> {
@@ -248,17 +304,27 @@ export async function getFeaturedPlaces(): Promise<PlaceItem[]> {
     ].join(",")
   );
 
-  const result = await directusJson<DirectusResponse<PlaceItem[]>>(
-    queryPath("places", params)
-  );
-  return result.data;
+  try {
+    const result = await directusJson<DirectusResponse<PlaceItem[]>>(
+      queryPath("places", params)
+    );
+    return result.data;
+  } catch (error) {
+    reportPublicReadFallback("featured-places", error);
+    return [];
+  }
 }
 
 export async function getSiteSettings(): Promise<SiteSettings> {
-  const result = await directusJson<DirectusResponse<SiteSettings>>(
-    "/items/site_settings"
-  );
-  return result.data;
+  try {
+    const result = await directusJson<DirectusResponse<SiteSettings>>(
+      "/items/site_settings"
+    );
+    return result.data;
+  } catch (error) {
+    reportPublicReadFallback("site-settings", error);
+    return DEFAULT_SITE_SETTINGS;
+  }
 }
 
 export async function getRouteBySlug(slug: string): Promise<RouteItem | null> {
@@ -268,37 +334,42 @@ export async function getRouteBySlug(slug: string): Promise<RouteItem | null> {
   params.set("limit", "1");
   params.set("fields", "*,category.name");
 
-  const result = await directusJson<DirectusResponse<RouteItem[]>>(
-    queryPath("routes", params)
-  );
-  const route = result.data[0];
-  if (!route) return null;
+  try {
+    const result = await directusJson<DirectusResponse<RouteItem[]>>(
+      queryPath("routes", params)
+    );
+    const route = result.data[0];
+    if (!route) return null;
 
-  const pointParams = new URLSearchParams();
-  pointParams.set("filter[route][_eq]", String(route.id));
-  pointParams.set("sort", "sort");
-  pointParams.set(
-    "fields",
-    [
-      "id",
-      "sort",
-      "title",
-      "description",
-      "latitude",
-      "longitude",
-      "highlight",
-      "place.id",
-      "place.title",
-      "place.slug",
-      "place.image",
-      "place.latitude",
-      "place.longitude",
-    ].join(",")
-  );
+    const pointParams = new URLSearchParams();
+    pointParams.set("filter[route][_eq]", String(route.id));
+    pointParams.set("sort", "sort");
+    pointParams.set(
+      "fields",
+      [
+        "id",
+        "sort",
+        "title",
+        "description",
+        "latitude",
+        "longitude",
+        "highlight",
+        "place.id",
+        "place.title",
+        "place.slug",
+        "place.image",
+        "place.latitude",
+        "place.longitude",
+      ].join(",")
+    );
 
-  const pointsResult = await directusJson<DirectusResponse<RoutePoint[]>>(
-    queryPath("route_points", pointParams)
-  );
+    const pointsResult = await directusJson<DirectusResponse<RoutePoint[]>>(
+      queryPath("route_points", pointParams)
+    );
 
-  return { ...route, points: pointsResult.data };
+    return { ...route, points: pointsResult.data };
+  } catch (error) {
+    reportPublicReadFallback(`route:${slug}`, error);
+    return null;
+  }
 }
