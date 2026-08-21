@@ -53,12 +53,17 @@ export async function directusFetch(
   } = options;
 
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+  let timedOut = false;
+  const timeout = setTimeout(() => {
+    timedOut = true;
+    controller.abort();
+  }, timeoutMs);
   const url = `${DIRECTUS_URL}${path.startsWith("/") ? path : `/${path}`}`;
 
+  const abortFromCaller = () => controller.abort();
   if (signal) {
     if (signal.aborted) controller.abort();
-    else signal.addEventListener("abort", () => controller.abort(), { once: true });
+    else signal.addEventListener("abort", abortFromCaller, { once: true });
   }
 
   try {
@@ -69,12 +74,14 @@ export async function directusFetch(
       signal: controller.signal,
     });
   } catch (error) {
-    if (controller.signal.aborted) {
+    if (timedOut) {
       throw new DirectusRequestError(
         `Directus request timed out after ${timeoutMs}ms`,
         path
       );
     }
+
+    if (signal?.aborted) throw error;
 
     throw new DirectusRequestError(
       error instanceof Error ? error.message : "Directus request failed",
@@ -82,6 +89,7 @@ export async function directusFetch(
     );
   } finally {
     clearTimeout(timeout);
+    signal?.removeEventListener("abort", abortFromCaller);
   }
 }
 
