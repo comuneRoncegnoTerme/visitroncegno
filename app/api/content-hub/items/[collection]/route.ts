@@ -28,11 +28,8 @@ export async function GET(
   }
 
   try {
-    const token = process.env.DIRECTUS_TOKEN?.trim();
-    if (!token) return contentHubUnavailableResponse();
-
     const config = contentHubCollections[collection];
-    const directusFields = await getDirectusCollectionFields(collection, token);
+    const directusFields = await getDirectusCollectionFields(collection);
     const fields = directusFields
       ? contentHubFieldsForSchema(collection, directusFields)
       : config.fields.filter((field) => ![
@@ -82,10 +79,7 @@ export async function POST(
   }
 
   try {
-    const token = process.env.DIRECTUS_TOKEN?.trim();
-    if (!token) return contentHubUnavailableResponse();
-
-    const directusFields = await getDirectusCollectionFields(collection, token);
+    const directusFields = await getDirectusCollectionFields(collection);
     const payload = sanitizeContentHubPayload(
       collection,
       body as Record<string, unknown>,
