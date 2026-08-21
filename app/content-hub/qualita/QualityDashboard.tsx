@@ -21,24 +21,42 @@ type Problem = {
   href: string;
 };
 
-type Props = {
-  referenceTime: number;
+type CollectionResult = {
+  unauthorized: boolean;
+  collection: keyof Data;
+  data: Item[];
+  serverTime: number | null;
 };
 
-async function fetchCollection(collection: keyof Data, signal: AbortSignal) {
+async function fetchCollection(
+  collection: keyof Data,
+  signal: AbortSignal
+): Promise<CollectionResult> {
   const response = await fetch(`/api/content-hub/items/${collection}`, {
     cache: "no-store",
     signal,
   });
   const json = await response.json().catch(() => null);
-  if (response.status === 401) return { unauthorized: true as const, collection, data: [] };
+  const responseDate = response.headers.get("date");
+  const parsedTime = responseDate ? Date.parse(responseDate) : Number.NaN;
+  const serverTime = Number.isNaN(parsedTime) ? null : parsedTime;
+
+  if (response.status === 401) {
+    return { unauthorized: true, collection, data: [], serverTime };
+  }
   if (!response.ok) throw new Error(json?.error ?? `Errore ${collection}`);
-  return { unauthorized: false as const, collection, data: json?.data ?? [] };
+  return {
+    unauthorized: false,
+    collection,
+    data: json?.data ?? [],
+    serverTime,
+  };
 }
 
-export default function QualityDashboard({ referenceTime }: Props) {
+export default function QualityDashboard() {
   const router = useRouter();
   const [data, setData] = useState<Data>({ events: [], places: [], routes: [] });
+  const [referenceTime, setReferenceTime] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -54,10 +72,14 @@ export default function QualityDashboard({ referenceTime }: Props) {
           router.replace("/content-hub/login");
           return;
         }
+
         setData(
           Object.fromEntries(
             results.map((result) => [result.collection, result.data])
           ) as Data
+        );
+        setReferenceTime(
+          results.find((result) => result.serverTime !== null)?.serverTime ?? null
         );
       })
       .catch((reason: unknown) => {
@@ -116,6 +138,7 @@ export default function QualityDashboard({ referenceTime }: Props) {
       if (!event.image) add(event, "Eventi", "Manca l'immagine", "/content-hub/eventi", "image");
       if (!event.location_name) add(event, "Eventi", "Manca il luogo", "/content-hub/eventi", "location");
       if (
+        referenceTime !== null &&
         event.end_date &&
         new Date(String(event.end_date)).getTime() < referenceTime
       ) {
