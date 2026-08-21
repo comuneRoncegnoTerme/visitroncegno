@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import type { HomepageContent } from "@/lib/directus";
 import styles from "./editor.module.css";
 
@@ -9,6 +10,7 @@ interface HomepageEditorProps {
 }
 
 export default function HomepageEditor({ homepage }: HomepageEditorProps) {
+  const router = useRouter();
   const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [message, setMessage] = useState("");
 
@@ -35,27 +37,32 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
       Object.keys(initialValues).map((key) => [key, String(form.get(key) ?? "")])
     );
 
-    const response = await fetch("/api/content-hub/homepage", {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+    try {
+      const response = await fetch("/api/content-hub/homepage", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const result = await response.json().catch(() => null);
 
-    const result = await response.json().catch(() => null);
+      if (response.status === 401) {
+        router.replace("/content-hub/login");
+        return;
+      }
 
-    if (response.status === 401) {
-      window.location.href = "/content-hub/login";
-      return;
-    }
+      if (!response.ok) {
+        setStatus("error");
+        setMessage(result?.error ?? "Salvataggio non riuscito");
+        return;
+      }
 
-    if (!response.ok) {
+      setStatus("saved");
+      setMessage("Modifiche salvate. La homepage pubblica usa già questi contenuti.");
+      router.refresh();
+    } catch {
       setStatus("error");
-      setMessage(result?.error ?? "Salvataggio non riuscito");
-      return;
+      setMessage("Connessione interrotta durante il salvataggio");
     }
-
-    setStatus("saved");
-    setMessage("Modifiche salvate. La homepage pubblica usa già questi contenuti.");
   }
 
   return (
@@ -84,7 +91,11 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
 
         <label className={styles.full}>
           <span>Descrizione</span>
-          <textarea name="hero_description" rows={5} defaultValue={initialValues.hero_description} />
+          <textarea
+            name="hero_description"
+            rows={5}
+            defaultValue={initialValues.hero_description}
+          />
         </label>
 
         <label>
@@ -111,7 +122,11 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
           <button type="submit" disabled={status === "saving"}>
             {status === "saving" ? "Salvataggio…" : "Salva modifiche"}
           </button>
-          {message && <p className={status === "error" ? styles.error : styles.success}>{message}</p>}
+          {message && (
+            <p className={status === "error" ? styles.error : styles.success}>
+              {message}
+            </p>
+          )}
         </div>
       </form>
     </section>
