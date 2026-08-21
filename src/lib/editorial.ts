@@ -38,7 +38,7 @@ export type EditorialItem = {
 async function fetchItems(collection: string, params: URLSearchParams) {
   try {
     const response = await fetch(`${DIRECTUS_URL}/items/${collection}?${params}`, {
-      next: { revalidate: 300 },
+      cache: "no-store",
     });
     if (!response.ok) return [];
     const result = (await response.json()) as { data?: EditorialItem[] };
