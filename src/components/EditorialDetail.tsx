@@ -2,7 +2,7 @@ import Link from "next/link";
 import { getDirectusAssetUrl, getSiteSettings } from "@/lib/directus";
 import { getEditorialList, plainText, type EditorialItem } from "@/lib/editorial";
 import { getRoutesForPlace } from "@/lib/place-routes";
-import { placeCategory } from "@/lib/place-taxonomy";
+import { isCompactPlace, placeEditorialHeading, placeHref } from "@/lib/place-detail";
 import EditorialHeader from "./EditorialHeader";
 import HomeMap from "./HomeMap";
 import SiteFooter from "./SiteFooter";
@@ -15,14 +15,6 @@ const FALLBACK_HERO = "/images/hero/roncegno-hero.jpg";
 function normalizeUrl(value?: string | null) {
   if (!value) return null;
   return /^https?:\/\//i.test(value) ? value : `https://${value}`;
-}
-
-function placeHeading(item: EditorialItem) {
-  const category = placeCategory({ map_icon: item.map_icon, map_label: item.map_label });
-  if (category === "food") return "Sapori da scoprire.";
-  if (category === "sleep") return "Un posto dove fermarsi.";
-  if (category === "services") return "Informazioni utili sul territorio.";
-  return "Una storia da incontrare.";
 }
 
 function formatDate(value?: string | null) {
@@ -56,9 +48,11 @@ export default async function EditorialDetail({ item, type }: Props) {
   const website = normalizeUrl(item.website_url);
   const booking = normalizeUrl(item.booking_url);
   const categoryLabel = item.map_label ?? item.category?.name ?? (type === "place" ? "Luogo da conoscere" : "Evento");
+  const compactPlace = type === "place" && isCompactPlace(item);
   const practicalInfo = type === "place" && Boolean(
-    item.address || item.phone || item.email || website || booking ||
-    item.access_notes || item.parking_notes || item.public_transport_notes
+    item.address || item.phone || item.email || website || booking || item.opening_hours ||
+    item.ticket_info || item.visit_duration || item.services_notes || item.capacity_notes ||
+    item.restrictions_notes || item.access_notes || item.parking_notes || item.public_transport_notes
   );
   const hasCoordinates = typeof item.latitude === "number" && typeof item.longitude === "number";
   const related = relatedItems.filter((candidate) => candidate.id !== item.id).slice(0, 3);
@@ -84,28 +78,37 @@ export default async function EditorialDetail({ item, type }: Props) {
       <section className={styles.factStrip} aria-label="Informazioni principali">
         <div><small>{type === "event" ? "Quando" : "Tipologia"}</small><strong>{type === "event" ? eventDate ?? "Data in aggiornamento" : categoryLabel}</strong></div>
         <div><small>Dove</small><strong>{location}</strong></div>
-        {type === "place" && item.phone && <div><small>Telefono</small><a href={`tel:${item.phone}`}>{item.phone}</a></div>}
+        {type === "place" && item.opening_hours && <div><small>Orari</small><strong>{item.opening_hours}</strong></div>}
+        {type === "place" && item.capacity_notes && <div><small>{item.place_type === "parking" ? "Posti / capienza" : "Capienza"}</small><strong>{item.capacity_notes}</strong></div>}
         {type === "event" && item.end_date && <div><small>Fino a</small><strong>{formatDate(item.end_date)}</strong></div>}
       </section>
 
       <section className={styles.detailGrid}>
-        <article>
-          <p className={styles.kicker}>{type === "place" ? "Conosci il territorio" : "Vivi Roncegno"}</p>
-          <h2>{type === "place" ? placeHeading(item) : "Tutto quello che c’è da sapere."}</h2>
-          {paragraphs.length ? paragraphs.map((text, index) => <p key={index}>{text}</p>) : (
-            <p>Le informazioni complete saranno disponibili a breve. Nel frattempo trovi qui sotto posizione, contatti e indicazioni utili disponibili.</p>
-          )}
-        </article>
+        {(!compactPlace || paragraphs.length > 0) && (
+          <article>
+            <p className={styles.kicker}>{type === "place" ? "Conosci il territorio" : "Vivi Roncegno"}</p>
+            <h2>{type === "place" ? placeEditorialHeading(item) : "Tutto quello che c’è da sapere."}</h2>
+            {paragraphs.length ? paragraphs.map((text, index) => <p key={index}>{text}</p>) : (
+              <p>Le informazioni complete saranno disponibili a breve. Nel frattempo trovi qui posizione, contatti e indicazioni pratiche disponibili.</p>
+            )}
+          </article>
+        )}
 
         <aside>
           {type === "event" && item.start_date && <div><small>Quando</small><strong>{eventDate}</strong></div>}
           <div><small>Dove</small><strong>{location}</strong></div>
+          {item.opening_hours && <div><small>Orari</small><strong>{item.opening_hours}</strong></div>}
+          {item.ticket_info && <div><small>Biglietti / accesso</small><strong>{item.ticket_info}</strong></div>}
+          {item.visit_duration && <div><small>Durata consigliata</small><strong>{item.visit_duration}</strong></div>}
+          {item.capacity_notes && <div><small>{item.place_type === "parking" ? "Posti / capienza" : "Capienza"}</small><strong>{item.capacity_notes}</strong></div>}
+          {item.restrictions_notes && <div><small>Limitazioni</small><strong>{item.restrictions_notes}</strong></div>}
+          {item.services_notes && <div><small>Servizi</small><strong>{item.services_notes}</strong></div>}
           {item.phone && <div><small>Telefono</small><a className={styles.inlineContact} href={`tel:${item.phone}`}>{item.phone}</a></div>}
           {item.email && <div><small>Email</small><a className={styles.inlineContact} href={`mailto:${item.email}`}>{item.email}</a></div>}
           {practicalInfo && (item.access_notes || item.parking_notes || item.public_transport_notes) && (
             <div className={styles.practicalNotes}>
-              {item.access_notes && <p><small>Accesso</small><span>{item.access_notes}</span></p>}
-              {item.parking_notes && <p><small>Parcheggio</small><span>{item.parking_notes}</span></p>}
+              {item.access_notes && <p><small>Accesso / accessibilità</small><span>{item.access_notes}</span></p>}
+              {item.parking_notes && item.place_type !== "parking" && <p><small>Parcheggio</small><span>{item.parking_notes}</span></p>}
               {item.public_transport_notes && <p><small>Trasporto pubblico</small><span>{item.public_transport_notes}</span></p>}
             </div>
           )}
@@ -114,7 +117,6 @@ export default async function EditorialDetail({ item, type }: Props) {
             {website && <a href={website} target="_blank" rel="noreferrer">Sito ufficiale ↗</a>}
             {hasCoordinates && <a href={`https://www.openstreetmap.org/?mlat=${item.latitude}&mlon=${item.longitude}#map=16/${item.latitude}/${item.longitude}`} target="_blank" rel="noreferrer">Come arrivare ↗</a>}
           </div>
-          <p>Verifica sempre eventuali aggiornamenti prima della partenza.</p>
         </aside>
       </section>
 
@@ -138,13 +140,17 @@ export default async function EditorialDetail({ item, type }: Props) {
                 longitude: item.longitude as number,
                 mapLabel: item.map_label ?? null,
                 mapIcon: item.map_icon ?? null,
+                placeType: item.place_type,
+                detailMode: item.detail_mode,
+                canonicalPath: item.canonical_path,
+                externalDetailUrl: item.external_detail_url,
               }]}
             />
           </div>
         </section>
       )}
 
-      {type === "place" && relatedRoutes.length > 0 && (
+      {type === "place" && !compactPlace && relatedRoutes.length > 0 && (
         <section className={styles.relatedEditorial}>
           <div className={styles.sectionHeading}>
             <div><p className={styles.kicker}>Da qui puoi partire</p><h2>Percorsi collegati a questo luogo.</h2></div>
@@ -173,7 +179,7 @@ export default async function EditorialDetail({ item, type }: Props) {
         </section>
       )}
 
-      {related.length > 0 && (
+      {!compactPlace && related.length > 0 && (
         <section className={styles.relatedEditorial}>
           <div className={styles.sectionHeading}>
             <div><p className={styles.kicker}>Continua a esplorare</p><h2>Potrebbe interessarti anche.</h2></div>
@@ -182,8 +188,9 @@ export default async function EditorialDetail({ item, type }: Props) {
           <div className={styles.relatedGrid}>
             {related.map((relatedItem) => {
               const relatedImage = getDirectusAssetUrl(relatedItem.image) ?? FALLBACK_HERO;
+              const href = type === "place" ? placeHref(relatedItem) : `/eventi/${relatedItem.slug}`;
               return (
-                <Link className={styles.relatedCard} key={relatedItem.id} href={`/${type === "place" ? "luoghi" : "eventi"}/${relatedItem.slug}`}>
+                <Link className={styles.relatedCard} key={relatedItem.id} href={href}>
                   <div className={styles.relatedImage} style={{ backgroundImage: `url('${relatedImage}')` }} />
                   <div>
                     <small>{relatedItem.map_label ?? relatedItem.category?.name ?? (type === "place" ? "Luogo" : "Evento")}</small>
