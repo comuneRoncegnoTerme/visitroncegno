@@ -20,6 +20,17 @@ async function directus(path) {
   return response.json();
 }
 
+async function tryDirectus(path) {
+  try {
+    return { ok: true, result: await directus(path) };
+  } catch (error) {
+    return {
+      ok: false,
+      error: error instanceof Error ? error.message : String(error),
+    };
+  }
+}
+
 function normalize(value) {
   return (value || "")
     .normalize("NFD")
@@ -55,7 +66,46 @@ function score(place, file) {
   return points;
 }
 
+async function auditRelations() {
+  console.log("Directus relation audit: route_points");
+
+  const [relationsCheck, routeFieldCheck, placeFieldCheck] = await Promise.all([
+    tryDirectus("/relations/route_points"),
+    tryDirectus("/fields/route_points/route"),
+    tryDirectus("/fields/route_points/place"),
+  ]);
+
+  if (!relationsCheck.ok) {
+    console.log(`  relations metadata: unavailable (${relationsCheck.error})`);
+  } else {
+    const relations = relationsCheck.result.data || [];
+    for (const field of ["route", "place"]) {
+      const relation = relations.find((entry) => entry.field === field);
+      if (!relation) {
+        console.log(`  [BROKEN] ${field}: no relation metadata found`);
+      } else {
+        console.log(`  [OK] ${field}: ${relation.collection}.${relation.field} -> ${relation.related_collection}`);
+      }
+    }
+  }
+
+  for (const [fieldName, check] of [["route", routeFieldCheck], ["place", placeFieldCheck]]) {
+    if (!check.ok) {
+      console.log(`  [WARN] field ${fieldName}: metadata unavailable (${check.error})`);
+      continue;
+    }
+
+    const field = check.result.data;
+    const special = Array.isArray(field?.meta?.special) ? field.meta.special.join(",") : field?.meta?.special || "-";
+    console.log(`  field ${fieldName}: type=${field?.type || "-"} special=${special}`);
+  }
+
+  console.log("");
+}
+
 async function main() {
+  await auditRelations();
+
   const routeParams = new URLSearchParams({
     "filter[slug][_eq]": routeSlug,
     fields: "id,title,slug",
@@ -71,7 +121,7 @@ async function main() {
 
   const pointParams = new URLSearchParams({
     "filter[route][_eq]": String(route.id),
-    fields: "id,sort,title,place.id,place.title,place.slug,place.image",
+    fields: "id,sort,title,route,place.id,place.title,place.slug,place.image",
     sort: "sort",
     limit: "100",
   });
@@ -91,11 +141,25 @@ async function main() {
   console.log(`Points: ${points.length} | Image assets: ${imageFiles.length}`);
   console.log("");
 
+  let unlinked = 0;
   let missing = 0;
 
   for (const point of points) {
     if (!point.place) {
-      console.log(`[${String(point.sort ?? "-").padStart(2, "0")}] ${point.title}: no linked place`);
+      unlinked += 1;
+      console.log(`[UNLINKED] [${String(point.sort ?? "-").padStart(2, "0")}] ${point.title}: route=${point.route ?? "-"}, no linked place`);
+
+      const pseudoPlace = { title: point.title, slug: normalize(point.title).replace(/\s+/g, "-") };
+      const candidates = imageFiles
+        .map((file) => ({ file, score: score(pseudoPlace, file) }))
+        .filter((entry) => entry.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 5);
+
+      for (const { file, score: value } of candidates) {
+        console.log(`  asset candidate score=${value}: ${file.id} | ${file.title || "-"} | ${file.filename_download || "-"}`);
+      }
+      console.log("");
       continue;
     }
 
@@ -124,6 +188,7 @@ async function main() {
     console.log("");
   }
 
+  console.log(`Unlinked route points: ${unlinked}`);
   console.log(`Missing linked place images: ${missing}`);
   console.log("Audit only: no Directus record was modified.");
 }
