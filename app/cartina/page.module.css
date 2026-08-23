@@ -1,0 +1,93 @@
+.page { background: var(--paper); }
+.hero, .mapSection, .guideSection { padding-inline: 5vw; }
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 7vw;
+  padding-top: 170px;
+  padding-bottom: 90px;
+  background: var(--cream);
+}
+
+.eyebrow, .eyebrowLight {
+  margin: 0 0 18px;
+  color: var(--orange);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.hero h1, .sectionHeading h2, .guideIntro h2, .endCta h2 {
+  margin: 0;
+  font-family: Georgia, serif;
+  font-weight: 400;
+  line-height: 0.98;
+}
+
+.hero h1 { font-size: clamp(3.4rem, 7vw, 7.2rem); }
+.heroCopy { align-self: end; max-width: 560px; }
+.heroCopy > p, .sectionHeading > p, .guideIntro > p { color: var(--muted); font-size: 1.05rem; line-height: 1.7; }
+
+.download {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 38px;
+  min-width: 300px;
+  margin-top: 18px;
+  padding: 18px 22px;
+  border-radius: 999px;
+  color: white;
+  background: var(--forest);
+  font-weight: 700;
+}
+
+.mapSection { padding-top: 88px; padding-bottom: 110px; }
+.attribution { margin: 14px 4px 0; color: var(--muted); font-size: 0.76rem; text-align: right; }
+.sectionHeading { display: grid; grid-template-columns: 1fr 0.7fr; gap: 7vw; align-items: end; margin-bottom: 38px; }
+.sectionHeading h2, .guideIntro h2 { font-size: clamp(2.6rem, 5vw, 5rem); }
+.sectionHeading > p { margin: 0; }
+
+.guideSection {
+  display: grid;
+  grid-template-columns: 0.34fr 0.66fr;
+  gap: 5vw;
+  padding-top: 110px;
+  padding-bottom: 110px;
+  background: var(--cream);
+}
+
+.guideIntro { align-self: start; position: sticky; top: 40px; }
+.guideLinks { display: grid; gap: 10px; margin-top: 30px; font-weight: 700; }
+
+.endCta {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 30px;
+  padding: 80px 5vw;
+  color: white;
+  background: var(--forest);
+}
+
+.eyebrowLight { color: #b9d8cc; }
+.endCta h2 { max-width: 820px; font-size: clamp(2.4rem, 5vw, 5.2rem); }
+.endCta a { padding-bottom: 8px; border-bottom: 1px solid currentColor; font-weight: 700; }
+
+@media (max-width: 760px) {
+  .hero, .mapSection, .guideSection { padding-inline: 24px; }
+  .hero { display: block; padding-top: 120px; padding-bottom: 54px; }
+  .hero h1 { font-size: clamp(3rem, 14vw, 4.6rem); }
+  .heroCopy { margin-top: 30px; }
+  .download { width: 100%; min-width: 0; }
+  .mapSection { padding-top: 58px; padding-bottom: 76px; }
+  .attribution { margin-top: 12px; text-align: left; }
+  .sectionHeading { display: block; margin-bottom: 28px; }
+  .sectionHeading > p { margin-top: 20px; }
+  .guideSection { display: block; padding-top: 72px; padding-bottom: 76px; }
+  .guideIntro { position: static; margin-bottom: 34px; }
+  .endCta { display: block; padding: 68px 24px; }
+  .endCta a { display: inline-block; margin-top: 28px; }
+}

@@ -2,6 +2,7 @@ import Link from "next/link";
 import HomeMap from "@/components/HomeMap";
 import FestaHomepageBanner from "@/components/FestaHomepageBanner";
 import MuseumsHomepageBanner from "@/components/MuseumsHomepageBanner";
+import IllustratedMapBanner from "@/components/IllustratedMapBanner";
 import PlanningHomepageSection from "@/components/PlanningHomepageSection";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -107,6 +108,8 @@ export default async function Home() {
       <section className="experiences-section" id="esperienze"><div className="section-shell"><div className="section-heading-row"><div><p className="eyebrow dark">Esperienze</p><h2>Quattro modi di vivere Roncegno</h2></div><a className="text-link" href="#luoghi">Tutte le esperienze<ArrowIcon /></a></div><div className="experience-grid">{experiences.map((experience, index) => { const experienceImage = getDirectusAssetUrl(experience.image); return (<a className="experience-card" href={experience.link ?? "/luoghi"} key={experience.id}><div className="card-background" style={{ backgroundImage: experienceImage ? `url('${experienceImage}')` : undefined }} /><div className="card-overlay" /><span className="card-number">{String(index + 1).padStart(2, "0")}</span><div className="card-content"><h3>{experience.title}</h3>{experience.description && <p>{experience.description}</p>}<span className="round-arrow"><ArrowIcon /></span></div></a>); })}</div></div></section>
 
       <section className="events-section" id="eventi"><div className="section-shell"><div className="section-heading-row"><div><p className="eyebrow accent">Agenda</p><h2>Cosa succede a Roncegno</h2></div><a className="button button-dark-outline" href="#eventi">Vedi tutti gli eventi<ArrowIcon /></a></div><div className="events-list">{events.map((event) => { const date = formatEventDate(event.start_date); const eventImage = getDirectusAssetUrl(event.image) ?? "/images/events/evento-fallback.jpg"; const location = event.location_name ?? event.place?.title ?? "Roncegno Terme"; const category = event.category?.name ?? "Evento"; return (<article className="event-row" key={event.id}><div className="event-date"><strong>{date.day}</strong><span>{date.month}</span></div><div className="event-image" style={{ backgroundImage: `url('${eventImage}')` }} /><div className="event-copy"><div className="event-meta"><span>{category}</span><span className="event-location"><MapPinIcon />{location}</span></div><h3>{event.title}</h3></div><a className="event-arrow" href={`/eventi/${event.slug}`} aria-label={`Scopri ${event.title}`}><ArrowIcon /></a></article>); })}</div></div></section>
+
+      <IllustratedMapBanner />
 
       <section className="map-section" id="mappa"><div className="map-panel"><HomeMap places={homeMapPlaces} /></div><div className="map-copy"><p className="eyebrow light">Esplora la mappa</p><h2>Il territorio,<br />tutto in un luogo.</h2><p>Trova sentieri, luoghi di interesse, parcheggi, strutture ricettive, attività e servizi utili per organizzare la tua visita.</p><Link className="button button-light" href="/organizza-la-visita#mappa-visita">Mappa e informazioni utili<ArrowIcon /></Link></div></section>
 

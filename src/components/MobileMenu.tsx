@@ -42,8 +42,9 @@ export default function MobileMenu() {
             <Link href="/luoghi" onClick={() => setOpen(false)}>Luoghi <span>01</span></Link>
             <Link href="/percorsi" onClick={() => setOpen(false)}>Percorsi <span>02</span></Link>
             <Link href="/eventi" onClick={() => setOpen(false)}>Eventi <span>03</span></Link>
-            <Link href="/#mappa" onClick={() => setOpen(false)}>Mappa <span>04</span></Link>
-            <Link href="/organizza-la-visita" onClick={() => setOpen(false)}>Organizza la visita <span>05</span></Link>
+            <Link href="/cartina" onClick={() => setOpen(false)}>Cartina <span>04</span></Link>
+            <Link href="/#mappa" onClick={() => setOpen(false)}>Mappa <span>05</span></Link>
+            <Link href="/organizza-la-visita" onClick={() => setOpen(false)}>Organizza la visita <span>06</span></Link>
           </nav>
 
           <div className={styles.mobileShortcuts}>
