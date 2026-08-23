@@ -1,4 +1,5 @@
 .shell {
+  position: relative;
   overflow: hidden;
   border: 1px solid rgba(23, 32, 29, 0.16);
   border-radius: 24px;
@@ -37,6 +38,8 @@
 .controls button:disabled { opacity: 0.35; cursor: default; }
 .controls span { min-width: 48px; font-size: 0.78rem; font-weight: 700; text-align: center; }
 .controls .reset { margin-left: auto; }
+.controls .tourButton { color: white; background: var(--forest); border-color: var(--forest); }
+.tourButton span { min-width: auto; color: #f5c45d; font-size: 1rem; }
 
 .frame {
   overflow: auto;
@@ -48,8 +51,84 @@
 }
 
 .frame[data-dragging="true"] { cursor: grabbing; }
-.frame:fullscreen { height: 100vh; background: #e9f5f8; }
-.frame img { display: block; max-width: none; height: auto; user-select: none; }
+.shell:fullscreen { border: 0; border-radius: 0; background: #e9f5f8; }
+.shell:fullscreen .frame { height: calc(100vh - 62px); }
+.canvas { position: relative; min-width: 100%; transition: width 900ms cubic-bezier(.2,.72,.2,1); }
+.canvas img { display: block; width: 100%; max-width: none; height: auto; user-select: none; }
+
+.hotspot {
+  position: absolute;
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 2px solid white;
+  border-radius: 50%;
+  color: white;
+  background: var(--forest);
+  box-shadow: 0 6px 22px rgba(13,42,34,.32);
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+
+.hotspot::before, .hotspotActive::after {
+  position: absolute;
+  inset: -7px;
+  content: "";
+  border: 1px solid rgba(255,255,255,.9);
+  border-radius: inherit;
+  animation: hotspotPulse 2.4s ease-out infinite;
+}
+
+.hotspot span { font-size: .63rem; font-weight: 800; letter-spacing: .03em; }
+.hotspot b {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  width: max-content;
+  max-width: 180px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  color: var(--ink);
+  background: rgba(255,255,255,.94);
+  box-shadow: 0 7px 24px rgba(13,42,34,.2);
+  font-size: .72rem;
+  opacity: 0;
+  transform: translate(-50%, 5px);
+  transition: opacity .2s ease, transform .2s ease;
+  pointer-events: none;
+}
+.hotspot:hover b, .hotspot:focus-visible b, .hotspotActive b { opacity: 1; transform: translate(-50%, 0); }
+.hotspotActive { background: var(--orange); transform: translate(-50%, -50%) scale(1.16); }
+
+.tourPath { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.tourPath polyline { fill: none; stroke: rgba(255,255,255,.88); stroke-width: .42; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1.3 1.4; filter: drop-shadow(0 2px 2px rgba(13,42,34,.45)); animation: routeFlow 18s linear infinite; }
+
+.storyCard {
+  position: absolute;
+  z-index: 5;
+  right: 24px;
+  bottom: 24px;
+  width: min(390px, calc(100% - 48px));
+  padding: 26px;
+  border-radius: 20px;
+  color: white;
+  background: rgba(13,42,34,.96);
+  box-shadow: 0 22px 60px rgba(7,24,19,.36);
+  backdrop-filter: blur(14px);
+  animation: cardIn .38s cubic-bezier(.2,.72,.2,1) both;
+}
+.storyCard small { color: #b9d8cc; font-size: .68rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+.storyCard h3 { margin: 8px 34px 8px 0; font-family: Georgia, serif; font-size: 2rem; font-weight: 400; line-height: 1; }
+.storyCard p { margin: 0; color: rgba(255,255,255,.78); font-size: .9rem; line-height: 1.55; }
+.closeCard { position: absolute; top: 14px; right: 14px; width: 34px; height: 34px; border: 1px solid rgba(255,255,255,.3); border-radius: 50%; color: white; background: transparent; font-size: 1.2rem; cursor: pointer; }
+.storyActions { display: flex; align-items: center; gap: 10px; margin-top: 18px; }
+.storyActions a { flex: 1; padding: 11px 15px; border-radius: 999px; color: var(--forest); background: white; font-size: .82rem; font-weight: 800; text-align: center; }
+.storyActions button { width: 42px; height: 42px; border: 1px solid rgba(255,255,255,.3); border-radius: 50%; color: white; background: transparent; cursor: pointer; }
+
+@keyframes hotspotPulse { from { opacity: .75; transform: scale(.75); } to { opacity: 0; transform: scale(1.65); } }
+@keyframes routeFlow { to { stroke-dashoffset: -30; } }
+@keyframes cardIn { from { opacity: 0; transform: translateY(18px) scale(.97); } }
 
 .hint {
   display: none;
@@ -67,8 +146,20 @@
   .controls button { min-width: 44px; min-height: 44px; padding-inline: 12px; }
   .controls span { display: none; }
   .controls .reset { margin-left: 0; }
+  .controls .tourButton { flex: 1; padding-inline: 10px; font-size: .75rem; }
+  .tourButton span { display: inline; }
   .controls .fullscreen { margin-left: auto; padding-inline: 0; font-size: 0; }
   .controls .fullscreen::after { content: "⛶"; font-size: 1.25rem; }
   .frame { height: 64vh; min-height: 460px; }
+  .frame::after { display: block; height: 220px; content: ""; }
+  .hotspot { width: 32px; height: 32px; }
+  .hotspot b { display: none; }
+  .storyCard { right: 10px; bottom: 48px; width: calc(100% - 20px); padding: 21px; border-radius: 18px; }
+  .storyCard h3 { font-size: 1.7rem; }
   .hint { display: block; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .canvas, .hotspot b { transition: none; }
+  .hotspot::before, .hotspotActive::after, .tourPath polyline, .storyCard { animation: none; }
 }
