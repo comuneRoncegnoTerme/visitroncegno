@@ -5,8 +5,9 @@ import { getSiteSettings } from "@/lib/directus";
 import styles from "./page.module.css";
 
 export const metadata = {
-  title: "I musei di Roncegno Terme | Visit Roncegno",
+  title: "Musei di Roncegno Terme",
   description: "Due luoghi identitari per scoprire la memoria, il lavoro e i suoni di Roncegno Terme.",
+  alternates: { canonical: "/musei" },
 };
 
 export default async function MuseumsPage() {

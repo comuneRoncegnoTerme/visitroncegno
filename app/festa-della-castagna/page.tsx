@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import styles from "./page.module.css";
+
+export const metadata: Metadata = {
+  title: "Festa della Castagna 2026",
+  description: "Programma, sapori, musica e informazioni utili per la Festa della Castagna di Roncegno Terme, dal 23 al 25 ottobre 2026.",
+  alternates: { canonical: "/festa-della-castagna" },
+};
 
 const stories = [
   ["01", "Il castagno nella storia", "/it/sentieri/il-castagno-nella-storia-3-1", "Una storia lunga secoli, intrecciata alla vita quotidiana e al paesaggio di Roncegno."],

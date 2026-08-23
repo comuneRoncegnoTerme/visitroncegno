@@ -73,6 +73,10 @@ export interface PlaceItem {
   map_label: string | null;
   map_icon: string | null;
   show_on_map: boolean;
+  place_type?: import("@/lib/place-detail").PlaceType | null;
+  detail_mode?: import("@/lib/place-detail").PlaceDetailMode | null;
+  canonical_path?: string | null;
+  external_detail_url?: string | null;
   category?: { name: string } | null;
 }
 
@@ -300,6 +304,10 @@ export async function getFeaturedPlaces(): Promise<PlaceItem[]> {
       "map_label",
       "map_icon",
       "show_on_map",
+      "place_type",
+      "detail_mode",
+      "canonical_path",
+      "external_detail_url",
       "category.name",
     ].join(",")
   );

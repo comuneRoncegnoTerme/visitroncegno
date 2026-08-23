@@ -5,8 +5,9 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/content-hub", "/api/content-hub"],
+      disallow: ["/content-hub/", "/api/content-hub/"],
     },
     sitemap: "https://www.visitroncegno.it/sitemap.xml",
+    host: "https://www.visitroncegno.it",
   };
 }

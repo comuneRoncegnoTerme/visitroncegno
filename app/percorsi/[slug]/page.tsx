@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import RouteMap from "@/components/RouteMap";
@@ -15,9 +16,22 @@ import {
   type RoutePoint,
 } from "@/lib/directus";
 import { getLegacyStoryPath } from "@/lib/stories";
+import { descriptionFrom, pageMetadata } from "@/lib/seo";
 
 interface RoutePageProps {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: RoutePageProps): Promise<Metadata> {
+  const route = await getRouteBySlug((await params).slug);
+  if (!route) return { title: "Percorso non trovato", robots: { index: false, follow: false } };
+
+  return pageMetadata({
+    title: route.title,
+    description: descriptionFrom(route.summary ?? route.description, `Scopri il percorso ${route.title} a Roncegno Terme: itinerario, difficoltà e informazioni utili.`),
+    path: `/percorsi/${route.slug}`,
+    image: getDirectusAssetUrl(route.image),
+  });
 }
 
 interface PointPlaceMedia {

@@ -5,9 +5,10 @@ import { getSiteSettings } from "@/lib/directus";
 import styles from "./page.module.css";
 
 export const metadata = {
-  title: "Memoria · Na vòlta a Ronzégno | Visit Roncegno",
+  title: "Memoria · Na vòlta a Ronzégno",
   description:
     "Fotografie, testimonianze e manoscritti del Progetto Memoria Na vòlta a Ronzégno.",
+  alternates: { canonical: "/memoria" },
 };
 
 const archiveSections = [

@@ -1,13 +1,27 @@
+import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { getDirectusAssetUrl, getSiteSettings } from "@/lib/directus";
-import { getStoryBySlug, storyParagraphs } from "@/lib/stories";
+import { getLegacyStoryPath, getStoryBySlug, storyParagraphs } from "@/lib/stories";
+import { descriptionFrom, pageMetadata } from "@/lib/seo";
 import styles from "./page.module.css";
 
 interface StoryPageProps {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: StoryPageProps): Promise<Metadata> {
+  const story = await getStoryBySlug((await params).slug);
+  if (!story) return { title: "Storia non trovata", robots: { index: false, follow: false } };
+  const canonical = getLegacyStoryPath(story) ?? `/storie/${story.slug}`;
+  return pageMetadata({
+    title: story.title,
+    description: descriptionFrom(story.excerpt ?? story.body, `Una storia di Roncegno Terme: ${story.title}.`),
+    path: canonical,
+    image: getDirectusAssetUrl(story.image),
+  });
 }
 
 const FALLBACK_IMAGE = "/images/hero/roncegno-hero.jpg";
@@ -33,6 +47,9 @@ export default async function StoryPage({ params }: StoryPageProps) {
   ]);
 
   if (!story) notFound();
+
+  const legacyPath = getLegacyStoryPath(story);
+  if (legacyPath) permanentRedirect(legacyPath);
 
   const storyImage = getDirectusAssetUrl(story.image);
   const heroImage = storyImage ?? FALLBACK_IMAGE;

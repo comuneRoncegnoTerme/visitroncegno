@@ -113,6 +113,24 @@ async function fetchStory(params: URLSearchParams): Promise<StoryItem | null> {
   }
 }
 
+export async function getStories(): Promise<StoryItem[]> {
+  const params = new URLSearchParams();
+  params.set("filter[status][_eq]", "published");
+  params.set("limit", "100");
+  params.set("fields", storyFields());
+
+  try {
+    const result = await directusJson<StoryResponse>(
+      `/items/stories?${params.toString()}`,
+      { authenticated: true }
+    );
+    return result.data ?? [];
+  } catch (error) {
+    console.error("Directus stories list error:", error);
+    return [];
+  }
+}
+
 export async function getStoryBySlug(slug: string): Promise<StoryItem | null> {
   const params = new URLSearchParams();
   params.set("filter[status][_eq]", "published");

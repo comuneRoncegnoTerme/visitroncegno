@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
@@ -6,6 +7,7 @@ import { getSiteSettings } from "@/lib/directus";
 import { getStoryByLegacySlug, storyParagraphs } from "@/lib/stories";
 import { getTrailPanel, trailPanels, type TrailPanel } from "@/lib/trail-panels";
 import styles from "./page.module.css";
+import { descriptionFrom, pageMetadata } from "@/lib/seo";
 
 interface LegacyTrailPageProps {
   params: Promise<{ slug: string }>;
@@ -34,6 +36,18 @@ async function getDirectusTrailPanel(slug: string): Promise<TrailPanel | null> {
 
 export function generateStaticParams() {
   return trailPanels.map((panel) => ({ slug: panel.slug }));
+}
+
+export async function generateMetadata({ params }: LegacyTrailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const panel = getTrailPanel(slug) ?? await getDirectusTrailPanel(slug);
+  if (!panel) return { title: "Approfondimento non trovato", robots: { index: false, follow: false } };
+
+  return pageMetadata({
+    title: panel.title,
+    description: descriptionFrom(panel.summary, `Approfondimento su ${panel.title} e il territorio di Roncegno Terme.`),
+    path: `/it/sentieri/${slug}`,
+  });
 }
 
 export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) {

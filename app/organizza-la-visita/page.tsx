@@ -20,8 +20,9 @@ import styles from "./page.module.css";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Organizza la visita | Visit Roncegno",
+  title: "Organizza la visita",
   description: "Dove dormire, dove mangiare, come arrivare e servizi utili per vivere Roncegno Terme.",
+  alternates: { canonical: "/organizza-la-visita" },
 };
 
 const OFFICIAL_TRAVEL_LINKS = {
