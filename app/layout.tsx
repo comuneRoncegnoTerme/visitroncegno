@@ -14,8 +14,13 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.visitroncegno.it"),
-  title: "Visit Roncegno Terme",
+  title: {
+    default: "Roncegno Terme: cosa vedere e cosa fare | Visit Roncegno",
+    template: "%s | Visit Roncegno",
+  },
   description: "Scopri Roncegno Terme in Valsugana: natura, percorsi, eventi, musei, memoria, ristoranti e ospitalità.",
+  alternates: { canonical: "/" },
+  robots: { index: true, follow: true },
   applicationName: "Visit Roncegno",
   openGraph: {
     type: "website",

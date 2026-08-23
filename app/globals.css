@@ -33,6 +33,37 @@ a {
   text-decoration: none;
 }
 
+.not-found-page {
+  display: grid;
+  align-content: center;
+  min-height: 100vh;
+  padding: 12vh max(6vw, 24px);
+  background: var(--cream);
+}
+
+.not-found-page h1 {
+  max-width: 780px;
+  margin: 16px 0;
+  font-family: Georgia, serif;
+  font-size: clamp(2.5rem, 7vw, 5.5rem);
+  font-weight: 400;
+  line-height: 0.98;
+}
+
+.not-found-page > p:not(.eyebrow) {
+  max-width: 620px;
+  color: var(--muted);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.not-found-page nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
 button,
 a {
   -webkit-tap-highlight-color: transparent;

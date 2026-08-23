@@ -5,8 +5,9 @@ import { getSiteSettings } from "@/lib/directus";
 import styles from "./page.module.css";
 
 export const metadata = {
-  title: "Mulino Angeli | Visit Roncegno",
+  title: "Mulino Angeli e Casa Museo degli Spaventapasseri",
   description: "Scopri il Mulino Angeli - Casa Museo degli Spaventapasseri di Roncegno Terme.",
+  alternates: { canonical: "/musei/mulino-angeli" },
 };
 
 export default async function MulinoAngeliPage() {

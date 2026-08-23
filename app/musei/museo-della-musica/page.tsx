@@ -5,8 +5,9 @@ import { getSiteSettings } from "@/lib/directus";
 import styles from "./page.module.css";
 
 export const metadata = {
-  title: "Museo degli Strumenti Musicali Popolari | Visit Roncegno",
+  title: "Museo degli Strumenti Musicali Popolari",
   description: "Scopri il Museo degli Strumenti Musicali Popolari di Roncegno Terme: circa mille strumenti da tutto il mondo, visite interattive e Parco Musicale.",
+  alternates: { canonical: "/musei/museo-della-musica" },
 };
 
 export default async function MusicMuseumPage() {

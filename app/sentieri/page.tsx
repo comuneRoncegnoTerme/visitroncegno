@@ -1,2 +1,2 @@
-import { redirect } from "next/navigation";
-export default function LegacyTrailsPage() { redirect("/percorsi"); }
+import { permanentRedirect } from "next/navigation";
+export default function LegacyTrailsPage() { permanentRedirect("/percorsi"); }
