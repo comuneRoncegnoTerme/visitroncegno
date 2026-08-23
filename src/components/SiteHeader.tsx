@@ -27,6 +27,7 @@ export default function SiteHeader({ settings, overlay = false }: Props) {
         <Link href="/luoghi">Luoghi</Link>
         <Link href="/percorsi">Percorsi</Link>
         <Link href="/eventi">Eventi</Link>
+        <Link href="/cartina">Cartina</Link>
         <Link href="/#mappa">Mappa</Link>
       </nav>
 
