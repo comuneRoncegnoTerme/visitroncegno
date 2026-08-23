@@ -148,6 +148,24 @@ npm run lint
 npm run build
 ```
 
+### Audit read-only dei luoghi Directus
+
+Per elencare tutti i record di `places` e segnalare dati mancanti o incoerenti:
+
+```bash
+DIRECTUS_URL=https://directus.example.it \
+DIRECTUS_TOKEN=... \
+npm run directus:audit-places
+```
+
+Il token è facoltativo se la collection e i relativi metadati sono leggibili dal ruolo pubblico. Lo script esegue esclusivamente richieste `GET`: non modifica record, relazioni, QR o route legacy. Controlla i campi editoriali e pratici, le regole di dettaglio per tipologia, immagini, coordinate e i redirect riconoscibili verso le pagine museali dedicate.
+
+Per ottenere un exit code non-zero quando vengono trovati problemi, utile in controlli manuali o CI:
+
+```bash
+npm run directus:audit-places -- --strict
+```
+
 ## Deploy
 
 Il deploy di produzione è automatizzato con GitHub Actions su push verso `main`.
