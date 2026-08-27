@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "directus:ensure-place-model": "node scripts/directus-place-model.mjs",
+    "directus:ensure-home-hero-model": "node scripts/directus-home-hero-model.mjs",
     "directus:audit-places": "node scripts/directus-audit-places.mjs",
     "directus:audit-route-images": "node scripts/directus-audit-route-images.mjs",
     "directus:audit-routes": "node scripts/directus-audit-routes.mjs"
