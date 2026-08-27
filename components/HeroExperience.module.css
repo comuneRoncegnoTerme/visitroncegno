@@ -1,0 +1,152 @@
+.media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-color: var(--forest);
+  background-position: center;
+  background-size: cover;
+  transform: scale(1.02);
+  animation: hero-media-drift 18s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.illustration {
+  background-size: cover;
+}
+
+.minimal {
+  background: var(--forest);
+  animation: none;
+  transform: none;
+}
+
+.atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  transition: background-color 2s ease, opacity 2s ease;
+}
+
+.morning {
+  background-color: rgba(226, 203, 151, 0.08);
+}
+
+.day {
+  background-color: rgba(255, 255, 255, 0.015);
+}
+
+.evening {
+  background-color: rgba(197, 114, 65, 0.09);
+}
+
+.night {
+  background-color: rgba(10, 28, 39, 0.18);
+}
+
+.hotspots {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.hotspot {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  transform: translate(-50%, -50%);
+  color: white;
+  pointer-events: auto;
+}
+
+.hotspotDot {
+  width: 10px;
+  height: 10px;
+  border: 2px solid white;
+  border-radius: 50%;
+  background: rgba(13, 42, 34, 0.7);
+  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.13);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.hotspotLabel {
+  max-width: 190px;
+  padding: 5px 0;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.25;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.hotspot:hover .hotspotDot,
+.hotspot:focus-visible .hotspotDot {
+  transform: scale(1.14);
+  box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.16);
+}
+
+.hotspot:hover .hotspotLabel,
+.hotspot:focus-visible .hotspotLabel {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.audioControl {
+  position: absolute;
+  right: 5vw;
+  bottom: 82px;
+  z-index: 5;
+}
+
+.audioControl button {
+  padding: 7px 0;
+  color: white;
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.62);
+  background: transparent;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@keyframes hero-media-drift {
+  from {
+    transform: scale(1.02);
+  }
+
+  to {
+    transform: scale(1.05);
+  }
+}
+
+@media (max-width: 760px) {
+  .hotspotLabel {
+    display: none;
+  }
+
+  .audioControl {
+    right: 5vw;
+    bottom: 74px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .media {
+    animation: none;
+    transform: scale(1.02);
+    will-change: auto;
+  }
+
+  .atmosphere,
+  .hotspotDot,
+  .hotspotLabel {
+    transition: none;
+  }
+}
