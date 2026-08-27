@@ -7,9 +7,8 @@
   background-color: var(--forest);
   background-position: center;
   background-size: cover;
-  transform: scale(1.02);
-  animation: hero-media-drift 18s ease-in-out infinite alternate;
-  will-change: transform;
+  transform: scale(1.012);
+  pointer-events: none;
 }
 
 .illustration {
@@ -18,7 +17,6 @@
 
 .minimal {
   background: var(--forest);
-  animation: none;
   transform: none;
 }
 
@@ -27,23 +25,44 @@
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  transition: background-color 2s ease, opacity 2s ease;
+  transition: opacity 2.4s ease;
+  box-shadow: inset 0 -18vh 28vh rgba(7, 27, 22, 0.08);
 }
 
 .morning {
-  background-color: rgba(226, 203, 151, 0.08);
+  background:
+    linear-gradient(180deg, rgba(247, 230, 191, 0.08), transparent 42%),
+    rgba(226, 203, 151, 0.025);
 }
 
 .day {
-  background-color: rgba(255, 255, 255, 0.015);
+  background: rgba(255, 255, 255, 0.008);
 }
 
 .evening {
-  background-color: rgba(197, 114, 65, 0.09);
+  background:
+    linear-gradient(180deg, rgba(196, 111, 61, 0.07), transparent 46%),
+    rgba(138, 70, 38, 0.025);
 }
 
 .night {
-  background-color: rgba(10, 28, 39, 0.18);
+  background:
+    linear-gradient(180deg, rgba(8, 25, 34, 0.16), rgba(8, 25, 34, 0.08)),
+    rgba(10, 28, 39, 0.08);
+}
+
+.contextLabel {
+  position: absolute;
+  top: 112px;
+  right: 5vw;
+  z-index: 5;
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .hotspots {
@@ -56,45 +75,60 @@
 .hotspot {
   position: absolute;
   display: flex;
-  align-items: center;
-  gap: 9px;
+  align-items: flex-start;
+  gap: 10px;
   transform: translate(-50%, -50%);
   color: white;
   pointer-events: auto;
 }
 
+.hotspotMarker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .hotspotDot {
-  width: 10px;
-  height: 10px;
-  border: 2px solid white;
+  width: 8px;
+  height: 8px;
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
   border-radius: 50%;
-  background: rgba(13, 42, 34, 0.7);
-  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.13);
-  transition: transform 180ms ease, box-shadow 180ms ease;
+  background: rgba(13, 42, 34, 0.72);
+  transition: transform 180ms ease;
+}
+
+.hotspotLine {
+  width: 1px;
+  height: 20px;
+  margin-top: 4px;
+  background: rgba(255, 255, 255, 0.42);
 }
 
 .hotspotLabel {
   max-width: 190px;
-  padding: 5px 0;
-  font-size: 12px;
-  font-weight: 700;
+  padding-top: 1px;
+  font-family: Georgia, serif;
+  font-size: 13px;
+  font-weight: 400;
   line-height: 1.25;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.55);
-  opacity: 0;
-  transform: translateX(-4px);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  opacity: 0.76;
   transition: opacity 180ms ease, transform 180ms ease;
 }
 
 .hotspot:hover .hotspotDot,
 .hotspot:focus-visible .hotspotDot {
-  transform: scale(1.14);
-  box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.16);
+  transform: scale(1.18);
 }
 
 .hotspot:hover .hotspotLabel,
 .hotspot:focus-visible .hotspotLabel {
   opacity: 1;
-  transform: translateX(0);
+  transform: translateX(2px);
+}
+
+.mobileHotspots {
+  display: none;
 }
 
 .audioControl {
@@ -108,40 +142,62 @@
   padding: 7px 0;
   color: white;
   border: 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.62);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
   background: transparent;
   font: inherit;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 600;
   cursor: pointer;
 }
 
-@keyframes hero-media-drift {
-  from {
-    transform: scale(1.02);
-  }
-
-  to {
-    transform: scale(1.05);
-  }
-}
-
 @media (max-width: 760px) {
-  .hotspotLabel {
+  .contextLabel {
+    top: 96px;
+    right: 5vw;
+    font-size: 10px;
+  }
+
+  .hotspots {
     display: none;
+  }
+
+  .mobileHotspots {
+    position: absolute;
+    right: 5vw;
+    bottom: 86px;
+    left: 5vw;
+    z-index: 5;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    align-items: baseline;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 12px;
+  }
+
+  .mobileHotspotsLead {
+    width: 100%;
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .mobileHotspots a {
+    padding-bottom: 2px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.42);
+    font-family: Georgia, serif;
   }
 
   .audioControl {
     right: 5vw;
-    bottom: 74px;
+    bottom: 50px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .media {
-    animation: none;
-    transform: scale(1.02);
-    will-change: auto;
+    transform: none;
   }
 
   .atmosphere,
