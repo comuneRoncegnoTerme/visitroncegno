@@ -1,4 +1,5 @@
 import Link from "next/link";
+import HeroExperience, { type HeroHotspot, type HeroMode } from "@/components/HeroExperience";
 import HomeMap from "@/components/HomeMap";
 import FestaHomepageBanner from "@/components/FestaHomepageBanner";
 import MuseumsHomepageBanner from "@/components/MuseumsHomepageBanner";
@@ -18,6 +19,28 @@ import {
 import { placeHref } from "@/lib/place-detail";
 
 export const dynamic = "force-dynamic";
+
+type HomepageHeroConfig = {
+  hero_mode?: HeroMode | null;
+  hero_video_url?: string | null;
+  hero_atmosphere_enabled?: boolean | null;
+  hero_hotspots_enabled?: boolean | null;
+  hero_hotspots?: HeroHotspot[] | string | null;
+  hero_ambient_audio_enabled?: boolean | null;
+  hero_ambient_audio_url?: string | null;
+};
+
+function parseHeroHotspots(value: HomepageHeroConfig["hero_hotspots"]): HeroHotspot[] {
+  if (Array.isArray(value)) return value;
+  if (typeof value !== "string" || !value.trim()) return [];
+
+  try {
+    const parsed = JSON.parse(value);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
 
 function ArrowIcon() {
   return (
@@ -55,6 +78,8 @@ export default async function Home() {
   }
 
   const heroImage = getDirectusAssetUrl(homepage.hero_image) ?? "/images/hero/roncegno-hero.jpg";
+  const heroConfig = homepage as typeof homepage & HomepageHeroConfig;
+  const heroHotspots = parseHeroHotspots(heroConfig.hero_hotspots);
   const homeMapPlaces = mapPlaces
     .filter((place) => place.latitude !== null && place.longitude !== null)
     .map((place) => ({
@@ -73,7 +98,16 @@ export default async function Home() {
       <SiteHeader settings={siteSettings} overlay />
 
       <section className="hero" id="top">
-        <div className="hero-image" style={{ backgroundImage: `url('${heroImage}')` }} />
+        <HeroExperience
+          mode={heroConfig.hero_mode}
+          imageUrl={heroImage}
+          videoUrl={heroConfig.hero_video_url}
+          atmosphereEnabled={heroConfig.hero_atmosphere_enabled}
+          hotspotsEnabled={heroConfig.hero_hotspots_enabled}
+          hotspots={heroHotspots}
+          ambientAudioEnabled={heroConfig.hero_ambient_audio_enabled}
+          ambientAudioUrl={heroConfig.hero_ambient_audio_url}
+        />
         <div className="hero-overlay" />
         <div className="hero-content">
           <p className="eyebrow">{homepage.hero_eyebrow ?? "Trentino · Valsugana"}</p>
