@@ -41,6 +41,16 @@ function getRoncegnoPeriod(): DayPeriod {
 }
 
 function isSafeHotspot(hotspot: HeroHotspot) {
+  if (
+    !hotspot ||
+    typeof hotspot.label !== "string" ||
+    typeof hotspot.href !== "string" ||
+    typeof hotspot.x !== "number" ||
+    typeof hotspot.y !== "number"
+  ) {
+    return false;
+  }
+
   const safeHref = hotspot.href.startsWith("/") || /^https?:\/\//i.test(hotspot.href);
   return (
     Boolean(hotspot.label.trim()) &&
@@ -129,7 +139,7 @@ export default function HeroExperience({
       )}
 
       {hotspotsEnabled && safeHotspots.length > 0 && (
-        <div className={styles.hotspots} aria-label="Punti da scoprire">
+        <div className={styles.hotspots} role="group" aria-label="Punti da scoprire">
           {safeHotspots.map((hotspot) => (
             <a
               className={styles.hotspot}
