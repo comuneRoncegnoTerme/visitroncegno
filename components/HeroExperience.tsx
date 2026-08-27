@@ -25,6 +25,13 @@ type Props = {
   ambientAudioUrl?: string | null;
 };
 
+const PERIOD_LABELS: Record<DayPeriod, string> = {
+  morning: "mattino",
+  day: "giorno",
+  evening: "sera",
+  night: "notte",
+};
+
 function getRoncegnoPeriod(): DayPeriod {
   const hour = Number(
     new Intl.DateTimeFormat("en-GB", {
@@ -86,7 +93,7 @@ export default function HeroExperience({
   }, []);
 
   const safeHotspots = useMemo(
-    () => (hotspots ?? []).filter(isSafeHotspot),
+    () => (hotspots ?? []).filter(isSafeHotspot).slice(0, 3),
     [hotspots]
   );
 
@@ -132,27 +139,48 @@ export default function HeroExperience({
       )}
 
       {atmosphereEnabled && (
-        <div
-          className={`${styles.atmosphere} ${styles[period]}`}
-          aria-hidden="true"
-        />
+        <>
+          <div
+            className={`${styles.atmosphere} ${styles[period]}`}
+            aria-hidden="true"
+          />
+          <div className={styles.contextLabel} aria-label={`Roncegno Terme, ${PERIOD_LABELS[period]}`}>
+            <span>Roncegno Terme</span>
+            <span aria-hidden="true">·</span>
+            <span>{PERIOD_LABELS[period]}</span>
+          </div>
+        </>
       )}
 
       {hotspotsEnabled && safeHotspots.length > 0 && (
-        <div className={styles.hotspots} role="group" aria-label="Punti da scoprire">
-          {safeHotspots.map((hotspot) => (
-            <a
-              className={styles.hotspot}
-              href={hotspot.href}
-              style={{ left: `${hotspot.x}%`, top: `${hotspot.y}%` }}
-              key={`${hotspot.label}-${hotspot.href}`}
-              aria-label={hotspot.label}
-            >
-              <span className={styles.hotspotDot} aria-hidden="true" />
-              <span className={styles.hotspotLabel}>{hotspot.label}</span>
-            </a>
-          ))}
-        </div>
+        <>
+          <div className={styles.hotspots} role="group" aria-label="Punti da scoprire">
+            {safeHotspots.map((hotspot) => (
+              <a
+                className={styles.hotspot}
+                href={hotspot.href}
+                style={{ left: `${hotspot.x}%`, top: `${hotspot.y}%` }}
+                key={`${hotspot.label}-${hotspot.href}`}
+                aria-label={hotspot.label}
+              >
+                <span className={styles.hotspotMarker} aria-hidden="true">
+                  <span className={styles.hotspotDot} />
+                  <span className={styles.hotspotLine} />
+                </span>
+                <span className={styles.hotspotLabel}>{hotspot.label}</span>
+              </a>
+            ))}
+          </div>
+
+          <nav className={styles.mobileHotspots} aria-label="Da qui puoi partire per">
+            <span className={styles.mobileHotspotsLead}>Da qui puoi partire per</span>
+            {safeHotspots.map((hotspot) => (
+              <a href={hotspot.href} key={`mobile-${hotspot.label}-${hotspot.href}`}>
+                {hotspot.label}
+              </a>
+            ))}
+          </nav>
+        </>
       )}
 
       {ambientAudioEnabled && ambientAudioUrl && (
