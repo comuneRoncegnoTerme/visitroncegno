@@ -8,7 +8,7 @@ import styles from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "Cartina ufficiale di Roncegno Terme",
-  description: "Esplora la cartina illustrata ufficiale di Roncegno Terme, consulta la guida del territorio e scarica il PDF.",
+  description: "Esplora la cartina illustrata ufficiale di Roncegno Terme e scarica il PDF.",
   alternates: { canonical: "/cartina" },
 };
 
@@ -81,14 +81,13 @@ export default async function CartinaPage() {
           <p className={styles.eyebrow}>La cartina ufficiale</p>
           <h1 id="cartina-page-title">La cartina illustrata di Roncegno.</h1>
           <p className={styles.lead}>
-            Esplora il territorio attraverso l’illustrazione ufficiale: luoghi, percorsi, musei, rifugi e punti di interesse raccolti in un unico strumento.
+            Esplora il territorio attraverso l’illustrazione ufficiale e apri i punti evidenziati per approfondire luoghi e percorsi nel sito.
           </p>
         </div>
         <div className={styles.introActions}>
           <a className={styles.primaryAction} href="/downloads/cartina-ufficiale-roncegno-terme.pdf" download>
             Scarica il PDF <span aria-hidden="true">↓</span>
           </a>
-          <a className={styles.textAction} href="#retro-cartina">Vai al retro della cartina <span aria-hidden="true">↓</span></a>
         </div>
       </section>
 
@@ -110,26 +109,15 @@ export default async function CartinaPage() {
         <p className={styles.attribution}>Illustrazione “Le Formiche” di Fabio Vettori · Cartina ufficiale 2026</p>
       </section>
 
-      <section className={styles.reverseSection} id="retro-cartina" aria-labelledby="retro-title">
-        <div className={styles.reverseHeading}>
-          <div>
-            <p className={styles.eyebrow}>Retro della cartina</p>
-            <h2 id="retro-title">Informazioni utili per la visita.</h2>
-          </div>
-          <div className={styles.reverseCopy}>
-            <p>La seconda facciata raccoglie passeggiate, punti d’interesse, rifugi, musei e strutture del territorio in italiano e inglese.</p>
-            <div className={styles.quickLinks}>
-              <Link href="/percorsi">Scopri i percorsi</Link>
-              <Link href="/organizza-la-visita">Organizza la visita</Link>
-            </div>
-          </div>
+      <section className={styles.nextSteps} aria-labelledby="approfondisci-title">
+        <div>
+          <p className={styles.eyebrow}>Approfondisci</p>
+          <h2 id="approfondisci-title">Dalla cartina alle informazioni utili.</h2>
         </div>
-        <div className={styles.reverseViewer}>
-          <IllustratedMapViewer
-            src="/images/cartina/cartina-roncegno-2.webp"
-            alt="Guida bilingue ufficiale allegata alla cartina di Roncegno Terme"
-            mobileScale={2.5}
-          />
+        <div className={styles.nextLinks}>
+          <Link href="/percorsi">Scopri i percorsi <span aria-hidden="true">→</span></Link>
+          <Link href="/luoghi">Esplora i luoghi <span aria-hidden="true">→</span></Link>
+          <Link href="/organizza-la-visita">Organizza la visita <span aria-hidden="true">→</span></Link>
         </div>
       </section>
 
