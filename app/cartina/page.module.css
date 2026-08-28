@@ -4,7 +4,7 @@
 
 .intro,
 .mapSection,
-.reverseSection {
+.nextSteps {
   padding-inline: 5vw;
 }
 
@@ -20,21 +20,21 @@
 
 .intro {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.55fr);
+  grid-template-columns: minmax(0, 1.15fr) minmax(220px, 0.45fr);
   gap: 6vw;
   align-items: end;
-  padding-top: 138px;
-  padding-bottom: 58px;
+  padding-top: 128px;
+  padding-bottom: 48px;
   background: var(--cream);
 }
 
 .introCopy {
-  max-width: 900px;
+  max-width: 860px;
 }
 
 .intro h1,
 .mapHeading h2,
-.reverseHeading h2,
+.nextSteps h2,
 .mapCta h2 {
   margin: 0;
   font-family: Georgia, serif;
@@ -43,79 +43,65 @@
 }
 
 .intro h1 {
-  max-width: 860px;
-  font-size: clamp(3.1rem, 5.6vw, 6rem);
+  max-width: 800px;
+  font-size: clamp(3rem, 5.2vw, 5.6rem);
 }
 
 .lead,
-.mapHeading > p,
-.reverseCopy > p {
+.mapHeading > p {
   color: var(--muted);
   font-size: 1rem;
   line-height: 1.7;
 }
 
 .lead {
-  max-width: 700px;
-  margin: 24px 0 0;
+  max-width: 680px;
+  margin: 22px 0 0;
 }
 
 .introActions {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 16px;
-  padding-bottom: 4px;
+  align-items: flex-end;
+  justify-content: flex-start;
 }
 
 .primaryAction {
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
-  gap: 30px;
-  min-width: 220px;
-  padding: 15px 20px;
+  gap: 28px;
+  min-width: 210px;
+  padding: 14px 19px;
   border-radius: 999px;
   color: white;
   background: var(--forest);
   font-weight: 700;
 }
 
-.textAction,
-.quickLinks a {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding-bottom: 4px;
-  border-bottom: 1px solid rgba(23, 32, 29, 0.28);
-  font-weight: 700;
-}
-
 .mapSection {
-  padding-top: 64px;
-  padding-bottom: 86px;
+  padding-top: 54px;
+  padding-bottom: 72px;
 }
 
 .mapHeading {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.55fr);
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.5fr);
   gap: 5vw;
   align-items: end;
-  margin-bottom: 26px;
+  margin-bottom: 24px;
 }
 
 .mapHeading h2,
-.reverseHeading h2 {
-  font-size: clamp(2.5rem, 4.2vw, 4.4rem);
+.nextSteps h2 {
+  font-size: clamp(2.4rem, 4vw, 4.2rem);
 }
 
 .mapHeading > p {
-  max-width: 560px;
+  max-width: 540px;
   margin: 0;
 }
 
-.viewerWrap,
-.reverseViewer {
+.viewerWrap {
   width: 100%;
 }
 
@@ -126,34 +112,31 @@
   text-align: right;
 }
 
-.reverseSection {
-  padding-top: 76px;
-  padding-bottom: 86px;
-  background: var(--cream);
-  scroll-margin-top: 24px;
-}
-
-.reverseHeading {
+.nextSteps {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.55fr);
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.5fr);
   gap: 5vw;
   align-items: end;
-  margin-bottom: 30px;
+  padding-top: 58px;
+  padding-bottom: 62px;
+  border-top: 1px solid rgba(23, 32, 29, 0.1);
+  background: var(--paper);
 }
 
-.reverseCopy {
-  max-width: 600px;
+.nextLinks {
+  display: grid;
+  gap: 12px;
+  justify-items: start;
 }
 
-.reverseCopy > p {
-  margin: 0;
-}
-
-.quickLinks {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px 24px;
-  margin-top: 20px;
+.nextLinks a,
+.mapCta a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgba(23, 32, 29, 0.28);
+  font-weight: 700;
 }
 
 .mapCta {
@@ -161,7 +144,7 @@
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 32px;
   align-items: end;
-  padding: 54px 5vw;
+  padding: 50px 5vw;
   color: white;
   background: var(--forest);
 }
@@ -171,33 +154,28 @@
 }
 
 .mapCta h2 {
-  max-width: 760px;
-  font-size: clamp(2.2rem, 3.8vw, 4rem);
+  max-width: 720px;
+  font-size: clamp(2.1rem, 3.5vw, 3.7rem);
 }
 
 .mapCta a {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid currentColor;
-  font-weight: 700;
+  border-bottom-color: currentColor;
 }
 
 @media (max-width: 900px) {
   .intro,
   .mapHeading,
-  .reverseHeading,
+  .nextSteps,
   .mapCta {
     grid-template-columns: 1fr;
   }
 
   .introActions {
-    margin-top: 4px;
+    margin-top: 2px;
   }
 
   .mapHeading,
-  .reverseHeading {
+  .nextSteps {
     gap: 20px;
   }
 
@@ -209,25 +187,25 @@
 @media (max-width: 760px) {
   .intro,
   .mapSection,
-  .reverseSection {
+  .nextSteps {
     padding-inline: 24px;
   }
 
   .intro {
-    padding-top: 112px;
-    padding-bottom: 44px;
+    padding-top: 108px;
+    padding-bottom: 40px;
   }
 
   .intro h1 {
-    font-size: clamp(2.9rem, 13vw, 4.2rem);
+    font-size: clamp(2.8rem, 12.5vw, 4rem);
   }
 
   .lead {
-    margin-top: 20px;
+    margin-top: 18px;
   }
 
   .introActions {
-    margin-top: 10px;
+    margin-top: 8px;
   }
 
   .primaryAction {
@@ -236,12 +214,12 @@
   }
 
   .mapSection {
-    padding-top: 46px;
-    padding-bottom: 62px;
+    padding-top: 42px;
+    padding-bottom: 54px;
   }
 
   .mapHeading {
-    margin-bottom: 22px;
+    margin-bottom: 20px;
   }
 
   .attribution {
@@ -249,25 +227,16 @@
     text-align: left;
   }
 
-  .reverseSection {
-    padding-top: 58px;
-    padding-bottom: 64px;
-  }
-
-  .reverseHeading {
-    margin-bottom: 24px;
-  }
-
-  .quickLinks {
-    display: grid;
-    justify-items: start;
+  .nextSteps {
+    padding-top: 46px;
+    padding-bottom: 50px;
   }
 
   .mapCta {
-    padding: 52px 24px;
+    padding: 48px 24px;
   }
 
   .mapCta h2 {
-    font-size: clamp(2.2rem, 10vw, 3.3rem);
+    font-size: clamp(2.1rem, 9.5vw, 3.1rem);
   }
 }
