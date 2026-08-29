@@ -47,13 +47,29 @@ function getStaticTrailPanel(slug: string) {
   return getTrailPanel(slug) ?? getCinqueValliPanel(slug);
 }
 
+function mergePanelContent(staticPanel: TrailPanel | null, directusPanel: TrailPanel | null) {
+  if (!staticPanel) return directusPanel;
+  if (!directusPanel) return staticPanel;
+
+  return {
+    ...staticPanel,
+    title: directusPanel.title,
+    eyebrow: directusPanel.eyebrow,
+    summary: directusPanel.summary,
+    body: directusPanel.body,
+    audioTitle: directusPanel.audioTitle,
+    relatedRouteLabel: directusPanel.relatedRouteLabel ?? staticPanel.relatedRouteLabel,
+    relatedRouteHref: directusPanel.relatedRouteHref ?? staticPanel.relatedRouteHref,
+  } satisfies TrailPanel;
+}
+
 export function generateStaticParams() {
   return [...trailPanels, ...cinqueValliPanels].map((panel) => ({ slug: panel.slug }));
 }
 
 export async function generateMetadata({ params }: LegacyTrailPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const panel = getStaticTrailPanel(slug) ?? await getDirectusTrailPanel(slug);
+  const panel = mergePanelContent(getStaticTrailPanel(slug), await getDirectusTrailPanel(slug));
   if (!panel) return { title: "Approfondimento non trovato", robots: { index: false, follow: false } };
 
   return pageMetadata({
@@ -68,10 +84,10 @@ export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) 
   const staticPanel = getStaticTrailPanel(slug);
   const [settings, directusPanel, storyMedia] = await Promise.all([
     getSiteSettings(),
-    staticPanel ? Promise.resolve(null) : getDirectusTrailPanel(slug),
+    getDirectusTrailPanel(slug),
     getPanelStoryMedia(slug),
   ]);
-  const panel = staticPanel ?? directusPanel;
+  const panel = mergePanelContent(staticPanel, directusPanel);
 
   if (!panel) notFound();
 
@@ -163,12 +179,12 @@ export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) 
         <section className={styles.relatedSection}>
           <div className={styles.relatedHeading}>
             <p className={styles.eyebrowDark}>Continua lungo il circuito</p>
-            <h2>Il castagno, da altri punti di vista.</h2>
+            <h2>Il territorio, da altri punti di vista.</h2>
           </div>
           <div className={styles.relatedGrid}>
             {panel.relatedPanels.map((related, index) => (
               <Link href={related.href} className={styles.relatedCard} key={related.href}>
-                <span>0{index + 1}</span>
+                <span>{String(index + 1).padStart(2, "0")}</span>
                 <small>{related.label}</small>
                 <h3>{related.title}</h3>
                 <strong>Apri la storia →</strong>
