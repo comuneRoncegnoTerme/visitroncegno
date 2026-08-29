@@ -1,0 +1,84 @@
+.locationSection {
+  padding-bottom: 72px;
+}
+
+.locationHeading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 28px;
+  margin-bottom: 22px;
+}
+
+.locationHeading > div {
+  max-width: 760px;
+}
+
+.locationHeading h2 {
+  margin: 8px 0 0;
+  font: 400 clamp(30px, 3.6vw, 48px)/1.08 Georgia, serif;
+  letter-spacing: -0.035em;
+}
+
+.locationHeading > a {
+  white-space: nowrap;
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgba(23, 55, 46, 0.32);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.map > div {
+  min-height: 360px;
+}
+
+.related {
+  padding-top: 8px;
+}
+
+.endLink {
+  background: #e9dfd0;
+}
+
+.endLink a {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 48px 5vw;
+}
+
+.endLink small {
+  color: #b65d32;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.endLink strong {
+  max-width: 720px;
+  font: 400 clamp(26px, 3vw, 38px)/1.08 Georgia, serif;
+}
+
+@media (max-width: 800px) {
+  .locationSection {
+    padding-bottom: 56px;
+  }
+
+  .locationHeading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .locationHeading > a {
+    white-space: normal;
+  }
+
+  .map > div {
+    min-height: 300px;
+  }
+
+  .endLink a {
+    padding: 40px 5vw;
+  }
+}
