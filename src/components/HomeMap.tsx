@@ -126,7 +126,7 @@ export default function HomeMap({ places, compact = false, showFilters = true }:
       style: mapStyle(mapTheme),
       center: [11.405, 46.047],
       zoom: 13.3,
-      attributionControl: false,
+      attributionControl: true,
       minZoom: 10,
       maxZoom: 17,
     });
