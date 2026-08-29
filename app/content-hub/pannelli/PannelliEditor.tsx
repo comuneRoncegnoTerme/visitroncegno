@@ -43,7 +43,7 @@ export default function PannelliEditor() {
       return;
     }
     if (!response.ok) {
-      setMessage(result?.error ?? "Impossibile caricare pannelli e storie");
+      setMessage(result?.error ?? "Impossibile caricare pannelli e contenuti");
       return;
     }
     const nextItems = result?.data ?? [];
@@ -124,7 +124,7 @@ export default function PannelliEditor() {
     <div className={styles.workspace}>
       <aside className={styles.listPane}>
         <div className={styles.listHeader}>
-          <div><span>{items.length} contenuti</span><h2>Pannelli e storie</h2></div>
+          <div><span>{items.length} contenuti</span><h2>Pannelli e contenuti</h2></div>
         </div>
         <div className={styles.searchBox}>
           <label htmlFor="panel-search">Cerca</label>
@@ -146,8 +146,8 @@ export default function PannelliEditor() {
         <div className={styles.editorHeading}>
           <div>
             <p>{draft ? `Modifica #${draft.id}` : "Seleziona un contenuto"}</p>
-            <h1>{draft?.title ?? "Pannelli e audioguide"}</h1>
-            <span>Testi, immagini e audioguide alimentano sia la pagina QR sia il racconto del percorso, senza cambiare URL legacy.</span>
+            <h1>{draft?.title ?? "Pannelli, contenuti e audioguide"}</h1>
+            <span>I contenuti collegati a URL legacy /it/sentieri sono pannelli fisici del percorso: testi, immagini e audio vengono riutilizzati nel sito senza cambiare QR o URL.</span>
           </div>
           {draft?.source_url && <a href={draft.source_url.replace("https://www.visitroncegno.it", "")} target="_blank" rel="noreferrer">Anteprima ↗</a>}
         </div>
@@ -166,20 +166,20 @@ export default function PannelliEditor() {
               <label>
                 <span>Ordine lungo il percorso</span>
                 <input type="number" min="0" value={draft.sort ?? ""} onChange={(event) => setField("sort", event.target.value === "" ? null : Number(event.target.value))} />
-                <small>Determina la sequenza nella sezione “Storie lungo il cammino”.</small>
+                <small>Determina la sequenza con cui pannelli e approfondimenti vengono mostrati lungo il percorso.</small>
               </label>
             )}
             {hasFeatured && (
               <label className={styles.checkbox}>
                 <input type="checkbox" checked={Boolean(draft.featured)} onChange={(event) => setField("featured", event.target.checked)} />
-                <span>Metti in evidenza</span>
-                <small>La scheda riceve maggiore peso visivo nella pagina del percorso.</small>
+                <span>Evidenza editoriale</span>
+                <small>Vale nei contesti editoriali del sito; non altera l’ordine o la dimensione dei pannelli lungo un percorso.</small>
               </label>
             )}
             <label className={styles.full}>
-              <span>Immagine del pannello</span>
+              <span>Immagine del pannello o contenuto</span>
               <MediaField value={draft.image ?? ""} kind="image" onChange={(value) => setField("image", value)} />
-              <small>Usata nella hero della scheda e nella sezione storie del percorso.</small>
+              <small>Usata nella hero della scheda e nelle anteprime del percorso.</small>
             </label>
             {hasAudioFields && (
               <>
