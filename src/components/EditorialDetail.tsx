@@ -3,6 +3,7 @@ import { getDirectusAssetUrl, getSiteSettings } from "@/lib/directus";
 import { getEditorialList, plainText, type EditorialItem } from "@/lib/editorial";
 import { getRoutesForPlace } from "@/lib/place-routes";
 import { isCompactPlace, placeEditorialHeading, placeHref } from "@/lib/place-detail";
+import DirectionsLink from "./DirectionsLink";
 import EditorialHeader from "./EditorialHeader";
 import HomeMap from "./HomeMap";
 import SiteFooter from "./SiteFooter";
@@ -49,13 +50,17 @@ export default async function EditorialDetail({ item, type }: Props) {
   const booking = normalizeUrl(item.booking_url);
   const categoryLabel = item.map_label ?? item.category?.name ?? (type === "place" ? "Luogo da conoscere" : "Evento");
   const compactPlace = type === "place" && isCompactPlace(item);
+  const foodPlace = type === "place" && item.place_type === "food";
   const practicalInfo = type === "place" && Boolean(
     item.address || item.phone || item.email || website || booking || item.opening_hours ||
     item.ticket_info || item.visit_duration || item.services_notes || item.capacity_notes ||
     item.restrictions_notes || item.access_notes || item.parking_notes || item.public_transport_notes
   );
   const hasCoordinates = typeof item.latitude === "number" && typeof item.longitude === "number";
-  const related = relatedItems.filter((candidate) => candidate.id !== item.id).slice(0, 3);
+  const related = relatedItems
+    .filter((candidate) => candidate.id !== item.id)
+    .filter((candidate) => !foodPlace || candidate.place_type === "food")
+    .slice(0, 3);
   const eventDate = type === "event" ? formatDateTime(item.start_date) : null;
 
   return (
@@ -86,8 +91,8 @@ export default async function EditorialDetail({ item, type }: Props) {
       <section className={styles.detailGrid}>
         {(!compactPlace || paragraphs.length > 0) && (
           <article>
-            <p className={styles.kicker}>{type === "place" ? "Conosci il territorio" : "Vivi Roncegno"}</p>
-            <h2>{type === "place" ? placeEditorialHeading(item) : "Tutto quello che c’è da sapere."}</h2>
+            <p className={styles.kicker}>{foodPlace ? "A tavola" : type === "place" ? "Conosci il territorio" : "Vivi Roncegno"}</p>
+            <h2>{foodPlace ? item.title : type === "place" ? placeEditorialHeading(item) : "Tutto quello che c’è da sapere."}</h2>
             {paragraphs.length ? paragraphs.map((text, index) => <p key={index}>{text}</p>) : (
               <p>Le informazioni complete saranno disponibili a breve. Nel frattempo trovi qui posizione, contatti e indicazioni pratiche disponibili.</p>
             )}
@@ -115,18 +120,36 @@ export default async function EditorialDetail({ item, type }: Props) {
           <div className={styles.detailActions}>
             {booking && <a href={booking} target="_blank" rel="noreferrer">Prenota / contatta ↗</a>}
             {website && <a href={website} target="_blank" rel="noreferrer">Sito ufficiale ↗</a>}
-            {hasCoordinates && <a href={`https://www.openstreetmap.org/?mlat=${item.latitude}&mlon=${item.longitude}#map=16/${item.latitude}/${item.longitude}`} target="_blank" rel="noreferrer">Come arrivare ↗</a>}
+            {(hasCoordinates || item.address) && (
+              <DirectionsLink latitude={item.latitude} longitude={item.longitude} address={item.address}>
+                Ottieni indicazioni ↗
+              </DirectionsLink>
+            )}
           </div>
         </aside>
       </section>
 
       {hasCoordinates && (
-        <section className={styles.locationSection}>
-          <div className={styles.sectionHeading}>
-            <div><p className={styles.kicker}>Dove si trova</p><h2>Trovalo sulla mappa.</h2></div>
-            <a href={`https://www.openstreetmap.org/?mlat=${item.latitude}&mlon=${item.longitude}#map=16/${item.latitude}/${item.longitude}`} target="_blank" rel="noreferrer">Apri indicazioni ↗</a>
-          </div>
-          <div className={styles.detailMap}>
+        <section className={`${styles.locationSection}${foodPlace ? ` ${styles.foodLocationSection}` : ""}`}>
+          {foodPlace ? (
+            <div className={styles.foodLocationHeading}>
+              <div>
+                <p className={styles.kicker}>Dove si trova</p>
+                <h2>{location}</h2>
+              </div>
+              <DirectionsLink latitude={item.latitude} longitude={item.longitude} address={item.address}>
+                Ottieni indicazioni ↗
+              </DirectionsLink>
+            </div>
+          ) : (
+            <div className={styles.sectionHeading}>
+              <div><p className={styles.kicker}>Dove si trova</p><h2>Trovalo sulla mappa.</h2></div>
+              <DirectionsLink latitude={item.latitude} longitude={item.longitude} address={item.address}>
+                Apri indicazioni ↗
+              </DirectionsLink>
+            </div>
+          )}
+          <div className={`${styles.detailMap}${foodPlace ? ` ${styles.foodDetailMap}` : ""}`}>
             <HomeMap
               compact
               showFilters={false}
@@ -150,7 +173,7 @@ export default async function EditorialDetail({ item, type }: Props) {
         </section>
       )}
 
-      {type === "place" && !compactPlace && relatedRoutes.length > 0 && (
+      {type === "place" && !compactPlace && !foodPlace && relatedRoutes.length > 0 && (
         <section className={styles.relatedEditorial}>
           <div className={styles.sectionHeading}>
             <div><p className={styles.kicker}>Da qui puoi partire</p><h2>Percorsi collegati a questo luogo.</h2></div>
@@ -180,10 +203,15 @@ export default async function EditorialDetail({ item, type }: Props) {
       )}
 
       {!compactPlace && related.length > 0 && (
-        <section className={styles.relatedEditorial}>
+        <section className={`${styles.relatedEditorial}${foodPlace ? ` ${styles.foodRelated}` : ""}`}>
           <div className={styles.sectionHeading}>
-            <div><p className={styles.kicker}>Continua a esplorare</p><h2>Potrebbe interessarti anche.</h2></div>
-            <Link href={type === "place" ? "/luoghi" : "/eventi"}>Vedi tutto →</Link>
+            <div>
+              <p className={styles.kicker}>{foodPlace ? "Dove mangiare" : "Continua a esplorare"}</p>
+              <h2>{foodPlace ? "Altri posti dove mangiare." : "Potrebbe interessarti anche."}</h2>
+            </div>
+            <Link href={foodPlace ? "/organizza-la-visita" : type === "place" ? "/luoghi" : "/eventi"}>
+              {foodPlace ? "Vedi dove mangiare →" : "Vedi tutto →"}
+            </Link>
           </div>
           <div className={styles.relatedGrid}>
             {related.map((relatedItem) => {
@@ -204,10 +232,16 @@ export default async function EditorialDetail({ item, type }: Props) {
         </section>
       )}
 
-      <section className={styles.relatedLinks}>
-        <Link href="/organizza-la-visita"><small>Organizza</small><strong>Dove mangiare e dormire →</strong></Link>
-        <Link href={type === "place" ? "/eventi" : "/luoghi"}><small>Continua a esplorare</small><strong>{type === "place" ? "Vedi i prossimi eventi" : "Conosci i luoghi"} →</strong></Link>
-      </section>
+      {foodPlace ? (
+        <section className={styles.foodEndLink}>
+          <Link href="/organizza-la-visita"><small>Organizza la visita</small><strong>Dormire, servizi e informazioni utili →</strong></Link>
+        </section>
+      ) : (
+        <section className={styles.relatedLinks}>
+          <Link href="/organizza-la-visita"><small>Organizza</small><strong>Dove mangiare e dormire →</strong></Link>
+          <Link href={type === "place" ? "/eventi" : "/luoghi"}><small>Continua a esplorare</small><strong>{type === "place" ? "Vedi i prossimi eventi" : "Conosci i luoghi"} →</strong></Link>
+        </section>
+      )}
       <SiteFooter settings={settings} />
     </main>
   );
