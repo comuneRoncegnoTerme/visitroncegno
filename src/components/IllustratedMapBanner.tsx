@@ -11,7 +11,7 @@ export default function IllustratedMapBanner() {
       <div className={styles.copy}>
         <p>Roncegno illustrata</p>
         <h2>Il territorio,<br />tutto in uno sguardo.</h2>
-        <span>Dai musei alle vette, esplora ogni dettaglio della cartina e consulta la guida ufficiale.</span>
+        <span>Dai musei alle vette del Lagorai, orientati nella cartina illustrata e scopri i luoghi del territorio.</span>
         <Link href="/cartina">Apri la cartina <b aria-hidden="true">→</b></Link>
       </div>
     </section>
