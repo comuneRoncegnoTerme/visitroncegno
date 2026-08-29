@@ -24,16 +24,12 @@ export default async function ContentHubPage() {
   ]);
 
   const panelCount = trailPanels.length + cinqueValliPanels.length;
-  const sections = [
-    { title: "Homepage", text: "Hero, messaggi principali e call to action", count: "Modifica diretta", href: "#homepage-editor" },
-    { title: "Eventi", text: "Crea, modifica, pubblica e archivia appuntamenti", count: `${events.length} prossimi in homepage`, href: "/content-hub/eventi" },
-    { title: "Luoghi", text: "Schede territoriali, coordinate e presenza sulla mappa", count: `${places.length} in evidenza`, href: "/content-hub/luoghi" },
-    { title: "Percorsi", text: "Dati tecnici, accessibilità, punto di partenza e GPX", count: "Gestione completa", href: "/content-hub/percorsi" },
-    { title: "Media", text: "Carica immagini, audio e tracce GPX in Directus", count: "Libreria Directus", href: "/content-hub/media" },
-    { title: "Qualità contenuti", text: "Trova immagini, coordinate, GPX e dati mancanti", count: "Controllo automatico", href: "/content-hub/qualita" },
-    { title: "Pannelli e audioguide", text: "Immagini, audio e testi delle pagine collegate ai QR", count: `${panelCount} URL legacy`, href: "/content-hub/pannelli" },
-    { title: "Esperienze", text: "Natura, benessere, cultura e movimento", count: `${experiences.length} attive`, href: "/#esperienze" },
-    { title: "Impostazioni sito", text: "Contatti, footer, social, logo e SEO predefinito", count: "Configurazione Directus", href: "/content-hub/impostazioni" },
+  const secondarySections = [
+    { title: "Percorsi", text: "Dati tecnici, accessibilità, punto di partenza e GPX", meta: "Gestione completa", href: "/content-hub/percorsi" },
+    { title: "Pannelli e audioguide", text: "Immagini, audio e testi delle pagine collegate ai QR", meta: `${panelCount} URL legacy`, href: "/content-hub/pannelli" },
+    { title: "Media", text: "Immagini, audio, documenti e tracce GPX", meta: "Libreria Directus", href: "/content-hub/media" },
+    { title: "Qualità contenuti", text: "Controlla immagini, coordinate, GPX e dati mancanti", meta: "Controllo automatico", href: "/content-hub/qualita" },
+    { title: "Impostazioni sito", text: "Contatti, footer, social, logo e SEO predefinito", meta: "Configurazione", href: "/content-hub/impostazioni" },
   ];
 
   return (
@@ -59,16 +55,67 @@ export default async function ContentHubPage() {
 
       <section className={styles.main}>
         <header className={styles.topbar}>
-          <div><p className={styles.eyebrow}>Area redazione · dati reali</p><h1>Cosa vuoi aggiornare?</h1></div>
+          <div>
+            <p className={styles.eyebrow}>Area redazione</p>
+            <h1>Buon lavoro, {session.name}.</h1>
+            <p className={styles.intro}>Aggiorna ciò che cambia oggi. Il resto può restare sullo sfondo.</p>
+          </div>
           <div className={styles.userBadge}><strong>{session.name}</strong><span>{session.role}</span></div>
         </header>
 
-        <section className={styles.cards} id="contenuti">
-          {sections.map((section) => (
-            <Link href={section.href} className={styles.card} key={section.title}>
-              <span>{section.count}</span><h2>{section.title}</h2><p>{section.text}</p><strong>Apri →</strong>
+        <section className={styles.dashboard} id="contenuti">
+          <div className={styles.primaryColumn}>
+            <p className={styles.sectionLabel}>Modifica subito</p>
+            <Link href="#homepage-editor" className={styles.heroAction}>
+              <div>
+                <span>Homepage</span>
+                <h2>La prima pagina del territorio.</h2>
+                <p>Hero, messaggi principali, call to action e contenuti in evidenza.</p>
+              </div>
+              <strong>Modifica homepage →</strong>
             </Link>
-          ))}
+
+            <div className={styles.quickGrid}>
+              <Link href="/content-hub/eventi" className={styles.quickAction}>
+                <span>{events.length} prossimi</span>
+                <h3>Eventi</h3>
+                <p>Aggiorna calendario e appuntamenti.</p>
+                <strong>Gestisci →</strong>
+              </Link>
+              <Link href="/content-hub/luoghi" className={styles.quickAction}>
+                <span>{places.length} in evidenza</span>
+                <h3>Luoghi</h3>
+                <p>Schede, contatti, coordinate e mappa.</p>
+                <strong>Gestisci →</strong>
+              </Link>
+            </div>
+          </div>
+
+          <aside className={styles.statusColumn}>
+            <p className={styles.sectionLabel}>Stato redazione</p>
+            <div className={styles.statusList}>
+              <div><strong>{events.length}</strong><span>eventi prossimi</span></div>
+              <div><strong>{places.length}</strong><span>luoghi in evidenza</span></div>
+              <div><strong>{panelCount}</strong><span>URL QR preservati</span></div>
+              <div><strong>{experiences.length}</strong><span>esperienze attive</span></div>
+            </div>
+            <Link href="/content-hub/qualita" className={styles.qualityLink}>Controlla qualità contenuti →</Link>
+          </aside>
+        </section>
+
+        <section className={styles.manageSection}>
+          <div className={styles.manageHeading}>
+            <div><p className={styles.sectionLabel}>Gestione</p><h2>Tutto il resto, senza rumore.</h2></div>
+          </div>
+          <div className={styles.manageList}>
+            {secondarySections.map((section) => (
+              <Link href={section.href} className={styles.manageRow} key={section.title}>
+                <div><h3>{section.title}</h3><p>{section.text}</p></div>
+                <span>{section.meta}</span>
+                <strong>Apri →</strong>
+              </Link>
+            ))}
+          </div>
         </section>
 
         <HomepageEditor homepage={homepage} />
