@@ -8,6 +8,7 @@ import EditorialHeader from "./EditorialHeader";
 import HomeMap from "./HomeMap";
 import SiteFooter from "./SiteFooter";
 import styles from "./Editorial.module.css";
+import foodStyles from "./FoodPlace.module.css";
 
 type Props = { item: EditorialItem; type: "place" | "event" };
 
@@ -130,9 +131,9 @@ export default async function EditorialDetail({ item, type }: Props) {
       </section>
 
       {hasCoordinates && (
-        <section className={`${styles.locationSection}${foodPlace ? ` ${styles.foodLocationSection}` : ""}`}>
+        <section className={`${styles.locationSection}${foodPlace ? ` ${foodStyles.locationSection}` : ""}`}>
           {foodPlace ? (
-            <div className={styles.foodLocationHeading}>
+            <div className={foodStyles.locationHeading}>
               <div>
                 <p className={styles.kicker}>Dove si trova</p>
                 <h2>{location}</h2>
@@ -149,7 +150,7 @@ export default async function EditorialDetail({ item, type }: Props) {
               </DirectionsLink>
             </div>
           )}
-          <div className={`${styles.detailMap}${foodPlace ? ` ${styles.foodDetailMap}` : ""}`}>
+          <div className={`${styles.detailMap}${foodPlace ? ` ${foodStyles.map}` : ""}`}>
             <HomeMap
               compact
               showFilters={false}
@@ -203,7 +204,7 @@ export default async function EditorialDetail({ item, type }: Props) {
       )}
 
       {!compactPlace && related.length > 0 && (
-        <section className={`${styles.relatedEditorial}${foodPlace ? ` ${styles.foodRelated}` : ""}`}>
+        <section className={`${styles.relatedEditorial}${foodPlace ? ` ${foodStyles.related}` : ""}`}>
           <div className={styles.sectionHeading}>
             <div>
               <p className={styles.kicker}>{foodPlace ? "Dove mangiare" : "Continua a esplorare"}</p>
@@ -233,7 +234,7 @@ export default async function EditorialDetail({ item, type }: Props) {
       )}
 
       {foodPlace ? (
-        <section className={styles.foodEndLink}>
+        <section className={foodStyles.endLink}>
           <Link href="/organizza-la-visita"><small>Organizza la visita</small><strong>Dormire, servizi e informazioni utili →</strong></Link>
         </section>
       ) : (
