@@ -91,11 +91,11 @@ function mapStyle(theme: MapTheme): StyleSpecification {
     sources: {
       editorial: {
         type: "raster",
-        tiles: ["https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png"],
+        tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
         tileSize: 256,
         minzoom: 0,
         maxzoom: 19,
-        attribution: "© OpenStreetMap contributors © CARTO",
+        attribution: "© OpenStreetMap contributors",
       },
     },
     layers: [{ id: "editorial", type: "raster", source: "editorial" }],
