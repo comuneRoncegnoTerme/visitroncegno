@@ -28,11 +28,10 @@ async function directus(path, options = {}) {
 const fields = [
   {
     field: "audio_file",
-    type: "uuid",
+    type: "string",
     meta: {
-      interface: "file",
-      special: ["file"],
-      note: "File MP3 dell’audioguida associata alla storia/pannello.",
+      interface: "input",
+      note: "UUID del file MP3 in Directus. Il Content Hub offre il selettore media.",
     },
     schema: { is_nullable: true },
   },
