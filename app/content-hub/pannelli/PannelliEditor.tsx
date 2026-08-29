@@ -20,7 +20,8 @@ type Story = {
   source_label?: string | null;
 };
 
-type Result = { data?: Story[]; fields?: string[]; error?: string };
+type ListResult = { data?: Story[]; fields?: string[]; error?: string };
+type SaveResult = { data?: Story; error?: string };
 
 export default function PannelliEditor() {
   const router = useRouter();
@@ -34,7 +35,7 @@ export default function PannelliEditor() {
 
   async function load() {
     const response = await fetch("/api/content-hub/items/stories", { cache: "no-store" });
-    const result = (await response.json().catch(() => null)) as Result | null;
+    const result = (await response.json().catch(() => null)) as ListResult | null;
     if (response.status === 401) {
       router.replace("/content-hub/login");
       return;
@@ -83,24 +84,39 @@ export default function PannelliEditor() {
     if (!draft || !selectedId) return;
     setSaving(true);
     setMessage("");
-    const response = await fetch(`/api/content-hub/items/stories/${selectedId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(draft),
-    });
-    const result = await response.json().catch(() => null);
-    if (response.status === 401) {
-      router.replace("/content-hub/login");
-      return;
-    }
-    if (!response.ok) {
-      setMessage(result?.error ?? "Salvataggio non riuscito");
+
+    try {
+      const response = await fetch(`/api/content-hub/items/stories/${selectedId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        cache: "no-store",
+        body: JSON.stringify(draft),
+      });
+      const result = (await response.json().catch(() => null)) as SaveResult | null;
+
+      if (response.status === 401) {
+        router.replace("/content-hub/login");
+        return;
+      }
+      if (!response.ok) {
+        setMessage(result?.error ?? "Salvataggio non riuscito");
+        return;
+      }
+
+      // Directus restituisce il record aggiornato. Lo usiamo subito come nuova
+      // sorgente del form invece di ricaricare la lista e rischiare di mostrare
+      // una risposta GET precedente al PATCH.
+      const saved = result?.data ? { ...draft, ...result.data } : { ...draft };
+      setDraft(saved);
+      setItems((current) =>
+        current.map((item) => item.id === selectedId ? saved : item)
+      );
+      setMessage("Modifiche salvate.");
+    } catch {
+      setMessage("Connessione interrotta durante il salvataggio");
+    } finally {
       setSaving(false);
-      return;
     }
-    await load();
-    setMessage("Modifiche salvate.");
-    setSaving(false);
   }
 
   return (

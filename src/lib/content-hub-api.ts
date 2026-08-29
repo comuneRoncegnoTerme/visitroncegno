@@ -29,6 +29,7 @@ export async function contentHubDirectusFetch(
   }
 
   return directusFetch(path, {
+    cache: "no-store",
     ...options,
     authenticated: true,
   });
