@@ -46,6 +46,36 @@ const LEGACY_INDEX_SLUGS = new Set([
   "localita-cinque-valli-9",
 ]);
 
+const HTML_ENTITIES: Record<string, string> = {
+  amp: "&",
+  apos: "'",
+  quot: '"',
+  nbsp: " ",
+  ldquo: "“",
+  rdquo: "”",
+  lsquo: "‘",
+  rsquo: "’",
+  laquo: "«",
+  raquo: "»",
+  hellip: "…",
+  ndash: "–",
+  mdash: "—",
+};
+
+function decodeHtmlEntities(value: string) {
+  return value.replace(/&(#(?:x[0-9a-f]+|\d+)|[a-z]+);/gi, (entity, code: string) => {
+    if (code.startsWith("#x") || code.startsWith("#X")) {
+      const value = Number.parseInt(code.slice(2), 16);
+      return Number.isFinite(value) ? String.fromCodePoint(value) : entity;
+    }
+    if (code.startsWith("#")) {
+      const value = Number.parseInt(code.slice(1), 10);
+      return Number.isFinite(value) ? String.fromCodePoint(value) : entity;
+    }
+    return HTML_ENTITIES[code.toLowerCase()] ?? entity;
+  });
+}
+
 function normalizeVisitRoncegnoLegacyPath(value: string | null) {
   if (!value) return null;
 
@@ -79,7 +109,7 @@ export function storyParagraphs(value: unknown): string[] {
     .replace(/<\/li>/gi, "\n")
     .replace(/<[^>]+>/g, "")
     .split(/\n{2,}|\n/)
-    .map((paragraph) => paragraph.trim())
+    .map((paragraph) => decodeHtmlEntities(paragraph.trim()))
     .filter(Boolean);
 }
 
