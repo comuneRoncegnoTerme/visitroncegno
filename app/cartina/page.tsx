@@ -8,7 +8,7 @@ import styles from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "Cartina ufficiale di Roncegno Terme",
-  description: "Esplora la cartina illustrata ufficiale di Roncegno Terme, consulta la guida del territorio e scarica il PDF.",
+  description: "Esplora la cartina illustrata ufficiale di Roncegno Terme e scarica il PDF.",
   alternates: { canonical: "/cartina" },
 };
 
@@ -75,51 +75,60 @@ export default async function CartinaPage() {
   return (
     <main className={styles.page}>
       <SiteHeader settings={settings} />
-      <section className={styles.hero}>
-        <div>
+
+      <section className={styles.intro} aria-labelledby="cartina-page-title">
+        <div className={styles.introCopy}>
           <p className={styles.eyebrow}>La cartina ufficiale</p>
-          <h1>Roncegno Terme,<br />tutto in uno sguardo.</h1>
+          <h1 id="cartina-page-title">La cartina illustrata di Roncegno.</h1>
+          <p className={styles.lead}>
+            Esplora il territorio attraverso l’illustrazione ufficiale e apri i punti evidenziati per approfondire luoghi e percorsi nel sito.
+          </p>
         </div>
-        <div className={styles.heroCopy}>
-          <p>Dal centro ai masi, dai musei alle vette del Lagorai: esplora il territorio attraverso l’illustrazione ufficiale e scopri quanto c’è intorno.</p>
-          <a className={styles.download} href="/downloads/cartina-ufficiale-roncegno-terme.pdf" download>Scarica la cartina in PDF <span>↓</span></a>
+        <div className={styles.introActions}>
+          <a className={styles.primaryAction} href="/downloads/cartina-ufficiale-roncegno-terme.pdf" download>
+            Scarica il PDF <span aria-hidden="true">↓</span>
+          </a>
         </div>
       </section>
 
       <section className={styles.mapSection} aria-labelledby="cartina-title">
-        <div className={styles.sectionHeading}>
-          <div><p className={styles.eyebrow}>Esplora</p><h2 id="cartina-title">Muoviti dentro la cartina.</h2></div>
+        <div className={styles.mapHeading}>
+          <div>
+            <p className={styles.eyebrow}>Esplora</p>
+            <h2 id="cartina-title">Muoviti nella cartina.</h2>
+          </div>
           <p>Tocca i punti numerati oppure avvia il tour illustrato. La rappresentazione è orientativa e non sostituisce la cartografia escursionistica.</p>
         </div>
-        <IllustratedMapViewer
-          src="/images/cartina/cartina-roncegno-1.webp"
-          alt="Cartina illustrata ufficiale di Roncegno Terme e del suo territorio"
-          hotspots={MAP_HOTSPOTS}
-        />
+        <div className={styles.viewerWrap}>
+          <IllustratedMapViewer
+            src="/images/cartina/cartina-roncegno-1.webp"
+            alt="Cartina illustrata ufficiale di Roncegno Terme e del suo territorio"
+            hotspots={MAP_HOTSPOTS}
+          />
+        </div>
         <p className={styles.attribution}>Illustrazione “Le Formiche” di Fabio Vettori · Cartina ufficiale 2026</p>
       </section>
 
-      <section className={styles.guideSection} aria-labelledby="guida-title">
-        <div className={styles.guideIntro}>
-          <p className={styles.eyebrow}>Sul retro della cartina</p>
-          <h2 id="guida-title">Idee e indirizzi per la visita.</h2>
-          <p>La seconda facciata raccoglie passeggiate, punti d’interesse, rifugi, musei e strutture del territorio in italiano e inglese.</p>
-          <div className={styles.guideLinks}>
-            <Link href="/percorsi">Scopri i percorsi →</Link>
-            <Link href="/organizza-la-visita">Organizza la visita →</Link>
-          </div>
+      <section className={styles.nextSteps} aria-labelledby="approfondisci-title">
+        <div>
+          <p className={styles.eyebrow}>Approfondisci</p>
+          <h2 id="approfondisci-title">Dalla cartina alle informazioni utili.</h2>
         </div>
-        <IllustratedMapViewer
-          src="/images/cartina/cartina-roncegno-2.webp"
-          alt="Guida bilingue ufficiale allegata alla cartina di Roncegno Terme"
-          mobileScale={2.5}
-        />
+        <div className={styles.nextLinks}>
+          <Link href="/percorsi">Scopri i percorsi <span aria-hidden="true">→</span></Link>
+          <Link href="/luoghi">Esplora i luoghi <span aria-hidden="true">→</span></Link>
+          <Link href="/organizza-la-visita">Organizza la visita <span aria-hidden="true">→</span></Link>
+        </div>
       </section>
 
-      <section className={styles.endCta}>
-        <div><p className={styles.eyebrowLight}>Orientati con precisione</p><h2>Hai bisogno di coordinate e indicazioni?</h2></div>
-        <Link href="/organizza-la-visita#mappa-visita">Apri la mappa interattiva →</Link>
+      <section className={styles.mapCta}>
+        <div>
+          <p className={styles.eyebrowLight}>Per orientarti sul posto</p>
+          <h2>Ti servono coordinate e indicazioni precise?</h2>
+        </div>
+        <Link href="/organizza-la-visita#mappa-visita">Apri la mappa interattiva <span aria-hidden="true">→</span></Link>
       </section>
+
       <SiteFooter settings={settings} />
     </main>
   );
