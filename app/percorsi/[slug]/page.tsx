@@ -15,6 +15,12 @@ import {
   getSiteSettings,
   type RoutePoint,
 } from "@/lib/directus";
+import {
+  contentCtaLabel,
+  contentKindLabel,
+  getLegacyPanelNumber,
+  isLegacyTrailPanelPath,
+} from "@/lib/content-semantics";
 import { getLegacyStoryPath } from "@/lib/stories";
 import { descriptionFrom, pageMetadata } from "@/lib/seo";
 
@@ -50,6 +56,7 @@ interface RouteStory {
   excerpt: string | null;
   body: string | null;
   image: string | null;
+  audio_file: string | null;
   featured: boolean;
   source_url: string | null;
   source_label: string | null;
@@ -163,6 +170,7 @@ async function loadRouteStories(routeId: number) {
       "excerpt",
       "body",
       "image",
+      "audio_file",
       "featured",
       "source_url",
       "source_label",
@@ -236,6 +244,9 @@ export default async function RoutePage({ params }: RoutePageProps) {
       ? ["Come arrivare", "Anche con trasporto pubblico"]
       : null,
   ].filter(Boolean) as [string, string][];
+
+  const panelCount = stories.filter((story) => isLegacyTrailPanelPath(storyHref(story))).length;
+  const allRouteContentsArePanels = stories.length > 0 && panelCount === stories.length;
 
   return (
     <main className={mobileStyles.routePage}>
@@ -363,22 +374,28 @@ export default async function RoutePage({ params }: RoutePageProps) {
           <div className="section-shell">
             <div className="route-stories-heading">
               <div>
-                <p className="eyebrow light">Storie lungo il cammino</p>
-                <h2>Capire il territorio<br />mentre lo attraversi.</h2>
+                <p className="eyebrow light">Lungo il percorso</p>
+                <h2>{allRouteContentsArePanels ? "I pannelli che incontri lungo il cammino." : "Pannelli e approfondimenti lungo il cammino."}</h2>
               </div>
-              <p>Approfondimenti su natura, memoria, tradizioni e paesaggio legati direttamente a questo percorso.</p>
+              <p>{allRouteContentsArePanels
+                ? "Sono gli approfondimenti presenti fisicamente sul territorio: aprili durante il percorso, consulta le immagini e ascolta le audioguide quando disponibili."
+                : "Contenuti legati direttamente al percorso: i pannelli corrispondono agli approfondimenti presenti sul territorio, gli altri contenuti ampliano il racconto."}</p>
             </div>
 
             <div className="route-stories-grid">
               {stories.map((story, index) => {
                 const storyImage = getDirectusAssetUrl(story.image);
-                const storyClass = story.featured
-                  ? "route-story-card route-story-card-featured"
-                  : "route-story-card";
                 const href = storyHref(story);
+                const isPanel = isLegacyTrailPanelPath(href);
+                const panelNumber = getLegacyPanelNumber(href);
+                const contentLabel = panelNumber
+                  ? `Pannello ${panelNumber}`
+                  : isPanel
+                    ? "Pannello"
+                    : String(index + 1).padStart(2, "0");
 
                 return (
-                  <article className={storyClass} key={story.id}>
+                  <article className="route-story-card" key={story.id}>
                     {storyImage && (
                       <div
                         className="route-story-image"
@@ -387,12 +404,15 @@ export default async function RoutePage({ params }: RoutePageProps) {
                     )}
                     <div className="route-story-copy">
                       <div className="route-story-meta">
-                        <span>{String(index + 1).padStart(2, "0")}</span>
-                        <small>{story.category?.name ?? "Approfondimento"}</small>
+                        <span>{contentLabel}</span>
+                        <small>{story.category?.name ?? contentKindLabel(href)}</small>
                       </div>
                       <h3>{story.title}</h3>
                       {story.excerpt && <p>{story.excerpt}</p>}
-                      <Link href={href}>Leggi la storia →</Link>
+                      <div className="route-story-footer">
+                        {story.audio_file && <em>Audioguida disponibile</em>}
+                        <Link href={href}>{contentCtaLabel(href)} →</Link>
+                      </div>
                     </div>
                   </article>
                 );
