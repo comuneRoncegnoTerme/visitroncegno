@@ -1,4 +1,4 @@
-export type ContentHubCollection = "events" | "places" | "routes";
+export type ContentHubCollection = "events" | "places" | "routes" | "stories";
 
 export const contentHubCollections: Record<
   ContentHubCollection,
@@ -75,6 +75,23 @@ export const contentHubCollections: Record<
       "gpx_file",
     ],
     sort: "sort,title",
+    limit: 250,
+  },
+  stories: {
+    fields: [
+      "id",
+      "status",
+      "title",
+      "slug",
+      "excerpt",
+      "body",
+      "image",
+      "audio_file",
+      "audio_title",
+      "source_url",
+      "source_label",
+    ],
+    sort: "title",
     limit: 250,
   },
 };
