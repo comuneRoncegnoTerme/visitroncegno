@@ -25,6 +25,16 @@ async function directus(path, options = {}) {
   return response.status === 204 ? null : response.json();
 }
 
+async function fieldExists(field) {
+  const response = await fetch(`${baseUrl}/fields/stories/${field}`, { headers });
+  if (response.status === 404) return false;
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(`GET /fields/stories/${field} failed (${response.status}): ${body}`);
+  }
+  return true;
+}
+
 const fields = [
   {
     field: "audio_file",
@@ -46,12 +56,9 @@ const fields = [
   },
 ];
 
-const existingResponse = await directus("/fields/stories");
-const existing = new Set((existingResponse?.data ?? []).map((field) => field.field));
 let created = 0;
-
 for (const definition of fields) {
-  if (existing.has(definition.field)) {
+  if (await fieldExists(definition.field)) {
     console.log(`skip ${definition.field}`);
     continue;
   }
@@ -81,6 +88,8 @@ if (minieraStory && !minieraStory.audio_file) {
     }),
   });
   console.log("linked Miniera audioguide");
+} else if (minieraStory) {
+  console.log("skip Miniera audioguide: already linked");
 }
 
 console.log(`Directus story media model ready. Created ${created} field(s).`);
