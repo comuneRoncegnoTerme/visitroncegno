@@ -6,6 +6,7 @@ import SiteFooter from "@/components/SiteFooter";
 import { getSiteSettings } from "@/lib/directus";
 import { getStoryByLegacySlug, storyParagraphs } from "@/lib/stories";
 import { getTrailPanel, trailPanels, type TrailPanel } from "@/lib/trail-panels";
+import { cinqueValliPanels, getCinqueValliPanel } from "@/lib/cinque-valli-panels";
 import styles from "./page.module.css";
 import { descriptionFrom, pageMetadata } from "@/lib/seo";
 
@@ -34,13 +35,17 @@ async function getDirectusTrailPanel(slug: string): Promise<TrailPanel | null> {
   };
 }
 
+function getStaticTrailPanel(slug: string) {
+  return getTrailPanel(slug) ?? getCinqueValliPanel(slug);
+}
+
 export function generateStaticParams() {
-  return trailPanels.map((panel) => ({ slug: panel.slug }));
+  return [...trailPanels, ...cinqueValliPanels].map((panel) => ({ slug: panel.slug }));
 }
 
 export async function generateMetadata({ params }: LegacyTrailPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const panel = getTrailPanel(slug) ?? await getDirectusTrailPanel(slug);
+  const panel = getStaticTrailPanel(slug) ?? await getDirectusTrailPanel(slug);
   if (!panel) return { title: "Approfondimento non trovato", robots: { index: false, follow: false } };
 
   return pageMetadata({
@@ -52,7 +57,7 @@ export async function generateMetadata({ params }: LegacyTrailPageProps): Promis
 
 export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) {
   const { slug } = await params;
-  const staticPanel = getTrailPanel(slug);
+  const staticPanel = getStaticTrailPanel(slug);
   const [settings, directusPanel] = await Promise.all([
     getSiteSettings(),
     staticPanel ? Promise.resolve(null) : getDirectusTrailPanel(slug),
