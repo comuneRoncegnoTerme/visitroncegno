@@ -3,10 +3,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { getSiteSettings } from "@/lib/directus";
+import { getDirectusAssetUrl, getSiteSettings } from "@/lib/directus";
 import { getStoryByLegacySlug, storyParagraphs } from "@/lib/stories";
 import { getTrailPanel, trailPanels, type TrailPanel } from "@/lib/trail-panels";
 import { cinqueValliPanels, getCinqueValliPanel } from "@/lib/cinque-valli-panels";
+import { getPanelAudioFileId } from "@/lib/panel-audio";
 import styles from "./page.module.css";
 import { descriptionFrom, pageMetadata } from "@/lib/seo";
 
@@ -70,6 +71,7 @@ export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) 
   const routeHref = panel.relatedRouteHref ??
     (panel.relatedRouteLabel === "Circuito del Castagno" ? "/percorsi/circuito-del-castagno" : "/percorsi");
   const routeLabel = panel.relatedRouteLabel ?? "Scopri i percorsi";
+  const audioUrl = getDirectusAssetUrl(getPanelAudioFileId(slug));
 
   return (
     <main className={`${styles.page} ${isChestnutHistory ? styles.chestnutPage : ""}`}>
@@ -122,6 +124,16 @@ export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) 
             <p>Ritrova questa storia nel paesaggio di Roncegno e scopri le altre tappe collegate.</p>
             <Link href={routeHref}>{routeLabel} →</Link>
           </div>
+
+          {audioUrl && (
+            <div className={styles.sourceCard}>
+              <p className={styles.metaLabel}>Audioguida</p>
+              <p>{panel.audioTitle}</p>
+              <audio controls preload="metadata" src={audioUrl} style={{ width: "100%" }}>
+                Il browser non supporta la riproduzione audio.
+              </audio>
+            </div>
+          )}
 
           {isChestnutHistory && (
             <div className={styles.sourceCard}>
