@@ -15,6 +15,10 @@ interface LegacyTrailPageProps {
   params: Promise<{ slug: string }>;
 }
 
+const LEGACY_PANEL_NUMBERS: Record<string, string> = {
+  "miniera-di-cinque-valli-8": "26–27",
+};
+
 async function getDirectusTrailPanel(slug: string): Promise<TrailPanel | null> {
   const story = await getStoryByLegacySlug(slug);
   if (!story) return null;
@@ -24,7 +28,7 @@ async function getDirectusTrailPanel(slug: string): Promise<TrailPanel | null> {
 
   return {
     slug,
-    panelNumber: "Approfondimento",
+    panelNumber: LEGACY_PANEL_NUMBERS[slug] ?? "Approfondimento",
     qrCodes: [],
     title: story.title,
     eyebrow: story.category?.name ?? "Storie lungo il cammino",
@@ -125,16 +129,6 @@ export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) 
             <Link href={routeHref}>{routeLabel} →</Link>
           </div>
 
-          {audioUrl && (
-            <div className={styles.sourceCard}>
-              <p className={styles.metaLabel}>Audioguida</p>
-              <p>{panel.audioTitle}</p>
-              <audio controls preload="metadata" src={audioUrl} style={{ width: "100%" }}>
-                Il browser non supporta la riproduzione audio.
-              </audio>
-            </div>
-          )}
-
           {isChestnutHistory && (
             <div className={styles.sourceCard}>
               <p className={styles.metaLabel}>Dalle schede storiche</p>
@@ -143,6 +137,16 @@ export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) 
             </div>
           )}
         </aside>
+
+        {audioUrl && (
+          <div className={`${styles.sourceCard} ${styles.audioCard}`}>
+            <p className={styles.metaLabel}>Audioguida</p>
+            <p>{panel.audioTitle}</p>
+            <audio controls autoPlay preload="auto" src={audioUrl} style={{ width: "100%" }}>
+              Il browser non supporta la riproduzione audio.
+            </audio>
+          </div>
+        )}
       </section>
 
       {panel.relatedPanels && (
