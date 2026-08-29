@@ -8,7 +8,11 @@ import {
   unauthorizedContentHubResponse,
   upstreamFailureResponse,
 } from "@/lib/content-hub-api";
-import { isContentHubCollection, sanitizeContentHubPayload } from "@/lib/content-hub-collections";
+import {
+  contentHubCollections,
+  isContentHubCollection,
+  sanitizeContentHubPayload,
+} from "@/lib/content-hub-collections";
 import { getDirectusCollectionFields } from "@/lib/content-hub-directus-schema";
 
 export async function PATCH(
@@ -28,7 +32,10 @@ export async function PATCH(
   }
 
   try {
-    const directusFields = await getDirectusCollectionFields(collection);
+    const directusFields = await getDirectusCollectionFields(
+      collection,
+      contentHubCollections[collection].fields
+    );
     const payload = sanitizeContentHubPayload(
       collection,
       body as Record<string, unknown>,
