@@ -81,6 +81,7 @@ export const contentHubCollections: Record<
     fields: [
       "id",
       "status",
+      "sort",
       "title",
       "slug",
       "excerpt",
@@ -88,10 +89,11 @@ export const contentHubCollections: Record<
       "image",
       "audio_file",
       "audio_title",
+      "featured",
       "source_url",
       "source_label",
     ],
-    sort: "title",
+    sort: "sort,title",
     limit: 250,
   },
 };
