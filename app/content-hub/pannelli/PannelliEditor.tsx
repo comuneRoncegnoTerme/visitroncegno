@@ -9,6 +9,7 @@ import styles from "../collection-editor.module.css";
 type Story = {
   id: number;
   status?: string;
+  sort?: number | null;
   title?: string;
   slug?: string;
   excerpt?: string | null;
@@ -16,6 +17,7 @@ type Story = {
   image?: string | null;
   audio_file?: string | null;
   audio_title?: string | null;
+  featured?: boolean;
   source_url?: string | null;
   source_label?: string | null;
 };
@@ -69,6 +71,8 @@ export default function PannelliEditor() {
   }, [items, query]);
 
   const hasAudioFields = fields.includes("audio_file") && fields.includes("audio_title");
+  const hasEditorialOrder = fields.includes("sort");
+  const hasFeatured = fields.includes("featured");
 
   function select(item: Story) {
     setSelectedId(item.id);
@@ -103,9 +107,6 @@ export default function PannelliEditor() {
         return;
       }
 
-      // Directus restituisce il record aggiornato. Lo usiamo subito come nuova
-      // sorgente del form invece di ricaricare la lista e rischiare di mostrare
-      // una risposta GET precedente al PATCH.
       const saved = result?.data ? { ...draft, ...result.data } : { ...draft };
       setDraft(saved);
       setItems((current) =>
@@ -146,7 +147,7 @@ export default function PannelliEditor() {
           <div>
             <p>{draft ? `Modifica #${draft.id}` : "Seleziona un contenuto"}</p>
             <h1>{draft?.title ?? "Pannelli e audioguide"}</h1>
-            <span>Immagine e audioguida vengono pubblicate sulle pagine legacy senza cambiare QR o URL.</span>
+            <span>Testi, immagini e audioguide alimentano sia la pagina QR sia il racconto del percorso, senza cambiare URL legacy.</span>
           </div>
           {draft?.source_url && <a href={draft.source_url.replace("https://www.visitroncegno.it", "")} target="_blank" rel="noreferrer">Anteprima ↗</a>}
         </div>
@@ -161,10 +162,24 @@ export default function PannelliEditor() {
               <span>Titolo</span>
               <input value={draft.title ?? ""} onChange={(event) => setField("title", event.target.value)} />
             </label>
+            {hasEditorialOrder && (
+              <label>
+                <span>Ordine lungo il percorso</span>
+                <input type="number" min="0" value={draft.sort ?? ""} onChange={(event) => setField("sort", event.target.value === "" ? null : Number(event.target.value))} />
+                <small>Determina la sequenza nella sezione “Storie lungo il cammino”.</small>
+              </label>
+            )}
+            {hasFeatured && (
+              <label className={styles.checkbox}>
+                <input type="checkbox" checked={Boolean(draft.featured)} onChange={(event) => setField("featured", event.target.checked)} />
+                <span>Metti in evidenza</span>
+                <small>La scheda riceve maggiore peso visivo nella pagina del percorso.</small>
+              </label>
+            )}
             <label className={styles.full}>
               <span>Immagine del pannello</span>
               <MediaField value={draft.image ?? ""} kind="image" onChange={(value) => setField("image", value)} />
-              <small>Usata come fotografia editoriale nella hero della scheda.</small>
+              <small>Usata nella hero della scheda e nella sezione storie del percorso.</small>
             </label>
             {hasAudioFields && (
               <>
