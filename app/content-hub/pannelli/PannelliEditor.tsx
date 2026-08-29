@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import MediaField from "../MediaField";
 import styles from "../collection-editor.module.css";
@@ -124,6 +125,7 @@ export default function PannelliEditor() {
       </aside>
 
       <section className={styles.editorPane}>
+        <Link href="/content-hub" className={styles.backToHub}>← Content Hub</Link>
         <div className={styles.editorHeading}>
           <div>
             <p>{draft ? `Modifica #${draft.id}` : "Seleziona un contenuto"}</p>
