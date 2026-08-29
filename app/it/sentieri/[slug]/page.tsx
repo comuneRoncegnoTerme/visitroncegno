@@ -3,17 +3,24 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import PanelAudioPlayer from "@/components/PanelAudioPlayer";
 import { getDirectusAssetUrl, getSiteSettings } from "@/lib/directus";
 import { getStoryByLegacySlug, storyParagraphs } from "@/lib/stories";
 import { getTrailPanel, trailPanels, type TrailPanel } from "@/lib/trail-panels";
 import { cinqueValliPanels, getCinqueValliPanel } from "@/lib/cinque-valli-panels";
 import { getPanelAudioFileId } from "@/lib/panel-audio";
+import { getPanelStoryMedia } from "@/lib/panel-story-media";
 import styles from "./page.module.css";
+import mediaStyles from "./panel-media.module.css";
 import { descriptionFrom, pageMetadata } from "@/lib/seo";
 
 interface LegacyTrailPageProps {
   params: Promise<{ slug: string }>;
 }
+
+const LEGACY_PANEL_NUMBERS: Record<string, string> = {
+  "miniera-di-cinque-valli-8": "26–27",
+};
 
 async function getDirectusTrailPanel(slug: string): Promise<TrailPanel | null> {
   const story = await getStoryByLegacySlug(slug);
@@ -24,7 +31,7 @@ async function getDirectusTrailPanel(slug: string): Promise<TrailPanel | null> {
 
   return {
     slug,
-    panelNumber: "Approfondimento",
+    panelNumber: LEGACY_PANEL_NUMBERS[slug] ?? "Approfondimento",
     qrCodes: [],
     title: story.title,
     eyebrow: story.category?.name ?? "Storie lungo il cammino",
@@ -59,9 +66,10 @@ export async function generateMetadata({ params }: LegacyTrailPageProps): Promis
 export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) {
   const { slug } = await params;
   const staticPanel = getStaticTrailPanel(slug);
-  const [settings, directusPanel] = await Promise.all([
+  const [settings, directusPanel, storyMedia] = await Promise.all([
     getSiteSettings(),
     staticPanel ? Promise.resolve(null) : getDirectusTrailPanel(slug),
+    getPanelStoryMedia(slug),
   ]);
   const panel = staticPanel ?? directusPanel;
 
@@ -71,13 +79,23 @@ export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) 
   const routeHref = panel.relatedRouteHref ??
     (panel.relatedRouteLabel === "Circuito del Castagno" ? "/percorsi/circuito-del-castagno" : "/percorsi");
   const routeLabel = panel.relatedRouteLabel ?? "Scopri i percorsi";
-  const audioUrl = getDirectusAssetUrl(getPanelAudioFileId(slug));
+  const audioFileId = storyMedia?.audio_file ?? getPanelAudioFileId(slug);
+  const audioUrl = getDirectusAssetUrl(audioFileId);
+  const audioTitle = storyMedia?.audio_title?.trim() || panel.audioTitle;
+  const panelImageUrl = getDirectusAssetUrl(storyMedia?.image);
 
   return (
     <main className={`${styles.page} ${isChestnutHistory ? styles.chestnutPage : ""}`}>
       <SiteHeader settings={settings} overlay />
 
-      <section className={styles.hero}>
+      <section className={`${styles.hero} ${panelImageUrl ? mediaStyles.heroWithImage : ""}`}>
+        {panelImageUrl && (
+          <div
+            className={mediaStyles.heroPhoto}
+            style={{ backgroundImage: `url(${panelImageUrl})` }}
+            aria-hidden="true"
+          />
+        )}
         <div className={styles.heroTexture} />
         <div className={styles.heroContent}>
           <Link href={routeHref} className={styles.backLink}>← {routeLabel}</Link>
@@ -88,7 +106,7 @@ export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) 
           <h1>{panel.title}</h1>
           <p className={styles.summary}>{panel.summary}</p>
         </div>
-        {isChestnutHistory && (
+        {isChestnutHistory && !panelImageUrl && (
           <div className={styles.heroWord} aria-hidden="true">CASTAGNO</div>
         )}
       </section>
@@ -104,8 +122,8 @@ export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) 
         </section>
       )}
 
-      <section className={styles.contentGrid}>
-        <article className={styles.article}>
+      <section className={`${styles.contentGrid} ${audioUrl ? mediaStyles.audioLayout : ""}`}>
+        <article className={`${styles.article} ${mediaStyles.article}`}>
           <p className={styles.articleKicker}>Storia e territorio</p>
           {panel.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
 
@@ -117,23 +135,13 @@ export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) 
           ))}
         </article>
 
-        <aside className={styles.sideColumn}>
+        <aside className={`${styles.sideColumn} ${mediaStyles.sideColumn}`}>
           <div className={styles.routeCard}>
             <p className={styles.routeKicker}>Lungo il territorio</p>
             <h2>Continua il percorso.</h2>
             <p>Ritrova questa storia nel paesaggio di Roncegno e scopri le altre tappe collegate.</p>
             <Link href={routeHref}>{routeLabel} →</Link>
           </div>
-
-          {audioUrl && (
-            <div className={styles.sourceCard}>
-              <p className={styles.metaLabel}>Audioguida</p>
-              <p>{panel.audioTitle}</p>
-              <audio controls preload="metadata" src={audioUrl} style={{ width: "100%" }}>
-                Il browser non supporta la riproduzione audio.
-              </audio>
-            </div>
-          )}
 
           {isChestnutHistory && (
             <div className={styles.sourceCard}>
@@ -143,6 +151,12 @@ export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) 
             </div>
           )}
         </aside>
+
+        {audioUrl && (
+          <div className={mediaStyles.audioCard}>
+            <PanelAudioPlayer src={audioUrl} title={audioTitle} autoPlay />
+          </div>
+        )}
       </section>
 
       {panel.relatedPanels && (
