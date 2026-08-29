@@ -1,6 +1,5 @@
 import Link from "next/link";
 import HeroExperience, { type HeroHotspot, type HeroMode } from "@/components/HeroExperience";
-import HomeMap from "@/components/HomeMap";
 import FestaHomepageBanner from "@/components/FestaHomepageBanner";
 import MuseumsHomepageBanner from "@/components/MuseumsHomepageBanner";
 import IllustratedMapBanner from "@/components/IllustratedMapBanner";
@@ -12,7 +11,6 @@ import {
   getExperiences,
   getFeaturedPlaces,
   getHomepage,
-  getMapPlaces,
   getSiteSettings,
   getUpcomingEvents,
 } from "@/lib/directus";
@@ -60,10 +58,9 @@ function MapPinIcon() {
 }
 
 export default async function Home() {
-  const [homepage, experiences, mapPlaces, events, featuredPlaces, siteSettings] = await Promise.all([
+  const [homepage, experiences, events, featuredPlaces, siteSettings] = await Promise.all([
     getHomepage(),
     getExperiences(),
-    getMapPlaces(),
     getUpcomingEvents(),
     getFeaturedPlaces(),
     getSiteSettings(),
@@ -80,18 +77,6 @@ export default async function Home() {
   const heroImage = getDirectusAssetUrl(homepage.hero_image) ?? "/images/hero/roncegno-hero.jpg";
   const heroConfig = homepage as typeof homepage & HomepageHeroConfig;
   const heroHotspots = parseHeroHotspots(heroConfig.hero_hotspots);
-  const homeMapPlaces = mapPlaces
-    .filter((place) => place.latitude !== null && place.longitude !== null)
-    .map((place) => ({
-      id: place.id,
-      title: place.title,
-      slug: place.slug,
-      summary: place.summary,
-      imageUrl: getDirectusAssetUrl(place.image),
-      latitude: place.latitude as number,
-      longitude: place.longitude as number,
-      mapLabel: place.map_label,
-    }));
 
   return (
     <main>
@@ -144,8 +129,6 @@ export default async function Home() {
       <section className="events-section" id="eventi"><div className="section-shell"><div className="section-heading-row"><div><p className="eyebrow accent">Agenda</p><h2>Cosa succede a Roncegno</h2></div><a className="button button-dark-outline" href="#eventi">Vedi tutti gli eventi<ArrowIcon /></a></div><div className="events-list">{events.map((event) => { const date = formatEventDate(event.start_date); const eventImage = getDirectusAssetUrl(event.image) ?? "/images/events/evento-fallback.jpg"; const location = event.location_name ?? event.place?.title ?? "Roncegno Terme"; const category = event.category?.name ?? "Evento"; return (<article className="event-row" key={event.id}><div className="event-date"><strong>{date.day}</strong><span>{date.month}</span></div><div className="event-image" style={{ backgroundImage: `url('${eventImage}')` }} /><div className="event-copy"><div className="event-meta"><span>{category}</span><span className="event-location"><MapPinIcon />{location}</span></div><h3>{event.title}</h3></div><a className="event-arrow" href={`/eventi/${event.slug}`} aria-label={`Scopri ${event.title}`}><ArrowIcon /></a></article>); })}</div></div></section>
 
       <IllustratedMapBanner />
-
-      <section className="map-section" id="mappa"><div className="map-panel"><HomeMap places={homeMapPlaces} /></div><div className="map-copy"><p className="eyebrow light">Esplora la mappa</p><h2>Il territorio,<br />tutto in un luogo.</h2><p>Trova sentieri, luoghi di interesse, parcheggi, strutture ricettive, attività e servizi utili per organizzare la tua visita.</p><Link className="button button-light" href="/organizza-la-visita#mappa-visita">Mappa e informazioni utili<ArrowIcon /></Link></div></section>
 
       <section className="places-section" id="luoghi"><div className="section-shell"><div className="section-heading-row"><div><p className="eyebrow dark">Luoghi da conoscere</p><h2>Tre paesaggi, un’unica destinazione</h2></div></div><div className="places-grid">{featuredPlaces.map((place) => { const placeImage = getDirectusAssetUrl(place.image) ?? "/images/places/fallback.jpg"; const subtitle = place.category?.name ?? place.map_label ?? "Luogo da scoprire"; const href = placeHref(place); return (<a className="place-card" href={href} key={place.id}><div className="place-image" style={{ backgroundImage: `url('${placeImage}')` }} /><div className="place-card-footer"><div><small>{subtitle}</small><h3>{place.title}</h3></div><span className="round-arrow dark-arrow"><ArrowIcon /></span></div></a>); })}</div></div></section>
 
