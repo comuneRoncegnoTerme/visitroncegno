@@ -8,6 +8,7 @@ import {
 } from "@/lib/directus";
 import { getContentHubSession } from "@/lib/content-hub-auth";
 import { trailPanels } from "@/lib/trail-panels";
+import { cinqueValliPanels } from "@/lib/cinque-valli-panels";
 import HomepageEditor from "./HomepageEditor";
 import styles from "./page.module.css";
 
@@ -22,6 +23,7 @@ export default async function ContentHubPage() {
     getExperiences(),
   ]);
 
+  const panelCount = trailPanels.length + cinqueValliPanels.length;
   const sections = [
     { title: "Homepage", text: "Hero, messaggi principali e call to action", count: "Modifica diretta", href: "#homepage-editor" },
     { title: "Eventi", text: "Crea, modifica, pubblica e archivia appuntamenti", count: `${events.length} prossimi in homepage`, href: "/content-hub/eventi" },
@@ -29,7 +31,7 @@ export default async function ContentHubPage() {
     { title: "Percorsi", text: "Dati tecnici, accessibilità, punto di partenza e GPX", count: "Gestione completa", href: "/content-hub/percorsi" },
     { title: "Media", text: "Carica immagini, audio e tracce GPX in Directus", count: "Libreria Directus", href: "/content-hub/media" },
     { title: "Qualità contenuti", text: "Trova immagini, coordinate, GPX e dati mancanti", count: "Controllo automatico", href: "/content-hub/qualita" },
-    { title: "Pannelli e audioguide", text: "URL storici, testi, audio e trascrizioni", count: `${trailPanels.length} URL legacy`, href: "#pannelli" },
+    { title: "Pannelli e audioguide", text: "Immagini, audio e testi delle pagine collegate ai QR", count: `${panelCount} URL legacy`, href: "/content-hub/pannelli" },
     { title: "Esperienze", text: "Natura, benessere, cultura e movimento", count: `${experiences.length} attive`, href: "/#esperienze" },
     { title: "Impostazioni sito", text: "Contatti, footer, social, logo e SEO predefinito", count: "Configurazione Directus", href: "/content-hub/impostazioni" },
   ];
@@ -44,6 +46,7 @@ export default async function ContentHubPage() {
           <Link href="/content-hub/eventi">Eventi</Link>
           <Link href="/content-hub/luoghi">Luoghi</Link>
           <Link href="/content-hub/percorsi">Percorsi</Link>
+          <Link href="/content-hub/pannelli">Pannelli e audioguide</Link>
           <Link href="/content-hub/media">Media</Link>
           <Link href="/content-hub/qualita">Qualità</Link>
           <Link href="/content-hub/impostazioni">Impostazioni</Link>
@@ -71,10 +74,10 @@ export default async function ContentHubPage() {
         <HomepageEditor homepage={homepage} />
 
         <section className={styles.panelSection} id="pannelli">
-          <div className={styles.sectionHeading}><div><p className={styles.eyebrow}>Segnaletica sul territorio</p><h2>Pannelli e audioguide legacy</h2></div></div>
-          <p className={styles.sectionIntro}>Gli URL già stampati sui QR restano invariati. Questa sezione mostra gli endpoint storici attualmente serviti dal sito.</p>
+          <div className={styles.sectionHeading}><div><p className={styles.eyebrow}>Segnaletica sul territorio</p><h2>Pannelli e audioguide legacy</h2></div><Link href="/content-hub/pannelli">Gestisci contenuti →</Link></div>
+          <p className={styles.sectionIntro}>Gli URL già stampati sui QR restano invariati. Immagini e audioguide si possono aggiornare dal Content Hub senza cambiare gli indirizzi fisici.</p>
           <div className={styles.table}>
-            {trailPanels.map((panel) => (
+            {[...trailPanels, ...cinqueValliPanels].map((panel) => (
               <div className={styles.row} key={panel.slug}>
                 <div className={styles.statusDot} />
                 <div><strong>{panel.title}</strong><small>/it/sentieri/{panel.slug}</small></div>
