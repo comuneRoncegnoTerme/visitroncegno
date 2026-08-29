@@ -29,7 +29,7 @@ export async function GET(
 
   try {
     const config = contentHubCollections[collection];
-    const directusFields = await getDirectusCollectionFields(collection);
+    const directusFields = await getDirectusCollectionFields(collection, config.fields);
     const fields = directusFields
       ? contentHubFieldsForSchema(collection, directusFields)
       : config.fields.filter((field) => ![
@@ -79,7 +79,8 @@ export async function POST(
   }
 
   try {
-    const directusFields = await getDirectusCollectionFields(collection);
+    const config = contentHubCollections[collection];
+    const directusFields = await getDirectusCollectionFields(collection, config.fields);
     const payload = sanitizeContentHubPayload(
       collection,
       body as Record<string, unknown>,
