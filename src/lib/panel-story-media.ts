@@ -6,7 +6,7 @@ type StoryMedia = {
   audio_title: string | null;
 };
 
-type StoryMediaResponse = { data?: StoryMedia[] };
+type StoryMediaResponse = { data?: Partial<StoryMedia>[] };
 
 async function fetchStoryMedia(params: URLSearchParams): Promise<StoryMedia | null> {
   try {
@@ -14,15 +14,19 @@ async function fetchStoryMedia(params: URLSearchParams): Promise<StoryMedia | nu
       `/items/stories?${params.toString()}`,
       { authenticated: true }
     );
-    return response.data?.[0] ?? null;
+    const item = response.data?.[0];
+    if (!item) return null;
+    return {
+      image: item.image ?? null,
+      audio_file: item.audio_file ?? null,
+      audio_title: item.audio_title ?? null,
+    };
   } catch {
     return null;
   }
 }
 
-export async function getPanelStoryMedia(legacySlug: string): Promise<StoryMedia | null> {
-  const fields = "image,audio_file,audio_title";
-
+async function findStoryMedia(legacySlug: string, fields: string) {
   const byLegacyUrl = new URLSearchParams();
   byLegacyUrl.set("filter[status][_eq]", "published");
   byLegacyUrl.set("filter[source_url][_contains]", `/it/sentieri/${legacySlug}`);
@@ -38,4 +42,12 @@ export async function getPanelStoryMedia(legacySlug: string): Promise<StoryMedia
   bySlug.set("fields", fields);
   bySlug.set("limit", "1");
   return fetchStoryMedia(bySlug);
+}
+
+export async function getPanelStoryMedia(legacySlug: string): Promise<StoryMedia | null> {
+  const complete = await findStoryMedia(legacySlug, "image,audio_file,audio_title");
+  if (complete) return complete;
+
+  // Keeps existing Directus installations working until the optional audio fields are added.
+  return findStoryMedia(legacySlug, "image");
 }
