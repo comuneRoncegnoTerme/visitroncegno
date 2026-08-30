@@ -52,6 +52,13 @@ export default async function EditorialDetail({ item, type }: Props) {
   const categoryLabel = item.map_label ?? item.category?.name ?? (type === "place" ? "Luogo da conoscere" : "Evento");
   const compactPlace = type === "place" && isCompactPlace(item);
   const foodPlace = type === "place" && item.place_type === "food";
+  const foodEditorialParagraphs = foodPlace
+    ? item.content
+      ? plainText(item.content)
+      : item.description && item.description.trim() !== item.summary?.trim()
+        ? plainText(item.description)
+        : []
+    : paragraphs;
   const practicalInfo = type === "place" && Boolean(
     item.address || item.phone || item.email || website || booking || item.opening_hours ||
     item.ticket_info || item.visit_duration || item.services_notes || item.capacity_notes ||
@@ -65,11 +72,11 @@ export default async function EditorialDetail({ item, type }: Props) {
   const eventDate = type === "event" ? formatDateTime(item.start_date) : null;
 
   return (
-    <main className={styles.page}>
+    <main className={`${styles.page}${foodPlace ? ` ${foodStyles.page}` : ""}`}>
       <EditorialHeader settings={settings} />
 
       <section
-        className={styles.detailHero}
+        className={`${styles.detailHero}${foodPlace ? ` ${foodStyles.hero}` : ""}`}
         style={{ backgroundImage: `linear-gradient(90deg,rgba(8,35,28,.88),rgba(8,35,28,.2)),url('${heroImage}')` }}
       >
         <Link href={type === "place" ? "/luoghi" : "/eventi"}>← {type === "place" ? "Tutti i luoghi" : "Tutti gli eventi"}</Link>
@@ -81,7 +88,7 @@ export default async function EditorialDetail({ item, type }: Props) {
         </div>
       </section>
 
-      <section className={styles.factStrip} aria-label="Informazioni principali">
+      <section className={`${styles.factStrip}${foodPlace ? ` ${foodStyles.factStrip}` : ""}`} aria-label="Informazioni principali">
         <div><small>{type === "event" ? "Quando" : "Tipologia"}</small><strong>{type === "event" ? eventDate ?? "Data in aggiornamento" : categoryLabel}</strong></div>
         <div><small>Dove</small><strong>{location}</strong></div>
         {type === "place" && item.opening_hours && <div><small>Orari</small><strong>{item.opening_hours}</strong></div>}
@@ -89,18 +96,18 @@ export default async function EditorialDetail({ item, type }: Props) {
         {type === "event" && item.end_date && <div><small>Fino a</small><strong>{formatDate(item.end_date)}</strong></div>}
       </section>
 
-      <section className={styles.detailGrid}>
-        {(!compactPlace || paragraphs.length > 0) && (
-          <article>
+      <section className={`${styles.detailGrid}${foodPlace ? ` ${foodStyles.detailGrid}` : ""}`}>
+        {(!compactPlace || foodEditorialParagraphs.length > 0) && (!foodPlace || foodEditorialParagraphs.length > 0) && (
+          <article className={foodPlace ? foodStyles.editorial : undefined}>
             <p className={styles.kicker}>{foodPlace ? "A tavola" : type === "place" ? "Conosci il territorio" : "Vivi Roncegno"}</p>
             <h2>{foodPlace ? item.title : type === "place" ? placeEditorialHeading(item) : "Tutto quello che c’è da sapere."}</h2>
-            {paragraphs.length ? paragraphs.map((text, index) => <p key={index}>{text}</p>) : (
+            {foodEditorialParagraphs.length ? foodEditorialParagraphs.map((text, index) => <p key={index}>{text}</p>) : (
               <p>Le informazioni complete saranno disponibili a breve. Nel frattempo trovi qui posizione, contatti e indicazioni pratiche disponibili.</p>
             )}
           </article>
         )}
 
-        <aside>
+        <aside className={foodPlace ? foodStyles.practicalCard : undefined}>
           {type === "event" && item.start_date && <div><small>Quando</small><strong>{eventDate}</strong></div>}
           <div><small>Dove</small><strong>{location}</strong></div>
           {item.opening_hours && <div><small>Orari</small><strong>{item.opening_hours}</strong></div>}
@@ -122,8 +129,8 @@ export default async function EditorialDetail({ item, type }: Props) {
             {booking && <a href={booking} target="_blank" rel="noreferrer">Prenota / contatta ↗</a>}
             {website && <a href={website} target="_blank" rel="noreferrer">Sito ufficiale ↗</a>}
             {(hasCoordinates || item.address) && (
-              <DirectionsLink latitude={item.latitude} longitude={item.longitude} address={item.address}>
-                Ottieni indicazioni ↗
+              <DirectionsLink className={foodPlace ? foodStyles.directionsButton : undefined} latitude={item.latitude} longitude={item.longitude} address={item.address}>
+                Ottieni indicazioni
               </DirectionsLink>
             )}
           </div>
@@ -138,8 +145,8 @@ export default async function EditorialDetail({ item, type }: Props) {
                 <p className={styles.kicker}>Dove si trova</p>
                 <h2>{location}</h2>
               </div>
-              <DirectionsLink latitude={item.latitude} longitude={item.longitude} address={item.address}>
-                Ottieni indicazioni ↗
+              <DirectionsLink className={foodStyles.directionsLink} latitude={item.latitude} longitude={item.longitude} address={item.address}>
+                Ottieni indicazioni
               </DirectionsLink>
             </div>
           ) : (
