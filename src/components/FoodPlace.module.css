@@ -76,14 +76,14 @@
     padding-bottom: 42px;
   }
 
-  .hero :global(h1) {
+  .heroCopy h1 {
     max-width: 11ch;
     font-size: clamp(43px, 12vw, 62px);
     line-height: .91;
     letter-spacing: -.045em;
   }
 
-  .hero :global(.heroCopy > div) {
+  .heroCopy > div {
     max-width: 34ch;
   }
 
@@ -97,7 +97,7 @@
     padding: 38px 0 44px;
   }
 
-  .detailGrid:not(:has(.editorial)) {
+  .singleColumn {
     display: block;
   }
 
@@ -105,21 +105,23 @@
     padding-bottom: 6px;
   }
 
-  .editorial :global(h2) {
+  .editorial h2 {
     font-size: clamp(34px, 10vw, 48px);
   }
 
   .practicalCard {
+    width: 100%;
+    max-width: 760px;
     padding: 20px 22px 24px !important;
     box-shadow: none !important;
   }
 
-  .practicalCard > div:not(:last-child) {
+  .practicalCard > div:not(.detailActions) {
     padding: 14px 0 !important;
   }
 
-  .practicalCard :global(.detailActions) {
-    margin-top: 18px;
+  .detailActions {
+    margin-top: 18px !important;
   }
 
   .directionsButton {
@@ -160,25 +162,25 @@
     padding-bottom: 48px;
   }
 
-  .related :global(.sectionHeading) {
+  .relatedHeading {
     gap: 14px;
     margin-bottom: 22px;
   }
 
-  .related :global(.sectionHeading h2) {
+  .relatedHeading h2 {
     font-size: clamp(34px, 10vw, 46px);
   }
 
-  .related :global(.relatedGrid) {
+  .relatedGrid {
     gap: 14px;
   }
 
-  .related :global(.relatedCard) {
-    min-height: 0;
+  .relatedCard {
+    min-height: 0 !important;
   }
 
-  .related :global(.relatedImage) {
-    height: 180px;
+  .relatedImage {
+    height: 180px !important;
   }
 
   .endLink a {
@@ -187,7 +189,7 @@
 }
 
 @media (max-width: 420px) {
-  .hero :global(h1) {
+  .heroCopy h1 {
     font-size: clamp(40px, 11.5vw, 54px);
   }
 
