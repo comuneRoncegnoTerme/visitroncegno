@@ -12,6 +12,7 @@ import {
 } from "@/lib/directus";
 import { getLegacyStoryPath, getStories } from "@/lib/stories";
 import styles from "./home-v2.module.css";
+import refine from "./home-v2-refine.module.css";
 
 export const dynamic = "force-dynamic";
 
@@ -135,22 +136,23 @@ export default async function Home() {
             <div><p>In primo piano</p><h2 className={styles.sectionTitle}>Eventi a Roncegno</h2><span className={styles.sectionLead}>Tradizioni, cultura e vita di paese. I prossimi appuntamenti da non perdere.</span></div>
             <Link className={styles.sectionLink} href="/eventi">Vedi tutti gli eventi →</Link>
           </div>
-          <div className={styles.eventsGrid}>
+          <div className={`${styles.eventsGrid} ${refine.eventsGrid}`}>
             {visibleEvents.map((event, index) => {
               const date = eventDate(event.start_date);
-              const image = getDirectusAssetUrl(event.image) ?? "/images/events/evento-fallback.jpg";
+              const image = getDirectusAssetUrl(event.image) ?? heroImage;
               const location = event.location_name ?? event.place?.title ?? "Roncegno Terme";
+              const primary = index === 0;
               return (
-                <Link className={`${styles.eventCard}${index === 0 ? ` ${styles.eventCardPrimary}` : ""}`} href={`/eventi/${event.slug}`} key={event.id}>
-                  <div className={styles.eventImage} style={{ backgroundImage: `url('${image}')` }} />
-                  <div className={styles.eventShade} />
-                  {index === 0 && <span className={styles.featuredLabel}>Evento in evidenza</span>}
-                  <div className={styles.eventBody}>
-                    <span className={styles.eventDate}><strong>{date.day}</strong><span>{date.month}</span></span>
-                    <div className={styles.eventMeta}>{event.category?.name ?? "Evento"} · {location}</div>
+                <Link className={`${styles.eventCard} ${refine.eventCard}${primary ? ` ${styles.eventCardPrimary} ${refine.eventCardPrimary}` : ""}`} href={`/eventi/${event.slug}`} key={event.id}>
+                  <div className={`${styles.eventImage} ${refine.eventImage}`} style={{ backgroundImage: `url('${image}')` }} />
+                  <div className={`${styles.eventShade} ${refine.eventShade}`} />
+                  {primary && <span className={styles.featuredLabel}>Evento in evidenza</span>}
+                  <div className={`${styles.eventBody} ${refine.eventBody}`}>
+                    <span className={`${styles.eventDate} ${refine.eventDate}`}><strong>{date.day}</strong><span>{date.month}</span></span>
+                    <div className={`${styles.eventMeta} ${refine.eventMeta}`}>{event.category?.name ?? "Evento"} · {location}</div>
                     <h3>{event.title}</h3>
-                    {index === 0 && event.summary && <p>{event.summary}</p>}
-                    <span className={styles.cardArrow} aria-hidden="true">→</span>
+                    {primary && event.summary && <p>{event.summary}</p>}
+                    <span className={`${styles.cardArrow} ${refine.cardArrow}`} aria-hidden="true">→</span>
                   </div>
                 </Link>
               );
@@ -180,21 +182,22 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className={styles.storySection}>
+      <section className={`${styles.storySection} ${refine.storySection}`}>
         <div className={styles.storyCopy}>
           <p className={styles.eyebrow}>Storie lungo il cammino</p>
           <h2>Capire il territorio mentre lo attraversi.</h2>
           <p>I pannelli, i percorsi e le storie di Roncegno diventano un unico racconto: natura, memoria, paesaggio e comunità da scoprire anche lungo i sentieri.</p>
           <Link className={styles.darkButton} href="/percorsi">Scopri i percorsi →</Link>
         </div>
-        <div className={styles.storyCards}>
+        <div className={`${styles.storyCards} ${refine.storyCards}`}>
           {visibleStories.map((story, index) => {
             const image = getDirectusAssetUrl(story.image) ?? heroImage;
             const href = getLegacyStoryPath(story) ?? `/storie/${story.slug}`;
+            const primary = index === 0;
             return (
-              <Link className={`${styles.storyCard}${index === 0 ? ` ${styles.storyCardPrimary}` : ""}`} href={href} key={story.id}>
-                <div className={styles.storyImage} style={{ backgroundImage: `url('${image}')` }} />
-                <div className={styles.storyBody}>
+              <Link className={`${styles.storyCard} ${refine.storyCard}${primary ? ` ${styles.storyCardPrimary} ${refine.storyCardPrimary}` : ""}`} href={href} key={story.id}>
+                <div className={`${styles.storyImage} ${refine.storyImage}`} style={{ backgroundImage: `url('${image}')` }} />
+                <div className={`${styles.storyBody} ${refine.storyBody}`}>
                   <small>{story.category?.name ?? "Storia"}</small>
                   <strong>{story.title}</strong>
                   {story.excerpt && <p>{story.excerpt}</p>}
