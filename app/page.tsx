@@ -26,6 +26,8 @@ type HomepageHeroConfig = {
   hero_ambient_audio_url?: string | null;
 };
 
+type UtilityIconName = "trail" | "wellness" | "culture" | "food" | "events" | "map";
+
 function parseHeroHotspots(value: HomepageHeroConfig["hero_hotspots"]): HeroHotspot[] {
   if (Array.isArray(value)) return value;
   if (typeof value !== "string" || !value.trim()) return [];
@@ -45,13 +47,23 @@ function eventDate(value: string) {
   };
 }
 
-const utilityItems = [
-  { label: "Sentieri e percorsi", note: "Natura e paesaggi", href: "/percorsi", icon: "↗" },
-  { label: "Terme e benessere", note: "Acque, salute e natura", href: "/luoghi", icon: "≈" },
-  { label: "Luoghi e cultura", note: "Borghi, musei e memoria", href: "/luoghi", icon: "⌂" },
-  { label: "Dove mangiare", note: "Sapori del territorio", href: "/organizza-la-visita", icon: "◌" },
-  { label: "Eventi", note: "Cosa succede a Roncegno", href: "/eventi", icon: "□" },
-  { label: "Cartina", note: "Orientati sul territorio", href: "/cartina", icon: "◇" },
+function UtilityIcon({ name }: { name: UtilityIconName }) {
+  const common = { stroke: "currentColor", strokeWidth: 1.6, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+  if (name === "trail") return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19c4-1 4-6 8-7s4-6 8-7" fill="none" {...common}/><path d="M5 8h4M15 16h4" fill="none" {...common}/></svg>;
+  if (name === "wellness") return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5c-2 3 2 4 0 7M12 4c-2 3 2 4 0 7M17 5c-2 3 2 4 0 7" fill="none" {...common}/><path d="M4 16c3 2 13 2 16 0" fill="none" {...common}/></svg>;
+  if (name === "culture") return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 9 8-4 8 4M6 10v7M10 10v7M14 10v7M18 10v7M4 19h16" fill="none" {...common}/></svg>;
+  if (name === "food") return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v7M4.5 4v4.5A2.5 2.5 0 0 0 7 11v9M9.5 4v4.5A2.5 2.5 0 0 1 7 11M16 4c3 2 3 7 0 9v7" fill="none" {...common}/></svg>;
+  if (name === "events") return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14v12H5zM8 4v5M16 4v5M5 11h14" fill="none" {...common}/></svg>;
+  return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 6 5-2 6 2 5-2v14l-5 2-6-2-5 2zM9 4v14M15 6v14" fill="none" {...common}/></svg>;
+}
+
+const utilityItems: Array<{ label: string; note: string; href: string; icon: UtilityIconName }> = [
+  { label: "Sentieri e percorsi", note: "Natura e paesaggi", href: "/percorsi", icon: "trail" },
+  { label: "Terme e benessere", note: "Acque, salute e natura", href: "/luoghi", icon: "wellness" },
+  { label: "Luoghi e cultura", note: "Borghi, musei e memoria", href: "/luoghi", icon: "culture" },
+  { label: "Dove mangiare", note: "Sapori del territorio", href: "/organizza-la-visita", icon: "food" },
+  { label: "Eventi", note: "Cosa succede a Roncegno", href: "/eventi", icon: "events" },
+  { label: "Cartina", note: "Orientati sul territorio", href: "/cartina", icon: "map" },
 ];
 
 const planningItems = [
@@ -100,7 +112,7 @@ export default async function Home() {
           <h1>{homepage.hero_title ?? "Semplicemente Roncegno Terme"}</h1>
           <p className={styles.heroIntro}>{homepage.hero_description ?? "Un territorio autentico tra montagna, acque termali, borghi e storie da vivere tutto l’anno."}</p>
           <div className={styles.heroActions}>
-            <Link className={styles.primaryButton} href={homepage.hero_primary_url ?? "/luoghi"}>{homepage.hero_primary_label ?? "Esplora il territorio"} →</Link>
+            <Link className={styles.primaryButton} href={homepage.hero_primary_url ?? "/luoghi"}>{homepage.hero_primary_label ?? "Esplora il territorio"}<span aria-hidden="true">→</span></Link>
             <Link className={styles.secondaryButton} href="/organizza-la-visita">Organizza la visita</Link>
           </div>
         </div>
@@ -110,8 +122,9 @@ export default async function Home() {
         <nav className={styles.utilityBar} aria-label="Scorciatoie principali">
           {utilityItems.map((item) => (
             <Link className={styles.utilityCard} href={item.href} key={item.label}>
-              <span className={styles.utilityIcon} aria-hidden="true">{item.icon}</span>
-              <span><strong>{item.label}</strong><small>{item.note}</small></span>
+              <span className={styles.utilityIcon}><UtilityIcon name={item.icon} /></span>
+              <span className={styles.utilityText}><strong>{item.label}</strong><small>{item.note}</small></span>
+              <span className={styles.utilityArrow} aria-hidden="true">→</span>
             </Link>
           ))}
         </nav>
@@ -120,7 +133,7 @@ export default async function Home() {
       <section className={`${styles.section} ${styles.eventsSection}`}>
         <div className={styles.sectionInner}>
           <div className={styles.sectionHeading}>
-            <div><p>In primo piano</p><h2 className={styles.sectionTitle}>Eventi a Roncegno</h2></div>
+            <div><p>In primo piano</p><h2 className={styles.sectionTitle}>Eventi a Roncegno</h2><span className={styles.sectionLead}>Tradizioni, cultura e vita di paese. I prossimi appuntamenti da non perdere.</span></div>
             <Link className={styles.sectionLink} href="/eventi">Vedi tutti gli eventi →</Link>
           </div>
           <div className={styles.eventsGrid}>
@@ -132,11 +145,13 @@ export default async function Home() {
                 <Link className={`${styles.eventCard}${index === 0 ? ` ${styles.eventCardPrimary}` : ""}`} href={`/eventi/${event.slug}`} key={event.id}>
                   <div className={styles.eventImage} style={{ backgroundImage: `url('${image}')` }} />
                   <div className={styles.eventShade} />
+                  {index === 0 && <span className={styles.featuredLabel}>Evento in evidenza</span>}
                   <div className={styles.eventBody}>
                     <span className={styles.eventDate}><strong>{date.day}</strong><span>{date.month}</span></span>
                     <div className={styles.eventMeta}>{event.category?.name ?? "Evento"} · {location}</div>
                     <h3>{event.title}</h3>
                     {index === 0 && event.summary && <p>{event.summary}</p>}
+                    <span className={styles.cardArrow} aria-hidden="true">→</span>
                   </div>
                 </Link>
               );
@@ -158,7 +173,7 @@ export default async function Home() {
                 <Link className={styles.themeCard} href={experience.link ?? "/luoghi"} key={experience.id}>
                   <div className={styles.themeImage} style={{ backgroundImage: `url('${image}')` }} />
                   <div className={styles.themeShade} />
-                  <div className={styles.themeCopy}><small>{String(index + 1).padStart(2, "0")}</small><h3>{experience.title}</h3></div>
+                  <div className={styles.themeCopy}><small>{String(index + 1).padStart(2, "0")}</small><h3>{experience.title}</h3><span aria-hidden="true">→</span></div>
                 </Link>
               );
             })}
@@ -171,14 +186,14 @@ export default async function Home() {
           <p className={styles.eyebrow}>Storie lungo il cammino</p>
           <h2>Capire il territorio mentre lo attraversi.</h2>
           <p>I pannelli, i percorsi e le storie di Roncegno diventano un unico racconto: natura, memoria, paesaggio e comunità da scoprire anche lungo i sentieri.</p>
-          <Link className={styles.primaryButton} href="/percorsi">Scopri i percorsi →</Link>
+          <Link className={styles.darkButton} href="/percorsi">Scopri i percorsi →</Link>
         </div>
         <div className={styles.storyCards}>
-          {visibleStories.map((story) => {
+          {visibleStories.map((story, index) => {
             const image = getDirectusAssetUrl(story.image) ?? heroImage;
             const href = getLegacyStoryPath(story) ?? `/storie/${story.slug}`;
             return (
-              <Link className={styles.storyCard} href={href} key={story.id}>
+              <Link className={`${styles.storyCard}${index === 0 ? ` ${styles.storyCardPrimary}` : ""}`} href={href} key={story.id}>
                 <div className={styles.storyImage} style={{ backgroundImage: `url('${image}')` }} />
                 <div className={styles.storyBody}>
                   <small>{story.category?.name ?? "Storia"}</small>
@@ -200,9 +215,10 @@ export default async function Home() {
             <p>Informazioni utili e servizi per organizzare al meglio il soggiorno, senza interrompere il racconto del territorio.</p>
           </div>
           <div className={styles.planningCards}>
-            {planningItems.map((item) => (
+            {planningItems.map((item, index) => (
               <Link className={styles.planningCard} href={item.href} key={item.label}>
-                <small>{item.note}</small><strong>{item.label}</strong><span>Apri →</span>
+                <span className={styles.planningNumber}>{String(index + 1).padStart(2, "0")}</span>
+                <small>{item.note}</small><strong>{item.label}</strong><span className={styles.planningArrow}>Apri →</span>
               </Link>
             ))}
           </div>
