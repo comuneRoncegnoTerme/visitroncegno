@@ -138,7 +138,7 @@ export default async function Home() {
           <div className={styles.eventsGrid}>
             {visibleEvents.map((event, index) => {
               const date = eventDate(event.start_date);
-              const image = getDirectusAssetUrl(event.image) ?? "/images/events/evento-fallback.jpg";
+              const image = getDirectusAssetUrl(event.image) ?? heroImage;
               const location = event.location_name ?? event.place?.title ?? "Roncegno Terme";
               return (
                 <Link className={`${styles.eventCard}${index === 0 ? ` ${styles.eventCardPrimary}` : ""}`} href={`/eventi/${event.slug}`} key={event.id}>
