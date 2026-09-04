@@ -10,8 +10,7 @@ import {
   getSiteSettings,
   getUpcomingEvents,
 } from "@/lib/directus";
-import { getEditorialList } from "@/lib/editorial";
-import { getLegacyStoryPath } from "@/lib/stories";
+import { getLegacyStoryPath, getStories } from "@/lib/stories";
 import styles from "./home-v2.module.css";
 
 export const dynamic = "force-dynamic";
@@ -79,7 +78,7 @@ export default async function Home() {
     getExperiences(),
     getUpcomingEvents(),
     getFeaturedPlaces(),
-    getEditorialList("stories"),
+    getStories(),
     getSiteSettings(),
   ]);
 
