@@ -56,17 +56,18 @@ function UtilityIcon({ name }: { name: UtilityIconName }) {
 }
 
 function experienceHref(title: string, configuredHref: string | null | undefined) {
-  if (configuredHref) return configuredHref;
   const normalized = title.toLowerCase();
-  if (normalized.includes("natura") || normalized.includes("montagna") || normalized.includes("sport") || normalized.includes("movimento")) return "/percorsi";
-  if (normalized.includes("terme") || normalized.includes("benessere") || normalized.includes("cultura") || normalized.includes("memoria")) return "/luoghi";
-  return "/luoghi";
+  if (normalized.includes("natura") || normalized.includes("montagna")) return "/temi/natura-e-montagna";
+  if (normalized.includes("terme") || normalized.includes("benessere")) return "/temi/terme-e-benessere";
+  if (normalized.includes("cultura") || normalized.includes("memoria")) return "/temi/cultura-e-memoria";
+  if (normalized.includes("sport") || normalized.includes("movimento")) return "/temi/sport-e-movimento";
+  return configuredHref ?? "/luoghi";
 }
 
 const utilityItems: Array<{ label: string; note: string; href: string; icon: UtilityIconName }> = [
   { label: "Sentieri e percorsi", note: "Natura e paesaggi", href: "/percorsi", icon: "trail" },
-  { label: "Terme e benessere", note: "Acque, salute e natura", href: "/luoghi", icon: "wellness" },
-  { label: "Luoghi e cultura", note: "Borghi, musei e memoria", href: "/luoghi", icon: "culture" },
+  { label: "Terme e benessere", note: "Acque, salute e natura", href: "/temi/terme-e-benessere", icon: "wellness" },
+  { label: "Luoghi e cultura", note: "Borghi, musei e memoria", href: "/temi/cultura-e-memoria", icon: "culture" },
   { label: "Dove mangiare", note: "Sapori del territorio", href: "/organizza-la-visita", icon: "food" },
   { label: "Eventi", note: "Cosa succede a Roncegno", href: "/eventi", icon: "events" },
   { label: "Cartina", note: "Orientati sul territorio", href: "/cartina", icon: "map" },
@@ -91,7 +92,7 @@ export default async function Home() {
   const heroConfig = homepage as typeof homepage & HomepageHeroConfig;
   const heroHotspots = parseHeroHotspots(heroConfig.hero_hotspots);
   const visibleEvents = events.slice(0, 4);
-  const visibleExperiences = experiences.slice(0, 5);
+  const visibleExperiences = experiences.slice(0, 4);
   const nextEvent = visibleEvents[0] ?? null;
   const nextEventDate = nextEvent ? eventDate(nextEvent.start_date) : null;
 
@@ -177,7 +178,7 @@ export default async function Home() {
       <section className={`${styles.section} ${styles.themesSection}`}>
         <div className={styles.sectionInner}>
           <div className={styles.sectionHeading}>
-            <div><p>Esplora per interesse</p><h2 className={styles.sectionTitle}>Trova il tuo Roncegno</h2><span className={styles.sectionLead}>Scegli da dove partire: ogni tema apre una sezione reale del sito.</span></div>
+            <div><p>Esplora per interesse</p><h2 className={styles.sectionTitle}>Trova il tuo Roncegno</h2><span className={styles.sectionLead}>Quattro modi diversi di vivere lo stesso territorio.</span></div>
           </div>
           <div className={styles.themesGrid}>
             {visibleExperiences.map((experience, index) => {
