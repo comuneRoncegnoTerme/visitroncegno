@@ -5,12 +5,10 @@ import SiteFooter from "@/components/SiteFooter";
 import {
   getDirectusAssetUrl,
   getExperiences,
-  getFeaturedPlaces,
   getHomepage,
   getSiteSettings,
   getUpcomingEvents,
 } from "@/lib/directus";
-import { getLegacyStoryPath, getStories } from "@/lib/stories";
 import styles from "./home-v2.module.css";
 import refine from "./home-v2-refine.module.css";
 
@@ -57,6 +55,14 @@ function UtilityIcon({ name }: { name: UtilityIconName }) {
   return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 6 5-2 6 2 5-2v14l-5 2-6-2-5 2zM9 4v14M15 6v14" fill="none" {...common}/></svg>;
 }
 
+function experienceHref(title: string, configuredHref: string | null | undefined) {
+  if (configuredHref) return configuredHref;
+  const normalized = title.toLowerCase();
+  if (normalized.includes("natura") || normalized.includes("montagna") || normalized.includes("sport") || normalized.includes("movimento")) return "/percorsi";
+  if (normalized.includes("terme") || normalized.includes("benessere") || normalized.includes("cultura") || normalized.includes("memoria")) return "/luoghi";
+  return "/luoghi";
+}
+
 const utilityItems: Array<{ label: string; note: string; href: string; icon: UtilityIconName }> = [
   { label: "Sentieri e percorsi", note: "Natura e paesaggi", href: "/percorsi", icon: "trail" },
   { label: "Terme e benessere", note: "Acque, salute e natura", href: "/luoghi", icon: "wellness" },
@@ -74,12 +80,10 @@ const planningItems = [
 ];
 
 export default async function Home() {
-  const [homepage, experiences, events, featuredPlaces, stories, siteSettings] = await Promise.all([
+  const [homepage, experiences, events, siteSettings] = await Promise.all([
     getHomepage(),
     getExperiences(),
     getUpcomingEvents(),
-    getFeaturedPlaces(),
-    getStories(),
     getSiteSettings(),
   ]);
 
@@ -88,14 +92,14 @@ export default async function Home() {
   const heroHotspots = parseHeroHotspots(heroConfig.hero_hotspots);
   const visibleEvents = events.slice(0, 4);
   const visibleExperiences = experiences.slice(0, 5);
-  const visibleStories = stories.slice(0, 3);
-  const placeFallback = featuredPlaces[0] ? getDirectusAssetUrl(featuredPlaces[0].image) : null;
+  const nextEvent = visibleEvents[0] ?? null;
+  const nextEventDate = nextEvent ? eventDate(nextEvent.start_date) : null;
 
   return (
     <main className={styles.page}>
       <SiteHeader settings={siteSettings} overlay />
 
-      <section className={styles.hero}>
+      <section className={`${styles.hero} ${refine.hero}`}>
         <HeroExperience
           mode={heroConfig.hero_mode}
           imageUrl={heroImage}
@@ -106,8 +110,8 @@ export default async function Home() {
           ambientAudioEnabled={heroConfig.hero_ambient_audio_enabled}
           ambientAudioUrl={heroConfig.hero_ambient_audio_url}
         />
-        <div className={styles.heroOverlay} />
-        <div className={styles.heroContent}>
+        <div className={`${styles.heroOverlay} ${refine.heroOverlay}`} />
+        <div className={`${styles.heroContent} ${refine.heroContent}`}>
           <p className={styles.eyebrow}>{homepage.hero_eyebrow ?? "Natura · Benessere · Cultura · Sapori"}</p>
           <h1>{homepage.hero_title ?? "Semplicemente Roncegno Terme"}</h1>
           <p className={styles.heroIntro}>{homepage.hero_description ?? "Un territorio autentico tra montagna, acque termali, borghi e storie da vivere tutto l’anno."}</p>
@@ -116,6 +120,15 @@ export default async function Home() {
             <Link className={styles.secondaryButton} href="/organizza-la-visita">Organizza la visita</Link>
           </div>
         </div>
+
+        {nextEvent && nextEventDate && (
+          <Link className={refine.heroEvent} href={`/eventi/${nextEvent.slug}`}>
+            <span className={refine.heroEventEyebrow}>Prossimo appuntamento</span>
+            <span className={refine.heroEventDate}><strong>{nextEventDate.day}</strong>{nextEventDate.month}</span>
+            <span className={refine.heroEventTitle}>{nextEvent.title}</span>
+            <span className={refine.heroEventArrow} aria-hidden="true">→</span>
+          </Link>
+        )}
       </section>
 
       <div className={styles.utilityWrap}>
@@ -136,7 +149,7 @@ export default async function Home() {
             <div><p>In primo piano</p><h2 className={styles.sectionTitle}>Eventi a Roncegno</h2><span className={styles.sectionLead}>Tradizioni, cultura e vita di paese. I prossimi appuntamenti da non perdere.</span></div>
             <Link className={styles.sectionLink} href="/eventi">Vedi tutti gli eventi →</Link>
           </div>
-          <div className={`${styles.eventsGrid} ${refine.eventsGrid}`}>
+          <div className={`${styles.eventsGrid} ${refine.eventsGrid}${visibleEvents.length === 3 ? ` ${refine.eventsGridThree}` : ""}`}>
             {visibleEvents.map((event, index) => {
               const date = eventDate(event.start_date);
               const image = getDirectusAssetUrl(event.image) ?? heroImage;
@@ -164,48 +177,25 @@ export default async function Home() {
       <section className={`${styles.section} ${styles.themesSection}`}>
         <div className={styles.sectionInner}>
           <div className={styles.sectionHeading}>
-            <div><p>Esperienze da vivere</p><h2 className={styles.sectionTitle}>Scopri Roncegno per temi</h2></div>
-            <Link className={styles.sectionLink} href="/luoghi">Esplora il territorio →</Link>
+            <div><p>Esplora per interesse</p><h2 className={styles.sectionTitle}>Trova il tuo Roncegno</h2><span className={styles.sectionLead}>Scegli da dove partire: ogni tema apre una sezione reale del sito.</span></div>
           </div>
           <div className={styles.themesGrid}>
             {visibleExperiences.map((experience, index) => {
-              const image = getDirectusAssetUrl(experience.image) ?? placeFallback ?? heroImage;
+              const image = getDirectusAssetUrl(experience.image) ?? heroImage;
+              const href = experienceHref(experience.title, experience.link);
               return (
-                <Link className={styles.themeCard} href={experience.link ?? "/luoghi"} key={experience.id}>
+                <Link className={styles.themeCard} href={href} key={experience.id}>
                   <div className={styles.themeImage} style={{ backgroundImage: `url('${image}')` }} />
                   <div className={styles.themeShade} />
-                  <div className={styles.themeCopy}><small>{String(index + 1).padStart(2, "0")}</small><h3>{experience.title}</h3><span aria-hidden="true">→</span></div>
+                  <div className={styles.themeCopy}>
+                    <small>{String(index + 1).padStart(2, "0")}</small>
+                    <h3>{experience.title}</h3>
+                    <span aria-hidden="true">→</span>
+                  </div>
                 </Link>
               );
             })}
           </div>
-        </div>
-      </section>
-
-      <section className={`${styles.storySection} ${refine.storySection}`}>
-        <div className={styles.storyCopy}>
-          <p className={styles.eyebrow}>Storie lungo il cammino</p>
-          <h2>Capire il territorio mentre lo attraversi.</h2>
-          <p>I pannelli, i percorsi e le storie di Roncegno diventano un unico racconto: natura, memoria, paesaggio e comunità da scoprire anche lungo i sentieri.</p>
-          <Link className={styles.darkButton} href="/percorsi">Scopri i percorsi →</Link>
-        </div>
-        <div className={`${styles.storyCards} ${refine.storyCards}`}>
-          {visibleStories.map((story, index) => {
-            const image = getDirectusAssetUrl(story.image) ?? heroImage;
-            const href = getLegacyStoryPath(story) ?? `/storie/${story.slug}`;
-            const primary = index === 0;
-            return (
-              <Link className={`${styles.storyCard} ${refine.storyCard}${primary ? ` ${styles.storyCardPrimary} ${refine.storyCardPrimary}` : ""}`} href={href} key={story.id}>
-                <div className={`${styles.storyImage} ${refine.storyImage}`} style={{ backgroundImage: `url('${image}')` }} />
-                <div className={`${styles.storyBody} ${refine.storyBody}`}>
-                  <small>{story.category?.name ?? "Storia"}</small>
-                  <strong>{story.title}</strong>
-                  {story.excerpt && <p>{story.excerpt}</p>}
-                  <span>Apri la storia →</span>
-                </div>
-              </Link>
-            );
-          })}
         </div>
       </section>
 
@@ -224,13 +214,6 @@ export default async function Home() {
               </Link>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className={styles.closing}>
-        <div className={styles.closingInner}>
-          <div><p className={styles.eyebrow}>Visit Roncegno</p><h2>Un territorio piccolo abbastanza da viverlo davvero.</h2><p>Parti da un evento, da un sentiero o da un luogo. Il resto del viaggio viene da sé.</p></div>
-          <Link className={styles.primaryButton} href="/organizza-la-visita">Organizza la visita →</Link>
         </div>
       </section>
 
