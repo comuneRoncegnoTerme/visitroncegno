@@ -200,6 +200,42 @@ export default async function Home() {
         </div>
       </section>
 
+      <section className={styles.storySection} aria-labelledby="memoria-title">
+        <div className={styles.storyCopy}>
+          <p className={styles.eyebrow}>Storie e memoria</p>
+          <h2 id="memoria-title">Na vòlta<br />a Ronzégno.</h2>
+          <p>Fotografie, testimonianze e documenti raccontano il paese attraverso chi lo ha vissuto. Un archivio di comunità per custodire le tracce del passato e continuare a farle parlare.</p>
+          <Link className={styles.darkButton} href="/memoria">Entra nell’archivio della memoria <span aria-hidden="true">→</span></Link>
+        </div>
+        <div className={styles.storyCards}>
+          <Link className={`${styles.storyCard} ${styles.storyCardPrimary}`} href="/memoria">
+            <span className={styles.storyImage} style={{ backgroundImage: "url('/images/memoria/paesaggio.jpg')" }} />
+            <span className={styles.storyBody}>
+              <small>Progetto Memoria</small>
+              <strong>Una comunità si racconta.</strong>
+              <p>Paesaggi, persone, edifici, tradizioni e manoscritti: sei tracce per ritrovare la storia di Roncegno.</p>
+              <span>Scopri il progetto →</span>
+            </span>
+          </Link>
+          <Link className={styles.storyCard} href="/memoria">
+            <span className={styles.storyImage} style={{ backgroundImage: "url('/images/memoria/persone.jpg')" }} />
+            <span className={styles.storyBody}>
+              <small>Volti</small>
+              <strong>Persone e comunità</strong>
+              <span>Esplora →</span>
+            </span>
+          </Link>
+          <Link className={styles.storyCard} href="/memoria">
+            <span className={styles.storyImage} style={{ backgroundImage: "url('/images/memoria/eventi-tradizioni.jpg')" }} />
+            <span className={styles.storyBody}>
+              <small>Tradizioni</small>
+              <strong>Storie che restano</strong>
+              <span>Esplora →</span>
+            </span>
+          </Link>
+        </div>
+      </section>
+
       <section className={styles.planningSection}>
         <div className={`${styles.sectionInner} ${styles.planningGrid}`}>
           <div className={styles.planningCopy}>
