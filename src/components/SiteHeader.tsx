@@ -6,9 +6,8 @@ import styles from "./SiteHeader.module.css";
 type Props = { settings: SiteSettings; overlay?: boolean };
 
 export default function SiteHeader({ settings, overlay = false }: Props) {
-  const directusLogo = getDirectusAssetUrl(settings.logo);
   const name = settings.site_name ?? "Visit Roncegno";
-  const logo = overlay ? "/images/logo/logo_white.svg" : directusLogo;
+  const logo = getDirectusAssetUrl(overlay ? (settings.logo_light ?? settings.logo) : settings.logo);
 
   return (
     <header className={`${styles.header} ${overlay ? styles.overlay : styles.inner}`}>
