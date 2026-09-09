@@ -35,7 +35,10 @@ export default async function ContentHubPage() {
   return (
     <main className={styles.page}>
       <aside className={styles.sidebar}>
-        <div><p className={styles.logo}>Visit Roncegno</p><span className={styles.product}>Content Hub</span></div>
+        <div className={styles.brandBlock}>
+          <img className={styles.brandLogo} src="/images/logo/logo_white.svg" alt="Visit Roncegno" />
+          <span className={styles.product}>Content Hub</span>
+        </div>
         <nav>
           <a href="#contenuti">Dashboard</a>
           <a href="#homepage-editor">Homepage</a>
@@ -56,20 +59,19 @@ export default async function ContentHubPage() {
       <section className={styles.main}>
         <header className={styles.topbar}>
           <div>
-            <p className={styles.eyebrow}>Area redazione</p>
-            <h1>Buon lavoro, {session.name}.</h1>
-            <p className={styles.intro}>Aggiorna ciò che cambia oggi. Il resto può restare sullo sfondo.</p>
+            <p className={styles.eyebrow}>Content Hub</p>
+            <h1>Dashboard</h1>
           </div>
           <div className={styles.userBadge}><strong>{session.name}</strong><span>{session.role}</span></div>
         </header>
 
         <section className={styles.dashboard} id="contenuti">
           <div className={styles.primaryColumn}>
-            <p className={styles.sectionLabel}>Modifica subito</p>
+            <p className={styles.sectionLabel}>Contenuti principali</p>
             <Link href="#homepage-editor" className={styles.heroAction}>
               <div>
                 <span>Homepage</span>
-                <h2>La prima pagina del territorio.</h2>
+                <h2>Homepage</h2>
                 <p>Hero, messaggi principali, call to action e contenuti in evidenza.</p>
               </div>
               <strong>Modifica homepage →</strong>
@@ -79,7 +81,7 @@ export default async function ContentHubPage() {
               <Link href="/content-hub/eventi" className={styles.quickAction}>
                 <span>{events.length} prossimi</span>
                 <h3>Eventi</h3>
-                <p>Aggiorna calendario e appuntamenti.</p>
+                <p>Calendario e appuntamenti.</p>
                 <strong>Gestisci →</strong>
               </Link>
               <Link href="/content-hub/luoghi" className={styles.quickAction}>
@@ -92,7 +94,7 @@ export default async function ContentHubPage() {
           </div>
 
           <aside className={styles.statusColumn}>
-            <p className={styles.sectionLabel}>Stato redazione</p>
+            <p className={styles.sectionLabel}>Stato contenuti</p>
             <div className={styles.statusList}>
               <div><strong>{events.length}</strong><span>eventi prossimi</span></div>
               <div><strong>{places.length}</strong><span>luoghi in evidenza</span></div>
@@ -105,7 +107,7 @@ export default async function ContentHubPage() {
 
         <section className={styles.manageSection}>
           <div className={styles.manageHeading}>
-            <div><p className={styles.sectionLabel}>Gestione</p><h2>Tutto il resto, senza rumore.</h2></div>
+            <p className={styles.sectionLabel}>Gestione</p>
           </div>
           <div className={styles.manageList}>
             {secondarySections.map((section) => (
