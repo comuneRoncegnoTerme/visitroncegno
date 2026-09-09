@@ -100,6 +100,11 @@
     scroll-snap-align: none !important;
   }
 
+  .themeCard h3 {
+    margin-right: 30px !important;
+    font-size: clamp(20px, 5.8vw, 27px) !important;
+  }
+
   .storySection {
     padding: 72px 5vw !important;
   }
@@ -111,7 +116,7 @@
 
 @media (max-width: 480px) {
   .utilityCard {
-    grid-template-columns: 34px 1fr !important;
+    grid-template-columns: 34px 1fr auto !important;
     gap: 10px !important;
     padding: 18px 14px !important;
   }
