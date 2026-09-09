@@ -211,8 +211,12 @@
     padding: 18px 14px !important;
   }
 
+  .themesGrid {
+    grid-template-columns: 1fr !important;
+  }
+
   .themeCard,
   .themeCard:nth-child(n) {
-    min-height: 190px !important;
+    min-height: 215px !important;
   }
 }
