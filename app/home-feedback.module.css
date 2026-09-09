@@ -22,17 +22,90 @@
   text-shadow: 0 1px 14px rgba(0, 0, 0, 0.42);
 }
 
+/* Four equal, static entry points: no oversized first card and no carousel feel. */
+.themesGrid {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 14px !important;
+}
+
+.themeCard,
+.themeCard:nth-child(n) {
+  grid-column: auto !important;
+  min-height: 350px !important;
+}
+
+.themeCard h3 {
+  max-width: 250px;
+  font-size: clamp(26px, 2vw, 34px) !important;
+  text-wrap: balance;
+}
+
+/* Memory stays a single lightweight teaser, but uses the desktop width better. */
 .storySection {
-  grid-template-columns: minmax(0, 790px) !important;
-  justify-content: center;
-  gap: 0 !important;
+  display: block !important;
+  padding: 86px 5vw !important;
 }
 
 .storyCopy {
-  max-width: 790px;
-  padding: 42px 0;
+  width: min(1400px, 100%);
+  max-width: none;
+  margin: 0 auto;
+  padding: 56px 0;
+  display: grid;
+  grid-template-columns: minmax(320px, 0.78fr) minmax(0, 1.22fr);
+  grid-template-rows: auto auto auto;
+  column-gap: clamp(56px, 8vw, 130px);
+  row-gap: 12px;
+  align-items: start;
   border-top: 1px solid rgba(23, 55, 46, 0.18);
   border-bottom: 1px solid rgba(23, 55, 46, 0.18);
+}
+
+.storyCopy > p:first-child {
+  grid-column: 1;
+  grid-row: 1;
+  margin-bottom: 4px;
+}
+
+.storyCopy h2 {
+  grid-column: 1;
+  grid-row: 2 / 4;
+  max-width: 520px;
+  margin: 0 !important;
+  font-size: clamp(48px, 4.5vw, 72px) !important;
+  line-height: 0.94 !important;
+}
+
+.storyCopy > p:not(:first-child) {
+  grid-column: 2;
+  grid-row: 2;
+  max-width: 650px !important;
+  margin: 2px 0 0 !important;
+  font-size: 16px !important;
+  line-height: 1.72 !important;
+}
+
+.storyCopy > a {
+  grid-column: 2;
+  grid-row: 3;
+  justify-self: start;
+  margin-top: 12px !important;
+}
+
+@media (max-width: 1180px) {
+  .themesGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .themeCard,
+  .themeCard:nth-child(n) {
+    min-height: 320px !important;
+  }
+
+  .storyCopy {
+    grid-template-columns: 0.9fr 1.1fr;
+    column-gap: 54px;
+  }
 }
 
 @media (max-width: 760px) {
@@ -93,7 +166,8 @@
     scroll-snap-type: none !important;
   }
 
-  .themeCard {
+  .themeCard,
+  .themeCard:nth-child(n) {
     grid-column: auto !important;
     min-width: 0 !important;
     min-height: 220px !important;
@@ -106,11 +180,27 @@
   }
 
   .storySection {
-    padding: 72px 5vw !important;
+    padding: 64px 5vw !important;
   }
 
   .storyCopy {
-    padding: 28px 0;
+    display: block;
+    padding: 34px 0;
+  }
+
+  .storyCopy h2 {
+    max-width: 540px;
+    margin-top: 8px !important;
+    font-size: clamp(44px, 13vw, 64px) !important;
+  }
+
+  .storyCopy > p:not(:first-child) {
+    margin-top: 20px !important;
+    font-size: 15px !important;
+  }
+
+  .storyCopy > a {
+    margin-top: 20px !important;
   }
 }
 
@@ -121,7 +211,12 @@
     padding: 18px 14px !important;
   }
 
-  .themeCard {
-    min-height: 190px !important;
+  .themesGrid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .themeCard,
+  .themeCard:nth-child(n) {
+    min-height: 215px !important;
   }
 }

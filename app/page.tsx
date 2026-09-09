@@ -179,7 +179,7 @@ export default async function Home() {
       <section className={`${styles.section} ${styles.themesSection}`}>
         <div className={styles.sectionInner}>
           <div className={styles.sectionHeading}>
-            <div><p>Esplora per interesse</p><h2 className={styles.sectionTitle}>Scopri Roncegno</h2><span className={styles.sectionLead}>Natura, benessere, cultura e movimento: quattro porte d’ingresso al territorio.</span></div>
+            <div><p>Esplora per interesse</p><h2 className={styles.sectionTitle}>Scopri Roncegno</h2><span className={styles.sectionLead}>Natura, benessere, cultura e movimento: quattro modi per entrare nel territorio.</span></div>
           </div>
           <div className={`${styles.themesGrid} ${feedback.themesGrid}`}>
             {visibleExperiences.map((experience, index) => {
