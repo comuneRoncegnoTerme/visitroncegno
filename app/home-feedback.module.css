@@ -1,0 +1,122 @@
+.eventShade {
+  background: linear-gradient(
+    0deg,
+    rgba(8, 35, 28, 0.98) 0%,
+    rgba(8, 35, 28, 0.82) 38%,
+    rgba(8, 35, 28, 0.48) 62%,
+    rgba(8, 35, 28, 0.14) 86%,
+    rgba(8, 35, 28, 0.06) 100%
+  ) !important;
+}
+
+.eventBody {
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.32);
+}
+
+.eventBody h3 {
+  text-wrap: balance;
+}
+
+.eventBody p {
+  color: rgba(255, 255, 255, 0.94) !important;
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.42);
+}
+
+.storySection {
+  grid-template-columns: minmax(0, 790px) !important;
+  justify-content: center;
+  gap: 0 !important;
+}
+
+.storyCopy {
+  max-width: 790px;
+  padding: 42px 0;
+  border-top: 1px solid rgba(23, 55, 46, 0.18);
+  border-bottom: 1px solid rgba(23, 55, 46, 0.18);
+}
+
+@media (max-width: 760px) {
+  .utilityWrap {
+    width: 92vw !important;
+    overflow: visible !important;
+  }
+
+  .utilityBar {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    overflow: hidden !important;
+    scroll-snap-type: none !important;
+  }
+
+  .utilityCard {
+    min-width: 0 !important;
+    min-height: 116px !important;
+    scroll-snap-align: none !important;
+    border-right: 1px solid rgba(23, 55, 46, 0.1) !important;
+    border-bottom: 1px solid rgba(23, 55, 46, 0.1) !important;
+  }
+
+  .utilityCard:nth-child(2n) {
+    border-right: 0 !important;
+  }
+
+  .utilityCard:nth-last-child(-n + 2) {
+    border-bottom: 0 !important;
+  }
+
+  .eventsGrid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    overflow: visible !important;
+    padding-right: 0 !important;
+    scroll-snap-type: none !important;
+  }
+
+  .eventCard {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 300px !important;
+    scroll-snap-align: none !important;
+  }
+
+  .eventCardPrimary {
+    min-height: 440px !important;
+  }
+
+  .themesGrid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    overflow: visible !important;
+    padding-right: 0 !important;
+    scroll-snap-type: none !important;
+  }
+
+  .themeCard {
+    grid-column: auto !important;
+    min-width: 0 !important;
+    min-height: 220px !important;
+    scroll-snap-align: none !important;
+  }
+
+  .storySection {
+    padding: 72px 5vw !important;
+  }
+
+  .storyCopy {
+    padding: 28px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .utilityCard {
+    grid-template-columns: 34px 1fr !important;
+    gap: 10px !important;
+    padding: 18px 14px !important;
+  }
+
+  .themeCard {
+    min-height: 190px !important;
+  }
+}
