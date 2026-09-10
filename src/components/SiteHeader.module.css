@@ -13,8 +13,8 @@
 
 .overlay {
   color: #fff;
-  background: linear-gradient(180deg, rgba(5,18,14,.58), rgba(5,18,14,.16));
-  backdrop-filter: blur(10px);
+  background: linear-gradient(180deg, rgba(5,18,14,.54), rgba(5,18,14,.13));
+  backdrop-filter: blur(9px);
 }
 
 .inner {
@@ -35,7 +35,7 @@
 
 .logo {
   display: block;
-  width: clamp(230px, 20vw, 315px);
+  width: clamp(238px, 20.5vw, 324px);
   height: auto;
   flex: none;
 }
@@ -139,24 +139,32 @@
   position: relative;
   display: grid;
   place-content: center;
-  gap: 6px;
-  width: 46px;
-  height: 46px;
+  gap: 5px;
+  width: 47px;
+  height: 47px;
   padding: 0;
   color: currentColor;
-  background: rgba(255,255,255,.08);
-  border: 1px solid rgba(255,255,255,.34);
+  background: rgba(255,255,255,.055);
+  border: 1px solid rgba(255,255,255,.4);
   border-radius: 50%;
+  backdrop-filter: blur(8px);
+  transition: background .18s ease, border-color .18s ease, transform .18s ease;
+}
+
+.mobileToggle:hover {
+  background: rgba(255,255,255,.11);
+  border-color: rgba(255,255,255,.58);
+  transform: translateY(-1px);
 }
 
 .inner .mobileToggle {
-  background: rgba(22,61,50,.04);
-  border-color: rgba(22,61,50,.26);
+  background: rgba(22,61,50,.035);
+  border-color: rgba(22,61,50,.28);
 }
 
 .mobileToggle span {
   display: block;
-  width: 18px;
+  width: 19px;
   height: 1px;
   background: currentColor;
 }
@@ -269,32 +277,34 @@
 
 @media (max-width: 640px) {
   .header {
-    padding: 13px 16px;
+    padding: 14px 18px;
   }
 
   .logo {
-    width: min(205px, 64vw);
+    width: min(220px, 68vw);
     height: auto;
   }
 
   .brand {
-    height: 48px;
+    height: 52px;
   }
 
   .mobileToggle {
-    width: 44px;
-    height: 44px;
+    width: 46px;
+    height: 46px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .nav a,
-  .cta {
+  .cta,
+  .mobileToggle {
     transition: none;
   }
 
   .nav a:hover,
-  .cta:hover {
+  .cta:hover,
+  .mobileToggle:hover {
     transform: none;
   }
 }
