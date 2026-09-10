@@ -11,6 +11,7 @@ import {
 } from "@/lib/directus";
 import styles from "./home-v2.module.css";
 import refine from "./home-v2-refine.module.css";
+import feedback from "./home-feedback.module.css";
 
 export const dynamic = "force-dynamic";
 
@@ -145,10 +146,10 @@ export default async function Home() {
         )}
       </section>
 
-      <div className={`${styles.utilityWrap} ${refine.utilityWrap}`}>
-        <nav className={`${styles.utilityBar} ${refine.utilityBar}`} aria-label="Scorciatoie principali">
+      <div className={`${styles.utilityWrap} ${feedback.utilityWrap} ${refine.utilityWrap}`}>
+        <nav className={`${styles.utilityBar} ${feedback.utilityBar} ${refine.utilityBar}`} aria-label="Scorciatoie principali">
           {utilityItems.map((item) => (
-            <Link className={`${styles.utilityCard} ${refine.utilityCard}`} href={item.href} key={item.label}>
+            <Link className={`${styles.utilityCard} ${feedback.utilityCard} ${refine.utilityCard}`} href={item.href} key={item.label}>
               <span className={styles.utilityIcon}><UtilityIcon name={item.icon} /></span>
               <span className={styles.utilityText}><strong>{item.label}</strong><small>{item.note}</small></span>
               <span className={styles.utilityArrow} aria-hidden="true">→</span>
@@ -163,18 +164,18 @@ export default async function Home() {
             <div><p>In primo piano</p><h2 className={styles.sectionTitle}>Eventi a Roncegno</h2><span className={styles.sectionLead}>Tradizioni, cultura e vita di paese. I prossimi appuntamenti da non perdere.</span></div>
             <Link className={styles.sectionLink} href="/eventi">Vedi tutti gli eventi →</Link>
           </div>
-          <div className={`${styles.eventsGrid} ${refine.eventsGrid}${visibleEvents.length === 3 ? ` ${refine.eventsGridThree}` : ""}`}>
+          <div className={`${styles.eventsGrid} ${refine.eventsGrid} ${feedback.eventsGrid}${visibleEvents.length === 3 ? ` ${refine.eventsGridThree}` : ""}`}>
             {visibleEvents.map((event, index) => {
               const date = eventDate(event.start_date);
               const image = getDirectusAssetUrl(event.image) ?? heroImage;
               const location = event.location_name ?? event.place?.title ?? "Roncegno Terme";
               const primary = index === 0;
               return (
-                <Link className={`${styles.eventCard} ${refine.eventCard}${primary ? ` ${styles.eventCardPrimary} ${refine.eventCardPrimary}` : ""}`} href={`/eventi/${event.slug}`} key={event.id}>
+                <Link className={`${styles.eventCard} ${refine.eventCard} ${feedback.eventCard}${primary ? ` ${styles.eventCardPrimary} ${refine.eventCardPrimary} ${feedback.eventCardPrimary}` : ""}`} href={`/eventi/${event.slug}`} key={event.id}>
                   <div className={`${styles.eventImage} ${refine.eventImage}`} style={{ backgroundImage: `url('${image}')` }} />
-                  <div className={`${styles.eventShade} ${refine.eventShade}`} />
+                  <div className={`${styles.eventShade} ${refine.eventShade} ${feedback.eventShade}`} />
                   {primary && <span className={styles.featuredLabel}>Evento in evidenza</span>}
-                  <div className={`${styles.eventBody} ${refine.eventBody}`}>
+                  <div className={`${styles.eventBody} ${refine.eventBody} ${feedback.eventBody}`}>
                     <span className={`${styles.eventDate} ${refine.eventDate}`}><strong>{date.day}</strong><span>{date.month}</span></span>
                     <div className={`${styles.eventMeta} ${refine.eventMeta}`}>{event.category?.name ?? "Evento"} · {location}</div>
                     <h3>{event.title}</h3>
@@ -193,12 +194,12 @@ export default async function Home() {
           <div className={styles.sectionHeading}>
             <div><p>Esplora per interesse</p><h2 className={styles.sectionTitle}>Quattro modi di vivere Roncegno</h2><span className={styles.sectionLead}>Natura, benessere, cultura e movimento: scegli da dove cominciare.</span></div>
           </div>
-          <div className={`${styles.themesGrid} ${refine.themesGrid}`}>
+          <div className={`${styles.themesGrid} ${feedback.themesGrid} ${refine.themesGrid}`}>
             {visibleExperiences.map((experience, index) => {
               const image = getDirectusAssetUrl(experience.image) ?? heroImage;
               const href = experienceHref(experience.title, experience.link);
               return (
-                <Link className={`${styles.themeCard} ${refine.themeCard}`} href={href} key={experience.id}>
+                <Link className={`${styles.themeCard} ${feedback.themeCard} ${refine.themeCard}`} href={href} key={experience.id}>
                   <div className={styles.themeImage} style={{ backgroundImage: `url('${image}')` }} />
                   <div className={styles.themeShade} />
                   <div className={styles.themeCopy}>
@@ -210,6 +211,15 @@ export default async function Home() {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      <section className={`${styles.storySection} ${feedback.storySection}`} aria-labelledby="memoria-title">
+        <div className={`${styles.storyCopy} ${feedback.storyCopy}`}>
+          <p className={styles.eyebrow}>Storie e memoria</p>
+          <h2 id="memoria-title">Na vòlta<br />a Ronzégno.</h2>
+          <p>Fotografie, testimonianze e documenti raccontano il paese attraverso chi lo ha vissuto. Un archivio di comunità per custodire le tracce del passato e continuare a farle parlare.</p>
+          <Link className={styles.darkButton} href="/memoria">Scopri la memoria di Roncegno <span aria-hidden="true">→</span></Link>
         </div>
       </section>
 
