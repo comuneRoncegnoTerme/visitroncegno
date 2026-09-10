@@ -145,10 +145,10 @@ export default async function Home() {
         )}
       </section>
 
-      <div className={styles.utilityWrap}>
-        <nav className={styles.utilityBar} aria-label="Scorciatoie principali">
+      <div className={`${styles.utilityWrap} ${refine.utilityWrap}`}>
+        <nav className={`${styles.utilityBar} ${refine.utilityBar}`} aria-label="Scorciatoie principali">
           {utilityItems.map((item) => (
-            <Link className={styles.utilityCard} href={item.href} key={item.label}>
+            <Link className={`${styles.utilityCard} ${refine.utilityCard}`} href={item.href} key={item.label}>
               <span className={styles.utilityIcon}><UtilityIcon name={item.icon} /></span>
               <span className={styles.utilityText}><strong>{item.label}</strong><small>{item.note}</small></span>
               <span className={styles.utilityArrow} aria-hidden="true">→</span>
@@ -188,17 +188,17 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className={`${styles.section} ${styles.themesSection}`}>
+      <section className={`${styles.section} ${styles.themesSection} ${refine.themesSection}`}>
         <div className={styles.sectionInner}>
           <div className={styles.sectionHeading}>
             <div><p>Esplora per interesse</p><h2 className={styles.sectionTitle}>Quattro modi di vivere Roncegno</h2><span className={styles.sectionLead}>Natura, benessere, cultura e movimento: scegli da dove cominciare.</span></div>
           </div>
-          <div className={styles.themesGrid}>
+          <div className={`${styles.themesGrid} ${refine.themesGrid}`}>
             {visibleExperiences.map((experience, index) => {
               const image = getDirectusAssetUrl(experience.image) ?? heroImage;
               const href = experienceHref(experience.title, experience.link);
               return (
-                <Link className={styles.themeCard} href={href} key={experience.id}>
+                <Link className={`${styles.themeCard} ${refine.themeCard}`} href={href} key={experience.id}>
                   <div className={styles.themeImage} style={{ backgroundImage: `url('${image}')` }} />
                   <div className={styles.themeShade} />
                   <div className={styles.themeCopy}>
