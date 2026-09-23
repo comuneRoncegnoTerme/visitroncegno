@@ -5,13 +5,16 @@ import SiteFooter from "@/components/SiteFooter";
 import {
   getDirectusAssetUrl,
   getExperiences,
+  getFeaturedPlaces,
   getHomepage,
   getSiteSettings,
   getUpcomingEvents,
 } from "@/lib/directus";
+import { placeHref } from "@/lib/place-detail";
 import styles from "./home-v2.module.css";
 import refine from "./home-v2-refine.module.css";
 import feedback from "./home-feedback.module.css";
+import editorial from "./home-editorial.module.css";
 
 export const dynamic = "force-dynamic";
 
@@ -91,10 +94,11 @@ const planningItems = [
 ];
 
 export default async function Home() {
-  const [homepage, experiences, events, siteSettings] = await Promise.all([
+  const [homepage, experiences, events, featuredPlaces, siteSettings] = await Promise.all([
     getHomepage(),
     getExperiences(),
     getUpcomingEvents(),
+    getFeaturedPlaces(),
     getSiteSettings(),
   ]);
 
@@ -103,6 +107,7 @@ export default async function Home() {
   const heroHotspots = parseHeroHotspots(heroConfig.hero_hotspots);
   const visibleEvents = events.slice(0, 4);
   const visibleExperiences = experiences.slice(0, 4);
+  const visibleFeaturedPlaces = featuredPlaces.slice(0, 3);
   const nextEvent = visibleEvents[0] ?? null;
   const nextEventDate = nextEvent ? eventDate(nextEvent.start_date) : null;
   const nextEventTime = nextEvent ? eventTime(nextEvent.start_date) : null;
@@ -210,6 +215,54 @@ export default async function Home() {
                 </Link>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {visibleFeaturedPlaces.length > 0 && (
+        <section className={`${styles.section} ${editorial.highlightsSection}`} aria-labelledby="highlights-title">
+          <div className={styles.sectionInner}>
+            <div className={styles.sectionHeading}>
+              <div>
+                <p>{homepage.highlights_eyebrow ?? "Da non perdere"}</p>
+                <h2 className={styles.sectionTitle} id="highlights-title">{homepage.highlights_title ?? "Tre luoghi da cui cominciare."}</h2>
+                <span className={styles.sectionLead}>{homepage.highlights_description ?? "Una selezione editoriale di luoghi simbolo, scelta dal Content Hub per raccontare Roncegno attraverso esperienze concrete."}</span>
+              </div>
+              <Link className={styles.sectionLink} href={homepage.highlights_link_url ?? "/luoghi"}>{homepage.highlights_link_label ?? "Scopri tutti i luoghi"} →</Link>
+            </div>
+
+            <div className={editorial.highlightsGrid}>
+              {visibleFeaturedPlaces.map((place, index) => {
+                const image = getDirectusAssetUrl(place.image) ?? heroImage;
+                return (
+                  <Link className={editorial.highlightCard} href={placeHref(place)} key={place.id}>
+                    <div className={editorial.highlightImage} style={{ backgroundImage: `url('${image}')` }} />
+                    <div className={editorial.highlightShade} />
+                    <span className={editorial.highlightNumber}>{String(index + 1).padStart(2, "0")}</span>
+                    <div className={editorial.highlightCopy}>
+                      <small>{place.category?.name ?? place.map_label ?? "Luogo da scoprire"}</small>
+                      <h3>{place.title}</h3>
+                      {place.summary && <p>{place.summary}</p>}
+                      <span className={editorial.highlightArrow} aria-hidden="true">→</span>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <section className={editorial.mapStory} aria-labelledby="map-story-title">
+        <div className={editorial.mapStoryInner}>
+          <div className={editorial.mapStoryCopy}>
+            <p className={styles.eyebrow}>{homepage.map_eyebrow ?? "Esplora il territorio"}</p>
+            <h2 id="map-story-title">{homepage.map_title ?? "Roncegno, tutto in una cartina."}</h2>
+            <p>{homepage.map_description ?? "Dalla cartina illustrata alla mappa interattiva: orientati tra luoghi, percorsi e servizi e poi approfondisci ciò che ti interessa."}</p>
+          </div>
+          <div className={editorial.mapStoryActions}>
+            <Link className={editorial.mapPrimary} href={homepage.map_primary_url ?? "/cartina"}>{homepage.map_primary_label ?? "Apri la cartina illustrata"} <span aria-hidden="true">→</span></Link>
+            <Link className={editorial.mapSecondary} href={homepage.map_secondary_url ?? "/organizza-la-visita#mappa-visita"}>{homepage.map_secondary_label ?? "Mappa interattiva"} <span aria-hidden="true">→</span></Link>
           </div>
         </div>
       </section>
