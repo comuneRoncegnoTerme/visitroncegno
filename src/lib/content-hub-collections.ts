@@ -92,6 +92,8 @@ export const contentHubCollections: Record<
       "featured",
       "source_url",
       "source_label",
+      "route",
+      "place",
     ],
     sort: "sort,title",
     limit: 250,
