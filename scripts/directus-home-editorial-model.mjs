@@ -12,6 +12,11 @@ const headers = {
 };
 
 const fields = [
+  ["routes_eyebrow", "Soprattitolo della sezione Esperienze e percorsi."],
+  ["routes_title", "Titolo della sezione Esperienze e percorsi."],
+  ["routes_description", "Testo introduttivo della sezione Esperienze e percorsi."],
+  ["routes_link_label", "Etichetta del link verso l'indice dei percorsi."],
+  ["routes_link_url", "Destinazione del link verso l'indice dei percorsi."],
   ["highlights_eyebrow", "Soprattitolo della sezione Luoghi in evidenza."],
   ["highlights_title", "Titolo della sezione Luoghi in evidenza."],
   ["highlights_description", "Testo introduttivo della sezione Luoghi in evidenza."],
