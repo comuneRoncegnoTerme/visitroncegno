@@ -11,6 +11,7 @@ export interface StoryItem {
   source_label: string | null;
   category?: { name: string } | null;
   route?: { id: number; title: string; slug: string } | null;
+  place?: { id: number; title: string; slug: string } | null;
 }
 
 type StoryLinkInput = Pick<StoryItem, "slug" | "source_url">;
@@ -127,6 +128,9 @@ function storyFields() {
     "route.id",
     "route.title",
     "route.slug",
+    "place.id",
+    "place.title",
+    "place.slug",
   ].join(",");
 }
 
@@ -157,6 +161,26 @@ export async function getStories(): Promise<StoryItem[]> {
     return result.data ?? [];
   } catch (error) {
     console.error("Directus stories list error:", error);
+    return [];
+  }
+}
+
+export async function getStoriesForPlace(placeId: number): Promise<StoryItem[]> {
+  const params = new URLSearchParams();
+  params.set("filter[status][_eq]", "published");
+  params.set("filter[place][_eq]", String(placeId));
+  params.set("sort", "sort,title");
+  params.set("limit", "20");
+  params.set("fields", storyFields());
+
+  try {
+    const result = await directusJson<StoryResponse>(
+      `/items/stories?${params.toString()}`,
+      { authenticated: true }
+    );
+    return result.data ?? [];
+  } catch (error) {
+    console.error("Directus place stories error:", error);
     return [];
   }
 }
