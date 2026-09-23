@@ -16,6 +16,11 @@ export interface HomepageContent {
   hero_primary_url: string | null;
   hero_secondary_label: string | null;
   hero_secondary_url: string | null;
+  routes_eyebrow: string | null;
+  routes_title: string | null;
+  routes_description: string | null;
+  routes_link_label: string | null;
+  routes_link_url: string | null;
   highlights_eyebrow: string | null;
   highlights_title: string | null;
   highlights_description: string | null;
@@ -173,6 +178,11 @@ const EMPTY_HOMEPAGE: HomepageContent = {
   hero_primary_url: null,
   hero_secondary_label: null,
   hero_secondary_url: null,
+  routes_eyebrow: null,
+  routes_title: null,
+  routes_description: null,
+  routes_link_label: null,
+  routes_link_url: null,
   highlights_eyebrow: null,
   highlights_title: null,
   highlights_description: null,
@@ -302,6 +312,55 @@ export async function getUpcomingEvents(): Promise<EventItem[]> {
     return result.data;
   } catch (error) {
     reportPublicReadFallback("upcoming-events", error);
+    return [];
+  }
+}
+
+export async function getHomepageRoutes(): Promise<RouteItem[]> {
+  async function readRoutes(filterField: "recommended" | "featured") {
+    const params = new URLSearchParams();
+    params.set("filter[status][_eq]", "published");
+    params.set(`filter[${filterField}][_eq]`, "true");
+    params.set("sort", "sort");
+    params.set("limit", "3");
+    params.set(
+      "fields",
+      [
+        "id",
+        "status",
+        "sort",
+        "title",
+        "slug",
+        "summary",
+        "image",
+        "difficulty",
+        "distance_km",
+        "duration_minutes",
+        "elevation_gain_m",
+        "experience_type",
+        "season",
+        "family_friendly",
+        "accessible",
+        "loop_route",
+        "featured",
+        "recommended",
+        "route_highlight",
+        "category.name",
+      ].join(",")
+    );
+
+    const result = await directusJson<DirectusResponse<RouteItem[]>>(
+      queryPath("routes", params)
+    );
+    return result.data;
+  }
+
+  try {
+    const recommended = await readRoutes("recommended");
+    if (recommended.length > 0) return recommended;
+    return await readRoutes("featured");
+  } catch (error) {
+    reportPublicReadFallback("homepage-routes", error);
     return [];
   }
 }
