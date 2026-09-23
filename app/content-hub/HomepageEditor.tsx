@@ -23,6 +23,11 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
       hero_primary_url: homepage.hero_primary_url ?? "",
       hero_secondary_label: homepage.hero_secondary_label ?? "",
       hero_secondary_url: homepage.hero_secondary_url ?? "",
+      routes_eyebrow: homepage.routes_eyebrow ?? "",
+      routes_title: homepage.routes_title ?? "",
+      routes_description: homepage.routes_description ?? "",
+      routes_link_label: homepage.routes_link_label ?? "",
+      routes_link_url: homepage.routes_link_url ?? "",
       highlights_eyebrow: homepage.highlights_eyebrow ?? "",
       highlights_title: homepage.highlights_title ?? "",
       highlights_description: homepage.highlights_description ?? "",
@@ -128,6 +133,36 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
         <label>
           <span>Destinazione pulsante secondario</span>
           <input name="hero_secondary_url" defaultValue={initialValues.hero_secondary_url} />
+        </label>
+
+        <div className={styles.full}>
+          <h3>Esperienze e percorsi</h3>
+          <p>La homepage mostra fino a tre percorsi consigliati, scelti tramite il flag “recommended” e, in fallback, “featured”.</p>
+        </div>
+
+        <label>
+          <span>Soprattitolo esperienze</span>
+          <input name="routes_eyebrow" defaultValue={initialValues.routes_eyebrow} />
+        </label>
+
+        <label className={styles.full}>
+          <span>Titolo esperienze</span>
+          <input name="routes_title" defaultValue={initialValues.routes_title} />
+        </label>
+
+        <label className={styles.full}>
+          <span>Descrizione esperienze</span>
+          <textarea name="routes_description" rows={4} defaultValue={initialValues.routes_description} />
+        </label>
+
+        <label>
+          <span>Testo link percorsi</span>
+          <input name="routes_link_label" defaultValue={initialValues.routes_link_label} />
+        </label>
+
+        <label>
+          <span>Destinazione link percorsi</span>
+          <input name="routes_link_url" defaultValue={initialValues.routes_link_url} />
         </label>
 
         <div className={styles.full}>
