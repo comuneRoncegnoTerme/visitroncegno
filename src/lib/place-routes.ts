@@ -14,6 +14,9 @@ interface RoutePointRelation {
     image: string | null;
     difficulty: string | null;
     distance_km: number | null;
+    duration_minutes: number | null;
+    elevation_gain_m: number | null;
+    route_highlight: string | null;
     category?: {
       name: string;
     } | null;
@@ -28,6 +31,9 @@ export interface RelatedRoute {
   image: string | null;
   difficulty: string | null;
   distance_km: number | null;
+  duration_minutes: number | null;
+  elevation_gain_m: number | null;
+  route_highlight: string | null;
   category?: {
     name: string;
   } | null;
@@ -48,6 +54,9 @@ export async function getRoutesForPlace(placeId: number): Promise<RelatedRoute[]
       "route.image",
       "route.difficulty",
       "route.distance_km",
+      "route.duration_minutes",
+      "route.elevation_gain_m",
+      "route.route_highlight",
       "route.category.name",
     ].join(",")
   );
