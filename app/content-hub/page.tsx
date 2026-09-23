@@ -26,6 +26,7 @@ export default async function ContentHubPage() {
   const panelCount = trailPanels.length + cinqueValliPanels.length;
   const secondarySections = [
     { title: "Percorsi", text: "Dati tecnici, accessibilità, punto di partenza e GPX", meta: "Gestione completa", href: "/content-hub/percorsi" },
+    { title: "Storie e memoria", text: "Racconti, testimonianze e collegamenti a luoghi e percorsi", meta: "Racconto diffuso", href: "/content-hub/storie" },
     { title: "Pannelli e audioguide", text: "Immagini, audio e testi delle pagine collegate ai QR", meta: `${panelCount} URL legacy`, href: "/content-hub/pannelli" },
     { title: "Media", text: "Immagini, audio, documenti e tracce GPX", meta: "Libreria Directus", href: "/content-hub/media" },
     { title: "Qualità contenuti", text: "Controlla immagini, coordinate, GPX e dati mancanti", meta: "Controllo automatico", href: "/content-hub/qualita" },
@@ -45,6 +46,7 @@ export default async function ContentHubPage() {
           <Link href="/content-hub/eventi">Eventi</Link>
           <Link href="/content-hub/luoghi">Luoghi</Link>
           <Link href="/content-hub/percorsi">Percorsi</Link>
+          <Link href="/content-hub/storie">Storie e memoria</Link>
           <Link href="/content-hub/pannelli">Pannelli e audioguide</Link>
           <Link href="/content-hub/media">Media</Link>
           <Link href="/content-hub/qualita">Qualità</Link>
