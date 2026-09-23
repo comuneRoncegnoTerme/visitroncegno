@@ -15,7 +15,8 @@ type FieldType =
   | "email"
   | "url"
   | "tel"
-  | "media";
+  | "media"
+  | "relation";
 
 export type EditorField = {
   name: string;
@@ -27,6 +28,7 @@ export type EditorField = {
   help?: string;
   mediaKind?: "image" | "file";
   options?: { label: string; value: string }[];
+  relationCollection?: "places" | "routes" | "events" | "stories";
 };
 
 type Item = Record<string, unknown> & {
@@ -38,7 +40,7 @@ type Item = Record<string, unknown> & {
 };
 
 type Props = {
-  collection: "events" | "places" | "routes";
+  collection: "events" | "places" | "routes" | "stories";
   title: string;
   description: string;
   fields: EditorField[];
@@ -99,6 +101,7 @@ export default function CollectionEditor({
   const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [message, setMessage] = useState("");
   const [query, setQuery] = useState("");
+  const [relationOptions, setRelationOptions] = useState<Record<string, Item[]>>({});
 
   const selected = useMemo(
     () => items.find((item) => item.id === selectedId) ?? null,
@@ -125,6 +128,34 @@ export default function CollectionEditor({
         )
     );
   }, [items, query]);
+
+  useEffect(() => {
+    const relationFields = fields.filter(
+      (field) => field.type === "relation" && field.relationCollection
+    );
+    if (relationFields.length === 0) return;
+
+    const controller = new AbortController();
+
+    void Promise.all(
+      relationFields.map(async (field) => {
+        const { response, result } = await fetchCollection(
+          field.relationCollection as Props["collection"],
+          controller.signal
+        );
+        if (!response.ok) return [field.name, []] as const;
+        return [field.name, result?.data ?? []] as const;
+      })
+    ).then((entries) => {
+      if (!controller.signal.aborted) {
+        setRelationOptions(Object.fromEntries(entries));
+      }
+    }).catch((error: unknown) => {
+      if (error instanceof DOMException && error.name === "AbortError") return;
+    });
+
+    return () => controller.abort();
+  }, [fields]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -345,6 +376,36 @@ export default function CollectionEditor({
                     onChange={(event) => setField(field.name, event.target.checked)}
                   />
                   <span>{field.label}</span>
+                  {field.help && <small>{field.help}</small>}
+                </label>
+              );
+            }
+
+            if (field.type === "relation") {
+              const currentId =
+                typeof value === "object" && value !== null && "id" in value
+                  ? String((value as { id?: unknown }).id ?? "")
+                  : String(value ?? "");
+
+              return (
+                <label key={field.name} className={className}>
+                  <span>{field.label}</span>
+                  <select
+                    value={currentId}
+                    onChange={(event) =>
+                      setField(
+                        field.name,
+                        event.target.value === "" ? null : Number(event.target.value)
+                      )
+                    }
+                  >
+                    <option value="">Nessun collegamento</option>
+                    {(relationOptions[field.name] ?? []).map((option) => (
+                      <option value={option.id} key={option.id}>
+                        {option.title || `#${option.id}`}
+                      </option>
+                    ))}
+                  </select>
                   {field.help && <small>{field.help}</small>}
                 </label>
               );

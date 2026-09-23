@@ -4,14 +4,17 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import {
   getDirectusAssetUrl,
-  getExperiences,
+  getFeaturedPlaces,
+  getHomepageRoutes,
   getHomepage,
   getSiteSettings,
   getUpcomingEvents,
 } from "@/lib/directus";
+import { placeHref } from "@/lib/place-detail";
 import styles from "./home-v2.module.css";
 import refine from "./home-v2-refine.module.css";
 import feedback from "./home-feedback.module.css";
+import editorial from "./home-editorial.module.css";
 
 export const dynamic = "force-dynamic";
 
@@ -65,14 +68,6 @@ function UtilityIcon({ name }: { name: UtilityIconName }) {
   return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 6 5-2 6 2 5-2v14l-5 2-6-2-5 2zM9 4v14M15 6v14" fill="none" {...common}/></svg>;
 }
 
-function experienceHref(title: string, configuredHref: string | null | undefined) {
-  const normalized = title.toLowerCase();
-  if (normalized.includes("natura") || normalized.includes("montagna")) return "/temi/natura-e-montagna";
-  if (normalized.includes("terme") || normalized.includes("benessere")) return "/temi/terme-e-benessere";
-  if (normalized.includes("cultura") || normalized.includes("memoria")) return "/temi/cultura-e-memoria";
-  if (normalized.includes("sport") || normalized.includes("movimento")) return "/temi/sport-e-movimento";
-  return configuredHref ?? "/luoghi";
-}
 
 const utilityItems: Array<{ label: string; note: string; href: string; icon: UtilityIconName }> = [
   { label: "Sentieri e percorsi", note: "Natura da vivere", href: "/percorsi", icon: "trail" },
@@ -91,10 +86,11 @@ const planningItems = [
 ];
 
 export default async function Home() {
-  const [homepage, experiences, events, siteSettings] = await Promise.all([
+  const [homepage, homepageRoutes, events, featuredPlaces, siteSettings] = await Promise.all([
     getHomepage(),
-    getExperiences(),
+    getHomepageRoutes(),
     getUpcomingEvents(),
+    getFeaturedPlaces(),
     getSiteSettings(),
   ]);
 
@@ -102,7 +98,8 @@ export default async function Home() {
   const heroConfig = homepage as typeof homepage & HomepageHeroConfig;
   const heroHotspots = parseHeroHotspots(heroConfig.hero_hotspots);
   const visibleEvents = events.slice(0, 4);
-  const visibleExperiences = experiences.slice(0, 4);
+  const visibleRoutes = homepageRoutes.slice(0, 3);
+  const visibleFeaturedPlaces = featuredPlaces.slice(0, 3);
   const nextEvent = visibleEvents[0] ?? null;
   const nextEventDate = nextEvent ? eventDate(nextEvent.start_date) : null;
   const nextEventTime = nextEvent ? eventTime(nextEvent.start_date) : null;
@@ -129,7 +126,7 @@ export default async function Home() {
           <p className={styles.heroIntro}>{homepage.hero_description ?? "Natura, montagna, benessere e memoria. Un territorio autentico da scoprire con il proprio ritmo."}</p>
           <div className={styles.heroActions}>
             <Link className={styles.primaryButton} href={homepage.hero_primary_url ?? "/luoghi"}>{homepage.hero_primary_label ?? "Esplora il territorio"}<span aria-hidden="true">→</span></Link>
-            <Link className={styles.secondaryButton} href="/organizza-la-visita">Organizza la visita <span aria-hidden="true">→</span></Link>
+            <Link className={styles.secondaryButton} href={homepage.hero_secondary_url ?? "/organizza-la-visita"}>{homepage.hero_secondary_label ?? "Organizza la visita"} <span aria-hidden="true">→</span></Link>
           </div>
         </div>
 
@@ -157,6 +154,86 @@ export default async function Home() {
           ))}
         </nav>
       </div>
+
+      {visibleRoutes.length > 0 && (
+        <section className={`${styles.section} ${editorial.routesSection}`} aria-labelledby="routes-title">
+          <div className={styles.sectionInner}>
+            <div className={styles.sectionHeading}>
+              <div>
+                <p>{homepage.routes_eyebrow ?? "Esperienze da vivere"}</p>
+                <h2 className={styles.sectionTitle} id="routes-title">{homepage.routes_title ?? "Scegli come vivere Roncegno."}</h2>
+                <span className={styles.sectionLead}>{homepage.routes_description ?? "Non solo categorie: percorsi concreti per entrare nel paesaggio, nella storia e nella vita del territorio."}</span>
+              </div>
+              <Link className={styles.sectionLink} href={homepage.routes_link_url ?? "/percorsi"}>{homepage.routes_link_label ?? "Scopri tutti i percorsi"} →</Link>
+            </div>
+
+            <div className={editorial.routesGrid}>
+              {visibleRoutes.map((route, index) => {
+                const image = getDirectusAssetUrl(route.image) ?? heroImage;
+                const hours = route.duration_minutes ? Math.floor(route.duration_minutes / 60) : 0;
+                const minutes = route.duration_minutes ? route.duration_minutes % 60 : 0;
+                const duration = route.duration_minutes
+                  ? [hours ? `${hours} h` : null, minutes ? `${minutes} min` : null].filter(Boolean).join(" ")
+                  : null;
+                const meta = [
+                  route.distance_km != null ? `${route.distance_km} km` : null,
+                  duration,
+                  route.elevation_gain_m != null ? `+${route.elevation_gain_m} m` : null,
+                ].filter(Boolean).join(" · ");
+
+                return (
+                  <Link className={editorial.routeCard} href={`/percorsi/${route.slug}`} key={route.id}>
+                    <div className={editorial.routeImage} style={{ backgroundImage: `url('${image}')` }} />
+                    <div className={editorial.routeShade} />
+                    <span className={editorial.routeNumber}>{String(index + 1).padStart(2, "0")}</span>
+                    <div className={editorial.routeCopy}>
+                      <small>{route.route_highlight ?? route.category?.name ?? "Percorso consigliato"}</small>
+                      <h3>{route.title}</h3>
+                      {route.summary && <p>{route.summary}</p>}
+                      {meta && <span className={editorial.routeMeta}>{meta}</span>}
+                      <span className={editorial.routeArrow} aria-hidden="true">→</span>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {visibleFeaturedPlaces.length > 0 && (
+        <section className={`${styles.section} ${editorial.highlightsSection}`} aria-labelledby="highlights-title">
+          <div className={styles.sectionInner}>
+            <div className={styles.sectionHeading}>
+              <div>
+                <p>{homepage.highlights_eyebrow ?? "Da non perdere"}</p>
+                <h2 className={styles.sectionTitle} id="highlights-title">{homepage.highlights_title ?? "Tre luoghi da cui cominciare."}</h2>
+                <span className={styles.sectionLead}>{homepage.highlights_description ?? "Una selezione editoriale di luoghi simbolo, scelta dal Content Hub per raccontare Roncegno attraverso esperienze concrete."}</span>
+              </div>
+              <Link className={styles.sectionLink} href={homepage.highlights_link_url ?? "/luoghi"}>{homepage.highlights_link_label ?? "Scopri tutti i luoghi"} →</Link>
+            </div>
+
+            <div className={editorial.highlightsGrid}>
+              {visibleFeaturedPlaces.map((place, index) => {
+                const image = getDirectusAssetUrl(place.image) ?? heroImage;
+                return (
+                  <Link className={editorial.highlightCard} href={placeHref(place)} key={place.id}>
+                    <div className={editorial.highlightImage} style={{ backgroundImage: `url('${image}')` }} />
+                    <div className={editorial.highlightShade} />
+                    <span className={editorial.highlightNumber}>{String(index + 1).padStart(2, "0")}</span>
+                    <div className={editorial.highlightCopy}>
+                      <small>{place.category?.name ?? place.map_label ?? "Luogo da scoprire"}</small>
+                      <h3>{place.title}</h3>
+                      {place.summary && <p>{place.summary}</p>}
+                      <span className={editorial.highlightArrow} aria-hidden="true">→</span>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className={`${styles.section} ${styles.eventsSection}`}>
         <div className={styles.sectionInner}>
@@ -189,27 +266,16 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className={`${styles.section} ${styles.themesSection} ${refine.themesSection}`}>
-        <div className={styles.sectionInner}>
-          <div className={styles.sectionHeading}>
-            <div><p>Esplora per interesse</p><h2 className={styles.sectionTitle}>Quattro modi di vivere Roncegno</h2><span className={styles.sectionLead}>Natura, benessere, cultura e movimento: scegli da dove cominciare.</span></div>
+      <section className={editorial.mapStory} aria-labelledby="map-story-title">
+        <div className={editorial.mapStoryInner}>
+          <div className={editorial.mapStoryCopy}>
+            <p className={styles.eyebrow}>{homepage.map_eyebrow ?? "Esplora il territorio"}</p>
+            <h2 id="map-story-title">{homepage.map_title ?? "Roncegno, tutto in una cartina."}</h2>
+            <p>{homepage.map_description ?? "Dalla cartina illustrata alla mappa interattiva: orientati tra luoghi, percorsi e servizi e poi approfondisci ciò che ti interessa."}</p>
           </div>
-          <div className={`${styles.themesGrid} ${feedback.themesGrid} ${refine.themesGrid}`}>
-            {visibleExperiences.map((experience, index) => {
-              const image = getDirectusAssetUrl(experience.image) ?? heroImage;
-              const href = experienceHref(experience.title, experience.link);
-              return (
-                <Link className={`${styles.themeCard} ${feedback.themeCard} ${refine.themeCard}`} href={href} key={experience.id}>
-                  <div className={styles.themeImage} style={{ backgroundImage: `url('${image}')` }} />
-                  <div className={styles.themeShade} />
-                  <div className={styles.themeCopy}>
-                    <small>{String(index + 1).padStart(2, "0")}</small>
-                    <h3>{experience.title}</h3>
-                    <span aria-hidden="true">→</span>
-                  </div>
-                </Link>
-              );
-            })}
+          <div className={editorial.mapStoryActions}>
+            <Link className={editorial.mapPrimary} href={homepage.map_primary_url ?? "/cartina"}>{homepage.map_primary_label ?? "Apri la cartina illustrata"} <span aria-hidden="true">→</span></Link>
+            <Link className={editorial.mapSecondary} href={homepage.map_secondary_url ?? "/organizza-la-visita#mappa-visita"}>{homepage.map_secondary_label ?? "Mappa interattiva"} <span aria-hidden="true">→</span></Link>
           </div>
         </div>
       </section>

@@ -56,7 +56,11 @@ export default async function StoryPage({ params }: StoryPageProps) {
   const paragraphs = storyParagraphs(story.body);
   const routeHref = story.route?.slug ? `/percorsi/${story.route.slug}` : "/percorsi";
   const routeLabel = story.route?.title ?? "Scopri i percorsi";
+  const placeHref = story.place?.slug ? `/luoghi/${story.place.slug}` : null;
+  const placeLabel = story.place?.title ?? null;
   const sourceUrl = publicSourceUrl(story.source_url);
+  const backHref = placeHref ?? routeHref;
+  const backLabel = placeLabel ?? routeLabel;
 
   return (
     <main className={styles.page}>
@@ -66,7 +70,7 @@ export default async function StoryPage({ params }: StoryPageProps) {
         <div className={styles.heroImage} style={{ backgroundImage: `url('${heroImage}')` }} />
         <div className={styles.heroOverlay} />
         <div className={styles.heroContent}>
-          <Link className={styles.backLink} href={routeHref}>← Torna al percorso</Link>
+          <Link className={styles.backLink} href={backHref}>← {placeLabel ? "Torna al luogo" : "Torna al percorso"}</Link>
           <p className={styles.eyebrow}>{story.category?.name ?? "Storia del territorio"}</p>
           <h1>{story.title}</h1>
           {story.excerpt && <p className={styles.lead}>{story.excerpt}</p>}
@@ -89,7 +93,11 @@ export default async function StoryPage({ params }: StoryPageProps) {
               <p className={styles.kicker}>Lungo il cammino</p>
               <h2>Continua a esplorare.</h2>
               <p>Questa storia fa parte del racconto diffuso di Roncegno: luoghi, paesaggio, memoria e percorsi sono collegati tra loro.</p>
-              <Link href={routeHref}>{routeLabel} →</Link>
+              {placeHref && placeLabel ? (
+                <Link href={placeHref}>{placeLabel} →</Link>
+              ) : (
+                <Link href={routeHref}>{routeLabel} →</Link>
+              )}
             </div>
 
             {sourceUrl && (
@@ -105,13 +113,13 @@ export default async function StoryPage({ params }: StoryPageProps) {
       </section>
 
       <section className={styles.endLinks}>
-        <Link href={routeHref}>
+        <Link href={backHref}>
           <small>Torna sul territorio</small>
-          <strong>{routeLabel} →</strong>
+          <strong>{backLabel} →</strong>
         </Link>
-        <Link href="/luoghi">
+        <Link href={story.route?.slug ? routeHref : "/luoghi"}>
           <small>Continua a conoscere Roncegno</small>
-          <strong>Esplora i luoghi →</strong>
+          <strong>{story.route?.slug ? `${routeLabel} →` : "Esplora i luoghi →"}</strong>
         </Link>
       </section>
 

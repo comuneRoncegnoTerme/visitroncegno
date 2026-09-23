@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import {
-  getExperiences,
   getFeaturedPlaces,
+  getHomepageRoutes,
   getHomepage,
   getUpcomingEvents,
 } from "@/lib/directus";
@@ -16,16 +16,17 @@ export default async function ContentHubPage() {
   const session = await getContentHubSession();
   if (!session) redirect("/content-hub/login");
 
-  const [homepage, events, places, experiences] = await Promise.all([
+  const [homepage, events, places, homepageRoutes] = await Promise.all([
     getHomepage(),
     getUpcomingEvents(),
     getFeaturedPlaces(),
-    getExperiences(),
+    getHomepageRoutes(),
   ]);
 
   const panelCount = trailPanels.length + cinqueValliPanels.length;
   const secondarySections = [
     { title: "Percorsi", text: "Dati tecnici, accessibilità, punto di partenza e GPX", meta: "Gestione completa", href: "/content-hub/percorsi" },
+    { title: "Storie e memoria", text: "Racconti, testimonianze e collegamenti a luoghi e percorsi", meta: "Racconto diffuso", href: "/content-hub/storie" },
     { title: "Pannelli e audioguide", text: "Immagini, audio e testi delle pagine collegate ai QR", meta: `${panelCount} URL legacy`, href: "/content-hub/pannelli" },
     { title: "Media", text: "Immagini, audio, documenti e tracce GPX", meta: "Libreria Directus", href: "/content-hub/media" },
     { title: "Qualità contenuti", text: "Controlla immagini, coordinate, GPX e dati mancanti", meta: "Controllo automatico", href: "/content-hub/qualita" },
@@ -45,6 +46,7 @@ export default async function ContentHubPage() {
           <Link href="/content-hub/eventi">Eventi</Link>
           <Link href="/content-hub/luoghi">Luoghi</Link>
           <Link href="/content-hub/percorsi">Percorsi</Link>
+          <Link href="/content-hub/storie">Storie e memoria</Link>
           <Link href="/content-hub/pannelli">Pannelli e audioguide</Link>
           <Link href="/content-hub/media">Media</Link>
           <Link href="/content-hub/qualita">Qualità</Link>
@@ -99,7 +101,7 @@ export default async function ContentHubPage() {
               <div><strong>{events.length}</strong><span>eventi prossimi</span></div>
               <div><strong>{places.length}</strong><span>luoghi in evidenza</span></div>
               <div><strong>{panelCount}</strong><span>URL QR preservati</span></div>
-              <div><strong>{experiences.length}</strong><span>esperienze attive</span></div>
+              <div><strong>{homepageRoutes.length}</strong><span>percorsi in homepage</span></div>
             </div>
             <Link href="/content-hub/qualita" className={styles.qualityLink}>Controlla qualità contenuti →</Link>
           </aside>

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getDirectusAssetUrl, getSiteSettings } from "@/lib/directus";
 import { getEditorialList, plainText, type EditorialItem } from "@/lib/editorial";
 import { getRoutesForPlace } from "@/lib/place-routes";
+import { getLegacyStoryPath, getStoriesForPlace } from "@/lib/stories";
 import { isCompactPlace, placeEditorialHeading, placeHref } from "@/lib/place-detail";
 import DirectionsLink from "./DirectionsLink";
 import EditorialHeader from "./EditorialHeader";
@@ -37,10 +38,11 @@ function formatDateTime(value?: string | null) {
 }
 
 export default async function EditorialDetail({ item, type }: Props) {
-  const [settings, relatedItems, relatedRoutes] = await Promise.all([
+  const [settings, relatedItems, relatedRoutes, relatedStories] = await Promise.all([
     getSiteSettings(),
     getEditorialList(type === "place" ? "places" : "events"),
     type === "place" ? getRoutesForPlace(item.id) : Promise.resolve([]),
+    type === "place" ? getStoriesForPlace(item.id) : Promise.resolve([]),
   ]);
 
   const directusImage = getDirectusAssetUrl(item.image);
@@ -182,6 +184,40 @@ export default async function EditorialDetail({ item, type }: Props) {
         </section>
       )}
 
+      {type === "place" && !compactPlace && !foodPlace && relatedStories.length > 0 && (
+        <section className={styles.memoryEditorial}>
+          <div className={styles.memoryIntro}>
+            <div>
+              <p className={styles.kicker}>Storie e memoria</p>
+              <h2>Questo luogo ha ancora qualcosa da raccontare.</h2>
+            </div>
+            <p>Fotografie, testimonianze e approfondimenti collegano il luogo di oggi alla memoria di Roncegno.</p>
+          </div>
+          <div className={styles.memoryGrid}>
+            {relatedStories.slice(0, 3).map((story, index) => {
+              const storyImage = getDirectusAssetUrl(story.image) ?? heroImage;
+              const href = getLegacyStoryPath(story) ?? `/storie/${story.slug}`;
+              return (
+                <Link className={styles.memoryCard} href={href} key={story.id}>
+                  <div className={styles.memoryImage} style={{ backgroundImage: `url('${storyImage}')` }} />
+                  <div className={styles.memoryShade} />
+                  <span className={styles.memoryNumber}>{String(index + 1).padStart(2, "0")}</span>
+                  <div className={styles.memoryCopy}>
+                    <small>{story.category?.name ?? "Memoria del territorio"}</small>
+                    <strong>{story.title}</strong>
+                    {story.excerpt && <p>{story.excerpt}</p>}
+                    <span aria-hidden="true">→</span>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+          <div className={styles.memoryFooter}>
+            <Link href="/memoria">Esplora Na vòlta a Ronzégno →</Link>
+          </div>
+        </section>
+      )}
+
       {type === "place" && !compactPlace && !foodPlace && relatedRoutes.length > 0 && (
         <section className={styles.relatedEditorial}>
           <div className={styles.sectionHeading}>
@@ -191,17 +227,25 @@ export default async function EditorialDetail({ item, type }: Props) {
           <div className={styles.relatedGrid}>
             {relatedRoutes.slice(0, 3).map((route) => {
               const routeImage = getDirectusAssetUrl(route.image) ?? FALLBACK_HERO;
+              const routeHours = route.duration_minutes ? Math.floor(route.duration_minutes / 60) : 0;
+              const routeMinutes = route.duration_minutes ? route.duration_minutes % 60 : 0;
+              const routeDuration = route.duration_minutes
+                ? [routeHours ? `${routeHours} h` : null, routeMinutes ? `${routeMinutes} min` : null].filter(Boolean).join(" ")
+                : null;
               const routeMeta = [
                 route.category?.name ?? "Percorso",
                 route.distance_km !== null ? `${route.distance_km} km` : null,
+                routeDuration,
+                route.elevation_gain_m !== null ? `+${route.elevation_gain_m} m` : null,
               ].filter(Boolean).join(" · ");
 
               return (
                 <Link className={styles.relatedCard} key={route.id} href={`/percorsi/${route.slug}`}>
                   <div className={styles.relatedImage} style={{ backgroundImage: `url('${routeImage}')` }} />
                   <div>
-                    <small>{routeMeta}</small>
+                    <small>{route.route_highlight ?? routeMeta}</small>
                     <strong>{route.title}</strong>
+                    {route.route_highlight && <span className={styles.relatedMeta}>{routeMeta}</span>}
                     {route.summary && <p>{route.summary}</p>}
                   </div>
                 </Link>
