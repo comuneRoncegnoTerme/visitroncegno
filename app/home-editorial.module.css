@@ -1,3 +1,135 @@
+.routesSection {
+  background: #fff;
+}
+
+.routesGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+  grid-template-rows: repeat(2, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.routeCard {
+  position: relative;
+  min-height: 280px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #17372e;
+  color: #fff;
+  isolation: isolate;
+}
+
+.routeCard:first-child {
+  grid-row: 1 / 3;
+  min-height: 576px;
+}
+
+.routeImage {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: cover;
+  transition: transform 0.55s ease;
+}
+
+.routeShade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(0deg, rgba(6, 29, 23, 0.97) 0%, rgba(6, 29, 23, 0.55) 48%, rgba(6, 29, 23, 0.08) 80%);
+}
+
+.routeNumber {
+  position: absolute;
+  top: 22px;
+  left: 22px;
+  z-index: 2;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.routeCopy {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  padding: 28px;
+}
+
+.routeCopy small {
+  display: block;
+  margin-bottom: 9px;
+  color: #efb083;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.routeCopy h3 {
+  max-width: 620px;
+  margin: 0;
+  font: 400 clamp(30px, 3vw, 48px) / 0.98 Georgia, "Times New Roman", serif;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+.routeCard:not(:first-child) .routeCopy h3 {
+  max-width: 460px;
+  font-size: clamp(27px, 2.5vw, 36px);
+}
+
+.routeCopy p {
+  display: -webkit-box;
+  max-width: 600px;
+  margin: 14px 56px 0 0;
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 14px;
+  line-height: 1.55;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.routeCard:not(:first-child) .routeCopy p {
+  -webkit-line-clamp: 2;
+}
+
+.routeMeta {
+  display: block;
+  margin-top: 16px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.routeArrow {
+  position: absolute;
+  right: 26px;
+  bottom: 28px;
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 50%;
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+
+.routeCard:hover .routeImage {
+  transform: scale(1.025);
+}
+
+.routeCard:hover .routeArrow {
+  transform: translateX(3px);
+  background: rgba(255, 255, 255, 0.09);
+}
+
 .highlightsSection {
   background: #f7f3ea;
 }
@@ -191,6 +323,21 @@
 }
 
 @media (max-width: 980px) {
+  .routesGrid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+  }
+
+  .routeCard:first-child {
+    grid-column: 1 / 3;
+    grid-row: auto;
+    min-height: 480px;
+  }
+
+  .routeCard:not(:first-child) {
+    min-height: 330px;
+  }
+
   .highlightsGrid {
     grid-template-columns: 1fr 1fr;
   }
@@ -211,6 +358,30 @@
 }
 
 @media (max-width: 760px) {
+  .routesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .routeCard,
+  .routeCard:first-child,
+  .routeCard:not(:first-child) {
+    grid-column: auto;
+    min-height: 390px;
+  }
+
+  .routeCopy {
+    padding: 24px;
+  }
+
+  .routeCopy p {
+    margin-right: 46px;
+  }
+
+  .routeArrow {
+    right: 22px;
+    bottom: 24px;
+  }
+
   .highlightsGrid {
     grid-template-columns: 1fr;
   }
@@ -261,6 +432,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .routeImage,
+  .routeArrow,
   .highlightImage,
   .highlightArrow,
   .mapPrimary,
@@ -268,6 +441,8 @@
     transition: none;
   }
 
+  .routeCard:hover .routeImage,
+  .routeCard:hover .routeArrow,
   .highlightCard:hover .highlightImage,
   .highlightCard:hover .highlightArrow,
   .mapPrimary:hover,
