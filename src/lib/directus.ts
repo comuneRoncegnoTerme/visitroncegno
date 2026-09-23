@@ -16,6 +16,18 @@ export interface HomepageContent {
   hero_primary_url: string | null;
   hero_secondary_label: string | null;
   hero_secondary_url: string | null;
+  highlights_eyebrow: string | null;
+  highlights_title: string | null;
+  highlights_description: string | null;
+  highlights_link_label: string | null;
+  highlights_link_url: string | null;
+  map_eyebrow: string | null;
+  map_title: string | null;
+  map_description: string | null;
+  map_primary_label: string | null;
+  map_primary_url: string | null;
+  map_secondary_label: string | null;
+  map_secondary_url: string | null;
 }
 
 export interface Experience {
@@ -161,6 +173,18 @@ const EMPTY_HOMEPAGE: HomepageContent = {
   hero_primary_url: null,
   hero_secondary_label: null,
   hero_secondary_url: null,
+  highlights_eyebrow: null,
+  highlights_title: null,
+  highlights_description: null,
+  highlights_link_label: null,
+  highlights_link_url: null,
+  map_eyebrow: null,
+  map_title: null,
+  map_description: null,
+  map_primary_label: null,
+  map_primary_url: null,
+  map_secondary_label: null,
+  map_secondary_url: null,
 };
 
 const DEFAULT_SITE_SETTINGS: SiteSettings = {
