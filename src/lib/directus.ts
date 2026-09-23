@@ -317,10 +317,10 @@ export async function getUpcomingEvents(): Promise<EventItem[]> {
 }
 
 export async function getHomepageRoutes(): Promise<RouteItem[]> {
-  async function readRoutes(filterField: "recommended" | "featured") {
+  async function readRoutes(filterField?: "recommended" | "featured") {
     const params = new URLSearchParams();
     params.set("filter[status][_eq]", "published");
-    params.set(`filter[${filterField}][_eq]`, "true");
+    if (filterField) params.set(`filter[${filterField}][_eq]`, "true");
     params.set("sort", "sort");
     params.set("limit", "3");
     params.set(
@@ -358,7 +358,11 @@ export async function getHomepageRoutes(): Promise<RouteItem[]> {
   try {
     const recommended = await readRoutes("recommended");
     if (recommended.length > 0) return recommended;
-    return await readRoutes("featured");
+
+    const featured = await readRoutes("featured");
+    if (featured.length > 0) return featured;
+
+    return await readRoutes();
   } catch (error) {
     reportPublicReadFallback("homepage-routes", error);
     return [];
