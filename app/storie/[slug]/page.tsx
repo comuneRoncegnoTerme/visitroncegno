@@ -59,6 +59,8 @@ export default async function StoryPage({ params }: StoryPageProps) {
   const placeHref = story.place?.slug ? `/luoghi/${story.place.slug}` : null;
   const placeLabel = story.place?.title ?? null;
   const sourceUrl = publicSourceUrl(story.source_url);
+  const backHref = placeHref ?? routeHref;
+  const backLabel = placeLabel ?? routeLabel;
 
   return (
     <main className={styles.page}>
@@ -68,7 +70,7 @@ export default async function StoryPage({ params }: StoryPageProps) {
         <div className={styles.heroImage} style={{ backgroundImage: `url('${heroImage}')` }} />
         <div className={styles.heroOverlay} />
         <div className={styles.heroContent}>
-          <Link className={styles.backLink} href={routeHref}>← Torna al percorso</Link>
+          <Link className={styles.backLink} href={backHref}>← {placeLabel ? "Torna al luogo" : "Torna al percorso"}</Link>
           <p className={styles.eyebrow}>{story.category?.name ?? "Storia del territorio"}</p>
           <h1>{story.title}</h1>
           {story.excerpt && <p className={styles.lead}>{story.excerpt}</p>}
@@ -111,9 +113,9 @@ export default async function StoryPage({ params }: StoryPageProps) {
       </section>
 
       <section className={styles.endLinks}>
-        <Link href={placeHref ?? routeHref}>
+        <Link href={backHref}>
           <small>Torna sul territorio</small>
-          <strong>{placeLabel ?? routeLabel} →</strong>
+          <strong>{backLabel} →</strong>
         </Link>
         <Link href={story.route?.slug ? routeHref : "/luoghi"}>
           <small>Continua a conoscere Roncegno</small>
