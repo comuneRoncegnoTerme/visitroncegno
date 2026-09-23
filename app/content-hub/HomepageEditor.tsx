@@ -23,6 +23,18 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
       hero_primary_url: homepage.hero_primary_url ?? "",
       hero_secondary_label: homepage.hero_secondary_label ?? "",
       hero_secondary_url: homepage.hero_secondary_url ?? "",
+      highlights_eyebrow: homepage.highlights_eyebrow ?? "",
+      highlights_title: homepage.highlights_title ?? "",
+      highlights_description: homepage.highlights_description ?? "",
+      highlights_link_label: homepage.highlights_link_label ?? "",
+      highlights_link_url: homepage.highlights_link_url ?? "",
+      map_eyebrow: homepage.map_eyebrow ?? "",
+      map_title: homepage.map_title ?? "",
+      map_description: homepage.map_description ?? "",
+      map_primary_label: homepage.map_primary_label ?? "",
+      map_primary_url: homepage.map_primary_url ?? "",
+      map_secondary_label: homepage.map_secondary_label ?? "",
+      map_secondary_url: homepage.map_secondary_url ?? "",
     }),
     [homepage]
   );
@@ -116,6 +128,76 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
         <label>
           <span>Destinazione pulsante secondario</span>
           <input name="hero_secondary_url" defaultValue={initialValues.hero_secondary_url} />
+        </label>
+
+        <div className={styles.full}>
+          <h3>Luoghi in evidenza</h3>
+          <p>I tre contenuti arrivano dai Luoghi marcati come “in evidenza”. Qui controlli il racconto della sezione.</p>
+        </div>
+
+        <label>
+          <span>Soprattitolo luoghi</span>
+          <input name="highlights_eyebrow" defaultValue={initialValues.highlights_eyebrow} />
+        </label>
+
+        <label className={styles.full}>
+          <span>Titolo luoghi</span>
+          <input name="highlights_title" defaultValue={initialValues.highlights_title} />
+        </label>
+
+        <label className={styles.full}>
+          <span>Descrizione luoghi</span>
+          <textarea name="highlights_description" rows={4} defaultValue={initialValues.highlights_description} />
+        </label>
+
+        <label>
+          <span>Testo link luoghi</span>
+          <input name="highlights_link_label" defaultValue={initialValues.highlights_link_label} />
+        </label>
+
+        <label>
+          <span>Destinazione link luoghi</span>
+          <input name="highlights_link_url" defaultValue={initialValues.highlights_link_url} />
+        </label>
+
+        <div className={styles.full}>
+          <h3>Cartina ed esplorazione</h3>
+          <p>Call to action che collega la narrazione editoriale alla cartina illustrata e alla mappa operativa.</p>
+        </div>
+
+        <label>
+          <span>Soprattitolo cartina</span>
+          <input name="map_eyebrow" defaultValue={initialValues.map_eyebrow} />
+        </label>
+
+        <label className={styles.full}>
+          <span>Titolo cartina</span>
+          <input name="map_title" defaultValue={initialValues.map_title} />
+        </label>
+
+        <label className={styles.full}>
+          <span>Descrizione cartina</span>
+          <textarea name="map_description" rows={4} defaultValue={initialValues.map_description} />
+        </label>
+
+        <label>
+          <span>Pulsante cartina illustrata</span>
+          <input name="map_primary_label" defaultValue={initialValues.map_primary_label} />
+        </label>
+
+        <label>
+          <span>Destinazione cartina illustrata</span>
+          <input name="map_primary_url" defaultValue={initialValues.map_primary_url} />
+        </label>
+
+        <label>
+          <span>Pulsante mappa interattiva</span>
+          <input name="map_secondary_label" defaultValue={initialValues.map_secondary_label} />
+        </label>
+
+        <label>
+          <span>Destinazione mappa interattiva</span>
+          <input name="map_secondary_url" defaultValue={initialValues.map_secondary_url} />
         </label>
 
         <div className={styles.actions}>
