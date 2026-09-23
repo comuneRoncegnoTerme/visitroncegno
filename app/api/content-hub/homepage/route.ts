@@ -17,6 +17,18 @@ const editableFields = [
   "hero_primary_url",
   "hero_secondary_label",
   "hero_secondary_url",
+  "highlights_eyebrow",
+  "highlights_title",
+  "highlights_description",
+  "highlights_link_label",
+  "highlights_link_url",
+  "map_eyebrow",
+  "map_title",
+  "map_description",
+  "map_primary_label",
+  "map_primary_url",
+  "map_secondary_label",
+  "map_secondary_url",
 ] as const;
 
 type EditableField = (typeof editableFields)[number];
