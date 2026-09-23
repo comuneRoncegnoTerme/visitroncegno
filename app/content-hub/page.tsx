@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import {
-  getExperiences,
   getFeaturedPlaces,
+  getHomepageRoutes,
   getHomepage,
   getUpcomingEvents,
 } from "@/lib/directus";
@@ -16,11 +16,11 @@ export default async function ContentHubPage() {
   const session = await getContentHubSession();
   if (!session) redirect("/content-hub/login");
 
-  const [homepage, events, places, experiences] = await Promise.all([
+  const [homepage, events, places, homepageRoutes] = await Promise.all([
     getHomepage(),
     getUpcomingEvents(),
     getFeaturedPlaces(),
-    getExperiences(),
+    getHomepageRoutes(),
   ]);
 
   const panelCount = trailPanels.length + cinqueValliPanels.length;
@@ -99,7 +99,7 @@ export default async function ContentHubPage() {
               <div><strong>{events.length}</strong><span>eventi prossimi</span></div>
               <div><strong>{places.length}</strong><span>luoghi in evidenza</span></div>
               <div><strong>{panelCount}</strong><span>URL QR preservati</span></div>
-              <div><strong>{experiences.length}</strong><span>esperienze attive</span></div>
+              <div><strong>{homepageRoutes.length}</strong><span>percorsi in homepage</span></div>
             </div>
             <Link href="/content-hub/qualita" className={styles.qualityLink}>Controlla qualità contenuti →</Link>
           </aside>
