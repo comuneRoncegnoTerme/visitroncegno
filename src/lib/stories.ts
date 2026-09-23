@@ -114,8 +114,8 @@ export function storyParagraphs(value: unknown): string[] {
     .filter(Boolean);
 }
 
-function storyFields() {
-  return [
+function storyFields(includePlace = true) {
+  const fields = [
     "id",
     "title",
     "slug",
@@ -128,23 +128,44 @@ function storyFields() {
     "route.id",
     "route.title",
     "route.slug",
-    "place.id",
-    "place.title",
-    "place.slug",
-  ].join(",");
+  ];
+
+  if (includePlace) {
+    fields.push("place.id", "place.title", "place.slug");
+  }
+
+  return fields.join(",");
 }
 
-async function fetchStory(params: URLSearchParams): Promise<StoryItem | null> {
+async function fetchStories(params: URLSearchParams): Promise<StoryItem[]> {
   try {
     const result = await directusJson<StoryResponse>(
       `/items/stories?${params.toString()}`,
       { authenticated: true }
     );
-    return result.data?.[0] ?? null;
+    return result.data ?? [];
   } catch (error) {
-    console.error("Directus story error:", error);
-    return null;
+    if ((params.get("fields") ?? "").includes("place.")) {
+      const fallback = new URLSearchParams(params);
+      fallback.set("fields", storyFields(false));
+      try {
+        const result = await directusJson<StoryResponse>(
+          `/items/stories?${fallback.toString()}`,
+          { authenticated: true }
+        );
+        return result.data ?? [];
+      } catch (fallbackError) {
+        console.error("Directus stories fallback error:", fallbackError);
+        return [];
+      }
+    }
+    console.error("Directus stories error:", error);
+    return [];
   }
+}
+
+async function fetchStory(params: URLSearchParams): Promise<StoryItem | null> {
+  return (await fetchStories(params))[0] ?? null;
 }
 
 export async function getStories(): Promise<StoryItem[]> {
@@ -153,16 +174,7 @@ export async function getStories(): Promise<StoryItem[]> {
   params.set("limit", "100");
   params.set("fields", storyFields());
 
-  try {
-    const result = await directusJson<StoryResponse>(
-      `/items/stories?${params.toString()}`,
-      { authenticated: true }
-    );
-    return result.data ?? [];
-  } catch (error) {
-    console.error("Directus stories list error:", error);
-    return [];
-  }
+  return fetchStories(params);
 }
 
 export async function getStoriesForPlace(placeId: number): Promise<StoryItem[]> {
@@ -173,16 +185,7 @@ export async function getStoriesForPlace(placeId: number): Promise<StoryItem[]> 
   params.set("limit", "20");
   params.set("fields", storyFields());
 
-  try {
-    const result = await directusJson<StoryResponse>(
-      `/items/stories?${params.toString()}`,
-      { authenticated: true }
-    );
-    return result.data ?? [];
-  } catch (error) {
-    console.error("Directus place stories error:", error);
-    return [];
-  }
+  return fetchStories(params);
 }
 
 export async function getStoryBySlug(slug: string): Promise<StoryItem | null> {
