@@ -155,37 +155,6 @@ export default async function Home() {
         </nav>
       </div>
 
-      <section className={`${styles.section} ${styles.eventsSection}`}>
-        <div className={styles.sectionInner}>
-          <div className={styles.sectionHeading}>
-            <div><p>In primo piano</p><h2 className={styles.sectionTitle}>Eventi a Roncegno</h2><span className={styles.sectionLead}>Tradizioni, cultura e vita di paese. I prossimi appuntamenti da non perdere.</span></div>
-            <Link className={styles.sectionLink} href="/eventi">Vedi tutti gli eventi →</Link>
-          </div>
-          <div className={`${styles.eventsGrid} ${refine.eventsGrid} ${feedback.eventsGrid}${visibleEvents.length === 3 ? ` ${refine.eventsGridThree}` : ""}`}>
-            {visibleEvents.map((event, index) => {
-              const date = eventDate(event.start_date);
-              const image = getDirectusAssetUrl(event.image) ?? heroImage;
-              const location = event.location_name ?? event.place?.title ?? "Roncegno Terme";
-              const primary = index === 0;
-              return (
-                <Link className={`${styles.eventCard} ${refine.eventCard} ${feedback.eventCard}${primary ? ` ${styles.eventCardPrimary} ${refine.eventCardPrimary} ${feedback.eventCardPrimary}` : ""}`} href={`/eventi/${event.slug}`} key={event.id}>
-                  <div className={`${styles.eventImage} ${refine.eventImage}`} style={{ backgroundImage: `url('${image}')` }} />
-                  <div className={`${styles.eventShade} ${refine.eventShade} ${feedback.eventShade}`} />
-                  {primary && <span className={styles.featuredLabel}>Evento in evidenza</span>}
-                  <div className={`${styles.eventBody} ${refine.eventBody} ${feedback.eventBody}`}>
-                    <span className={`${styles.eventDate} ${refine.eventDate}`}><strong>{date.day}</strong><span>{date.month}</span></span>
-                    <div className={`${styles.eventMeta} ${refine.eventMeta}`}>{event.category?.name ?? "Evento"} · {location}</div>
-                    <h3>{event.title}</h3>
-                    {primary && event.summary && <p>{event.summary}</p>}
-                    <span className={`${styles.cardArrow} ${refine.cardArrow}`} aria-hidden="true">→</span>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
       {visibleRoutes.length > 0 && (
         <section className={`${styles.section} ${editorial.routesSection}`} aria-labelledby="routes-title">
           <div className={styles.sectionInner}>
@@ -265,6 +234,37 @@ export default async function Home() {
           </div>
         </section>
       )}
+
+      <section className={`${styles.section} ${styles.eventsSection}`}>
+        <div className={styles.sectionInner}>
+          <div className={styles.sectionHeading}>
+            <div><p>In primo piano</p><h2 className={styles.sectionTitle}>Eventi a Roncegno</h2><span className={styles.sectionLead}>Tradizioni, cultura e vita di paese. I prossimi appuntamenti da non perdere.</span></div>
+            <Link className={styles.sectionLink} href="/eventi">Vedi tutti gli eventi →</Link>
+          </div>
+          <div className={`${styles.eventsGrid} ${refine.eventsGrid} ${feedback.eventsGrid}${visibleEvents.length === 3 ? ` ${refine.eventsGridThree}` : ""}`}>
+            {visibleEvents.map((event, index) => {
+              const date = eventDate(event.start_date);
+              const image = getDirectusAssetUrl(event.image) ?? heroImage;
+              const location = event.location_name ?? event.place?.title ?? "Roncegno Terme";
+              const primary = index === 0;
+              return (
+                <Link className={`${styles.eventCard} ${refine.eventCard} ${feedback.eventCard}${primary ? ` ${styles.eventCardPrimary} ${refine.eventCardPrimary} ${feedback.eventCardPrimary}` : ""}`} href={`/eventi/${event.slug}`} key={event.id}>
+                  <div className={`${styles.eventImage} ${refine.eventImage}`} style={{ backgroundImage: `url('${image}')` }} />
+                  <div className={`${styles.eventShade} ${refine.eventShade} ${feedback.eventShade}`} />
+                  {primary && <span className={styles.featuredLabel}>Evento in evidenza</span>}
+                  <div className={`${styles.eventBody} ${refine.eventBody} ${feedback.eventBody}`}>
+                    <span className={`${styles.eventDate} ${refine.eventDate}`}><strong>{date.day}</strong><span>{date.month}</span></span>
+                    <div className={`${styles.eventMeta} ${refine.eventMeta}`}>{event.category?.name ?? "Evento"} · {location}</div>
+                    <h3>{event.title}</h3>
+                    {primary && event.summary && <p>{event.summary}</p>}
+                    <span className={`${styles.cardArrow} ${refine.cardArrow}`} aria-hidden="true">→</span>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
       <section className={editorial.mapStory} aria-labelledby="map-story-title">
         <div className={editorial.mapStoryInner}>
