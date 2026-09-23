@@ -160,6 +160,24 @@ npm run directus:ensure-home-editorial-model
 
 Lo script è idempotente: crea soltanto i campi non ancora presenti. I tre luoghi mostrati nella sezione “Da non perdere” continuano invece a provenire da `places` e dal flag `featured`, così non vengono duplicati contenuti nel CMS.
 
+### Collegamenti tra luoghi, percorsi e memoria
+
+Le schede Luogo possono mostrare automaticamente:
+
+- percorsi che attraversano il luogo, tramite `route_points.place`;
+- storie e testimonianze collegate al luogo, tramite `stories.place`;
+- il richiamo alla sezione generale `Na vòlta a Ronzégno`.
+
+Per aggiungere in modo idempotente la relazione `stories.place -> places` a un'installazione Directus esistente:
+
+```bash
+DIRECTUS_URL=https://directus.example.it \
+DIRECTUS_TOKEN=... \
+npm run directus:ensure-story-place-model
+```
+
+Dopo la creazione della relazione, il Content Hub espone la sezione **Storie e memoria** e permette di collegare ogni storia sia a un luogo sia, quando pertinente, a un percorso. Le schede Luogo usano questi collegamenti per costruire il racconto editoriale senza duplicare testi o immagini.
+
 ### Audit read-only dei luoghi Directus
 
 Per elencare tutti i record di `places` e segnalare dati mancanti o incoerenti:
