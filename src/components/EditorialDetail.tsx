@@ -227,17 +227,25 @@ export default async function EditorialDetail({ item, type }: Props) {
           <div className={styles.relatedGrid}>
             {relatedRoutes.slice(0, 3).map((route) => {
               const routeImage = getDirectusAssetUrl(route.image) ?? FALLBACK_HERO;
+              const routeHours = route.duration_minutes ? Math.floor(route.duration_minutes / 60) : 0;
+              const routeMinutes = route.duration_minutes ? route.duration_minutes % 60 : 0;
+              const routeDuration = route.duration_minutes
+                ? [routeHours ? `${routeHours} h` : null, routeMinutes ? `${routeMinutes} min` : null].filter(Boolean).join(" ")
+                : null;
               const routeMeta = [
                 route.category?.name ?? "Percorso",
                 route.distance_km !== null ? `${route.distance_km} km` : null,
+                routeDuration,
+                route.elevation_gain_m !== null ? `+${route.elevation_gain_m} m` : null,
               ].filter(Boolean).join(" · ");
 
               return (
                 <Link className={styles.relatedCard} key={route.id} href={`/percorsi/${route.slug}`}>
                   <div className={styles.relatedImage} style={{ backgroundImage: `url('${routeImage}')` }} />
                   <div>
-                    <small>{routeMeta}</small>
+                    <small>{route.route_highlight ?? routeMeta}</small>
                     <strong>{route.title}</strong>
+                    {route.route_highlight && <span className={styles.relatedMeta}>{routeMeta}</span>}
                     {route.summary && <p>{route.summary}</p>}
                   </div>
                 </Link>
