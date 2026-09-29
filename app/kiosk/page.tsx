@@ -8,6 +8,9 @@ import {
   getSiteSettings,
   getUpcomingEvents,
 } from "@/lib/directus";
+import KioskAttract, { type KioskAttractSlide } from "./KioskAttract";
+import KioskFullscreenButton from "./KioskFullscreenButton";
+import KioskQr from "./KioskQr";
 import styles from "./page.module.css";
 
 export const dynamic = "force-dynamic";
@@ -60,8 +63,31 @@ export default async function KioskPage() {
     getDirectusAssetUrl(places[0]?.image) ??
     heroImage;
 
+  const attractSlides: KioskAttractSlide[] = [
+    {
+      eyebrow: "Benvenuti a Roncegno Terme",
+      title: homepage.hero_title ?? "Un territorio da vivere.",
+      description: homepage.hero_description ?? "Natura, benessere, cultura e sapori nel cuore della Valsugana.",
+      image: heroImage,
+    },
+    ...(nextEvent ? [{
+      eyebrow: "Prossimo appuntamento",
+      title: nextEvent.title,
+      description: nextEvent.location_name ?? nextEvent.place?.title ?? "Roncegno Terme",
+      image: getDirectusAssetUrl(nextEvent.image) ?? heroImage,
+    }] : []),
+    ...(highlight ? [{
+      eyebrow: "Da scoprire",
+      title: highlight.title,
+      description: highlight.description,
+      image: highlightImage,
+    }] : []),
+  ];
+
   return (
     <main className={styles.page}>
+      <KioskAttract slides={attractSlides} />
+
       <section
         className={styles.hero}
         style={{ backgroundImage: `url('${heroImage}')` }}
@@ -77,9 +103,12 @@ export default async function KioskPage() {
             )}
           </Link>
 
-          <div className={styles.clockBlock} aria-label="Ora locale">
+          <div className={styles.headerActions}>
+            <KioskFullscreenButton className={styles.fullscreenButton} />
+            <div className={styles.clockBlock} aria-label="Ora locale">
             <span className={styles.clock} data-kiosk-clock>--:--</span>
-            <small data-kiosk-date>Roncegno Terme</small>
+              <small data-kiosk-date>Roncegno Terme</small>
+            </div>
           </div>
         </header>
 
@@ -173,7 +202,7 @@ export default async function KioskPage() {
           I contenuti di questo schermo sono aggiornati dallo stesso ecosistema
           digitale di visitroncegno.it.
         </p>
-        <Link href="/" className={styles.webLink}>visitroncegno.it ↗</Link>
+        <KioskQr pathname="/kiosk" label="Porta Visit Roncegno con te" />
       </footer>
     </main>
   );
