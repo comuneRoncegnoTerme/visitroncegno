@@ -3,7 +3,6 @@ import Link from "next/link";
 import { getDirectusAssetUrl, getSiteSettings } from "@/lib/directus";
 import { getEditorialList } from "@/lib/editorial";
 import KioskChrome from "../KioskChrome";
-import KioskQr from "../KioskQr";
 import styles from "../KioskList.module.css";
 
 export const dynamic = "force-dynamic";
@@ -62,7 +61,6 @@ export default async function KioskRoutesPage() {
       ) : (
         <p className={styles.empty}>I percorsi saranno disponibili a breve.</p>
       )}
-          <div className={styles.handoff}><KioskQr pathname="/kiosk/percorsi" /></div>
 </main>
   );
 }
