@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import KioskPersistentQr from "./KioskPersistentQr";
 import KioskRuntime from "./KioskRuntime";
 import styles from "./KioskShell.module.css";
 
@@ -11,6 +12,7 @@ export default function KioskLayout({ children }: Readonly<{ children: React.Rea
     <div className={styles.shell}>
       <KioskRuntime />
       {children}
+      <KioskPersistentQr />
     </div>
   );
 }

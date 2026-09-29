@@ -49,7 +49,6 @@ export default async function KioskEventDetailPage({ params }: Props) {
       intro={item.summary}
       paragraphs={paragraphs}
       facts={facts}
-      pathname={`/kiosk/eventi/${slug}`}
     />
   );
 }
