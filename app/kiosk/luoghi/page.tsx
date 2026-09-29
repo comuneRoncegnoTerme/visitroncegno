@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getDirectusAssetUrl, getSiteSettings } from "@/lib/directus";
 import { getEditorialList } from "@/lib/editorial";
 import KioskChrome from "../KioskChrome";
+import KioskQr from "../KioskQr";
 import styles from "../KioskList.module.css";
 
 export const dynamic = "force-dynamic";
@@ -48,6 +49,7 @@ export default async function KioskPlacesPage() {
       ) : (
         <p className={styles.empty}>I luoghi saranno disponibili a breve.</p>
       )}
-    </main>
+          <div className={styles.handoff}><KioskQr pathname="/kiosk/luoghi" /></div>
+</main>
   );
 }
