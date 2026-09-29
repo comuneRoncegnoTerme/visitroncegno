@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getDirectusAssetUrl, getSiteSettings } from "@/lib/directus";
 import KioskChrome from "../KioskChrome";
+import KioskQr from "../KioskQr";
 import styles from "../KioskList.module.css";
 
 export const metadata: Metadata = { title: "Organizza la visita | Infopoint Visit Roncegno" };
@@ -47,6 +48,7 @@ export default async function KioskOrganizePage() {
           <span>Infopoint · parcheggi · servizi</span>
         </article>
       </section>
-    </main>
+          <div className={styles.handoff}><KioskQr pathname="/kiosk/organizza" /></div>
+</main>
   );
 }
