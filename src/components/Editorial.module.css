@@ -111,3 +111,30 @@
     border-bottom:1px solid rgba(23,55,46,.1);
   }
 }
+
+
+/* Use the horizontal canvas consistently on editorial pages. */
+.indexHeroInner,
+.indexContent,
+.locationSection,
+.relatedEditorial,
+.memoryEditorial,
+.detailGrid,
+.factStrip{
+  width:92vw;
+  max-width:none;
+}
+.relatedGrid{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+}
+@media(max-width:800px){
+  .indexHeroInner,
+  .indexContent,
+  .locationSection,
+  .relatedEditorial,
+  .memoryEditorial,
+  .detailGrid{
+    width:90vw;
+  }
+  .factStrip{width:100%}
+}

@@ -103,3 +103,21 @@
   }
   .footerNav a{border-bottom:1px solid rgba(23,55,46,.1)}
 }
+
+
+/* Match the wider section rhythm used across the site. */
+.heroInner,
+.content{
+  width:92vw;
+  max-width:none;
+}
+@media(max-width:700px){
+  .heroInner,
+  .content{
+    width:90vw;
+  }
+  .content{
+    padding-left:0;
+    padding-right:0;
+  }
+}
