@@ -1,5 +1,6 @@
 import Link from "next/link";
 import KioskChrome from "./KioskChrome";
+import KioskQr from "./KioskQr";
 import styles from "./KioskDetail.module.css";
 
 type Fact = { label: string; value: string };
@@ -15,6 +16,7 @@ type Props = {
   intro?: string | null;
   paragraphs?: string[];
   facts?: Fact[];
+  pathname: string;
 };
 
 export default function KioskDetail({
@@ -28,6 +30,7 @@ export default function KioskDetail({
   intro,
   paragraphs = [],
   facts = [],
+  pathname,
 }: Props) {
   return (
     <main className={styles.page}>
@@ -60,7 +63,10 @@ export default function KioskDetail({
           )}
         </div>
 
-        <Link href={backHref} className={styles.back}>← Torna alla sezione</Link>
+        <div className={styles.bottomActions}>
+          <Link href={backHref} className={styles.back}>← Torna alla sezione</Link>
+          <KioskQr pathname={pathname} />
+        </div>
       </section>
     </main>
   );
