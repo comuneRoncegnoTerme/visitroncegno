@@ -44,6 +44,7 @@ export default async function KioskRouteDetailPage({ params }: Props) {
       intro={route.route_highlight ?? route.summary}
       paragraphs={paragraphs}
       facts={facts}
+      pathname={`/kiosk/percorsi/${slug}`}
     />
   );
 }
