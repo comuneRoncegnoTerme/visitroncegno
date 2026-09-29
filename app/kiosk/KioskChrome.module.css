@@ -84,3 +84,18 @@
   .actions{gap:8px}
   .brand img{max-width:145px}
 }
+
+.fullscreen{
+  min-height:46px;
+  padding:0 16px;
+  border:1px solid rgba(22,55,45,.18);
+  border-radius:999px;
+  background:#efe7db;
+  color:#16372d;
+  font-size:12px;
+  font-weight:800;
+  cursor:pointer;
+}
+@media(max-width:850px){
+  .fullscreen{display:none}
+}
