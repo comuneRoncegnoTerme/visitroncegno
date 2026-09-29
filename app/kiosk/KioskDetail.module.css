@@ -117,3 +117,17 @@
   }
   .facts>div:last-child{border-bottom:0}
 }
+
+.bottomActions{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:28px;
+  margin-top:26px;
+}
+@media(max-width:760px){
+  .bottomActions{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+}
