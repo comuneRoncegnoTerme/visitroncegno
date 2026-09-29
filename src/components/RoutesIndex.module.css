@@ -38,3 +38,68 @@
   transform:translateY(-4px);
   box-shadow:0 20px 50px rgba(23,55,46,.1);
 }
+
+
+/* Refined route-card treatment matching the editorial listings. */
+.editorialGrid{gap:20px}
+.card{
+  border-radius:24px;
+  border-color:rgba(23,55,46,.09);
+  box-shadow:0 12px 34px rgba(23,55,46,.055);
+  transform:translateZ(0);
+}
+.featuredCard{border-radius:28px}
+.image{
+  min-height:300px;
+  transition:transform .5s cubic-bezier(.2,.7,.2,1),filter .3s ease;
+}
+.featuredCard .image{min-height:442px}
+.card:hover .image{transform:scale(1.018)}
+.card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 22px 54px rgba(23,55,46,.11);
+}
+.cardBody{padding:28px 30px 30px}
+.featuredCard .cardBody{padding:30px 32px 34px}
+.metaRow{letter-spacing:.15em}
+.card p{
+  color:#5e6b65;
+  line-height:1.62;
+}
+.facts{
+  margin-top:4px;
+  padding-top:15px;
+}
+.card strong{
+  display:inline-flex;
+  width:max-content;
+  align-items:center;
+  gap:8px;
+  margin-top:8px;
+}
+.footerNav{
+  padding:0 5vw 54px;
+  gap:14px;
+  border-top:0;
+  background:var(--paper);
+}
+.footerNav a{
+  border:1px solid rgba(23,55,46,.1);
+  border-radius:20px;
+  background:var(--cream);
+  transition:transform .18s ease,background .18s ease;
+}
+.footerNav a:last-child{border-right:1px solid rgba(23,55,46,.1)}
+.footerNav a:hover{
+  transform:translateY(-2px);
+  background:#e8ddcf;
+}
+@media(max-width:700px){
+  .card,.featuredCard{border-radius:20px}
+  .cardBody,.featuredCard .cardBody{padding:24px}
+  .footerNav{
+    padding:0 24px 40px;
+    gap:10px;
+  }
+  .footerNav a{border-bottom:1px solid rgba(23,55,46,.1)}
+}
