@@ -6,3 +6,27 @@
 .kicker{align-self:start;margin:8px 0;font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#d97843}
 @media(max-width:1000px){.memoryIntro{grid-template-columns:1fr;gap:20px}.memoryGrid{grid-template-columns:1fr 1fr}.memoryCard:first-child{grid-column:1 / 3}.memoryCard{min-height:340px}.indexHeroInner{grid-template-columns:1fr}.heroIntro{max-width:720px}.cardGrid{grid-template-columns:repeat(2,1fr)}.card,.featuredIndexCard,.card:nth-child(n){grid-column:auto}.featuredIndexCard{grid-column:1 / 3}.factStrip{grid-template-columns:repeat(2,1fr)}.factStrip>div:nth-child(2){border-right:0}.factStrip>div:nth-child(-n+2){border-bottom:1px solid rgba(23,55,46,.12)}.relatedGrid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:800px){.memoryEditorial{padding-bottom:64px}.memoryIntro{padding-top:34px}.memoryGrid{grid-template-columns:1fr}.memoryCard,.memoryCard:first-child{grid-column:auto;min-height:390px}.memoryCopy{padding:22px}.memoryCopy strong,.memoryCard:first-child .memoryCopy strong{font-size:30px}.memoryFooter{justify-content:flex-start}.header{grid-template-columns:1fr auto}.header nav{display:none}.indexHero{padding:58px 5vw 42px}.indexHero h1{font-size:clamp(3.2rem,13vw,5rem)}.heroIntro{font-size:1rem}.indexContent{padding:32px 0 66px}.indexLead{align-items:flex-start;flex-direction:column;gap:10px}.indexLead span{text-align:left}.cardGrid{grid-template-columns:1fr}.card,.featuredIndexCard,.card:nth-child(n){grid-column:1;min-height:0}.cardImage,.featuredIndexCard .cardImage{min-height:240px}.featuredIndexCard .cardCopy h2,.cardCopy h2{font-size:clamp(2rem,10vw,3rem)}.indexFooterNav{grid-template-columns:1fr}.indexFooterNav a{border-right:0;border-bottom:1px solid rgba(23,32,29,.14)}.visitCta{align-items:flex-start;flex-direction:column}.detailHero{min-height:560px;padding:42px 5vw 48px}.heroCopy h1{font-size:clamp(48px,15vw,76px)}.heroCopy>div{font-size:17px}.factStrip{grid-template-columns:1fr;margin-top:0;width:100%;box-shadow:none}.factStrip>div,.factStrip>div:nth-child(2){min-height:auto;padding:18px 5vw;border-right:0;border-bottom:1px solid rgba(23,55,46,.12)}.detailGrid{grid-template-columns:1fr;gap:45px;padding:62px 0}.detailGrid aside{position:static;padding:24px}.detailActions a{min-height:46px;display:flex;align-items:center;justify-content:center}.locationSection,.relatedEditorial{padding-bottom:64px}.sectionHeading{align-items:flex-start;flex-direction:column}.sectionHeading>a{white-space:normal}.detailMap>div{min-height:340px}.relatedGrid{grid-template-columns:1fr}.relatedCard{min-height:390px}.relatedImage{height:210px}.relatedLinks{grid-template-columns:1fr}.relatedLinks a{border-bottom:1px solid rgba(23,55,46,.13)}}
+
+/* Shared card language: align listing pages with the rounded homepage system. */
+.card,
+.relatedCard,
+.memoryCard {
+  overflow: hidden;
+  border: 1px solid rgba(23,55,46,.08);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(23,55,46,.05);
+}
+.cardImage,
+.relatedImage {
+  overflow: hidden;
+}
+.card:hover,
+.relatedCard:hover {
+  box-shadow: 0 20px 50px rgba(23,55,46,.1);
+}
+.detailGrid aside,
+.factStrip,
+.detailMap {
+  border-radius: 20px;
+  overflow: hidden;
+}
