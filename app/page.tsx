@@ -11,6 +11,8 @@ import {
   getUpcomingEvents,
 } from "@/lib/directus";
 import { placeHref } from "@/lib/place-detail";
+import { getEditorialList } from "@/lib/editorial";
+import { isEatingPlace, isServicePlace, isSleepingPlace } from "@/lib/place-taxonomy";
 import styles from "./home-v2.module.css";
 import refine from "./home-v2-refine.module.css";
 import feedback from "./home-feedback.module.css";
@@ -78,20 +80,14 @@ const utilityItems: Array<{ label: string; note: string; href: string; icon: Uti
   { label: "Cartina", note: "Orientati sul territorio", href: "/cartina", icon: "map" },
 ];
 
-const planningItems = [
-  { label: "Come arrivare", note: "Auto, treno e mobilità", href: "/organizza-la-visita" },
-  { label: "Dove dormire", note: "Ospitalità e soggiorno", href: "/organizza-la-visita" },
-  { label: "Dove mangiare", note: "Ristoranti e sapori", href: "/organizza-la-visita" },
-  { label: "Informazioni utili", note: "Servizi, contatti e accessibilità", href: "/organizza-la-visita" },
-];
-
 export default async function Home() {
-  const [homepage, homepageRoutes, events, featuredPlaces, siteSettings] = await Promise.all([
+  const [homepage, homepageRoutes, events, featuredPlaces, siteSettings, allPlaces] = await Promise.all([
     getHomepage(),
     getHomepageRoutes(),
     getUpcomingEvents(),
     getFeaturedPlaces(),
     getSiteSettings(),
+    getEditorialList("places"),
   ]);
 
   const heroImage = getDirectusAssetUrl(homepage.hero_image) ?? "/images/hero/roncegno-hero.jpg";
@@ -103,6 +99,15 @@ export default async function Home() {
   const nextEvent = visibleEvents[0] ?? null;
   const nextEventDate = nextEvent ? eventDate(nextEvent.start_date) : null;
   const nextEventTime = nextEvent ? eventTime(nextEvent.start_date) : null;
+  const sleepingImage = getDirectusAssetUrl(allPlaces.find(isSleepingPlace)?.image) ?? "/images/homepage/roncegno-skyline.webp";
+  const eatingImage = getDirectusAssetUrl(allPlaces.find(isEatingPlace)?.image) ?? "/images/festa-castagna/caldarroste.jpg";
+  const serviceImage = getDirectusAssetUrl(allPlaces.find(isServicePlace)?.image) ?? "/images/cartina/cartina-roncegno-preview.webp";
+  const planningItems = [
+    { label: "Come arrivare", note: "Auto, treno e mobilità", href: "/organizza-la-visita#come-arrivare", image: "/images/homepage/APT_Valsugana_Roncegno_2025_10_07_Luca_Matassoni_HD_12.jpg" },
+    { label: "Dove dormire", note: "Ospitalità e soggiorno", href: "/organizza-la-visita#dormire", image: sleepingImage },
+    { label: "Dove mangiare", note: "Ristoranti e sapori", href: "/organizza-la-visita#mangiare", image: eatingImage },
+    { label: "Informazioni utili", note: "Servizi, contatti e accessibilità", href: "/organizza-la-visita#servizi", image: serviceImage },
+  ];
 
   return (
     <main className={styles.page}>
@@ -281,11 +286,16 @@ export default async function Home() {
       </section>
 
       <section className={`${styles.storySection} ${feedback.storySection}`} aria-labelledby="memoria-title">
+        <div className={styles.memoryLandscape} aria-hidden="true" />
         <div className={`${styles.storyCopy} ${feedback.storyCopy}`}>
           <p className={styles.eyebrow}>Storie e memoria</p>
           <h2 id="memoria-title">Na vòlta<br />a Ronzégno.</h2>
           <p>Fotografie, testimonianze e documenti raccontano il paese attraverso chi lo ha vissuto. Un archivio di comunità per custodire le tracce del passato e continuare a farle parlare.</p>
           <Link className={styles.darkButton} href="/memoria">Scopri la memoria di Roncegno <span aria-hidden="true">→</span></Link>
+          <div className={styles.memoryPhotos} aria-hidden="true">
+            <span className={styles.memoryPhotoLarge} />
+            <span className={styles.memoryPhotoSmall} />
+          </div>
         </div>
       </section>
 
@@ -299,8 +309,13 @@ export default async function Home() {
           <div className={styles.planningCards}>
             {planningItems.map((item, index) => (
               <Link className={styles.planningCard} href={item.href} key={item.label}>
-                <span className={styles.planningNumber}>{String(index + 1).padStart(2, "0")}</span>
-                <small>{item.note}</small><strong>{item.label}</strong><span className={styles.planningArrow}>Apri →</span>
+                <span className={styles.planningImage} style={{ backgroundImage: `url('${item.image}')` }} aria-hidden="true" />
+                <span className={styles.planningContent}>
+                  <span className={styles.planningNumber}>{String(index + 1).padStart(2, "0")}</span>
+                  <small>{item.note}</small>
+                  <strong>{item.label}</strong>
+                  <span className={styles.planningArrow}>Apri →</span>
+                </span>
               </Link>
             ))}
           </div>
