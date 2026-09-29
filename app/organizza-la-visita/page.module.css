@@ -1,1 +1,112 @@
 .page{background:#faf9f5;color:#17201d}.hero{padding:64px 5vw 54px;background:#163d32;color:#fff}.heroInner,.gatewayGrid,.contentSection,.travelSection,.mapSection,.practicalGrid{width:min(1240px,90vw);margin:0 auto}.heroInner{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(360px,.92fr);gap:6vw;align-items:end}.heroSide{display:flex;flex-direction:column;align-items:flex-start}.eyebrow{margin:0 0 14px;color:#d66b2c;font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}.hero h1,.sectionHeading h2,.travelHeading h2,.mapHeading h2,.practicalCard h2{font-family:Georgia,"Times New Roman",serif;font-weight:400}.hero h1{max-width:760px;margin:0;color:#fff;font-size:clamp(3.7rem,6.4vw,6.9rem);line-height:.9;letter-spacing:-.055em}.lead{max-width:620px;margin:0;color:rgba(255,255,255,.76);font-size:1.05rem;line-height:1.62}.jumpNav{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}.jumpNav a{padding:9px 13px;color:#fff;border:1px solid rgba(255,255,255,.28);border-radius:999px;font-size:12px;font-weight:700}.gateway{padding:0;background:#f3f0e8}.gatewayGrid{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid rgba(23,32,29,.13)}.gatewayCard{position:relative;display:flex;flex-direction:column;min-height:220px;padding:24px;border-right:1px solid rgba(23,32,29,.13);transition:background 180ms ease,color 180ms ease}.gatewayCard:last-child{border-right:0}.gatewayCard>span{color:#b85e35;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}.gatewayCard strong{margin-top:28px;font-family:Georgia,"Times New Roman",serif;font-size:28px;font-weight:400}.gatewayCard p{max-width:270px;margin:10px 0 18px;color:#67706c;font-size:13px;line-height:1.5}.gatewayCard svg{margin-top:auto}.gatewayCard:hover{color:#fff;background:#163d32}.gatewayCard:hover p,.gatewayCard:hover>span{color:rgba(255,255,255,.68)}.contentSection{padding:92px 0}.alt{padding-top:0}.sectionHeading,.travelHeading{display:grid;grid-template-columns:1fr minmax(320px,.7fr);gap:8vw;align-items:end;margin-bottom:36px}.sectionHeading h2,.travelHeading h2,.mapHeading h2,.practicalCard h2{margin:0;color:#163d32;font-size:clamp(42px,5vw,68px);line-height:.98;letter-spacing:-.045em}.sectionHeading>p,.travelHeading>p,.mapHeading>p,.practicalCard>p{margin:0;color:#5d6762;font-size:15px;line-height:1.7}.placeGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.placeCard{overflow:hidden;background:#f3f0e8}.placeImage{aspect-ratio:4/2.8;background:#2d594c center/cover}.placeCopy{padding:23px 24px 25px}.placeCopy small{color:#b85e35;font-size:10px;font-weight:700;letter-spacing:.11em;text-transform:uppercase}.placeCopy strong{display:block;margin-top:7px;color:#163d32;font-family:Georgia,"Times New Roman",serif;font-size:27px;font-weight:400}.placeCopy p{margin:10px 0 18px;color:#67706c;font-size:13px;line-height:1.55}.placeCopy span,.practicalCard a{display:inline-flex;align-items:center;gap:10px;color:#163d32;font-size:12px;font-weight:700}.empty{margin:0;padding:28px;color:#67706c;background:#f3f0e8;border:1px solid rgba(23,32,29,.12);font-size:14px;line-height:1.6}.travelSection{padding:0 0 96px}.travelGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(23,32,29,.14);border:1px solid rgba(23,32,29,.14)}.travelCard{display:flex;flex-direction:column;min-height:330px;padding:28px;background:#f3f0e8}.travelCard>span{color:#b85e35;font-size:10px;font-weight:700;letter-spacing:.15em}.travelCard h3{margin:46px 0 14px;color:#163d32;font-family:Georgia,"Times New Roman",serif;font-size:30px;font-weight:400;line-height:1}.travelCard p{margin:0 0 24px;color:#5d6762;font-size:13px;line-height:1.65}.travelCard>a,.travelLinks a{display:inline-flex;width:fit-content;margin-top:auto;padding-bottom:5px;color:#163d32;border-bottom:1px solid rgba(22,61,50,.55);font-size:12px;font-weight:700}.travelLinks{display:flex;flex-direction:column;align-items:flex-start;gap:10px;margin-top:auto}.travelLinks a{margin-top:0}.mapSection{display:grid;grid-template-columns:minmax(280px,.55fr) 1.4fr;gap:52px;align-items:stretch;padding:0 0 96px}.mapHeading{display:flex;flex-direction:column;justify-content:center}.mapHeading>p:last-child{margin-top:22px}.mapFrame{min-height:560px;overflow:hidden;background:#163d32}.practicalGrid{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-bottom:96px;background:rgba(23,32,29,.13);border:1px solid rgba(23,32,29,.13)}.practicalCard{min-height:350px;padding:clamp(34px,5vw,64px);background:#f3f0e8}.practicalCard>p{max-width:560px;margin-top:22px}.practicalCard a{margin-top:30px;padding-bottom:6px;border-bottom:1px solid currentColor}@media(max-width:1050px){.heroInner,.sectionHeading,.travelHeading,.mapSection{grid-template-columns:1fr}.lead{max-width:720px}.gatewayGrid,.travelGrid{grid-template-columns:1fr 1fr}.gatewayCard:nth-child(2){border-right:0}.gatewayCard:nth-child(-n+2){border-bottom:1px solid rgba(23,32,29,.13)}.placeGrid{grid-template-columns:1fr 1fr}.mapHeading{max-width:680px}}@media(max-width:700px){.hero{padding:58px 0 42px}.heroInner,.gatewayGrid,.contentSection,.travelSection,.mapSection,.practicalGrid{width:min(100% - 32px,1240px)}.hero h1{font-size:clamp(3.2rem,13vw,5rem)}.lead{font-size:1rem}.jumpNav{flex-wrap:nowrap;margin-right:-16px;padding-right:16px;overflow-x:auto;scrollbar-width:none}.jumpNav::-webkit-scrollbar{display:none}.jumpNav a{flex:0 0 auto}.gatewayGrid,.placeGrid,.travelGrid,.practicalGrid{grid-template-columns:1fr}.gatewayCard{min-height:180px;padding:22px;border-right:0;border-bottom:1px solid rgba(23,32,29,.13)}.gatewayCard:last-child{border-bottom:0}.gatewayCard strong{margin-top:24px;font-size:27px}.contentSection{padding:70px 0}.alt{padding-top:0}.sectionHeading,.travelHeading{gap:22px;margin-bottom:30px}.sectionHeading h2,.travelHeading h2,.mapHeading h2,.practicalCard h2{font-size:46px}.travelSection{padding-bottom:70px}.travelCard{min-height:auto;padding:26px 24px 30px}.travelCard h3{margin-top:32px;font-size:28px}.travelCard>a,.travelLinks{margin-top:8px}.mapSection{gap:30px;padding-bottom:70px}.mapFrame{min-height:460px;margin-right:-16px;margin-left:-16px}.practicalGrid{gap:1px;margin-bottom:70px}.practicalCard{min-height:auto;padding:34px 24px 38px}}
+
+/* Align Organizza la visita with the rounded editorial system and use the viewport better. */
+.heroInner,
+.gatewayGrid,
+.contentSection,
+.travelSection,
+.mapSection,
+.practicalGrid{
+  width:92vw;
+  max-width:none;
+}
+.gateway{
+  padding:28px 0 34px;
+}
+.gatewayGrid{
+  gap:14px;
+  border-bottom:0;
+}
+.gatewayCard{
+  min-height:210px;
+  border:1px solid rgba(23,55,46,.09);
+  border-radius:24px;
+  background:#f8f5ee;
+  box-shadow:0 10px 28px rgba(23,55,46,.045);
+}
+.gatewayCard:last-child{border-right:1px solid rgba(23,55,46,.09)}
+.gatewayCard:hover{
+  transform:translateY(-3px);
+  box-shadow:0 18px 42px rgba(23,55,46,.1);
+}
+.placeGrid{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+}
+.placeCard{
+  border:1px solid rgba(23,55,46,.08);
+  border-radius:24px;
+  background:#fff;
+  box-shadow:0 12px 32px rgba(23,55,46,.05);
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.placeCard:hover{
+  transform:translateY(-4px);
+  box-shadow:0 20px 48px rgba(23,55,46,.1);
+}
+.placeImage{
+  min-height:250px;
+  aspect-ratio:auto;
+}
+.placeCopy{padding:26px 28px 28px}
+.travelGrid{
+  gap:14px;
+  border:0;
+  background:transparent;
+}
+.travelCard{
+  border:1px solid rgba(23,55,46,.09);
+  border-radius:24px;
+  background:#f8f5ee;
+  box-shadow:0 10px 28px rgba(23,55,46,.045);
+}
+.mapFrame{
+  overflow:hidden;
+  border-radius:24px;
+  box-shadow:0 16px 42px rgba(23,55,46,.08);
+}
+.practicalGrid{
+  gap:14px;
+  border:0;
+  background:transparent;
+}
+.practicalCard{
+  border:1px solid rgba(23,55,46,.09);
+  border-radius:24px;
+  background:#f8f5ee;
+  box-shadow:0 10px 28px rgba(23,55,46,.045);
+}
+@media(max-width:1050px){
+  .gatewayCard:nth-child(2){border-right:1px solid rgba(23,55,46,.09)}
+  .gatewayCard:nth-child(-n+2){border-bottom:1px solid rgba(23,55,46,.09)}
+}
+@media(max-width:700px){
+  .heroInner,
+  .gatewayGrid,
+  .contentSection,
+  .travelSection,
+  .mapSection,
+  .practicalGrid{
+    width:90vw;
+  }
+  .gateway{
+    padding:18px 0 28px;
+  }
+  .gatewayGrid,
+  .placeGrid,
+  .travelGrid,
+  .practicalGrid{
+    gap:10px;
+  }
+  .gatewayCard,
+  .placeCard,
+  .travelCard,
+  .practicalCard,
+  .mapFrame{
+    border-radius:20px;
+  }
+  .gatewayCard{
+    border:1px solid rgba(23,55,46,.09);
+  }
+  .placeImage{min-height:220px}
+}
