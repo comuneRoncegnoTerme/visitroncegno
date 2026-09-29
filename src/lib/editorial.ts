@@ -1,4 +1,4 @@
-import { DIRECTUS_URL } from "@/lib/directus";
+import { directusJson } from "@/lib/directus-client";
 import type { PlaceDetailMode, PlaceType } from "@/lib/place-detail";
 
 export type EditorialItem = {
@@ -46,15 +46,20 @@ export type EditorialItem = {
   place?: { title?: string | null } | null;
 };
 
+type EditorialResponse = { data?: EditorialItem[] };
+
 async function fetchItems(collection: string, params: URLSearchParams) {
   try {
-    const response = await fetch(`${DIRECTUS_URL}/items/${collection}?${params}`, {
-      cache: "no-store",
-    });
-    if (!response.ok) return [];
-    const result = (await response.json()) as { data?: EditorialItem[] };
+    const result = await directusJson<EditorialResponse>(
+      `/items/${collection}?${params.toString()}`,
+      { cache: "no-store" }
+    );
     return result.data ?? [];
-  } catch {
+  } catch (error) {
+    console.warn("Directus editorial read unavailable", {
+      collection,
+      message: error instanceof Error ? error.message : "Unknown error",
+    });
     return [];
   }
 }
