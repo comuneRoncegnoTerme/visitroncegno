@@ -129,7 +129,7 @@ export default async function Home() {
           <p className={styles.heroIntro}>{homepage.hero_description ?? "Natura, montagna, benessere e memoria. Un territorio autentico da scoprire con il proprio ritmo."}</p>
           <div className={styles.heroActions}>
             <Link className={styles.primaryButton} href={homepage.hero_primary_url ?? "/luoghi"}>{homepage.hero_primary_label ?? "Esplora il territorio"}<span aria-hidden="true">→</span></Link>
-            <Link className={styles.secondaryButton} href="/organizza-la-visita">Organizza la visita <span aria-hidden="true">→</span></Link>
+            <Link className={styles.secondaryButton} href={homepage.hero_secondary_url ?? "/organizza-la-visita"}>{homepage.hero_secondary_label ?? "Organizza la visita"} <span aria-hidden="true">→</span></Link>
           </div>
         </div>
 

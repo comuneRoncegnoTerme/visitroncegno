@@ -1,4 +1,4 @@
-import { DIRECTUS_URL } from "@/lib/directus";
+import { directusJson } from "@/lib/directus-client";
 
 interface DirectusResponse<T> {
   data: T;
@@ -53,25 +53,26 @@ export async function getRoutesForPlace(placeId: number): Promise<RelatedRoute[]
   );
   params.set("limit", "20");
 
-  const response = await fetch(
-    `${DIRECTUS_URL}/items/route_points?${params.toString()}`,
-    { cache: "no-store" }
-  );
+  try {
+    const result = await directusJson<DirectusResponse<RoutePointRelation[]>>(
+      `/items/route_points?${params.toString()}`,
+      { cache: "no-store" }
+    );
+    const unique = new Map<number, RelatedRoute>();
 
-  if (!response.ok) {
-    console.warn(`Directus place routes error: ${response.status}`);
+    for (const relation of result.data) {
+      if (relation.route) {
+        const { status: _status, ...route } = relation.route;
+        unique.set(route.id, route);
+      }
+    }
+
+    return [...unique.values()];
+  } catch (error) {
+    console.warn("Directus place routes unavailable", {
+      placeId,
+      message: error instanceof Error ? error.message : "Unknown error",
+    });
     return [];
   }
-
-  const result = (await response.json()) as DirectusResponse<RoutePointRelation[]>;
-  const unique = new Map<number, RelatedRoute>();
-
-  for (const relation of result.data) {
-    if (relation.route) {
-      const { status: _status, ...route } = relation.route;
-      unique.set(route.id, route);
-    }
-  }
-
-  return [...unique.values()];
 }
