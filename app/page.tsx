@@ -307,6 +307,26 @@ export default async function Home() {
         </div>
       </section>
 
+      <section className={styles.closing} aria-labelledby="closing-title">
+        <div className={`${styles.sectionInner} ${styles.closingInner}`}>
+          <div className={styles.closingCopy}>
+            <p className={styles.eyebrow}>Continua a esplorare</p>
+            <h2 id="closing-title">Roncegno, da vivere con il tuo ritmo.</h2>
+            <p>
+              Scegli un luogo, un percorso o un appuntamento e costruisci la tua visita partendo da ciò che ti incuriosisce di più.
+            </p>
+          </div>
+          <div className={styles.closingActions}>
+            <Link className={styles.closingPrimary} href="/luoghi">
+              Esplora i luoghi <span aria-hidden="true">→</span>
+            </Link>
+            <Link className={styles.closingSecondary} href="/eventi">
+              Guarda gli eventi <span aria-hidden="true">→</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <SiteFooter settings={siteSettings} />
     </main>
   );
