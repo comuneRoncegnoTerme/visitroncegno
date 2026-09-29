@@ -1,0 +1,117 @@
+.overlay{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  display:block;
+  width:100%;
+  height:100%;
+  padding:0;
+  overflow:hidden;
+  border:0;
+  background:#16372d;
+  color:#fff;
+  cursor:pointer;
+  text-align:left;
+}
+.image{
+  position:absolute;
+  inset:0;
+  background:#31594d center/cover;
+  animation:slowZoom 12s ease-out both;
+}
+.shade{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg,rgba(6,29,23,.92) 0%,rgba(6,29,23,.56) 48%,rgba(6,29,23,.12) 80%),
+    linear-gradient(0deg,rgba(6,29,23,.74),transparent 52%);
+}
+.brand{
+  position:absolute;
+  top:4vw;
+  left:4vw;
+  z-index:2;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+}
+.copy{
+  position:absolute;
+  z-index:2;
+  left:4vw;
+  bottom:15vh;
+  max-width:900px;
+}
+.copy p{
+  margin:0 0 16px;
+  color:#efb083;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+.copy h2{
+  margin:0;
+  font:400 clamp(72px,8vw,140px)/.86 Georgia,serif;
+  letter-spacing:-.055em;
+  text-wrap:balance;
+}
+.copy span{
+  display:block;
+  max-width:650px;
+  margin-top:24px;
+  color:rgba(255,255,255,.8);
+  font-size:20px;
+  line-height:1.55;
+}
+.touch{
+  position:absolute;
+  right:4vw;
+  bottom:5vh;
+  z-index:2;
+  display:flex;
+  min-width:260px;
+  flex-direction:column;
+  align-items:flex-end;
+  padding:18px 22px;
+  border:1px solid rgba(255,255,255,.28);
+  border-radius:999px;
+  background:rgba(8,35,28,.42);
+  backdrop-filter:blur(12px);
+}
+.touch strong{font-size:15px}
+.touch span{
+  margin-top:3px;
+  color:rgba(255,255,255,.68);
+  font-size:11px;
+}
+.dots{
+  position:absolute;
+  left:4vw;
+  bottom:5vh;
+  z-index:2;
+  display:flex;
+  gap:8px;
+}
+.dots span{
+  width:28px;
+  height:3px;
+  border-radius:999px;
+  background:rgba(255,255,255,.28);
+}
+.dots .activeDot{background:#fff}
+@keyframes slowZoom{
+  from{transform:scale(1)}
+  to{transform:scale(1.035)}
+}
+@media(max-width:760px){
+  .copy{right:5vw;left:5vw;bottom:18vh}
+  .copy h2{font-size:clamp(58px,15vw,88px)}
+  .copy span{font-size:17px}
+  .touch{right:5vw;bottom:5vh;min-width:220px}
+  .dots{left:5vw}
+}
+@media(prefers-reduced-motion:reduce){
+  .image{animation:none}
+}
