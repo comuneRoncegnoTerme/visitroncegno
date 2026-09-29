@@ -268,3 +268,78 @@
     font-size:clamp(44px,12vw,64px);
   }
 }
+
+
+/* Wider editorial rhythm across homepage sections. */
+.sectionInner{
+  width:92vw;
+  max-width:none;
+}
+.planningGrid{
+  width:92vw;
+  max-width:none;
+}
+.planningCard{
+  display:grid;
+  grid-template-columns:minmax(128px,38%) minmax(0,1fr);
+  min-height:190px;
+  padding:0;
+}
+.planningImage{
+  min-height:190px;
+  background-position:center;
+  background-size:cover;
+}
+.planningContent{
+  position:relative;
+  display:flex;
+  min-width:0;
+  flex-direction:column;
+  padding:28px 30px 26px;
+}
+.planningContent .planningNumber{
+  top:24px;
+  right:24px;
+}
+.planningContent small{
+  max-width:76%;
+}
+.planningContent strong{
+  max-width:88%;
+}
+.planningContent .planningArrow{
+  margin-top:auto;
+  padding-top:24px;
+}
+.planningCard::after{
+  right:22px;
+  bottom:22px;
+}
+@media(max-width:1180px){
+  .planningCard{
+    grid-template-columns:145px minmax(0,1fr);
+  }
+}
+@media(max-width:760px){
+  .sectionInner,.planningGrid{
+    width:90vw;
+  }
+  .planningCard{
+    grid-template-columns:112px minmax(0,1fr);
+    min-height:158px;
+  }
+  .planningImage{
+    min-height:158px;
+  }
+  .planningContent{
+    padding:22px 20px;
+  }
+}
+@media(max-width:480px){
+  .planningCard{
+    grid-template-columns:96px minmax(0,1fr);
+  }
+  .planningContent strong{
+    font-size:24px;
+  }
+}
