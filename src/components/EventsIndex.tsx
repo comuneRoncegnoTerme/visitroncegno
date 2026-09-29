@@ -17,15 +17,42 @@ function eventStart(item: EditorialItem) {
 }
 
 function eventEnd(item: EditorialItem) {
-  if (item.end_date) return new Date(item.end_date).getTime();
-  return item.start_date ? new Date(item.start_date).getTime() : Number.NEGATIVE_INFINITY;
+  return item.end_date ? new Date(item.end_date).getTime() : null;
+}
+
+function romeDayKey(value: Date | string) {
+  const date = typeof value === "string" ? new Date(value) : value;
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/Rome",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(date);
+  const map = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  return `${map.year}-${map.month}-${map.day}`;
+}
+
+function isOngoing(item: EditorialItem, now: number, today: string) {
+  if (!item.start_date || eventStart(item) > now) return false;
+  const end = eventEnd(item);
+  if (end !== null) return end >= now;
+  return romeDayKey(item.start_date) === today;
+}
+
+function isPast(item: EditorialItem, now: number, today: string) {
+  if (!item.start_date) return false;
+  const end = eventEnd(item);
+  if (end !== null) return end < now;
+  return romeDayKey(item.start_date) < today;
 }
 
 function splitEvents(items: EditorialItem[]): EventBucket {
   const now = Date.now();
+  const today = romeDayKey(new Date(now));
+
   const ongoing = items
-    .filter((item) => item.start_date && eventStart(item) <= now && eventEnd(item) >= now)
-    .sort((a, b) => eventEnd(a) - eventEnd(b));
+    .filter((item) => isOngoing(item, now, today))
+    .sort((a, b) => eventStart(a) - eventStart(b));
 
   const upcoming = items
     .filter((item) => item.start_date && eventStart(item) > now)
@@ -34,12 +61,10 @@ function splitEvents(items: EditorialItem[]): EventBucket {
   const featured = ongoing[0] ?? upcoming[0] ?? null;
   const featuredIsOngoing = Boolean(featured && ongoing.some((item) => item.id === featured.id));
 
-  const future = items
-    .filter((item) => item.start_date && eventStart(item) > now && item.id !== featured?.id)
-    .sort((a, b) => eventStart(a) - eventStart(b));
+  const future = upcoming.filter((item) => item.id !== featured?.id);
 
   const past = items
-    .filter((item) => item.start_date && eventEnd(item) < now)
+    .filter((item) => isPast(item, now, today))
     .sort((a, b) => eventStart(b) - eventStart(a));
 
   return { featured, featuredIsOngoing, future, past };
