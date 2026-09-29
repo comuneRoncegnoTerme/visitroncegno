@@ -8,7 +8,6 @@ import {
   getSiteSettings,
   getUpcomingEvents,
 } from "@/lib/directus";
-import KioskRuntime from "./KioskRuntime";
 import styles from "./page.module.css";
 
 export const dynamic = "force-dynamic";
@@ -63,8 +62,6 @@ export default async function KioskPage() {
 
   return (
     <main className={styles.page}>
-      <KioskRuntime />
-
       <section
         className={styles.hero}
         style={{ backgroundImage: `url('${heroImage}')` }}
@@ -96,7 +93,7 @@ export default async function KioskPage() {
         </div>
 
         {nextEvent && nextEventDate && (
-          <Link href={`/eventi/${nextEvent.slug}`} className={styles.nextEvent}>
+          <Link href={`/kiosk/eventi/${nextEvent.slug}`} className={styles.nextEvent}>
             <span className={styles.nextEventLabel}>Prossimo appuntamento</span>
             <span className={styles.nextEventDate}>
               <strong>{nextEventDate.day}</strong>
@@ -113,7 +110,7 @@ export default async function KioskPage() {
       </section>
 
       <section className={styles.actions} aria-label="Esplora Visit Roncegno">
-        <Link href="/luoghi" className={styles.actionCard}>
+        <Link href="/kiosk/luoghi" className={styles.actionCard}>
           <span className={styles.actionNumber}>01</span>
           <span>
             <small>Territorio</small>
@@ -122,7 +119,7 @@ export default async function KioskPage() {
           <b aria-hidden="true">→</b>
         </Link>
 
-        <Link href="/percorsi" className={styles.actionCard}>
+        <Link href="/kiosk/percorsi" className={styles.actionCard}>
           <span className={styles.actionNumber}>02</span>
           <span>
             <small>Camminare e pedalare</small>
@@ -131,7 +128,7 @@ export default async function KioskPage() {
           <b aria-hidden="true">→</b>
         </Link>
 
-        <Link href="/eventi" className={styles.actionCard}>
+        <Link href="/kiosk/eventi" className={styles.actionCard}>
           <span className={styles.actionNumber}>03</span>
           <span>
             <small>Oggi e nei prossimi giorni</small>
@@ -140,7 +137,7 @@ export default async function KioskPage() {
           <b aria-hidden="true">→</b>
         </Link>
 
-        <Link href="/organizza-la-visita" className={styles.actionCard}>
+        <Link href="/kiosk/organizza" className={styles.actionCard}>
           <span className={styles.actionNumber}>04</span>
           <span>
             <small>Informazioni utili</small>
@@ -163,7 +160,7 @@ export default async function KioskPage() {
               places[0]?.summary ??
               "Lasciati guidare tra paesaggi, luoghi e storie del territorio."}
           </p>
-          <Link href={highlight?.link ?? "/luoghi"}>Scopri di più →</Link>
+          <Link href="/kiosk/luoghi">Scopri di più →</Link>
         </div>
       </section>
 
