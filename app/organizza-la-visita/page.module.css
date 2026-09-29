@@ -110,3 +110,106 @@
   }
   .placeImage{min-height:220px}
 }
+
+
+/* Editorial visit-planner intro aligned with the memory section. */
+.hero{
+  position:relative;
+  overflow:hidden;
+  padding:78px 5vw 72px;
+  background:#efe7da;
+  color:#163d32;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,rgba(239,231,218,.98) 0%,rgba(239,231,218,.9) 48%,rgba(239,231,218,.72) 72%,rgba(239,231,218,.9) 100%);
+  pointer-events:none;
+}
+.heroBackdrop{
+  position:absolute;
+  inset:0;
+  opacity:.14;
+  background:url("/images/homepage/roncegno-skyline.webp") center 58%/cover no-repeat;
+  filter:grayscale(.7) sepia(.16);
+}
+.heroInner{
+  position:relative;
+  z-index:1;
+  display:grid;
+  grid-template-columns:minmax(0,.9fr) minmax(320px,.72fr) minmax(250px,.55fr);
+  gap:clamp(34px,5vw,84px);
+  align-items:center;
+  min-height:330px;
+  width:92vw;
+  margin:0 auto;
+  padding:34px 0;
+  border-top:1px solid rgba(23,55,46,.16);
+  border-bottom:1px solid rgba(23,55,46,.16);
+}
+.heroTitle h1{
+  max-width:760px;
+  margin:0;
+  color:#163d32;
+  font-size:clamp(3.8rem,6.2vw,6.8rem);
+  line-height:.9;
+}
+.heroSide{
+  align-self:center;
+}
+.lead{
+  color:#586660;
+}
+.jumpNav a{
+  color:#163d32;
+  border-color:rgba(22,61,50,.22);
+  background:rgba(255,255,255,.25);
+}
+.heroPhotos{
+  position:relative;
+  min-height:250px;
+}
+.heroPhotoA,.heroPhotoB{
+  position:absolute;
+  display:block;
+  border:8px solid rgba(250,246,238,.96);
+  background-position:center;
+  background-size:cover;
+  box-shadow:0 18px 35px rgba(67,55,42,.18);
+}
+.heroPhotoA{
+  top:4px;
+  right:10px;
+  width:72%;
+  aspect-ratio:4/3;
+  transform:rotate(3deg);
+}
+.heroPhotoB{
+  right:0;
+  bottom:6px;
+  width:50%;
+  aspect-ratio:4/3;
+  transform:rotate(-2deg);
+}
+@media(max-width:1050px){
+  .heroInner{
+    grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);
+  }
+  .heroPhotos{display:none}
+}
+@media(max-width:700px){
+  .hero{
+    padding:54px 5vw 46px;
+  }
+  .heroInner{
+    grid-template-columns:1fr;
+    gap:22px;
+    width:90vw;
+    min-height:0;
+    padding:26px 0;
+  }
+  .heroTitle h1{
+    font-size:clamp(3.2rem,13vw,5rem);
+  }
+}

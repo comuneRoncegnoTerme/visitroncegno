@@ -3,7 +3,7 @@ import Link from "next/link";
 import EditorialHeader from "@/components/EditorialHeader";
 import RoutesEditorialList from "@/components/RoutesEditorialList";
 import SiteFooter from "@/components/SiteFooter";
-import { getSiteSettings } from "@/lib/directus";
+import { getDirectusAssetUrl, getSiteSettings } from "@/lib/directus";
 import { getEditorialList } from "@/lib/editorial";
 import styles from "@/components/RoutesIndex.module.css";
 
@@ -19,19 +19,30 @@ export default async function RoutesPage() {
     getSiteSettings(),
   ]);
 
+  const heroImage = getDirectusAssetUrl(items[0]?.image);
+  const heroPhotoA = getDirectusAssetUrl(items[1]?.image ?? items[0]?.image);
+  const heroPhotoB = getDirectusAssetUrl(items[2]?.image ?? items[0]?.image);
+
   return (
     <main className={styles.page}>
       <EditorialHeader settings={settings} />
 
       <section className={styles.hero}>
+        {heroImage && <div className={styles.heroBackdrop} style={{ backgroundImage: `url('${heroImage}')` }} aria-hidden="true" />}
         <div className={styles.heroInner}>
-          <div>
+          <div className={styles.heroTitle}>
             <p className={styles.eyebrow}>Camminare</p>
             <h1>Percorsi e sentieri.</h1>
           </div>
           <p className={styles.heroIntro}>
             Itinerari tra castagneti, masi e panorami del Lagorai. Scegli il percorso in base al tempo, alla difficoltà e al tipo di uscita, poi preparati e parti con rispetto per la montagna.
           </p>
+          {(heroPhotoA || heroPhotoB) && (
+            <div className={styles.heroPhotos} aria-hidden="true">
+              {heroPhotoA && <span className={styles.heroPhotoA} style={{ backgroundImage: `url('${heroPhotoA}')` }} />}
+              {heroPhotoB && <span className={styles.heroPhotoB} style={{ backgroundImage: `url('${heroPhotoB}')` }} />}
+            </div>
+          )}
         </div>
       </section>
 

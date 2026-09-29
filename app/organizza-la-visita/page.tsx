@@ -95,14 +95,17 @@ export default async function OrganizzaLaVisitaPage() {
   const sleeping = allPlaces.filter(isSleepingPlace);
   const eating = allPlaces.filter(isEatingPlace);
   const services = allPlaces.filter(isServicePlace);
+  const heroPhotoA = getDirectusAssetUrl(sleeping[0]?.image ?? eating[0]?.image);
+  const heroPhotoB = getDirectusAssetUrl(eating[0]?.image ?? services[0]?.image);
 
   return (
     <main className={styles.page}>
       <SiteHeader settings={siteSettings} />
 
       <section className={styles.hero}>
+        <div className={styles.heroBackdrop} aria-hidden="true" />
         <div className={styles.heroInner}>
-          <div>
+          <div className={styles.heroTitle}>
             <p className={styles.eyebrow}>Pianifica il soggiorno</p>
             <h1>Organizza la tua visita.</h1>
           </div>
@@ -116,6 +119,12 @@ export default async function OrganizzaLaVisitaPage() {
               <a href="#servizi">Servizi</a>
             </nav>
           </div>
+          {(heroPhotoA || heroPhotoB) && (
+            <div className={styles.heroPhotos} aria-hidden="true">
+              {heroPhotoA && <span className={styles.heroPhotoA} style={{ backgroundImage: `url('${heroPhotoA}')` }} />}
+              {heroPhotoB && <span className={styles.heroPhotoB} style={{ backgroundImage: `url('${heroPhotoB}')` }} />}
+            </div>
+          )}
         </div>
       </section>
 

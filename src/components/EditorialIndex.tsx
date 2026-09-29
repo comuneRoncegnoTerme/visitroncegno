@@ -30,18 +30,30 @@ function itemHref(item: EditorialItem, basePath: string) {
 export default async function EditorialIndex(props: Props) {
   const settings = await getSiteSettings();
   const isEvents = props.basePath === "/eventi";
+  const heroImage = getDirectusAssetUrl(props.items[0]?.image);
+  const heroPhotoA = getDirectusAssetUrl(props.items[1]?.image ?? props.items[0]?.image);
+  const heroPhotoB = getDirectusAssetUrl(props.items[2]?.image ?? props.items[0]?.image);
 
   return (
     <main className={styles.page}>
       <EditorialHeader settings={settings} />
 
       <section className={styles.indexHero}>
+        {heroImage && <div className={styles.indexHeroBackdrop} style={{ backgroundImage: `url('${heroImage}')` }} aria-hidden="true" />}
         <div className={styles.indexHeroInner}>
-          <div>
+          <div className={styles.indexHeroTitle}>
             <p className={styles.indexEyebrow}>{props.eyebrow}</p>
             <h1>{props.title}</h1>
           </div>
-          <p className={styles.heroIntro}>{props.introduction}</p>
+          <div className={styles.indexHeroCopy}>
+            <p className={styles.heroIntro}>{props.introduction}</p>
+          </div>
+          {(heroPhotoA || heroPhotoB) && (
+            <div className={styles.indexHeroPhotos} aria-hidden="true">
+              {heroPhotoA && <span className={styles.indexHeroPhotoA} style={{ backgroundImage: `url('${heroPhotoA}')` }} />}
+              {heroPhotoB && <span className={styles.indexHeroPhotoB} style={{ backgroundImage: `url('${heroPhotoB}')` }} />}
+            </div>
+          )}
         </div>
       </section>
 
