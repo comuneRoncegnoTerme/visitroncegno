@@ -37,6 +37,7 @@ export default async function KioskPlaceDetailPage({ params }: Props) {
       intro={item.summary}
       paragraphs={paragraphs}
       facts={facts}
+      pathname={`/kiosk/luoghi/${slug}`}
     />
   );
 }
