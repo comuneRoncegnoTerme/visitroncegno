@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 const REFRESH_EVERY_MS = 5 * 60 * 1000;
-const IDLE_RETURN_MS = 90 * 1000;
+const IDLE_RETURN_MS = 60 * 1000;
 
 function updateClock() {
   const now = new Date();
