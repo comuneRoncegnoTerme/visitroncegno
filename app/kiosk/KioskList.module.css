@@ -186,3 +186,17 @@
   .image{min-height:220px}
   .organizeCard{min-height:220px}
 }
+
+.handoff{
+  display:flex;
+  width:92vw;
+  margin:0 auto;
+  padding:0 0 70px;
+  justify-content:flex-end;
+}
+@media(max-width:760px){
+  .handoff{
+    width:90vw;
+    justify-content:flex-start;
+  }
+}
