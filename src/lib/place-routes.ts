@@ -14,6 +14,9 @@ interface RoutePointRelation {
     image: string | null;
     difficulty: string | null;
     distance_km: number | null;
+    duration_minutes: number | null;
+    elevation_gain_m: number | null;
+    route_highlight: string | null;
     category?: {
       name: string;
     } | null;
@@ -28,6 +31,9 @@ export interface RelatedRoute {
   image: string | null;
   difficulty: string | null;
   distance_km: number | null;
+  duration_minutes: number | null;
+  elevation_gain_m: number | null;
+  route_highlight: string | null;
   category?: {
     name: string;
   } | null;
@@ -48,6 +54,9 @@ export async function getRoutesForPlace(placeId: number): Promise<RelatedRoute[]
       "route.image",
       "route.difficulty",
       "route.distance_km",
+      "route.duration_minutes",
+      "route.elevation_gain_m",
+      "route.route_highlight",
       "route.category.name",
     ].join(",")
   );
@@ -61,10 +70,22 @@ export async function getRoutesForPlace(placeId: number): Promise<RelatedRoute[]
     const unique = new Map<number, RelatedRoute>();
 
     for (const relation of result.data) {
-      if (relation.route) {
-        const { status: _status, ...route } = relation.route;
-        unique.set(route.id, route);
-      }
+      const route = relation.route;
+      if (!route) continue;
+
+      unique.set(route.id, {
+        id: route.id,
+        title: route.title,
+        slug: route.slug,
+        summary: route.summary,
+        image: route.image,
+        difficulty: route.difficulty,
+        distance_km: route.distance_km,
+        duration_minutes: route.duration_minutes,
+        elevation_gain_m: route.elevation_gain_m,
+        route_highlight: route.route_highlight,
+        category: route.category,
+      });
     }
 
     return [...unique.values()];
