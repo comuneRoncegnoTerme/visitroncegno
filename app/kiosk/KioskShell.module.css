@@ -1,0 +1,14 @@
+.shell{
+  min-height:100vh;
+  overscroll-behavior:none;
+  touch-action:manipulation;
+  user-select:none;
+  -webkit-user-select:none;
+  -webkit-touch-callout:none;
+}
+.shell input,
+.shell textarea,
+.shell select,
+.shell [contenteditable="true"]{
+  display:none!important;
+}
