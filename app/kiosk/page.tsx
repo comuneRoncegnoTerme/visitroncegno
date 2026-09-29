@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
   getDirectusAssetUrl,
@@ -11,6 +12,12 @@ import KioskRuntime from "./KioskRuntime";
 import styles from "./page.module.css";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Infopoint digitale | Visit Roncegno",
+  description: "Interfaccia kiosk dell’infopoint turistico di Roncegno Terme.",
+  robots: { index: false, follow: false },
+};
 
 function formatEventDate(value: string) {
   const date = new Date(value);
