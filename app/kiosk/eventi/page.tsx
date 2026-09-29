@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getDirectusAssetUrl, getSiteSettings } from "@/lib/directus";
 import { getEditorialList } from "@/lib/editorial";
 import KioskChrome from "../KioskChrome";
+import KioskQr from "../KioskQr";
 import styles from "../KioskList.module.css";
 
 export const dynamic = "force-dynamic";
@@ -81,6 +82,7 @@ export default async function KioskEventsPage() {
       ) : (
         <p className={styles.empty}>Non ci sono appuntamenti pubblicati in questo momento.</p>
       )}
-    </main>
+          <div className={styles.handoff}><KioskQr pathname="/kiosk/eventi" /></div>
+</main>
   );
 }
