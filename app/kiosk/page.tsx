@@ -10,7 +10,7 @@ import {
 } from "@/lib/directus";
 import KioskAttract, { type KioskAttractSlide } from "./KioskAttract";
 import KioskFullscreenButton from "./KioskFullscreenButton";
-import KioskQr from "./KioskQr";
+import KioskWeather from "./KioskWeather";
 import styles from "./page.module.css";
 
 export const dynamic = "force-dynamic";
@@ -86,7 +86,15 @@ export default async function KioskPage() {
 
   return (
     <main className={styles.page}>
-      <KioskAttract slides={attractSlides} />
+      <KioskAttract
+        slides={attractSlides}
+        nextEvent={nextEvent && nextEventDate ? {
+          title: nextEvent.title,
+          date: `${nextEventDate.weekday} ${nextEventDate.day} ${nextEventDate.month.toLowerCase()}`,
+          location: nextEvent.location_name ?? nextEvent.place?.title ?? "Roncegno Terme",
+          href: `/kiosk/eventi/${nextEvent.slug}`,
+        } : null}
+      />
 
       <section
         className={styles.hero}
@@ -105,6 +113,7 @@ export default async function KioskPage() {
 
           <div className={styles.headerActions}>
             <KioskFullscreenButton className={styles.fullscreenButton} />
+            <KioskWeather className={styles.weatherBlock} />
             <div className={styles.clockBlock} aria-label="Ora locale">
             <span className={styles.clock} data-kiosk-clock>--:--</span>
               <small data-kiosk-date>Roncegno Terme</small>
@@ -202,7 +211,7 @@ export default async function KioskPage() {
           I contenuti di questo schermo sono aggiornati dallo stesso ecosistema
           digitale di visitroncegno.it.
         </p>
-        <KioskQr pathname="/kiosk" label="Porta Visit Roncegno con te" />
+        <span className={styles.footerNote}>Tocca lo schermo oppure inquadra il QR per continuare sul telefono.</span>
       </footer>
     </main>
   );
