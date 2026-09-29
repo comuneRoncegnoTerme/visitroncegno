@@ -119,20 +119,30 @@ function EventCard({ item, compact = false }: { item: EditorialItem; compact?: b
 export default async function EventsIndex({ items }: { items: EditorialItem[] }) {
   const settings = await getSiteSettings();
   const { featured, featuredIsOngoing, future, past } = splitEvents(items);
+  const heroImage = getDirectusAssetUrl(featured?.image);
+  const heroPhotoA = getDirectusAssetUrl(future[0]?.image ?? featured?.image);
+  const heroPhotoB = getDirectusAssetUrl(future[1]?.image ?? featured?.image);
 
   return (
     <main className={styles.page}>
       <EditorialHeader settings={settings} />
 
       <section className={styles.hero}>
+        {heroImage && <div className={styles.heroBackdrop} style={{ backgroundImage: `url('${heroImage}')` }} aria-hidden="true" />}
         <div className={styles.heroInner}>
-          <div>
+          <div className={styles.heroTitle}>
             <p className={styles.eyebrow}>Agenda</p>
             <h1>Vivi Roncegno,<br />insieme.</h1>
           </div>
           <p className={styles.heroIntro}>
             Feste di paese, cultura, sport e sapori: gli appuntamenti per incontrare la comunità e vivere il territorio nel momento giusto.
           </p>
+          {(heroPhotoA || heroPhotoB) && (
+            <div className={styles.heroPhotos} aria-hidden="true">
+              {heroPhotoA && <span className={styles.heroPhotoA} style={{ backgroundImage: `url('${heroPhotoA}')` }} />}
+              {heroPhotoB && <span className={styles.heroPhotoB} style={{ backgroundImage: `url('${heroPhotoB}')` }} />}
+            </div>
+          )}
         </div>
       </section>
 
