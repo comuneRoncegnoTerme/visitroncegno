@@ -286,15 +286,15 @@ export default async function Home() {
       </section>
 
       <section className={`${styles.storySection} ${feedback.storySection}`} aria-labelledby="memoria-title">
-        <div className={styles.memoryLandscape} aria-hidden="true" />
+        <div className={feedback.memoryLandscape} aria-hidden="true" />
         <div className={`${styles.storyCopy} ${feedback.storyCopy}`}>
           <p className={styles.eyebrow}>Storie e memoria</p>
           <h2 id="memoria-title">Na vòlta<br />a Ronzégno.</h2>
           <p>Fotografie, testimonianze e documenti raccontano il paese attraverso chi lo ha vissuto. Un archivio di comunità per custodire le tracce del passato e continuare a farle parlare.</p>
           <Link className={styles.darkButton} href="/memoria">Scopri la memoria di Roncegno <span aria-hidden="true">→</span></Link>
-          <div className={styles.memoryPhotos} aria-hidden="true">
-            <span className={styles.memoryPhotoLarge} />
-            <span className={styles.memoryPhotoSmall} />
+          <div className={feedback.memoryPhotos} aria-hidden="true">
+            <span className={feedback.memoryPhotoLarge} />
+            <span className={feedback.memoryPhotoSmall} />
           </div>
         </div>
       </section>
