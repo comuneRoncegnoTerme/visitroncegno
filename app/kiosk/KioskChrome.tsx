@@ -1,4 +1,5 @@
 import Link from "next/link";
+import KioskFullscreenButton from "./KioskFullscreenButton";
 import styles from "./KioskChrome.module.css";
 
 type Props = {
@@ -28,6 +29,7 @@ export default function KioskChrome({
           <Link href={backHref} className={styles.back}>← Indietro</Link>
         )}
         <Link href="/kiosk" className={styles.home}>Home</Link>
+        <KioskFullscreenButton className={styles.fullscreen} />
         <div className={styles.clockBlock}>
           <span data-kiosk-clock>--:--</span>
           <small data-kiosk-date>Roncegno Terme</small>
