@@ -180,7 +180,7 @@
 }
 .touch{
   position:absolute;
-  right:4vw;
+  right:390px;
   bottom:5.6vh;
   z-index:2;
   display:flex;
@@ -262,7 +262,8 @@
     width:auto;
   }
   .touch{
-    right:5vw;
+    right:auto;
+    left:5vw;
     bottom:5vh;
   }
   .touch div span{display:none}
