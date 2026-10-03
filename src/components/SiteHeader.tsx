@@ -8,12 +8,13 @@ type Props = { settings: SiteSettings; overlay?: boolean };
 export default function SiteHeader({ settings, overlay = false }: Props) {
   const name = settings.site_name ?? "Visit Roncegno";
   const logo = getDirectusAssetUrl(overlay ? (settings.logo_light ?? settings.logo) : settings.logo);
+  const useWhiteFallbackLogo = overlay && !settings.logo_light && !!settings.logo;
 
   return (
     <header className={`${styles.header} ${overlay ? styles.overlay : styles.inner}`}>
       <Link className={styles.brand} href="/" aria-label={name}>
         {logo ? (
-          <img className={styles.logo} src={logo} alt={name} />
+          <img className={`${styles.logo} ${useWhiteFallbackLogo ? styles.logoOverlayFallback : ""}`} src={logo} alt={name} />
         ) : (
           <span className={styles.wordmark}>
             <strong>{name}</strong>
