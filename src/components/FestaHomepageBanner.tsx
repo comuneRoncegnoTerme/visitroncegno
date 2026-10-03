@@ -9,13 +9,13 @@ export default function FestaHomepageBanner() {
 
       <div className={styles.content}>
         <p className={styles.eyebrow}>23–25 ottobre 2026 · Roncegno Terme</p>
-        <h2 id="festa-home-title">Tre giorni per vivere l’autunno di Roncegno.</h2>
+        <h2 id="festa-home-title">Festa della Castagna 2026</h2>
         <p className={styles.lead}>
-          Caldarroste sul fuoco, bancarelle tra gli alberi, musica, famiglie e un paese intero che si ritrova.
+          Tre giorni di castagne, cucina, musica, passeggiate e vita di paese.
         </p>
         <div className={styles.actions}>
-          <Link className={styles.primary} href="/festa-della-castagna">Scopri la Festa →</Link>
-          <Link className={styles.secondary} href="/festa-della-castagna#programma">Vai al programma</Link>
+          <Link className={styles.primary} href="/festa-della-castagna">Scopri il programma →</Link>
+          <Link className={styles.secondary} href="/eventi">Tutti gli appuntamenti</Link>
         </div>
       </div>
 
