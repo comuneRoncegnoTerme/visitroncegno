@@ -40,6 +40,10 @@
   flex: none;
 }
 
+.logoOverlayFallback {
+  filter: brightness(0) invert(1);
+}
+
 .wordmark {
   display: flex;
   flex-direction: column;
