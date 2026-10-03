@@ -2,6 +2,7 @@ import Link from "next/link";
 import HeroExperience, { type HeroHotspot, type HeroMode } from "@/components/HeroExperience";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import FestaHomepageBanner from "@/components/FestaHomepageBanner";
 import {
   getDirectusAssetUrl,
   getFeaturedPlaces,
@@ -73,8 +74,8 @@ function UtilityIcon({ name }: { name: UtilityIconName }) {
 
 const utilityItems: Array<{ label: string; note: string; href: string; icon: UtilityIconName }> = [
   { label: "Sentieri e percorsi", note: "Natura da vivere", href: "/percorsi", icon: "trail" },
-  { label: "Terme e benessere", note: "Un equilibrio naturale", href: "/temi/terme-e-benessere", icon: "wellness" },
-  { label: "Luoghi e cultura", note: "Borghi, musei e memoria", href: "/temi/cultura-e-memoria", icon: "culture" },
+  { label: "Terme e benessere", note: "Acque, parco e benessere", href: "/temi/terme-e-benessere", icon: "wellness" },
+  { label: "Luoghi e cultura", note: "Luoghi, storie e memoria", href: "/temi/cultura-e-memoria", icon: "culture" },
   { label: "Dove mangiare", note: "Sapori del territorio", href: "/organizza-la-visita", icon: "food" },
   { label: "Eventi", note: "Cosa succede a Roncegno", href: "/eventi", icon: "events" },
   { label: "Cartina", note: "Orientati sul territorio", href: "/cartina", icon: "map" },
@@ -128,7 +129,7 @@ export default async function Home() {
         <div className={`${styles.heroContent} ${refine.heroContent}`}>
           <p className={styles.eyebrow}>{homepage.hero_eyebrow ?? "Trentino · Valsugana"}</p>
           <h1>{homepage.hero_title ?? "Semplicemente, Roncegno Terme"}</h1>
-          <p className={styles.heroIntro}>{homepage.hero_description ?? "Natura, montagna, benessere e memoria. Un territorio autentico da scoprire con il proprio ritmo."}</p>
+          <p className={styles.heroIntro}>{homepage.hero_description ?? "Natura, montagna, terme e memoria. Un paese da scoprire con il proprio ritmo."}</p>
           <div className={styles.heroActions}>
             <Link className={styles.primaryButton} href={homepage.hero_primary_url ?? "/luoghi"}>{homepage.hero_primary_label ?? "Esplora il territorio"}<span aria-hidden="true">→</span></Link>
             <Link className={styles.secondaryButton} href={homepage.hero_secondary_url ?? "/organizza-la-visita"}>{homepage.hero_secondary_label ?? "Organizza la visita"} <span aria-hidden="true">→</span></Link>
@@ -167,7 +168,7 @@ export default async function Home() {
               <div>
                 <p>{homepage.routes_eyebrow ?? "Esperienze da vivere"}</p>
                 <h2 className={styles.sectionTitle} id="routes-title">{homepage.routes_title ?? "Scegli come vivere Roncegno."}</h2>
-                <span className={styles.sectionLead}>{homepage.routes_description ?? "Non solo categorie: percorsi concreti per entrare nel paesaggio, nella storia e nella vita del territorio."}</span>
+                <span className={styles.sectionLead}>{homepage.routes_description ?? "Percorsi e idee per conoscere Roncegno, dalla montagna al paese."}</span>
               </div>
               <Link className={styles.sectionLink} href={homepage.routes_link_url ?? "/percorsi"}>{homepage.routes_link_label ?? "Scopri tutti i percorsi"} →</Link>
             </div>
@@ -206,6 +207,24 @@ export default async function Home() {
         </section>
       )}
 
+
+      <section className={editorial.identityStrip} aria-labelledby="identity-title">
+        <div className={editorial.identityInner}>
+          <div className={editorial.identityCopy}>
+            <p>Un paese, molti paesaggi</p>
+            <h2 id="identity-title">Dal fondovalle ai masi di montagna.</h2>
+            <span>
+              Il centro storico, le terme, Marter, i castagneti e la montagna raccontano parti diverse dello stesso territorio.
+            </span>
+          </div>
+          <div className={editorial.identityFacts} aria-label="Tratti distintivi di Roncegno">
+            <span><strong>Terme</strong><small>Acque e parco</small></span>
+            <span><strong>44</strong><small>insediamenti masali</small></span>
+            <span><strong>Montagna</strong><small>e fondovalle</small></span>
+          </div>
+        </div>
+      </section>
+
       {visibleFeaturedPlaces.length > 0 && (
         <section className={`${styles.section} ${editorial.highlightsSection}`} aria-labelledby="highlights-title">
           <div className={styles.sectionInner}>
@@ -213,7 +232,7 @@ export default async function Home() {
               <div>
                 <p>{homepage.highlights_eyebrow ?? "Da non perdere"}</p>
                 <h2 className={styles.sectionTitle} id="highlights-title">{homepage.highlights_title ?? "Tre luoghi da cui cominciare."}</h2>
-                <span className={styles.sectionLead}>{homepage.highlights_description ?? "Una selezione editoriale di luoghi simbolo, scelta dal Content Hub per raccontare Roncegno attraverso esperienze concrete."}</span>
+                <span className={styles.sectionLead}>{homepage.highlights_description ?? "Tre luoghi diversi tra loro, per iniziare a conoscere Roncegno."}</span>
               </div>
               <Link className={styles.sectionLink} href={homepage.highlights_link_url ?? "/luoghi"}>{homepage.highlights_link_label ?? "Scopri tutti i luoghi"} →</Link>
             </div>
@@ -240,10 +259,13 @@ export default async function Home() {
         </section>
       )}
 
+
+      <FestaHomepageBanner />
+
       <section className={`${styles.section} ${styles.eventsSection}`}>
         <div className={styles.sectionInner}>
           <div className={styles.sectionHeading}>
-            <div><p>In primo piano</p><h2 className={styles.sectionTitle}>Eventi a Roncegno</h2><span className={styles.sectionLead}>Tradizioni, cultura e vita di paese. I prossimi appuntamenti da non perdere.</span></div>
+            <div><p>In primo piano</p><h2 className={styles.sectionTitle}>Eventi a Roncegno</h2><span className={styles.sectionLead}>Tradizioni, cultura e vita di paese. I prossimi appuntamenti a Roncegno.</span></div>
             <Link className={styles.sectionLink} href="/eventi">Vedi tutti gli eventi →</Link>
           </div>
           <div className={`${styles.eventsGrid} ${refine.eventsGrid} ${feedback.eventsGrid}${visibleEvents.length === 3 ? ` ${refine.eventsGridThree}` : ""}`}>
@@ -251,6 +273,7 @@ export default async function Home() {
               const date = eventDate(event.start_date);
               const image = getDirectusAssetUrl(event.image) ?? heroImage;
               const location = event.location_name ?? event.place?.title ?? "Roncegno Terme";
+              const time = eventTime(event.start_date);
               const primary = index === 0;
               return (
                 <Link className={`${styles.eventCard} ${refine.eventCard} ${feedback.eventCard}${primary ? ` ${styles.eventCardPrimary} ${refine.eventCardPrimary} ${feedback.eventCardPrimary}` : ""}`} href={`/eventi/${event.slug}`} key={event.id}>
@@ -259,7 +282,7 @@ export default async function Home() {
                   {primary && <span className={styles.featuredLabel}>Evento in evidenza</span>}
                   <div className={`${styles.eventBody} ${refine.eventBody} ${feedback.eventBody}`}>
                     <span className={`${styles.eventDate} ${refine.eventDate}`}><strong>{date.day}</strong><span>{date.month}</span></span>
-                    <div className={`${styles.eventMeta} ${refine.eventMeta}`}>{event.category?.name ?? "Evento"} · {location}</div>
+                    <div className={`${styles.eventMeta} ${refine.eventMeta}`}>{event.category?.name ?? "Evento"} · {location}{time ? ` · ore ${time}` : ""}</div>
                     <h3>{event.title}</h3>
                     {primary && event.summary && <p>{event.summary}</p>}
                     <span className={`${styles.cardArrow} ${refine.cardArrow}`} aria-hidden="true">→</span>
@@ -276,7 +299,7 @@ export default async function Home() {
           <div className={editorial.mapStoryCopy}>
             <p className={styles.eyebrow}>{homepage.map_eyebrow ?? "Esplora il territorio"}</p>
             <h2 id="map-story-title">{homepage.map_title ?? "Roncegno, tutto in una cartina."}</h2>
-            <p>{homepage.map_description ?? "Dalla cartina illustrata alla mappa interattiva: orientati tra luoghi, percorsi e servizi e poi approfondisci ciò che ti interessa."}</p>
+            <p>{homepage.map_description ?? "Luoghi, percorsi e servizi per orientarti e scegliere cosa vedere."}</p>
           </div>
           <div className={editorial.mapStoryActions}>
             <Link className={editorial.mapPrimary} href={homepage.map_primary_url ?? "/cartina"}>{homepage.map_primary_label ?? "Apri la cartina illustrata"} <span aria-hidden="true">→</span></Link>
@@ -290,7 +313,7 @@ export default async function Home() {
         <div className={`${styles.storyCopy} ${feedback.storyCopy}`}>
           <p className={styles.eyebrow}>Storie e memoria</p>
           <h2 id="memoria-title">Na vòlta<br />a Ronzégno.</h2>
-          <p>Fotografie, testimonianze e documenti raccontano il paese attraverso chi lo ha vissuto. Un archivio di comunità per custodire le tracce del passato e continuare a farle parlare.</p>
+          <p>Fotografie, testimonianze e documenti raccontano Roncegno attraverso le persone che lo hanno vissuto. Un archivio della memoria del paese, costruito nel tempo.</p>
           <Link className={styles.darkButton} href="/memoria">Scopri la memoria di Roncegno <span aria-hidden="true">→</span></Link>
           <div className={feedback.memoryPhotos} aria-hidden="true">
             <span className={feedback.memoryPhotoLarge} />
@@ -304,7 +327,7 @@ export default async function Home() {
           <div className={styles.planningCopy}>
             <p className={styles.eyebrow}>Tutto a portata di mano</p>
             <h2>Pianifica la tua visita.</h2>
-            <p>Informazioni utili e servizi per organizzare al meglio il soggiorno, senza interrompere il racconto del territorio.</p>
+            <p>Come arrivare, dove dormire, dove mangiare e le informazioni utili per organizzare il soggiorno.</p>
           </div>
           <div className={styles.planningCards}>
             {planningItems.map((item, index) => (
@@ -328,7 +351,7 @@ export default async function Home() {
             <p className={styles.eyebrow}>Continua a esplorare</p>
             <h2 id="closing-title">Roncegno, da vivere con il tuo ritmo.</h2>
             <p>
-              Scegli un luogo, un percorso o un appuntamento e costruisci la tua visita partendo da ciò che ti incuriosisce di più.
+              Luoghi, percorsi e appuntamenti per continuare a conoscere Roncegno, con il tuo ritmo.
             </p>
           </div>
           <div className={styles.closingActions}>
