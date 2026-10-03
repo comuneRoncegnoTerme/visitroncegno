@@ -209,18 +209,21 @@ export default async function Home() {
 
 
       <section className={editorial.identityStrip} aria-labelledby="identity-title">
+        <div className={editorial.identityLandscape} aria-hidden="true" />
         <div className={editorial.identityInner}>
           <div className={editorial.identityCopy}>
             <p>Un paese, molti paesaggi</p>
-            <h2 id="identity-title">Dal fondovalle ai masi di montagna.</h2>
-            <span>
-              Il centro storico, le terme, Marter, i castagneti e la montagna raccontano parti diverse dello stesso territorio.
-            </span>
+            <h2 id="identity-title">Dal fondovalle ai masi.</h2>
+          </div>
+          <div className={editorial.identityNarrative}>
+            <p>
+              Il centro storico, Marter, le terme, i castagneti e la montagna raccontano parti diverse di Roncegno.
+            </p>
           </div>
           <div className={editorial.identityFacts} aria-label="Tratti distintivi di Roncegno">
             <span><strong>Terme</strong><small>Acque e parco</small></span>
-            <span><strong>44</strong><small>insediamenti masali</small></span>
-            <span><strong>Montagna</strong><small>e fondovalle</small></span>
+            <span><strong>44 masi</strong><small>Sul territorio</small></span>
+            <span><strong>Montagna</strong><small>Dal fondovalle in su</small></span>
           </div>
         </div>
       </section>
@@ -323,25 +326,41 @@ export default async function Home() {
       </section>
 
       <section className={styles.planningSection}>
-        <div className={`${styles.sectionInner} ${styles.planningGrid}`}>
-          <div className={styles.planningCopy}>
-            <p className={styles.eyebrow}>Tutto a portata di mano</p>
-            <h2>Pianifica la tua visita.</h2>
-            <p>Come arrivare, dove dormire, dove mangiare e le informazioni utili per organizzare il soggiorno.</p>
+        <div className={`${styles.sectionInner} ${styles.planningEditorial}`}>
+          <div className={styles.planningEditorialTop}>
+            <div className={styles.planningCopy}>
+              <p className={styles.eyebrow}>Tutto a portata di mano</p>
+              <h2>Pianifica la tua visita.</h2>
+            </div>
+
+            <div className={styles.planningIntro}>
+              <p>Come arrivare, dove dormire, dove mangiare e le informazioni utili per organizzare il soggiorno.</p>
+            </div>
+
+            <div className={styles.planningPhotos} aria-hidden="true">
+              <span
+                className={styles.planningPhotoLarge}
+                style={{ backgroundImage: `url('${sleepingImage}')` }}
+              />
+              <span
+                className={styles.planningPhotoSmall}
+                style={{ backgroundImage: `url('${eatingImage}')` }}
+              />
+            </div>
           </div>
-          <div className={styles.planningCards}>
+
+          <nav className={styles.planningLinks} aria-label="Organizza la visita">
             {planningItems.map((item, index) => (
-              <Link className={styles.planningCard} href={item.href} key={item.label}>
-                <span className={styles.planningImage} style={{ backgroundImage: `url('${item.image}')` }} aria-hidden="true" />
-                <span className={styles.planningContent}>
-                  <span className={styles.planningNumber}>{String(index + 1).padStart(2, "0")}</span>
+              <Link href={item.href} key={item.label}>
+                <span className={styles.planningLinkNumber}>{String(index + 1).padStart(2, "0")}</span>
+                <span>
                   <small>{item.note}</small>
                   <strong>{item.label}</strong>
-                  <span className={styles.planningArrow}>Apri →</span>
                 </span>
+                <span className={styles.planningLinkArrow} aria-hidden="true">→</span>
               </Link>
             ))}
-          </div>
+          </nav>
         </div>
       </section>
 
