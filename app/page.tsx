@@ -212,15 +212,15 @@ export default async function Home() {
         <div className={editorial.identityInner}>
           <div className={editorial.identityCopy}>
             <p>Un paese, molti paesaggi</p>
-            <h2 id="identity-title">Dal fondovalle ai masi di montagna.</h2>
+            <h2 id="identity-title">Dal fondovalle ai masi.</h2>
             <span>
-              Il centro storico, le terme, Marter, i castagneti e la montagna raccontano parti diverse dello stesso territorio.
+              Il centro storico, Marter, le terme, i castagneti e la montagna raccontano parti diverse di Roncegno.
             </span>
           </div>
           <div className={editorial.identityFacts} aria-label="Tratti distintivi di Roncegno">
             <span><strong>Terme</strong><small>Acque e parco</small></span>
-            <span><strong>44</strong><small>insediamenti masali</small></span>
-            <span><strong>Montagna</strong><small>e fondovalle</small></span>
+            <span><strong>44 masi</strong><small>Sul territorio</small></span>
+            <span><strong>Montagna</strong><small>Dal fondovalle in su</small></span>
           </div>
         </div>
       </section>
