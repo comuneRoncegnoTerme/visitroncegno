@@ -60,50 +60,61 @@ export default async function ContentHubPage() {
 
       <section className={styles.main}>
         <header className={styles.topbar}>
-          <div>
-            <p className={styles.eyebrow}>Content Hub</p>
-            <h1>Dashboard</h1>
+          <div className={styles.topbarCopy}>
+            <p className={styles.eyebrow}>Visit Roncegno · Content Hub</p>
+            <h1>Regia del sito.</h1>
+            <p className={styles.topbarLead}>
+              Da qui aggiorni i contenuti che costruiscono il racconto di Roncegno:
+              homepage, agenda, luoghi, percorsi e materiali sul territorio.
+            </p>
           </div>
           <div className={styles.userBadge}><strong>{session.name}</strong><span>{session.role}</span></div>
         </header>
 
         <section className={styles.dashboard} id="contenuti">
           <div className={styles.primaryColumn}>
-            <p className={styles.sectionLabel}>Contenuti principali</p>
+            <p className={styles.sectionLabel}>Da dove vuoi partire?</p>
             <Link href="#homepage-editor" className={styles.heroAction}>
+              <span className={styles.actionNumber}>01</span>
               <div>
-                <span>Homepage</span>
+                <span>Pagina principale</span>
                 <h2>Homepage</h2>
-                <p>Hero, messaggi principali, call to action e contenuti in evidenza.</p>
+                <p>Hero, percorsi, luoghi in evidenza, appuntamenti e blocchi editoriali.</p>
               </div>
-              <strong>Modifica homepage →</strong>
+              <strong>Apri editor →</strong>
             </Link>
 
             <div className={styles.quickGrid}>
               <Link href="/content-hub/eventi" className={styles.quickAction}>
-                <span>{events.length} prossimi</span>
-                <h3>Eventi</h3>
-                <p>Calendario e appuntamenti.</p>
+                <span className={styles.actionNumber}>02</span>
+                <div>
+                  <small>{events.length} prossimi</small>
+                  <h3>Eventi</h3>
+                  <p>Pubblica e aggiorna il calendario.</p>
+                </div>
                 <strong>Gestisci →</strong>
               </Link>
               <Link href="/content-hub/luoghi" className={styles.quickAction}>
-                <span>{places.length} in evidenza</span>
-                <h3>Luoghi</h3>
-                <p>Schede, contatti, coordinate e mappa.</p>
+                <span className={styles.actionNumber}>03</span>
+                <div>
+                  <small>{places.length} in evidenza</small>
+                  <h3>Luoghi</h3>
+                  <p>Schede, coordinate, contatti e mappa.</p>
+                </div>
                 <strong>Gestisci →</strong>
               </Link>
             </div>
           </div>
 
           <aside className={styles.statusColumn}>
-            <p className={styles.sectionLabel}>Stato contenuti</p>
+            <p className={styles.sectionLabel}>A colpo d’occhio</p>
             <div className={styles.statusList}>
               <div><strong>{events.length}</strong><span>eventi prossimi</span></div>
               <div><strong>{places.length}</strong><span>luoghi in evidenza</span></div>
-              <div><strong>{panelCount}</strong><span>URL QR preservati</span></div>
               <div><strong>{homepageRoutes.length}</strong><span>percorsi in homepage</span></div>
+              <div><strong>{panelCount}</strong><span>URL QR preservati</span></div>
             </div>
-            <Link href="/content-hub/qualita" className={styles.qualityLink}>Controlla qualità contenuti →</Link>
+            <Link href="/content-hub/qualita" className={styles.qualityLink}>Verifica la qualità dei contenuti →</Link>
           </aside>
         </section>
 

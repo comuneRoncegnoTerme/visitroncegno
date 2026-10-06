@@ -90,7 +90,7 @@ export default async function EventDetail({ item }: Props) {
   const eventDate = formatDateTime(item.start_date);
   const eventEnd = formatDateTime(item.end_date);
   const badge = dateBadge(item.start_date);
-  const paragraphs = plainText(item.content ?? item.description ?? item.summary);
+  const paragraphs = plainText(item.content ?? item.description);
   const website = normalizeUrl(item.website_url);
   const booking = normalizeUrl(item.booking_url);
   const calendar = googleCalendarHref(item, location);
@@ -150,7 +150,7 @@ export default async function EventDetail({ item }: Props) {
 
       <section className={styles.contentGrid}>
         <article className={styles.editorialCopy}>
-          <p className={styles.kicker}>Vivi Roncegno</p>
+          <p className={styles.kicker}>L’appuntamento</p>
           {paragraphs.length ? (
             paragraphs.map((text, index) => <p key={index}>{text}</p>)
           ) : (

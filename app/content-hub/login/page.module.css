@@ -1,56 +1,44 @@
 .page{
-  position:relative;
   min-height:100vh;
-  overflow:hidden;
-  background:#f1ede4;
-  color:#17322a;
-}
-.ambient{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  background:
-    radial-gradient(circle at 14% 18%,rgba(214,107,44,.08),transparent 24%),
-    radial-gradient(circle at 86% 84%,rgba(23,56,47,.08),transparent 28%);
+  background:#f5f1e8;
+  color:#17352d;
 }
 .shell{
-  position:relative;
-  z-index:1;
-  width:min(1380px,94vw);
+  width:min(1320px,92vw);
   margin:0 auto;
-  padding:28px 0 42px;
+  padding:28px 0 24px;
 }
 .header{
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:28px;
-  padding:0 2px 22px;
-  border-bottom:1px solid rgba(23,50,42,.12);
+  min-height:74px;
+  border-bottom:1px solid rgba(23,53,45,.14);
 }
 .brand{
   display:flex;
   align-items:center;
-  gap:14px;
+  gap:15px;
   color:inherit;
 }
 .siteLogo{
   display:block;
   width:auto;
-  max-width:230px;
-  max-height:58px;
+  max-width:220px;
+  max-height:54px;
   object-fit:contain;
 }
-.brand span{
+.brand>span{
   font:400 24px/1 Georgia,'Times New Roman',serif;
 }
 .brand small{
-  padding-left:14px;
-  border-left:1px solid rgba(23,50,42,.16);
-  color:#7a847f;
+  padding-left:15px;
+  border-left:1px solid rgba(23,53,45,.18);
+  color:#6d7973;
   font-size:9px;
   font-weight:800;
-  letter-spacing:.18em;
+  letter-spacing:.17em;
   text-transform:uppercase;
 }
 .headerMeta{
@@ -59,14 +47,14 @@
   gap:22px;
 }
 .headerMeta>span{
-  color:#8a918c;
+  color:#8b918d;
   font-size:9px;
   font-weight:800;
-  letter-spacing:.16em;
+  letter-spacing:.15em;
   text-transform:uppercase;
 }
 .siteLink{
-  color:#56655f;
+  color:#51645c;
   font-size:12px;
   font-weight:700;
 }
@@ -74,136 +62,106 @@
 
 .loginArea{
   display:grid;
-  grid-template-columns:minmax(0,1.26fr) minmax(390px,.74fr);
-  gap:22px;
-  align-items:stretch;
-  min-height:calc(100vh - 112px);
-  padding:28px 0 0;
+  grid-template-columns:minmax(0,1.12fr) minmax(390px,.88fr);
+  min-height:calc(100vh - 155px);
+  border-bottom:1px solid rgba(23,53,45,.14);
 }
-.showcase{
-  position:relative;
-  min-height:680px;
-  overflow:hidden;
-  border-radius:30px;
-  background:#274d41 center/cover no-repeat;
-  box-shadow:0 26px 70px rgba(25,42,36,.12);
-}
-.showcaseShade{
-  position:absolute;
-  inset:0;
-  background:
-    linear-gradient(90deg,rgba(7,31,25,.94) 0%,rgba(7,31,25,.76) 50%,rgba(7,31,25,.38) 100%),
-    linear-gradient(0deg,rgba(7,31,25,.74),transparent 58%);
-}
-.showcaseContent{
-  position:relative;
-  z-index:1;
+.introPanel{
   display:flex;
-  min-height:680px;
+  min-height:650px;
   flex-direction:column;
   justify-content:space-between;
-  padding:54px 58px 44px;
-  color:#fff;
+  padding:72px 7vw 44px 0;
+  border-right:1px solid rgba(23,53,45,.14);
 }
 .eyebrow{
-  margin:0 0 16px;
-  color:#efb083;
+  margin:0 0 18px;
+  color:#c86b39;
   font-size:10px;
   font-weight:800;
-  letter-spacing:.18em;
+  letter-spacing:.2em;
   text-transform:uppercase;
 }
-.showcase h1{
-  max-width:760px;
+.introTop h1{
+  max-width:720px;
   margin:0;
-  font:400 clamp(68px,7vw,112px)/.87 Georgia,'Times New Roman',serif;
-  letter-spacing:-.06em;
+  font:400 clamp(64px,7vw,106px)/.9 Georgia,'Times New Roman',serif;
+  letter-spacing:-.055em;
 }
 .lead{
-  max-width:680px;
-  margin:26px 0 0;
-  color:rgba(255,255,255,.78);
-  font-size:18px;
-  line-height:1.62;
+  max-width:650px;
+  margin:28px 0 0;
+  color:#556861;
+  font:400 20px/1.55 Georgia,'Times New Roman',serif;
 }
-.capabilities{
-  display:flex;
-  flex-wrap:wrap;
-  gap:9px;
-  max-width:720px;
-  margin:36px 0 auto;
+.editorialIndex{
+  width:min(720px,100%);
+  margin:52px 0 auto;
+  border-top:1px solid rgba(23,53,45,.16);
 }
-.capabilities span{
-  padding:9px 13px;
-  border:1px solid rgba(255,255,255,.22);
-  border-radius:999px;
-  background:rgba(255,255,255,.07);
-  color:rgba(255,255,255,.82);
+.editorialIndex>div{
+  display:grid;
+  grid-template-columns:46px 150px 1fr;
+  align-items:baseline;
+  gap:16px;
+  padding:15px 0;
+  border-bottom:1px solid rgba(23,53,45,.12);
+}
+.editorialIndex span{
+  color:#bd6a3e;
   font-size:10px;
-  font-weight:700;
-  backdrop-filter:blur(8px);
+  font-weight:800;
+  letter-spacing:.12em;
+}
+.editorialIndex strong{
+  font:400 20px/1.1 Georgia,'Times New Roman',serif;
+}
+.editorialIndex small{
+  color:#758079;
+  font-size:12px;
 }
 .institutionalSignature{
   display:flex;
   align-items:center;
-  gap:16px;
-  width:max-content;
-  max-width:100%;
-  margin-top:44px;
-  padding:16px 18px;
-  border:1px solid rgba(255,255,255,.2);
-  border-radius:18px;
-  background:rgba(4,24,19,.3);
-  backdrop-filter:blur(12px);
+  gap:14px;
+  margin-top:42px;
 }
 .municipalCrest{
-  width:54px;
-  height:64px;
+  width:42px;
+  height:50px;
   object-fit:contain;
-  flex:0 0 auto;
 }
 .institutionalSignature>div{
   display:flex;
-  min-width:0;
   flex-direction:column;
+  min-width:0;
 }
 .institutionalSignature small{
-  color:rgba(255,255,255,.58);
+  color:#8a918d;
   font-size:9px;
   font-weight:800;
-  letter-spacing:.14em;
+  letter-spacing:.13em;
   text-transform:uppercase;
 }
 .institutionalSignature strong{
-  margin-top:4px;
-  color:#fff;
-  font:400 18px/1.1 Georgia,'Times New Roman',serif;
+  margin-top:3px;
+  font:400 16px/1.15 Georgia,'Times New Roman',serif;
 }
 .institutionalSignature span{
-  margin-top:4px;
-  color:rgba(255,255,255,.68);
+  margin-top:3px;
+  color:#7a847f;
   font-size:11px;
 }
-
 .accessPanel{
-  display:flex;
-  min-width:0;
-  flex-direction:column;
-  justify-content:center;
-  padding:22px;
-}
-.card{
-  padding:38px;
-  border:1px solid rgba(23,50,42,.11);
-  border-radius:24px;
-  background:rgba(255,255,255,.94);
-  box-shadow:0 20px 55px rgba(25,42,36,.08);
-  backdrop-filter:blur(12px);
+  align-self:center;
+  width:min(100%,470px);
+  margin-left:auto;
+  padding:42px 0 42px 58px;
 }
 .cardHeading>span{
   display:block;
-  margin-bottom:10px;
-  color:#9a663e;
+  margin-bottom:11px;
+  color:#a05d38;
   font-size:9px;
   font-weight:800;
   letter-spacing:.16em;
@@ -211,18 +169,18 @@
 }
 .cardHeading h2{
   margin:0;
-  font:400 38px/1 Georgia,'Times New Roman',serif;
+  font:400 42px/.98 Georgia,'Times New Roman',serif;
   letter-spacing:-.035em;
 }
 .cardHeading p{
   margin:15px 0 0;
-  color:#69756f;
-  line-height:1.6;
+  color:#6d7872;
+  line-height:1.55;
 }
 .form{
   display:grid;
   gap:18px;
-  margin-top:30px;
+  margin-top:34px;
 }
 .form label{
   display:grid;
@@ -237,10 +195,10 @@
   width:100%;
   height:54px;
   padding:0 15px;
-  border:1px solid rgba(23,50,42,.16);
-  border-radius:12px;
-  background:#f8f6f0;
-  color:#17322a;
+  border:1px solid rgba(23,53,45,.18);
+  border-radius:4px;
+  background:#faf8f3;
+  color:#17352d;
   font:inherit;
   outline:0;
   transition:border-color .18s ease,box-shadow .18s ease,background .18s ease;
@@ -248,24 +206,20 @@
 .form input:focus{
   border-color:#386454;
   background:#fff;
-  box-shadow:0 0 0 4px rgba(56,100,84,.08);
+  box-shadow:0 0 0 3px rgba(56,100,84,.07);
 }
 .form button{
   height:54px;
   border:0;
-  border-radius:12px;
+  border-radius:4px;
   background:#17382f;
   color:#fff;
   font:inherit;
   font-weight:800;
   cursor:pointer;
-  box-shadow:0 10px 24px rgba(23,56,47,.16);
-  transition:transform .18s ease,background .18s ease;
+  transition:background .18s ease;
 }
-.form button:hover{
-  transform:translateY(-1px);
-  background:#214b40;
-}
+.form button:hover{background:#214b40}
 .form button:disabled{
   cursor:wait;
   opacity:.66;
@@ -278,10 +232,10 @@
 .securityNote{
   display:flex;
   gap:9px;
-  margin-top:20px;
+  margin-top:22px;
   padding-top:18px;
-  border-top:1px solid rgba(23,50,42,.08);
-  color:#879089;
+  border-top:1px solid rgba(23,53,45,.1);
+  color:#828b86;
 }
 .securityNote>span{
   color:#5f8779;
@@ -290,21 +244,19 @@
 .securityNote p{
   margin:0;
   font-size:10px;
-  line-height:1.55;
+  line-height:1.5;
 }
-.productNote{
+.footer{
   display:flex;
-  flex-direction:column;
-  align-items:center;
-  margin-top:18px;
-  color:#758079;
-  text-align:center;
+  justify-content:space-between;
+  gap:20px;
+  padding:14px 0 0;
+  color:#7a847e;
 }
-.productNote span{
-  font:400 15px/1.2 Georgia,'Times New Roman',serif;
+.footer span{
+  font:400 13px/1.2 Georgia,'Times New Roman',serif;
 }
-.productNote small{
-  margin-top:5px;
+.footer small{
   font-size:9px;
   letter-spacing:.09em;
   text-transform:uppercase;
@@ -315,83 +267,35 @@
   outline:3px solid rgba(56,100,84,.28);
   outline-offset:4px;
 }
-
-@media(max-width:1050px){
-  .shell{width:min(94vw,900px)}
-  .loginArea{
-    grid-template-columns:1fr;
+@media(max-width:980px){
+  .shell{width:min(92vw,820px)}
+  .loginArea{grid-template-columns:1fr}
+  .introPanel{
     min-height:auto;
-    padding-top:24px;
-  }
-  .showcase,
-  .showcaseContent{
-    min-height:560px;
-  }
-  .showcaseContent{
-    padding:44px 46px 38px;
+    padding:56px 0 42px;
+    border-right:0;
+    border-bottom:1px solid rgba(23,53,45,.14);
   }
   .accessPanel{
-    padding:0 0 36px;
-  }
-  .card{
-    width:min(100%,620px);
-    margin:0 auto;
+    width:min(100%,560px);
+    margin:0;
+    padding:44px 0 52px;
   }
 }
-@media(max-width:650px){
-  .shell{
-    width:min(100% - 24px,900px);
-    padding-top:18px;
-  }
-  .header{
-    align-items:flex-start;
-  }
-  .siteLogo{
-    max-width:170px;
-    max-height:46px;
-  }
-  .brand{
-    align-items:flex-start;
-    flex-direction:column;
-    gap:5px;
-  }
-  .brand small{
-    padding-left:0;
-    border-left:0;
-  }
+@media(max-width:620px){
+  .shell{width:calc(100% - 32px);padding-top:14px}
+  .header{align-items:flex-start;padding:10px 0 16px}
+  .siteLogo{max-width:165px;max-height:44px}
+  .brand{align-items:flex-start;flex-direction:column;gap:5px}
+  .brand small{padding-left:0;border-left:0}
   .headerMeta>span{display:none}
-  .loginArea{gap:14px}
-  .showcase{
-    min-height:500px;
-    border-radius:22px;
-  }
-  .showcaseContent{
-    min-height:500px;
-    padding:34px 28px 28px;
-  }
-  .showcase h1{
-    font-size:clamp(58px,17vw,82px);
-  }
-  .lead{
-    font-size:16px;
-  }
-  .capabilities{
-    gap:7px;
-    margin-top:26px;
-  }
-  .institutionalSignature{
-    width:100%;
-    margin-top:28px;
-    padding:14px;
-  }
-  .municipalCrest{
-    width:48px;
-    height:58px;
-  }
-  .accessPanel{padding:0 0 26px}
-  .card{
-    padding:26px;
-    border-radius:20px;
-  }
-  .cardHeading h2{font-size:32px}
+  .introPanel{padding:42px 0 34px}
+  .introTop h1{font-size:clamp(56px,17vw,78px)}
+  .lead{font-size:17px}
+  .editorialIndex{margin-top:36px}
+  .editorialIndex>div{grid-template-columns:34px 1fr;gap:10px}
+  .editorialIndex small{grid-column:2}
+  .accessPanel{padding:36px 0 44px}
+  .cardHeading h2{font-size:36px}
+  .footer{flex-direction:column;gap:4px}
 }
