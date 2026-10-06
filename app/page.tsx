@@ -211,16 +211,16 @@ export default async function Home() {
       <section className={editorial.identityStrip} aria-labelledby="identity-title">
         <div className={editorial.identityInner}>
           <div className={editorial.identityCopy}>
-            <p>Un paese, molti paesaggi</p>
-            <h2 id="identity-title">Dal fondovalle ai masi di montagna.</h2>
+            <p>{homepage.identity_eyebrow ?? "Un paese, molti paesaggi"}</p>
+            <h2 id="identity-title">{homepage.identity_title ?? "Dal fondovalle ai masi di montagna."}</h2>
             <span>
-              Il centro storico, le terme, Marter, i castagneti e la montagna raccontano parti diverse dello stesso territorio.
+              {homepage.identity_description ?? "Il centro storico, le terme, Marter, i castagneti e la montagna raccontano parti diverse dello stesso territorio."}
             </span>
           </div>
           <div className={editorial.identityFacts} aria-label="Tratti distintivi di Roncegno">
-            <span><strong>Terme</strong><small>Acque e parco</small></span>
-            <span><strong>44</strong><small>insediamenti masali</small></span>
-            <span><strong>Montagna</strong><small>e fondovalle</small></span>
+            <span><strong>{homepage.identity_fact_1_value ?? "Terme"}</strong><small>{homepage.identity_fact_1_label ?? "Acque e parco"}</small></span>
+            <span><strong>{homepage.identity_fact_2_value ?? "44"}</strong><small>{homepage.identity_fact_2_label ?? "insediamenti masali"}</small></span>
+            <span><strong>{homepage.identity_fact_3_value ?? "Montagna"}</strong><small>{homepage.identity_fact_3_label ?? "e fondovalle"}</small></span>
           </div>
         </div>
       </section>
@@ -260,13 +260,25 @@ export default async function Home() {
       )}
 
 
-      <FestaHomepageBanner />
+      {(homepage.seasonal_enabled ?? true) && (
+        <FestaHomepageBanner
+          eyebrow={homepage.seasonal_eyebrow}
+          title={homepage.seasonal_title}
+          description={homepage.seasonal_description}
+          primaryLabel={homepage.seasonal_primary_label}
+          primaryUrl={homepage.seasonal_primary_url}
+          secondaryLabel={homepage.seasonal_secondary_label}
+          secondaryUrl={homepage.seasonal_secondary_url}
+          noteSmall={homepage.seasonal_note_small}
+          noteStrong={homepage.seasonal_note_strong}
+        />
+      )}
 
       <section className={`${styles.section} ${styles.eventsSection}`}>
         <div className={styles.sectionInner}>
           <div className={styles.sectionHeading}>
-            <div><p>In primo piano</p><h2 className={styles.sectionTitle}>Eventi a Roncegno</h2><span className={styles.sectionLead}>Tradizioni, cultura e vita di paese. I prossimi appuntamenti a Roncegno.</span></div>
-            <Link className={styles.sectionLink} href="/eventi">Vedi tutti gli eventi →</Link>
+            <div><p>{homepage.events_eyebrow ?? "In primo piano"}</p><h2 className={styles.sectionTitle}>{homepage.events_title ?? "Eventi a Roncegno"}</h2><span className={styles.sectionLead}>{homepage.events_description ?? "Tradizioni, cultura e vita di paese. I prossimi appuntamenti a Roncegno."}</span></div>
+            <Link className={styles.sectionLink} href={homepage.events_link_url ?? "/eventi"}>{homepage.events_link_label ?? "Vedi tutti gli eventi"} →</Link>
           </div>
           <div className={`${styles.eventsGrid} ${refine.eventsGrid} ${feedback.eventsGrid}${visibleEvents.length === 3 ? ` ${refine.eventsGridThree}` : ""}`}>
             {visibleEvents.map((event, index) => {
@@ -311,10 +323,10 @@ export default async function Home() {
       <section className={`${styles.storySection} ${feedback.storySection}`} aria-labelledby="memoria-title">
         <div className={feedback.memoryLandscape} aria-hidden="true" />
         <div className={`${styles.storyCopy} ${feedback.storyCopy}`}>
-          <p className={styles.eyebrow}>Storie e memoria</p>
-          <h2 id="memoria-title">Na vòlta<br />a Ronzégno.</h2>
-          <p>Fotografie, testimonianze e documenti raccontano Roncegno attraverso le persone che lo hanno vissuto. Un archivio della memoria del paese, costruito nel tempo.</p>
-          <Link className={styles.darkButton} href="/memoria">Scopri la memoria di Roncegno <span aria-hidden="true">→</span></Link>
+          <p className={styles.eyebrow}>{homepage.memory_eyebrow ?? "Storie e memoria"}</p>
+          <h2 id="memoria-title">{homepage.memory_title ?? "Na vòlta a Ronzégno."}</h2>
+          <p>{homepage.memory_description ?? "Fotografie, testimonianze e documenti raccontano Roncegno attraverso le persone che lo hanno vissuto. Un archivio della memoria del paese, costruito nel tempo."}</p>
+          <Link className={styles.darkButton} href={homepage.memory_link_url ?? "/memoria"}>{homepage.memory_link_label ?? "Scopri la memoria di Roncegno"} <span aria-hidden="true">→</span></Link>
           <div className={feedback.memoryPhotos} aria-hidden="true">
             <span className={feedback.memoryPhotoLarge} />
             <span className={feedback.memoryPhotoSmall} />
@@ -325,9 +337,9 @@ export default async function Home() {
       <section className={styles.planningSection}>
         <div className={`${styles.sectionInner} ${styles.planningGrid}`}>
           <div className={styles.planningCopy}>
-            <p className={styles.eyebrow}>Tutto a portata di mano</p>
-            <h2>Pianifica la tua visita.</h2>
-            <p>Come arrivare, dove dormire, dove mangiare e le informazioni utili per organizzare il soggiorno.</p>
+            <p className={styles.eyebrow}>{homepage.planning_eyebrow ?? "Tutto a portata di mano"}</p>
+            <h2>{homepage.planning_title ?? "Pianifica la tua visita."}</h2>
+            <p>{homepage.planning_description ?? "Come arrivare, dove dormire, dove mangiare e le informazioni utili per organizzare il soggiorno."}</p>
           </div>
           <div className={styles.planningCards}>
             {planningItems.map((item, index) => (
@@ -348,18 +360,18 @@ export default async function Home() {
       <section className={styles.closing} aria-labelledby="closing-title">
         <div className={`${styles.sectionInner} ${styles.closingInner}`}>
           <div className={styles.closingCopy}>
-            <p className={styles.eyebrow}>Continua a esplorare</p>
-            <h2 id="closing-title">Roncegno, da vivere con il tuo ritmo.</h2>
+            <p className={styles.eyebrow}>{homepage.closing_eyebrow ?? "Continua a esplorare"}</p>
+            <h2 id="closing-title">{homepage.closing_title ?? "Roncegno, da vivere con il tuo ritmo."}</h2>
             <p>
-              Luoghi, percorsi e appuntamenti per continuare a conoscere Roncegno, con il tuo ritmo.
+              {homepage.closing_description ?? "Luoghi, percorsi e appuntamenti per continuare a conoscere Roncegno, con il tuo ritmo."}
             </p>
           </div>
           <div className={styles.closingActions}>
-            <Link className={styles.closingPrimary} href="/luoghi">
-              Esplora i luoghi <span aria-hidden="true">→</span>
+            <Link className={styles.closingPrimary} href={homepage.closing_primary_url ?? "/luoghi"}>
+              {homepage.closing_primary_label ?? "Esplora i luoghi"} <span aria-hidden="true">→</span>
             </Link>
-            <Link className={styles.closingSecondary} href="/eventi">
-              Guarda gli eventi <span aria-hidden="true">→</span>
+            <Link className={styles.closingSecondary} href={homepage.closing_secondary_url ?? "/eventi"}>
+              {homepage.closing_secondary_label ?? "Guarda gli eventi"} <span aria-hidden="true">→</span>
             </Link>
           </div>
         </div>
