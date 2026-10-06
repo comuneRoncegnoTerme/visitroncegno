@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import MediaField from "./MediaField";
 import styles from "./collection-editor.module.css";
@@ -113,8 +114,6 @@ export default function CollectionEditor({
     const available = new Set(availableFields);
     return fields.filter((field) => available.has(field.name));
   }, [availableFields, fields]);
-
-  const hiddenFieldCount = fields.length - visibleFields.length;
 
   const filteredItems = useMemo(() => {
     const normalizedQuery = query.trim().toLocaleLowerCase("it-IT");
@@ -335,6 +334,10 @@ export default function CollectionEditor({
       </aside>
 
       <section className={styles.editorPane}>
+        <Link href="/content-hub" className={styles.backToHub}>
+          ← Torna al Content Hub
+        </Link>
+
         <div className={styles.editorHeading}>
           <div>
             <p>{selected ? `Modifica #${selected.id}` : "Nuovo contenuto"}</p>
@@ -351,13 +354,6 @@ export default function CollectionEditor({
             </a>
           )}
         </div>
-
-        {availableFields && hiddenFieldCount > 0 && (
-          <p className={styles.schemaNotice}>
-            {hiddenFieldCount} campi avanzati non sono ancora presenti nello schema Directus
-            di questa installazione e vengono nascosti automaticamente.
-          </p>
-        )}
 
         <form className={styles.form} onSubmit={save}>
           {visibleFields.map((field) => {
