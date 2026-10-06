@@ -1,21 +1,47 @@
 import Link from "next/link";
 import styles from "./FestaHomepageBanner.module.css";
 
-export default function FestaHomepageBanner() {
+type Props = {
+  eyebrow?: string | null;
+  title?: string | null;
+  description?: string | null;
+  primaryLabel?: string | null;
+  primaryUrl?: string | null;
+  secondaryLabel?: string | null;
+  secondaryUrl?: string | null;
+  noteSmall?: string | null;
+  noteStrong?: string | null;
+};
+
+export default function FestaHomepageBanner({
+  eyebrow,
+  title,
+  description,
+  primaryLabel,
+  primaryUrl,
+  secondaryLabel,
+  secondaryUrl,
+  noteSmall,
+  noteStrong,
+}: Props) {
   return (
     <section className={styles.wrapper} aria-labelledby="festa-home-title">
       <div className={styles.image} />
       <div className={styles.overlay} />
 
       <div className={styles.content}>
-        <p className={styles.eyebrow}>23–25 ottobre 2026 · Roncegno Terme</p>
-        <h2 id="festa-home-title">Festa della Castagna 2026</h2>
+        <p className={styles.eyebrow}>{eyebrow ?? "23–25 ottobre 2026 · Roncegno Terme"}</p>
+        <h2 id="festa-home-title">{title ?? "Festa della Castagna 2026"}</h2>
         <p className={styles.lead}>
-          Tre giorni di castagne, cucina, musica, passeggiate e vita di paese.
+          {description ?? "Tre giorni di castagne, cucina, musica, passeggiate e vita di paese."}
         </p>
         <div className={styles.actions}>
-          <Link className={styles.primary} href="/festa-della-castagna">Scopri il programma →</Link>
-          <Link className={styles.secondary} href="/eventi">Tutti gli appuntamenti</Link>
+          <Link className={styles.primary} href={primaryUrl ?? "/festa-della-castagna"}>
+            {primaryLabel ?? "Scopri il programma"} →
+          </Link>
+          <Link className={styles.secondary} href={secondaryUrl ?? "/eventi"}>
+            {secondaryLabel ?? "Tutti gli appuntamenti"}
+          </Link>
         </div>
       </div>
 
@@ -28,8 +54,8 @@ export default function FestaHomepageBanner() {
       </div>
 
       <div className={styles.note}>
-        <span>Festa: sabato 24 e domenica 25</span>
-        <strong>Aspettando la Festa: venerdì 23</strong>
+        <span>{noteSmall ?? "Festa: sabato 24 e domenica 25"}</span>
+        <strong>{noteStrong ?? "Aspettando la Festa: venerdì 23"}</strong>
       </div>
     </section>
   );
