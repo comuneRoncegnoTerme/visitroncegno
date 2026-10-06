@@ -33,6 +33,51 @@ export interface HomepageContent {
   map_primary_url: string | null;
   map_secondary_label: string | null;
   map_secondary_url: string | null;
+
+  identity_eyebrow: string | null;
+  identity_title: string | null;
+  identity_description: string | null;
+  identity_fact_1_value: string | null;
+  identity_fact_1_label: string | null;
+  identity_fact_2_value: string | null;
+  identity_fact_2_label: string | null;
+  identity_fact_3_value: string | null;
+  identity_fact_3_label: string | null;
+
+  seasonal_enabled: boolean | null;
+  seasonal_eyebrow: string | null;
+  seasonal_title: string | null;
+  seasonal_description: string | null;
+  seasonal_primary_label: string | null;
+  seasonal_primary_url: string | null;
+  seasonal_secondary_label: string | null;
+  seasonal_secondary_url: string | null;
+  seasonal_note_small: string | null;
+  seasonal_note_strong: string | null;
+
+  events_eyebrow: string | null;
+  events_title: string | null;
+  events_description: string | null;
+  events_link_label: string | null;
+  events_link_url: string | null;
+
+  memory_eyebrow: string | null;
+  memory_title: string | null;
+  memory_description: string | null;
+  memory_link_label: string | null;
+  memory_link_url: string | null;
+
+  planning_eyebrow: string | null;
+  planning_title: string | null;
+  planning_description: string | null;
+
+  closing_eyebrow: string | null;
+  closing_title: string | null;
+  closing_description: string | null;
+  closing_primary_label: string | null;
+  closing_primary_url: string | null;
+  closing_secondary_label: string | null;
+  closing_secondary_url: string | null;
 }
 
 export interface Experience {
@@ -195,6 +240,45 @@ const EMPTY_HOMEPAGE: HomepageContent = {
   map_primary_url: null,
   map_secondary_label: null,
   map_secondary_url: null,
+  identity_eyebrow: null,
+  identity_title: null,
+  identity_description: null,
+  identity_fact_1_value: null,
+  identity_fact_1_label: null,
+  identity_fact_2_value: null,
+  identity_fact_2_label: null,
+  identity_fact_3_value: null,
+  identity_fact_3_label: null,
+  seasonal_enabled: true,
+  seasonal_eyebrow: null,
+  seasonal_title: null,
+  seasonal_description: null,
+  seasonal_primary_label: null,
+  seasonal_primary_url: null,
+  seasonal_secondary_label: null,
+  seasonal_secondary_url: null,
+  seasonal_note_small: null,
+  seasonal_note_strong: null,
+  events_eyebrow: null,
+  events_title: null,
+  events_description: null,
+  events_link_label: null,
+  events_link_url: null,
+  memory_eyebrow: null,
+  memory_title: null,
+  memory_description: null,
+  memory_link_label: null,
+  memory_link_url: null,
+  planning_eyebrow: null,
+  planning_title: null,
+  planning_description: null,
+  closing_eyebrow: null,
+  closing_title: null,
+  closing_description: null,
+  closing_primary_label: null,
+  closing_primary_url: null,
+  closing_secondary_label: null,
+  closing_secondary_url: null,
 };
 
 const DEFAULT_SITE_SETTINGS: SiteSettings = {
