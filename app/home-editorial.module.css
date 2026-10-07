@@ -452,201 +452,93 @@
 }
 
 
-/* Editorial identity interlude: same visual grammar as the memory block. */
-.identityStrip {
-  position: relative;
-  overflow: hidden;
-  padding: 62px 5vw 66px;
-  background: #f4efe5;
+/* Compact identity interlude: more balanced and less empty. */
+.identityStrip{
+  position:relative;
+  overflow:hidden;
+  padding:54px 5vw 62px;
+  background:#f4efe5;
 }
-
-.identityLandscape {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 58%;
-  opacity: .11;
+.identityLandscape{
+  position:absolute;
+  inset:auto 0 0;
+  height:70%;
+  opacity:.075;
   background:
-    linear-gradient(180deg, rgba(244,239,229,1) 0%, rgba(244,239,229,.52) 28%, rgba(244,239,229,.08) 100%),
-    url("/images/homepage/roncegno-skyline.webp") center 62%/cover no-repeat;
-  filter: grayscale(.45) sepia(.08);
-  pointer-events: none;
+    linear-gradient(180deg,rgba(244,239,229,1) 0%,rgba(244,239,229,.68) 30%,rgba(244,239,229,.12) 100%),
+    url("/images/homepage/roncegno-skyline.webp") center 58%/cover no-repeat;
+  filter:grayscale(.55) sepia(.06);
+  pointer-events:none;
 }
-
-.identityInner {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: minmax(320px,.88fr) minmax(320px,.82fr) minmax(340px,.72fr);
-  grid-template-rows: auto auto;
-  gap: 14px clamp(38px,5vw,84px);
-  align-items: start;
-  width: 92vw;
-  max-width: none;
-  margin: 0 auto;
-  padding: 34px 0 30px;
-  border-top: 1px solid rgba(23,55,46,.15);
-  border-bottom: 1px solid rgba(23,55,46,.15);
+.identityInner{
+  position:relative;
+  z-index:1;
+  display:grid;
+  grid-template-columns:minmax(0,1.08fr) minmax(360px,.72fr);
+  gap:clamp(54px,7vw,120px);
+  align-items:center;
+  width:92vw;
+  margin:0 auto;
+  padding:30px 0;
+  border-top:1px solid rgba(23,55,46,.14);
+  border-bottom:1px solid rgba(23,55,46,.14);
 }
-
-.identityCopy {
-  grid-column: 1;
-  grid-row: 1 / 3;
+.identityCopy{max-width:760px}
+.identityCopy>p{
+  margin:0 0 12px;
+  color:#b65d32;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.18em;
+  text-transform:uppercase;
 }
-
-.identityCopy > p {
-  margin: 0 0 12px;
-  color: #b65d32;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .18em;
-  text-transform: uppercase;
+.identityCopy h2{
+  max-width:620px;
+  margin:0;
+  font:400 clamp(42px,4.3vw,68px)/.95 Georgia,"Times New Roman",serif;
+  letter-spacing:-.045em;
+  text-wrap:balance;
 }
-
-.identityCopy h2 {
-  max-width: 520px;
-  margin: 0;
-  font: 400 clamp(42px, 4.1vw, 64px)/.96 Georgia, "Times New Roman", serif;
-  letter-spacing: -.045em;
-  text-wrap: balance;
+.identityCopy>span{
+  display:block;
+  max-width:660px;
+  margin-top:20px;
+  color:#596660;
+  font-size:16px;
+  line-height:1.68;
 }
-
-.identityNarrative {
-  grid-column: 2;
-  grid-row: 1;
-  align-self: center;
+.identityFacts{
+  display:flex;
+  flex-direction:column;
+  border-top:1px solid rgba(23,55,46,.13);
 }
-
-.identityNarrative p {
-  max-width: 560px;
-  margin: 0;
-  color: #596660;
-  font-size: 16px;
-  line-height: 1.7;
+.identityFacts>span{
+  display:grid;
+  grid-template-columns:minmax(120px,.8fr) 1fr;
+  gap:20px;
+  align-items:baseline;
+  padding:18px 0;
+  border-bottom:1px solid rgba(23,55,46,.13);
 }
-
-.identityFacts {
-  grid-column: 3;
-  grid-row: 1 / 3;
-  display: flex;
-  flex-direction: column;
-  align-self: stretch;
-  justify-content: center;
+.identityFacts strong{
+  font:400 26px/1 Georgia,"Times New Roman",serif;
+  letter-spacing:-.02em;
 }
-
-.identityFacts > span {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(110px,.75fr) 1fr;
-  gap: 18px;
-  align-items: baseline;
-  padding: 16px 0;
-  border-bottom: 1px solid rgba(23,55,46,.13);
+.identityFacts small{
+  color:#75807b;
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:.09em;
+  text-transform:uppercase;
 }
-
-.identityFacts > span:first-child {
-  border-top: 1px solid rgba(23,55,46,.13);
+@media(max-width:900px){
+  .identityInner{grid-template-columns:1fr;gap:30px}
 }
-
-.identityFacts strong,
-.identityFacts small {
-  display: block;
-}
-
-.identityFacts strong {
-  font: 400 23px/1 Georgia, "Times New Roman", serif;
-  letter-spacing: -.02em;
-}
-
-.identityFacts small {
-  color: #75807b;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: .09em;
-  text-transform: uppercase;
-}
-
-@media (max-width: 1080px) {
-  .identityInner {
-    grid-template-columns: minmax(280px,.9fr) minmax(0,1.1fr);
-  }
-
-  .identityCopy {
-    grid-column: 1;
-  }
-
-  .identityNarrative {
-    grid-column: 2;
-  }
-
-  .identityFacts {
-    grid-column: 1 / 3;
-    grid-row: 3;
-    flex-direction: row;
-    gap: 0;
-  }
-
-  .identityFacts > span {
-    flex: 1;
-    display: block;
-    padding: 16px 18px;
-    border-top: 1px solid rgba(23,55,46,.13);
-    border-right: 1px solid rgba(23,55,46,.13);
-    border-bottom: 1px solid rgba(23,55,46,.13);
-  }
-
-  .identityFacts > span:last-child {
-    border-right: 0;
-  }
-
-  .identityFacts small {
-    margin-top: 6px;
-  }
-}
-
-@media (max-width: 760px) {
-  .identityStrip {
-    padding: 50px 5vw 54px;
-  }
-
-  .identityLandscape {
-    height: 42%;
-    opacity: .08;
-  }
-
-  .identityInner {
-    display: block;
-    width: 100%;
-    padding: 28px 0;
-  }
-
-  .identityNarrative {
-    margin-top: 22px;
-  }
-
-  .identityNarrative p {
-    font-size: 15px;
-  }
-
-  .identityFacts {
-    display: block;
-    margin-top: 24px;
-  }
-
-  .identityFacts > span,
-  .identityFacts > span:first-child {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    padding: 13px 0;
-    border-right: 0;
-    border-top: 0;
-    border-bottom: 1px solid rgba(23,55,46,.12);
-  }
-
-  .identityFacts > span:first-child {
-    border-top: 1px solid rgba(23,55,46,.12);
-  }
+@media(max-width:760px){
+  .identityStrip{padding:44px 5vw 52px}
+  .identityInner{width:100%;padding:26px 0}
+  .identityCopy>span{font-size:15px}
+  .identityFacts>span{grid-template-columns:120px 1fr;padding:14px 0}
 }
 
 /* Slightly tighter section rhythm to keep the editorial pace moving. */
@@ -705,4 +597,33 @@
   .mapStory {
     padding-bottom: 82px;
   }
+}
+
+
+/* Cartina block with atmospheric blurred map background. */
+.mapStoryInner{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  background:#17372e;
+  box-shadow:0 22px 54px rgba(23,55,46,.12);
+}
+.mapStoryInner::before{
+  position:absolute;
+  inset:-16px;
+  z-index:-2;
+  content:"";
+  background:url("/images/cartina/cartina-roncegno-preview.webp") center/cover no-repeat;
+  filter:blur(5px) saturate(.75);
+  transform:scale(1.05);
+  opacity:.42;
+}
+.mapStoryInner::after{
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  content:"";
+  background:
+    linear-gradient(90deg,rgba(11,49,40,.94) 0%,rgba(11,49,40,.84) 46%,rgba(11,49,40,.66) 100%),
+    radial-gradient(circle at 82% 25%,rgba(214,107,44,.18),transparent 30%);
 }

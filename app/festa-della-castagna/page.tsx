@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
+import { getSiteSettings } from "@/lib/directus";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
@@ -58,21 +61,19 @@ const programme = [
   },
 ] as const;
 
-export default function FestaDellaCastagnaPage() {
+export default async function FestaDellaCastagnaPage() {
+  const siteSettings = await getSiteSettings();
+
   return (
     <main className={styles.page}>
-      <header className={styles.header}>
-        <Link href="/" className={styles.brand}>Visit Roncegno</Link>
-        <nav><a href="#atmosfera">La Festa</a><a href="#programma">Programma</a><a href="#storie">Castagneti</a></nav>
-        <Link href="/" className={styles.backLink}>Torna a Roncegno</Link>
-      </header>
+      <SiteHeader settings={siteSettings} overlay />
 
       <section className={styles.hero}>
         <div className={styles.heroImage} />
         <div className={styles.heroOverlay} />
         <div className={styles.heroContent}>
           <p className={styles.kicker}>23–25 ottobre 2026 · Roncegno Terme</p>
-          <img className={styles.officialLogo} src="/images/festa-castagna/logo-festa.png" alt="Logo ufficiale Festa della Castagna Roncegno Terme" />
+          <img className={styles.officialLogo} src="/images/festa-castagna/logo-festa.webp" alt="Logo ufficiale Festa della Castagna Roncegno Terme" />
           <p className={styles.lead}>Caldarroste sul fuoco, bancarelle tra gli alberi, musica, famiglie e un paese intero che si ritrova. Tre giorni per vivere l’autunno di Roncegno.</p>
           <div className={styles.heroActions}>
             <a href="#programma" className={styles.primaryButton}>Scopri il programma →</a>
@@ -114,7 +115,6 @@ export default function FestaDellaCastagnaPage() {
         <div className={styles.videoStoryCaption}>
           <p>Dentro la Festa</p>
           <h2>Roncegno, in un giorno d’autunno.</h2>
-          <span>Castagne, musica, piazze e persone.</span>
         </div>
       </section>
 
@@ -195,6 +195,7 @@ export default function FestaDellaCastagnaPage() {
       </section>
 
       <section className={styles.cta}><div><p className={styles.eyebrowLight}>Visit Roncegno</p><h2>Portati a casa qualcosa di più di un sacchetto di castagne.</h2><p>Scopri i luoghi, i percorsi e le storie che fanno di Roncegno un territorio da vivere tutto l’anno.</p></div><Link href="/" className={styles.lightButton}>Esplora Roncegno →</Link></section>
+      <SiteFooter settings={siteSettings} />
     </main>
   );
 }
