@@ -7,8 +7,9 @@ type Props = { settings: SiteSettings; overlay?: boolean };
 
 export default function SiteHeader({ settings, overlay = false }: Props) {
   const name = settings.site_name ?? "Visit Roncegno";
-  const logo = getDirectusAssetUrl(overlay ? (settings.logo_light ?? settings.logo) : settings.logo);
-  const useWhiteFallbackLogo = overlay && !settings.logo_light && !!settings.logo;
+  const cmsLogo = getDirectusAssetUrl(overlay ? (settings.logo_light ?? settings.logo) : settings.logo);
+  const logo = cmsLogo ?? (overlay ? "/images/logo/logo_white.svg" : "/images/logo/visit-roncegno.png");
+  const useWhiteFallbackLogo = overlay && !settings.logo_light && !!settings.logo && !!cmsLogo;
 
   return (
     <header className={`${styles.header} ${overlay ? styles.overlay : styles.inner}`}>
