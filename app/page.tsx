@@ -209,18 +209,21 @@ export default async function Home() {
 
 
       <section className={editorial.identityStrip} aria-labelledby="identity-title">
+        <div className={editorial.identityLandscape} aria-hidden="true" />
         <div className={editorial.identityInner}>
           <div className={editorial.identityCopy}>
             <p>{homepage.identity_eyebrow ?? "Un paese, molti paesaggi"}</p>
-            <h2 id="identity-title">{homepage.identity_title ?? "Dal fondovalle ai masi di montagna."}</h2>
-            <span>
-              {homepage.identity_description ?? "Il centro storico, le terme, Marter, i castagneti e la montagna raccontano parti diverse dello stesso territorio."}
-            </span>
+            <h2 id="identity-title">{homepage.identity_title ?? "Dal fondovalle ai masi."}</h2>
+          </div>
+          <div className={editorial.identityNarrative}>
+            <p>
+              {homepage.identity_description ?? "Il centro storico, Marter, le terme, i castagneti e la montagna raccontano parti diverse di Roncegno."}
+            </p>
           </div>
           <div className={editorial.identityFacts} aria-label="Tratti distintivi di Roncegno">
             <span><strong>{homepage.identity_fact_1_value ?? "Terme"}</strong><small>{homepage.identity_fact_1_label ?? "Acque e parco"}</small></span>
-            <span><strong>{homepage.identity_fact_2_value ?? "44"}</strong><small>{homepage.identity_fact_2_label ?? "insediamenti masali"}</small></span>
-            <span><strong>{homepage.identity_fact_3_value ?? "Montagna"}</strong><small>{homepage.identity_fact_3_label ?? "e fondovalle"}</small></span>
+            <span><strong>{homepage.identity_fact_2_value ?? "44 masi"}</strong><small>{homepage.identity_fact_2_label ?? "Sul territorio"}</small></span>
+            <span><strong>{homepage.identity_fact_3_value ?? "Montagna"}</strong><small>{homepage.identity_fact_3_label ?? "Dal fondovalle in su"}</small></span>
           </div>
         </div>
       </section>
@@ -335,25 +338,35 @@ export default async function Home() {
       </section>
 
       <section className={styles.planningSection}>
-        <div className={`${styles.sectionInner} ${styles.planningGrid}`}>
-          <div className={styles.planningCopy}>
-            <p className={styles.eyebrow}>{homepage.planning_eyebrow ?? "Tutto a portata di mano"}</p>
-            <h2>{homepage.planning_title ?? "Pianifica la tua visita."}</h2>
-            <p>{homepage.planning_description ?? "Come arrivare, dove dormire, dove mangiare e le informazioni utili per organizzare il soggiorno."}</p>
+        <div className={`${styles.sectionInner} ${styles.planningEditorial}`}>
+          <div className={styles.planningEditorialTop}>
+            <div className={styles.planningCopy}>
+              <p className={styles.eyebrow}>{homepage.planning_eyebrow ?? "Tutto a portata di mano"}</p>
+              <h2>{homepage.planning_title ?? "Pianifica la tua visita."}</h2>
+            </div>
+
+            <div className={styles.planningIntro}>
+              <p>{homepage.planning_description ?? "Come arrivare, dove dormire, dove mangiare e le informazioni utili per organizzare il soggiorno."}</p>
+            </div>
+
+            <div className={styles.planningPhotos} aria-hidden="true">
+              <span className={styles.planningPhotoLarge} style={{ backgroundImage: `url('${sleepingImage}')` }} />
+              <span className={styles.planningPhotoSmall} style={{ backgroundImage: `url('${eatingImage}')` }} />
+            </div>
           </div>
-          <div className={styles.planningCards}>
+
+          <nav className={styles.planningLinks} aria-label="Organizza la visita">
             {planningItems.map((item, index) => (
-              <Link className={styles.planningCard} href={item.href} key={item.label}>
-                <span className={styles.planningImage} style={{ backgroundImage: `url('${item.image}')` }} aria-hidden="true" />
-                <span className={styles.planningContent}>
-                  <span className={styles.planningNumber}>{String(index + 1).padStart(2, "0")}</span>
+              <Link href={item.href} key={item.label}>
+                <span className={styles.planningLinkNumber}>{String(index + 1).padStart(2, "0")}</span>
+                <span>
                   <small>{item.note}</small>
                   <strong>{item.label}</strong>
-                  <span className={styles.planningArrow}>Apri →</span>
                 </span>
+                <span className={styles.planningLinkArrow} aria-hidden="true">→</span>
               </Link>
             ))}
-          </div>
+          </nav>
         </div>
       </section>
 
