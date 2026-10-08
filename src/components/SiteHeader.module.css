@@ -180,7 +180,9 @@
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
-  padding: 22px 22px 28px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 22px 22px calc(28px + env(safe-area-inset-bottom, 0px));
   color: #fff;
   background:
     radial-gradient(circle at 85% 15%, rgba(214,107,44,.24), transparent 28%),
@@ -221,11 +223,11 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  min-height: 70px;
-  padding: 15px 2px;
+  min-height: 60px;
+  padding: 13px 2px;
   border-bottom: 1px solid rgba(255,255,255,.13);
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: clamp(30px, 9vw, 43px);
+  font-size: clamp(28px, 8.4vw, 40px);
   line-height: 1;
 }
 
@@ -245,10 +247,13 @@
 }
 
 .mobileShortcuts a {
-  padding: 11px 14px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 16px;
   border: 1px solid rgba(255,255,255,.2);
   border-radius: 999px;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .brand:focus-visible,
@@ -311,4 +316,10 @@
   .mobileToggle:hover {
     transform: none;
   }
+}
+
+.contentAnchor {
+  display: block;
+  height: 0;
+  outline: none;
 }
