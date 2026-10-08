@@ -12,6 +12,7 @@ const fields: EditorField[] = [
   { name: "title", label: "Nome del luogo / attività", required: true, full: true },
   { name: "slug", label: "Slug URL", required: true, full: true },
   { name: "summary", label: "Descrizione breve", type: "textarea", full: true },
+  { name: "description", label: "Descrizione completa", type: "textarea", full: true, help: "Il testo della scheda del luogo: storia, cosa vedere, perché fermarsi. Il testo breve resta per card e anteprime." },
   { name: "image", label: "Immagine", type: "media", mediaKind: "image", full: true },
 
   { name: "place_type", label: "Tipo di luogo", type: "select", options: [

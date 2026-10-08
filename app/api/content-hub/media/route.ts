@@ -8,6 +8,7 @@ import {
   unauthorizedContentHubResponse,
   upstreamFailureResponse,
 } from "@/lib/content-hub-api";
+import { isAllowedUpload } from "@/lib/content-hub-uploads";
 
 export async function GET() {
   if (!(await requireContentHubSession())) return unauthorizedContentHubResponse();
@@ -39,22 +40,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Seleziona un file" }, { status: 400 });
   }
 
-  const allowed = [
-    "image/jpeg",
-    "image/png",
-    "image/webp",
-    "image/svg+xml",
-    "audio/mpeg",
-    "audio/mp4",
-    "audio/wav",
-    "application/gpx+xml",
-    "application/xml",
-    "text/xml",
-    "application/octet-stream",
-  ];
-  const isGpx = file.name.toLowerCase().endsWith(".gpx");
-  if (!allowed.includes(file.type) && !isGpx) {
-    return NextResponse.json({ error: "Formato non supportato" }, { status: 415 });
+  if (!isAllowedUpload(file)) {
+    return NextResponse.json(
+      { error: "Formato non supportato: carica foto JPEG, PNG o WebP, audio MP3, M4A o WAV, oppure tracce GPX" },
+      { status: 415 }
+    );
   }
   if (file.size > 30 * 1024 * 1024) {
     return NextResponse.json({ error: "File troppo grande: massimo 30 MB" }, { status: 413 });
