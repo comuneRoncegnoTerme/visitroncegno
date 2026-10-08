@@ -55,7 +55,6 @@ function RouteImage({ item, index }: { item: RouteListItem; index: number }) {
   return (
     <div className={`${styles.image} ${styles.imageFallback}`}>
       <span>{String(index + 1).padStart(2, "0")}</span>
-      <small>Immagine in arrivo</small>
     </div>
   );
 }
