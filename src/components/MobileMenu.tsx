@@ -1,23 +1,55 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { mainNavigation, planningLinks } from "@/lib/navigation";
 import styles from "./SiteHeader.module.css";
 
 export default function MobileMenu() {
   const [open, setOpen] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement | null>(null);
+  const panelRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    if (!open) return;
+    const panel = panelRef.current;
+    const toggle = toggleRef.current;
+    document.body.style.overflow = "hidden";
+    panel?.querySelector<HTMLElement>("nav a")?.focus();
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        return;
+      }
+      // Il focus resta dentro il menu finché è aperto.
+      if (event.key !== "Tab" || !panel) return;
+      const focusable = [...panel.querySelectorAll<HTMLElement>("a[href], button")];
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
 
     return () => {
       document.body.style.overflow = "";
+      document.removeEventListener("keydown", onKeyDown);
+      toggle?.focus();
     };
   }, [open]);
+
+  const close = () => setOpen(false);
 
   return (
     <div className={styles.mobileMenu}>
       <button
+        ref={toggleRef}
         className={styles.mobileToggle}
         type="button"
         aria-expanded={open}
@@ -30,27 +62,25 @@ export default function MobileMenu() {
       </button>
 
       {open && (
-        <div className={styles.mobilePanel} id="mobile-navigation">
+        <div ref={panelRef} className={styles.mobilePanel} id="mobile-navigation" role="dialog" aria-modal="true" aria-label="Menu">
           <div className={styles.mobilePanelTop}>
             <span>Esplora Roncegno</span>
-            <button type="button" onClick={() => setOpen(false)} aria-label="Chiudi menu">
+            <button type="button" onClick={close} aria-label="Chiudi menu">
               ×
             </button>
           </div>
 
           <nav className={styles.mobileNav} aria-label="Navigazione mobile">
-            <Link href="/luoghi" onClick={() => setOpen(false)}>Luoghi <span>01</span></Link>
-            <Link href="/percorsi" onClick={() => setOpen(false)}>Percorsi <span>02</span></Link>
-            <Link href="/eventi" onClick={() => setOpen(false)}>Eventi <span>03</span></Link>
-            <Link href="/cartina" onClick={() => setOpen(false)}>Cartina <span>04</span></Link>
-            <Link href="/#mappa" onClick={() => setOpen(false)}>Mappa <span>05</span></Link>
-            <Link href="/organizza-la-visita" onClick={() => setOpen(false)}>Organizza la visita <span>06</span></Link>
+            {mainNavigation.map((item) => (
+              <Link key={item.href} href={item.href} onClick={close}>{item.label}</Link>
+            ))}
+            <Link href="/organizza-la-visita" onClick={close}>Organizza la visita</Link>
           </nav>
 
           <div className={styles.mobileShortcuts}>
-            <Link href="/organizza-la-visita#dormire" onClick={() => setOpen(false)}>Dove dormire</Link>
-            <Link href="/organizza-la-visita#mangiare" onClick={() => setOpen(false)}>Dove mangiare</Link>
-            <Link href="/organizza-la-visita#come-arrivare" onClick={() => setOpen(false)}>Come arrivare</Link>
+            {planningLinks.map((item) => (
+              <Link key={item.href} href={item.href} onClick={close}>{item.label}</Link>
+            ))}
           </div>
         </div>
       )}
