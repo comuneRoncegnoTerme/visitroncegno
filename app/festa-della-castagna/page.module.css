@@ -281,3 +281,17 @@
   .info h2,
   .cta h2{font-size:40px}
 }
+
+
+/* Video fallback and reachable playback controls. */
+.videoFallback{
+  position:absolute;
+  inset:0;
+  background:url('/images/festa-castagna/benvenuti.jpg') center/cover no-repeat;
+}
+.videoStoryShade,
+.videoStoryCaption{pointer-events:none}
+.videoStoryMedia{pointer-events:auto}
+@media (prefers-reduced-motion:reduce){
+  .photoGrid img{transition:none}
+}
