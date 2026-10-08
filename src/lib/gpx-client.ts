@@ -103,24 +103,20 @@ export function buildElevationProfile(segments: GpxPoint[][]): ElevationPoint[] 
   const profile: ElevationPoint[] = [];
 
   segments.forEach((segment) => {
-    const pointsWithElevation = segment.filter(
-      (point): point is GpxPoint & { elevation: number } =>
-        point.elevation !== null && Number.isFinite(point.elevation)
-    );
-
-    pointsWithElevation.forEach((point, index) => {
+    // Measure the entire track, including points without an elevation value.
+    // Otherwise missing <ele> tags cause the profile to underreport distance.
+    segment.forEach((point, index) => {
       if (index > 0) {
-        cumulativeDistance += haversineDistanceKm(
-          pointsWithElevation[index - 1],
-          point
-        );
+        cumulativeDistance += haversineDistanceKm(segment[index - 1], point);
       }
 
-      profile.push({
-        ...point,
-        elevation: point.elevation,
-        distanceKm: cumulativeDistance,
-      });
+      if (point.elevation !== null && Number.isFinite(point.elevation)) {
+        profile.push({
+          ...point,
+          elevation: point.elevation,
+          distanceKm: cumulativeDistance,
+        });
+      }
     });
   });
 
