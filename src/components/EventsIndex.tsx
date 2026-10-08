@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getDirectusAssetUrl, getSiteSettings } from "@/lib/directus";
+import { getDirectusImageUrl, getSiteSettings } from "@/lib/directus";
 import type { EditorialItem } from "@/lib/editorial";
 import EditorialHeader from "./EditorialHeader";
 import {
@@ -47,7 +47,7 @@ function location(item: EditorialItem) {
 }
 
 function EventCard({ item, compact = false }: { item: EditorialItem; compact?: boolean }) {
-  const image = getDirectusAssetUrl(item.image);
+  const image = getDirectusImageUrl(item.image);
   const date = dateParts(item.start_date);
 
   return (
@@ -73,9 +73,9 @@ function EventCard({ item, compact = false }: { item: EditorialItem; compact?: b
 export default async function EventsIndex({ items }: { items: EditorialItem[] }) {
   const settings = await getSiteSettings();
   const { featured, featuredIsOngoing, future, past } = splitEvents(items);
-  const heroImage = getDirectusAssetUrl(featured?.image);
-  const heroPhotoA = getDirectusAssetUrl(future[0]?.image ?? featured?.image);
-  const heroPhotoB = getDirectusAssetUrl(future[1]?.image ?? featured?.image);
+  const heroImage = getDirectusImageUrl(featured?.image);
+  const heroPhotoA = getDirectusImageUrl(future[0]?.image ?? featured?.image);
+  const heroPhotoB = getDirectusImageUrl(future[1]?.image ?? featured?.image);
 
   return (
     <main className={styles.page}>
@@ -110,7 +110,7 @@ export default async function EventsIndex({ items }: { items: EditorialItem[] })
           <Link className={styles.featuredCard} href={`/eventi/${featured.slug}`}>
             <div
               className={styles.featuredImage}
-              style={getDirectusAssetUrl(featured.image) ? { backgroundImage: `url('${getDirectusAssetUrl(featured.image)}')` } : undefined}
+              style={getDirectusImageUrl(featured.image) ? { backgroundImage: `url('${getDirectusImageUrl(featured.image)}')` } : undefined}
             />
             <div className={styles.featuredShade} />
             <div className={styles.featuredCopy}>

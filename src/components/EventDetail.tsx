@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getDirectusAssetUrl, getSiteSettings } from "@/lib/directus";
+import { getDirectusImageUrl, getSiteSettings } from "@/lib/directus";
 import { getEditorialList, plainText, type EditorialItem } from "@/lib/editorial";
 import DirectionsLink from "./DirectionsLink";
 import EditorialHeader from "./EditorialHeader";
@@ -45,7 +45,7 @@ export default async function EventDetail({ item }: Props) {
     getEditorialList("events"),
   ]);
 
-  const directusImage = getDirectusAssetUrl(item.image);
+  const directusImage = getDirectusImageUrl(item.image);
   const heroImage = directusImage ?? FALLBACK_HERO;
   const location = item.address ?? item.location_name ?? item.place?.title ?? "Roncegno Terme";
   const categoryLabel = item.map_label ?? item.category?.name ?? "Evento";
@@ -192,7 +192,7 @@ export default async function EventDetail({ item }: Props) {
 
           <div className={styles.relatedGrid}>
             {related.map((relatedItem) => {
-              const image = getDirectusAssetUrl(relatedItem.image) ?? FALLBACK_HERO;
+              const image = getDirectusImageUrl(relatedItem.image) ?? FALLBACK_HERO;
               const date = eventDayBadge(relatedItem.start_date);
               return (
                 <Link className={styles.relatedCard} key={relatedItem.id} href={`/eventi/${relatedItem.slug}`}>

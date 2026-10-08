@@ -73,7 +73,7 @@ export default async function FestaDellaCastagnaPage() {
         <div className={styles.heroOverlay} />
         <div className={styles.heroContent}>
           <p className={styles.kicker}>23–25 ottobre 2026 · Roncegno Terme</p>
-          <img className={styles.officialLogo} src="/images/festa-castagna/logo-festa.png" alt="Logo ufficiale Festa della Castagna Roncegno Terme" />
+          <img className={styles.officialLogo} src="/images/festa-castagna/logo-festa-ufficiale.webp" width={1200} height={614} alt="Logo ufficiale Festa della Castagna Roncegno Terme" />
           <p className={styles.lead}>Caldarroste sul fuoco, bancarelle tra gli alberi, musica, famiglie e un paese intero che si ritrova. Tre giorni per vivere l’autunno di Roncegno.</p>
           <div className={styles.heroActions}>
             <a href="#programma" className={styles.primaryButton}>Scopri il programma →</a>
@@ -132,11 +132,11 @@ export default async function FestaDellaCastagnaPage() {
             <figcaption><span>Il fuoco</span><strong>Caldarroste, profumi e sapori d’autunno</strong></figcaption>
           </figure>
           <figure className={styles.photoWide}>
-            <img src="/images/festa-castagna/gallery-festa.webp" alt="Momenti della Festa della Castagna a Roncegno Terme" />
+            <img src="/images/festa-castagna/festa-banda-strada.webp" alt="La banda suona tra la gente nel centro di Roncegno durante la Festa" />
             <figcaption><span>Roncegno in festa</span><strong>Persone, musica e il paese che si incontra</strong></figcaption>
           </figure>
           <figure className={styles.photoCake}>
-            <img src="/images/festa-castagna/torta-gigante.webp" alt="Torta gigante alla Festa della Castagna" />
+            <img src="/images/festa-castagna/festa-castagne-cesto.webp" alt="Castagne raccolte in un cesto di vimini" />
             <figcaption><span>Atmosfera</span><strong>La tradizione diventa esperienza</strong></figcaption>
           </figure>
         </div>
