@@ -15,64 +15,55 @@ function toRadians(value: number) {
   return (value * Math.PI) / 180;
 }
 
-function pointFromElement(point: Element): GpxPoint | null {
-  const latitudeAttribute = point.getAttribute("lat");
-  const longitudeAttribute = point.getAttribute("lon");
+// Parser testuale: funziona identico sul server (rendering della pagina) e nel browser.
+// DOMParser esiste solo nel browser e faceva fallire con errore 500 le pagine percorso con GPX.
+const TAG = "(?:[\\w.-]+:)?";
+const SEGMENT_PATTERN = new RegExp(`<${TAG}trkseg\\b[^>]*>([\\s\\S]*?)</${TAG}trkseg\\s*>`, "gi");
+const ELEVATION_PATTERN = new RegExp(`<${TAG}ele\\b[^>]*>\\s*([^<\\s]+)\\s*</${TAG}ele\\s*>`, "i");
 
-  if (!latitudeAttribute || !longitudeAttribute) {
-    return null;
+function pointPattern(tag: "trkpt" | "rtept") {
+  return new RegExp(`<${TAG}${tag}\\b([^>]*?)(?:/>|>([\\s\\S]*?)</${TAG}${tag}\\s*>)`, "gi");
+}
+
+function attribute(attributes: string, name: string) {
+  const match = attributes.match(new RegExp(`\\b${name}\\s*=\\s*["']([^"']+)["']`, "i"));
+  return match ? Number(match[1]) : Number.NaN;
+}
+
+function parsePoints(source: string, tag: "trkpt" | "rtept"): GpxPoint[] {
+  const points: GpxPoint[] = [];
+
+  for (const match of source.matchAll(pointPattern(tag))) {
+    const latitude = attribute(match[1], "lat");
+    const longitude = attribute(match[1], "lon");
+    if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) continue;
+
+    const elevationValue = match[2]?.match(ELEVATION_PATTERN)?.[1];
+    const elevation = elevationValue ? Number(elevationValue) : null;
+
+    points.push({
+      latitude,
+      longitude,
+      elevation: elevation !== null && Number.isFinite(elevation) ? elevation : null,
+    });
   }
 
-  const latitude = Number(latitudeAttribute);
-  const longitude = Number(longitudeAttribute);
-
-  if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
-    return null;
-  }
-
-  const elevationElement = Array.from(point.children).find(
-    (child) => child.localName === "ele"
-  );
-  const elevationValue = elevationElement?.textContent?.trim();
-  const elevation = elevationValue ? Number(elevationValue) : null;
-
-  return {
-    latitude,
-    longitude,
-    elevation: elevation !== null && Number.isFinite(elevation) ? elevation : null,
-  };
+  return points;
 }
 
 export function parseGpxSegments(gpxText: string): GpxPoint[][] {
-  const parser = new DOMParser();
-  const xml = parser.parseFromString(gpxText, "application/xml");
+  // I commenti XML possono contenere tag di esempio: vanno ignorati.
+  const source = gpxText.replace(/<!--[\s\S]*?-->/g, "");
 
-  if (xml.getElementsByTagName("parsererror").length > 0) {
-    return [];
-  }
-
-  const trackSegments = Array.from(
-    xml.getElementsByTagNameNS("*", "trkseg")
-  );
-
-  const parsedTrackSegments = trackSegments
-    .map((segment) =>
-      Array.from(segment.getElementsByTagNameNS("*", "trkpt"))
-        .map(pointFromElement)
-        .filter(Boolean) as GpxPoint[]
-    )
+  const trackSegments = [...source.matchAll(SEGMENT_PATTERN)]
+    .map((segment) => parsePoints(segment[1], "trkpt"))
     .filter((segment) => segment.length > 0);
 
-  if (parsedTrackSegments.length > 0) {
-    return parsedTrackSegments;
+  if (trackSegments.length > 0) {
+    return trackSegments;
   }
 
-  const routePoints = Array.from(
-    xml.getElementsByTagNameNS("*", "rtept")
-  )
-    .map(pointFromElement)
-    .filter(Boolean) as GpxPoint[];
-
+  const routePoints = parsePoints(source, "rtept");
   return routePoints.length > 0 ? [routePoints] : [];
 }
 
@@ -103,24 +94,20 @@ export function buildElevationProfile(segments: GpxPoint[][]): ElevationPoint[] 
   const profile: ElevationPoint[] = [];
 
   segments.forEach((segment) => {
-    const pointsWithElevation = segment.filter(
-      (point): point is GpxPoint & { elevation: number } =>
-        point.elevation !== null && Number.isFinite(point.elevation)
-    );
-
-    pointsWithElevation.forEach((point, index) => {
+    // Measure the entire track, including points without an elevation value.
+    // Otherwise missing <ele> tags cause the profile to underreport distance.
+    segment.forEach((point, index) => {
       if (index > 0) {
-        cumulativeDistance += haversineDistanceKm(
-          pointsWithElevation[index - 1],
-          point
-        );
+        cumulativeDistance += haversineDistanceKm(segment[index - 1], point);
       }
 
-      profile.push({
-        ...point,
-        elevation: point.elevation,
-        distanceKm: cumulativeDistance,
-      });
+      if (point.elevation !== null && Number.isFinite(point.elevation)) {
+        profile.push({
+          ...point,
+          elevation: point.elevation,
+          distanceKm: cumulativeDistance,
+        });
+      }
     });
   });
 

@@ -1,4 +1,5 @@
 import { DIRECTUS_URL, directusJson } from "@/lib/directus-client";
+import { currentAndUpcomingEvents, directusUpcomingLowerBound } from "@/lib/event-dates";
 
 export { DIRECTUS_URL } from "@/lib/directus-client";
 
@@ -114,7 +115,7 @@ export interface EventItem {
   image: string | null;
   start_date: string;
   end_date: string | null;
-  all_day: boolean;
+  all_day: boolean | null;
   location_name: string | null;
   featured: boolean;
   category?: { name: string } | null;
@@ -343,6 +344,23 @@ export function getDirectusAssetUrl(fileId: string | null | undefined): string |
   return fileId ? `${DIRECTUS_URL}/assets/${fileId}` : null;
 }
 
+// Fotografie: Directus restituisce una versione ridimensionata in WebP invece dell'originale
+// (spesso 4000-6000 px e diversi MB). Usare solo per immagini raster, non per file, audio, GPX o SVG.
+// DIRECTUS_IMAGE_TRANSFORMS=false disattiva la trasformazione se Directus non la consente.
+const IMAGE_TRANSFORMS_ENABLED = process.env.DIRECTUS_IMAGE_TRANSFORMS?.trim().toLowerCase() !== "false";
+
+export function getDirectusImageUrl(fileId: string | null | undefined, width = 1600): string | null {
+  const url = getDirectusAssetUrl(fileId);
+  if (!url || !IMAGE_TRANSFORMS_ENABLED) return url;
+  const params = new URLSearchParams({
+    width: String(width),
+    quality: "78",
+    format: "webp",
+    withoutEnlargement: "true",
+  });
+  return `${url}?${params.toString()}`;
+}
+
 export async function getMapPlaces(): Promise<MapPlace[]> {
   const params = new URLSearchParams();
   params.set("filter[status][_eq]", "published");
@@ -364,12 +382,22 @@ export async function getMapPlaces(): Promise<MapPlace[]> {
   }
 }
 
-export async function getUpcomingEvents(): Promise<EventItem[]> {
+export async function getUpcomingEvents(limit = 4): Promise<EventItem[]> {
+  // Gli eventi già iniziati ma non ancora finiti (es. la Festa nel fine settimana) devono restare visibili:
+  // Directus restituisce un intervallo largo, la selezione esatta avviene con l'ora di Roncegno.
+  const lowerBound = directusUpcomingLowerBound();
   const params = new URLSearchParams();
-  params.set("filter[status][_eq]", "published");
-  params.set("filter[start_date][_gte]", new Date().toISOString());
+  params.set(
+    "filter",
+    JSON.stringify({
+      _and: [
+        { status: { _eq: "published" } },
+        { _or: [{ start_date: { _gte: lowerBound } }, { end_date: { _gte: lowerBound } }] },
+      ],
+    })
+  );
   params.set("sort", "start_date");
-  params.set("limit", "3");
+  params.set("limit", "60");
   params.set(
     "fields",
     [
@@ -393,7 +421,7 @@ export async function getUpcomingEvents(): Promise<EventItem[]> {
     const result = await directusJson<DirectusResponse<EventItem[]>>(
       queryPath("events", params)
     );
-    return result.data;
+    return currentAndUpcomingEvents(result.data).slice(0, limit);
   } catch (error) {
     reportPublicReadFallback("upcoming-events", error);
     return [];

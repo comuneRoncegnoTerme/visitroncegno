@@ -2,7 +2,11 @@ import Link from "next/link";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import { getSiteSettings } from "@/lib/directus";
+import { memoriaArchiveUrl } from "@/lib/memoria-archive";
 import styles from "./page.module.css";
+
+// Rigenerata periodicamente: legge MEMORIA_ARCHIVE_URL dall'ambiente di esecuzione, non da quello di build.
+export const revalidate = 300;
 
 export const metadata = {
   title: "Memoria · Na vòlta a Ronzégno",
@@ -12,12 +16,12 @@ export const metadata = {
 };
 
 const archiveSections = [
-  { number: "01", title: "Paesaggio", image: "/images/memoria/paesaggio.jpg", href: "https://www.visitroncegno.it/it/memoria/paesaggio" },
-  { number: "02", title: "Edifici", image: "/images/memoria/edifici.jpg", href: "https://www.visitroncegno.it/it/memoria/edifici" },
-  { number: "03", title: "Persone", image: "/images/memoria/persone.jpg", href: "https://www.visitroncegno.it/it/memoria/persone" },
-  { number: "04", title: "Eventi e tradizioni", image: "/images/memoria/eventi-tradizioni.jpg", href: "https://www.visitroncegno.it/it/memoria/eventi-e-tradizioni" },
-  { number: "05", title: "Attività tipiche", image: "/images/memoria/attivita-tipiche.jpg", href: "https://www.visitroncegno.it/it/memoria/tivor" },
-  { number: "06", title: "Lettere e manoscritti", image: "/images/memoria/lettere-manoscritti.jpg", href: "https://www.visitroncegno.it/it/memoria/lettere-e-manoscritti" },
+  { number: "01", title: "Paesaggio", image: "/images/memoria/paesaggio.jpg", path: "/it/memoria/paesaggio" },
+  { number: "02", title: "Edifici", image: "/images/memoria/edifici.jpg", path: "/it/memoria/edifici" },
+  { number: "03", title: "Persone", image: "/images/memoria/persone.jpg", path: "/it/memoria/persone" },
+  { number: "04", title: "Eventi e tradizioni", image: "/images/memoria/eventi-tradizioni.jpg", path: "/it/memoria/eventi-e-tradizioni" },
+  { number: "05", title: "Attività tipiche", image: "/images/memoria/attivita-tipiche.jpg", path: "/it/memoria/tivor" },
+  { number: "06", title: "Lettere e manoscritti", image: "/images/memoria/lettere-manoscritti.jpg", path: "/it/memoria/lettere-e-manoscritti" },
 ];
 
 export default async function MemoryPage() {
@@ -57,7 +61,7 @@ export default async function MemoryPage() {
         </div>
         <div className={styles.archiveGrid}>
           {archiveSections.map((section) => (
-            <a className={styles.archiveCard} href={section.href} key={section.title}>
+            <a className={styles.archiveCard} href={memoriaArchiveUrl(section.path)} key={section.title}>
               <span className={styles.cardImage} style={{ backgroundImage: `url('${section.image}')` }} />
               <span className={styles.cardShade} />
               <span className={styles.cardNumber}>{section.number}</span>
@@ -72,8 +76,8 @@ export default async function MemoryPage() {
         <p className={styles.kicker}>Storia per immagini</p>
         <h2>Ogni fotografia<br />riporta a casa una storia.</h2>
         <div className={styles.closingActions}>
-          <a href="https://www.visitroncegno.it/it/memoria/storia-per-immagini">Sfoglia la storia per immagini <span aria-hidden="true">→</span></a>
-          <a href="https://www.visitroncegno.it/it/memoria/progetto-memoria-na-volt">Scopri le pubblicazioni <span aria-hidden="true">→</span></a>
+          <a href={memoriaArchiveUrl("/it/memoria/storia-per-immagini")}>Sfoglia la storia per immagini <span aria-hidden="true">→</span></a>
+          <a href={memoriaArchiveUrl("/it/memoria/progetto-memoria-na-volt")}>Scopri le pubblicazioni <span aria-hidden="true">→</span></a>
         </div>
         <Link className={styles.homeLink} href="/">Torna a Visit Roncegno</Link>
       </section>

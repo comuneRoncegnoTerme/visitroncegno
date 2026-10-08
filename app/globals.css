@@ -1713,3 +1713,19 @@ a {
   box-shadow:
     0 3px 10px rgba(0, 0, 0, 0.2);
 }
+
+/* Link per chi naviga da tastiera: visibile solo quando riceve il focus. */
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -80px;
+  z-index: 200;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: #163d32;
+  color: #fff;
+  font: 700 15px/1 Arial, Helvetica, sans-serif;
+}
+.skip-link:focus {
+  top: 12px;
+}
