@@ -71,6 +71,13 @@ export default async function EditorialDetail({ item, type }: Props) {
   const related = relatedItems
     .filter((candidate) => candidate.id !== item.id)
     .filter((candidate) => !foodPlace || candidate.place_type === "food")
+    .sort((a, b) => {
+      if (type !== "place") return 0;
+      const relevance = (candidate: EditorialItem) =>
+        (candidate.place_type && candidate.place_type === item.place_type ? 2 : 0) +
+        (candidate.category?.name && candidate.category.name === item.category?.name ? 1 : 0);
+      return relevance(b) - relevance(a);
+    })
     .slice(0, 3);
   const eventDate = type === "event" ? formatDateTime(item.start_date) : null;
 
@@ -87,7 +94,6 @@ export default async function EditorialDetail({ item, type }: Props) {
           <p>{categoryLabel}</p>
           <h1>{item.title}</h1>
           {item.summary && <div>{item.summary}</div>}
-          {!directusImage && <small>Immagine del territorio · aggiungi una foto specifica dal Content Hub</small>}
         </div>
       </section>
 
