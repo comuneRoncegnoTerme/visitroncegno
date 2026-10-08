@@ -281,3 +281,11 @@
   .info h2,
   .cta h2{font-size:40px}
 }
+
+
+/* Video: la didascalia e la sfumatura non intercettano i tocchi sul pulsante di riproduzione. */
+.videoStoryShade,
+.videoStoryCaption{pointer-events:none}
+@media (prefers-reduced-motion:reduce){
+  .photoGrid img{transition:none}
+}
