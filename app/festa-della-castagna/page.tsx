@@ -4,6 +4,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { getSiteSettings } from "@/lib/directus";
 import styles from "./page.module.css";
+import FestaAtmosphereVideo from "./FestaAtmosphereVideo";
 
 export const metadata: Metadata = {
   title: "Festa della Castagna 2026",
@@ -99,24 +100,7 @@ export default async function FestaDellaCastagnaPage() {
         </div>
       </section>
 
-      <section className={styles.videoStory} aria-label="Atmosfera della Festa della Castagna">
-        <video
-          className={styles.videoStoryMedia}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          poster="/images/festa-castagna/benvenuti.jpg"
-        >
-          <source src="/videos/festa-castagna-atmosfera.mp4" type="video/mp4" />
-        </video>
-        <div className={styles.videoStoryShade} />
-        <div className={styles.videoStoryCaption}>
-          <p>Dentro la Festa</p>
-          <h2>Roncegno, in un giorno d’autunno.</h2>
-        </div>
-      </section>
+      <FestaAtmosphereVideo />
 
       <section className={styles.moments}>
         <div className={styles.momentsHeading}>
