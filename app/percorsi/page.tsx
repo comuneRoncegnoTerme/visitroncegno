@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { connection } from "next/server";
 import Link from "next/link";
 import EditorialHeader from "@/components/EditorialHeader";
 import RoutesEditorialList from "@/components/RoutesEditorialList";
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RoutesPage() {
+  await connection();
   const [items, settings] = await Promise.all([
     getEditorialList("routes"),
     getSiteSettings(),

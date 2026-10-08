@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { publicDirectusCache } from "@/lib/directus-cache";
 import Link from "next/link";
 import RouteMap from "@/components/RouteMap";
 import RouteElevationProfile from "@/components/RouteElevationProfile";
@@ -101,9 +102,7 @@ async function loadGpxText(gpxUrl: string | null) {
   if (!gpxUrl) return null;
 
   try {
-    const response = await fetch(gpxUrl, {
-      cache: "no-store",
-    });
+    const response = await fetch(gpxUrl, publicDirectusCache);
 
     if (!response.ok) {
       console.error(`GPX asset error: ${response.status}`);
@@ -138,7 +137,7 @@ async function loadPointPlaceMedia(points: RoutePoint[] | undefined) {
   try {
     const response = await fetch(
       `${DIRECTUS_URL}/items/places?${params.toString()}`,
-      { cache: "no-store" }
+      publicDirectusCache
     );
 
     if (!response.ok) {
@@ -185,7 +184,7 @@ async function loadRouteStories(routeId: number) {
     const response = await fetch(
       `${DIRECTUS_URL}/items/stories?${params.toString()}`,
       {
-        cache: "no-store",
+        ...publicDirectusCache,
         headers: token ? { Authorization: `Bearer ${token}` } : undefined,
       }
     );

@@ -64,8 +64,7 @@ export async function getRoutesForPlace(placeId: number): Promise<RelatedRoute[]
 
   try {
     const result = await directusJson<DirectusResponse<RoutePointRelation[]>>(
-      `/items/route_points?${params.toString()}`,
-      { cache: "no-store" }
+      `/items/route_points?${params.toString()}`
     );
     const unique = new Map<number, RelatedRoute>();
 

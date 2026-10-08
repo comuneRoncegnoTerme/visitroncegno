@@ -1,3 +1,5 @@
+import { revalidateTag } from "next/cache";
+import { DIRECTUS_CACHE_TAG } from "@/lib/directus-cache";
 import { NextRequest, NextResponse } from "next/server";
 import {
   contentHubDirectusFetch,
@@ -98,6 +100,8 @@ export async function POST(
     });
     if (!response.ok) return upstreamFailureResponse("create-item", response, { collection });
 
+    // Il sito pubblico mostra subito la modifica (vedi src/lib/directus-cache.ts).
+    revalidateTag(DIRECTUS_CACHE_TAG, { expire: 0 });
     const result = await readJsonSafely(response);
     return NextResponse.json({ ok: true, data: result?.data ?? result }, { status: 201 });
   } catch (error) {

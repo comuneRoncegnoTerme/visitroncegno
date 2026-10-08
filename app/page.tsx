@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { connection } from "next/server";
 import HeroExperience, { type HeroHotspot, type HeroMode } from "@/components/HeroExperience";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -18,8 +19,6 @@ import styles from "./home-v2.module.css";
 import refine from "./home-v2-refine.module.css";
 import feedback from "./home-feedback.module.css";
 import editorial from "./home-editorial.module.css";
-
-export const dynamic = "force-dynamic";
 
 type HomepageHeroConfig = {
   hero_mode?: HeroMode | null;
@@ -82,6 +81,7 @@ const utilityItems: Array<{ label: string; note: string; href: string; icon: Uti
 ];
 
 export default async function Home() {
+  await connection();
   const [homepage, homepageRoutes, events, featuredPlaces, siteSettings, allPlaces] = await Promise.all([
     getHomepage(),
     getHomepageRoutes(),
