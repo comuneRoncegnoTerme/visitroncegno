@@ -10,7 +10,7 @@ import storyStyles from "@/components/RouteStories.module.css";
 
 import {
   DIRECTUS_URL,
-  getDirectusAssetUrl,
+  getDirectusAssetUrl, getDirectusImageUrl,
   getRouteBySlug,
   getSiteSettings,
   type RoutePoint,
@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: RoutePageProps): Promise<Meta
     title: route.title,
     description: descriptionFrom(route.summary ?? route.description, `Scopri il percorso ${route.title} a Roncegno Terme: itinerario, difficoltà e informazioni utili.`),
     path: `/percorsi/${route.slug}`,
-    image: getDirectusAssetUrl(route.image),
+    image: getDirectusImageUrl(route.image),
   });
 }
 
@@ -67,7 +67,7 @@ interface RouteStory {
 }
 
 const FALLBACK_ROUTE_IMAGE =
-  "/images/homepage/APT_Valsugana_Roncegno_2025_10_07_Luca_Matassoni_HD_12.jpg";
+  "/images/homepage/roncegno-panorama.webp";
 
 function formatDuration(minutes: number | null) {
   if (!minutes) return null;
@@ -217,7 +217,7 @@ export default async function RoutePage({ params }: RoutePageProps) {
     loadRouteStories(route.id),
   ]);
 
-  const directusHeroImage = getDirectusAssetUrl(route.image);
+  const directusHeroImage = getDirectusImageUrl(route.image);
   const heroImage = directusHeroImage ?? FALLBACK_ROUTE_IMAGE;
   const gpxUrl = getDirectusAssetUrl(route.gpx_file);
   const gpxText = await loadGpxText(gpxUrl);
@@ -263,9 +263,6 @@ export default async function RoutePage({ params }: RoutePageProps) {
           <p className="eyebrow">{route.category?.name ?? "Percorso"}</p>
           <h1>{route.title}</h1>
           {route.route_highlight && <p className="route-highlight">{route.route_highlight}</p>}
-          {!directusHeroImage && (
-            <small className="route-image-note">Immagine territoriale provvisoria · carica una foto del percorso in Directus</small>
-          )}
         </div>
       </section>
 
@@ -333,7 +330,7 @@ export default async function RoutePage({ params }: RoutePageProps) {
               {route.points.map((point, index) => {
                 const mediaPlace = point.place ? pointPlaceMedia.get(point.place.id) : null;
                 const placeImageId = mediaPlace?.image ?? point.place?.image ?? null;
-                const placeImage = getDirectusAssetUrl(placeImageId);
+                const placeImage = getDirectusImageUrl(placeImageId);
                 const href = point.place ? `/luoghi/${point.place.slug}` : null;
                 const badge = mediaPlace?.map_label || (point.place ? "Luogo" : "Tappa");
                 const imageClass = placeImage
@@ -347,7 +344,6 @@ export default async function RoutePage({ params }: RoutePageProps) {
                       style={placeImage ? { backgroundImage: `url('${placeImage}')` } : undefined}
                     >
                       <span>{String(index + 1).padStart(2, "0")}</span>
-                      {!placeImage && <small>Foto da aggiungere</small>}
                     </div>
                     <div className="route-point-copy">
                       <small>{badge}</small>
@@ -384,7 +380,7 @@ export default async function RoutePage({ params }: RoutePageProps) {
 
             <div className="route-stories-grid">
               {stories.map((story, index) => {
-                const storyImage = getDirectusAssetUrl(story.image);
+                const storyImage = getDirectusImageUrl(story.image);
                 const href = storyHref(story);
                 const isPanel = isLegacyTrailPanelPath(href);
                 const panelNumber = getLegacyPanelNumber(href);

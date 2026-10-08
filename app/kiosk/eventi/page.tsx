@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getDirectusAssetUrl, getSiteSettings } from "@/lib/directus";
+import { getDirectusAssetUrl, getDirectusImageUrl, getSiteSettings } from "@/lib/directus";
 import { getEditorialList } from "@/lib/editorial";
 import KioskChrome from "../KioskChrome";
 import styles from "../KioskList.module.css";
@@ -64,7 +64,7 @@ export default async function KioskEventsPage() {
       {visible.length ? (
         <section className={styles.grid} aria-label="Eventi in programma">
           {visible.map((item) => {
-            const image = getDirectusAssetUrl(item.image);
+            const image = getDirectusImageUrl(item.image);
             return (
               <Link className={styles.card} href={`/kiosk/eventi/${item.slug}`} key={item.id}>
                 <div className={styles.image} style={image ? { backgroundImage: `url('${image}')` } : undefined} />

@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import PanelAudioPlayer from "@/components/PanelAudioPlayer";
-import { getDirectusAssetUrl, getSiteSettings } from "@/lib/directus";
+import { getDirectusAssetUrl, getDirectusImageUrl, getSiteSettings } from "@/lib/directus";
 import { getStoryByLegacySlug, storyParagraphs } from "@/lib/stories";
 import { getTrailPanel, trailPanels, type TrailPanel } from "@/lib/trail-panels";
 import { cinqueValliPanels, getCinqueValliPanel } from "@/lib/cinque-valli-panels";
@@ -98,7 +98,7 @@ export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) 
   const audioFileId = storyMedia?.audio_file ?? getPanelAudioFileId(slug);
   const audioUrl = getDirectusAssetUrl(audioFileId);
   const audioTitle = storyMedia?.audio_title?.trim() || panel.audioTitle;
-  const panelImageUrl = getDirectusAssetUrl(storyMedia?.image);
+  const panelImageUrl = getDirectusImageUrl(storyMedia?.image);
 
   return (
     <main className={`${styles.page} ${isChestnutHistory ? styles.chestnutPage : ""}`}>

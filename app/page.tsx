@@ -4,7 +4,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import FestaHomepageBanner from "@/components/FestaHomepageBanner";
 import {
-  getDirectusAssetUrl,
+  getDirectusImageUrl,
   getFeaturedPlaces,
   getHomepageRoutes,
   getHomepage,
@@ -12,6 +12,7 @@ import {
   getUpcomingEvents,
 } from "@/lib/directus";
 import { placeHref } from "@/lib/place-detail";
+import { eventDayBadge, eventTimeLabel, isEventOngoing } from "@/lib/event-dates";
 import { getEditorialList } from "@/lib/editorial";
 import { isEatingPlace, isServicePlace, isSleepingPlace } from "@/lib/place-taxonomy";
 import styles from "./home-v2.module.css";
@@ -44,23 +45,6 @@ function parseHeroHotspots(value: HomepageHeroConfig["hero_hotspots"]): HeroHots
   }
 }
 
-function eventDate(value: string) {
-  const date = new Date(value);
-  return {
-    day: new Intl.DateTimeFormat("it-IT", { day: "2-digit", timeZone: "Europe/Rome" }).format(date),
-    month: new Intl.DateTimeFormat("it-IT", { month: "short", timeZone: "Europe/Rome" }).format(date).replace(".", "").toUpperCase(),
-  };
-}
-
-function eventTime(value: string) {
-  return new Intl.DateTimeFormat("it-IT", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-    timeZone: "Europe/Rome",
-  }).format(new Date(value));
-}
-
 function UtilityIcon({ name }: { name: UtilityIconName }) {
   const common = { stroke: "currentColor", strokeWidth: 1.6, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
   if (name === "trail") return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19c4-1 4-6 8-7s4-6 8-7" fill="none" {...common}/><path d="M5 8h4M15 16h4" fill="none" {...common}/></svg>;
@@ -91,20 +75,20 @@ export default async function Home() {
     getEditorialList("places"),
   ]);
 
-  const heroImage = getDirectusAssetUrl(homepage.hero_image) ?? "/images/hero/roncegno-hero.jpg";
+  const heroImage = getDirectusImageUrl(homepage.hero_image) ?? "/images/hero/roncegno-hero.jpg";
   const heroConfig = homepage as typeof homepage & HomepageHeroConfig;
   const heroHotspots = parseHeroHotspots(heroConfig.hero_hotspots);
   const visibleEvents = events.slice(0, 4);
   const visibleRoutes = homepageRoutes.slice(0, 3);
   const visibleFeaturedPlaces = featuredPlaces.slice(0, 3);
   const nextEvent = visibleEvents[0] ?? null;
-  const nextEventDate = nextEvent ? eventDate(nextEvent.start_date) : null;
-  const nextEventTime = nextEvent ? eventTime(nextEvent.start_date) : null;
-  const sleepingImage = getDirectusAssetUrl(allPlaces.find(isSleepingPlace)?.image) ?? "/images/homepage/roncegno-skyline.webp";
-  const eatingImage = getDirectusAssetUrl(allPlaces.find(isEatingPlace)?.image) ?? "/images/festa-castagna/caldarroste.jpg";
-  const serviceImage = getDirectusAssetUrl(allPlaces.find(isServicePlace)?.image) ?? "/images/cartina/cartina-roncegno-preview.webp";
+  const nextEventDate = nextEvent ? eventDayBadge(nextEvent.start_date) : null;
+  const nextEventTime = nextEvent ? eventTimeLabel(nextEvent) : null;
+  const sleepingImage = getDirectusImageUrl(allPlaces.find(isSleepingPlace)?.image) ?? "/images/homepage/roncegno-skyline.webp";
+  const eatingImage = getDirectusImageUrl(allPlaces.find(isEatingPlace)?.image) ?? "/images/festa-castagna/caldarroste.jpg";
+  const serviceImage = getDirectusImageUrl(allPlaces.find(isServicePlace)?.image) ?? "/images/cartina/cartina-roncegno-preview.webp";
   const planningItems = [
-    { label: "Come arrivare", note: "Auto, treno e mobilità", href: "/organizza-la-visita#come-arrivare", image: "/images/homepage/APT_Valsugana_Roncegno_2025_10_07_Luca_Matassoni_HD_12.jpg" },
+    { label: "Come arrivare", note: "Auto, treno e mobilità", href: "/organizza-la-visita#come-arrivare", image: "/images/homepage/roncegno-panorama.webp" },
     { label: "Dove dormire", note: "Ospitalità e soggiorno", href: "/organizza-la-visita#dormire", image: sleepingImage },
     { label: "Dove mangiare", note: "Ristoranti e sapori", href: "/organizza-la-visita#mangiare", image: eatingImage },
     { label: "Informazioni utili", note: "Servizi, contatti e accessibilità", href: "/organizza-la-visita#servizi", image: serviceImage },
@@ -138,11 +122,11 @@ export default async function Home() {
 
         {nextEvent && nextEventDate && (
           <Link className={refine.heroEvent} href={`/eventi/${nextEvent.slug}`}>
-            <span className={refine.heroEventEyebrow}>Prossimo appuntamento</span>
+            <span className={refine.heroEventEyebrow}>{isEventOngoing(nextEvent) ? "In corso" : "Prossimo appuntamento"}</span>
             <span className={refine.heroEventDate}><strong>{nextEventDate.day}</strong>{nextEventDate.month}</span>
             <span className={refine.heroEventCopy}>
               <span className={refine.heroEventTitle}>{nextEvent.title}</span>
-              {nextEventTime && <span className={refine.heroEventMeta}>Ore {nextEventTime} · Roncegno Terme</span>}
+              <span className={refine.heroEventMeta}>{[nextEventTime ? `Ore ${nextEventTime}` : null, nextEvent.location_name ?? nextEvent.place?.title ?? "Roncegno Terme"].filter(Boolean).join(" · ")}</span>
             </span>
             <span className={refine.heroEventArrow} aria-hidden="true">→</span>
           </Link>
@@ -175,7 +159,7 @@ export default async function Home() {
 
             <div className={editorial.routesGrid}>
               {visibleRoutes.map((route, index) => {
-                const image = getDirectusAssetUrl(route.image) ?? heroImage;
+                const image = getDirectusImageUrl(route.image) ?? heroImage;
                 const hours = route.duration_minutes ? Math.floor(route.duration_minutes / 60) : 0;
                 const minutes = route.duration_minutes ? route.duration_minutes % 60 : 0;
                 const duration = route.duration_minutes
@@ -240,7 +224,7 @@ export default async function Home() {
 
             <div className={editorial.highlightsGrid}>
               {visibleFeaturedPlaces.map((place, index) => {
-                const image = getDirectusAssetUrl(place.image) ?? heroImage;
+                const image = getDirectusImageUrl(place.image) ?? heroImage;
                 return (
                   <Link className={editorial.highlightCard} href={placeHref(place)} key={place.id}>
                     <div className={editorial.highlightImage} style={{ backgroundImage: `url('${image}')` }} />
@@ -275,6 +259,7 @@ export default async function Home() {
         />
       )}
 
+      {visibleEvents.length > 0 && (
       <section className={`${styles.section} ${styles.eventsSection}`}>
         <div className={styles.sectionInner}>
           <div className={styles.sectionHeading}>
@@ -283,10 +268,10 @@ export default async function Home() {
           </div>
           <div className={`${styles.eventsGrid} ${refine.eventsGrid} ${feedback.eventsGrid}${visibleEvents.length === 3 ? ` ${refine.eventsGridThree}` : ""}`}>
             {visibleEvents.map((event, index) => {
-              const date = eventDate(event.start_date);
-              const image = getDirectusAssetUrl(event.image) ?? heroImage;
+              const date = eventDayBadge(event.start_date) ?? { day: "", month: "" };
+              const image = getDirectusImageUrl(event.image) ?? heroImage;
               const location = event.location_name ?? event.place?.title ?? "Roncegno Terme";
-              const time = eventTime(event.start_date);
+              const time = eventTimeLabel(event);
               const primary = index === 0;
               return (
                 <Link className={`${styles.eventCard} ${refine.eventCard} ${feedback.eventCard}${primary ? ` ${styles.eventCardPrimary} ${refine.eventCardPrimary} ${feedback.eventCardPrimary}` : ""}`} href={`/eventi/${event.slug}`} key={event.id}>
@@ -306,6 +291,7 @@ export default async function Home() {
           </div>
         </div>
       </section>
+      )}
 
       <section className={editorial.mapStory} aria-labelledby="map-story-title">
         <div className={editorial.mapStoryInner}>

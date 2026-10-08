@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getDirectusAssetUrl, getRouteBySlug, getSiteSettings } from "@/lib/directus";
+import { getDirectusAssetUrl, getDirectusImageUrl, getRouteBySlug, getSiteSettings } from "@/lib/directus";
 import { plainText } from "@/lib/editorial";
 import KioskDetail from "../../KioskDetail";
 
@@ -23,7 +23,7 @@ export default async function KioskRouteDetailPage({ params }: Props) {
   if (!route) notFound();
 
   const logo = getDirectusAssetUrl(settings.logo);
-  const image = getDirectusAssetUrl(route.image);
+  const image = getDirectusImageUrl(route.image);
   const paragraphs = plainText(route.description ?? route.summary);
   const facts = [
     route.distance_km !== null ? { label: "Distanza", value: `${route.distance_km} km` } : null,
