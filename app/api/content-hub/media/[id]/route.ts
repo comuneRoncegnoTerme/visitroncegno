@@ -7,6 +7,9 @@ import {
   unauthorizedContentHubResponse,
 } from "@/lib/content-hub-api";
 
+// Mostrati nel browser: foto raster e audio. Tutto il resto viene scaricato come allegato.
+const INLINE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif", "audio/"];
+
 export async function GET(
   _request: Request,
   context: { params: Promise<{ id: string }> }
@@ -28,14 +31,19 @@ export async function GET(
       return NextResponse.json({ error: "File non trovato" }, { status: 404 });
     }
 
-    return new Response(response.body, {
-      status: 200,
-      headers: {
-        "Content-Type": response.headers.get("content-type") ?? "application/octet-stream",
-        "Cache-Control": "private, max-age=60",
-        "X-Content-Type-Options": "nosniff",
-      },
-    });
+    const contentType = response.headers.get("content-type") ?? "application/octet-stream";
+    const headers: Record<string, string> = {
+      "Content-Type": contentType,
+      "Cache-Control": "private, max-age=60",
+      "X-Content-Type-Options": "nosniff",
+      // Nessun file (nemmeno un vecchio SVG già caricato) può eseguire script nel dominio del sito.
+      "Content-Security-Policy": "default-src 'none'; img-src 'self' data:; media-src 'self'; style-src 'unsafe-inline'; sandbox",
+    };
+    if (!INLINE_TYPES.some((prefix) => contentType.startsWith(prefix))) {
+      headers["Content-Disposition"] = "attachment";
+    }
+
+    return new Response(response.body, { status: 200, headers });
   } catch (error) {
     logContentHubUpstreamError("read-media", error, { id });
     return contentHubUnavailableResponse();

@@ -8,13 +8,14 @@ export const contentHubCollections: Record<
     fields: [
       "id", "status", "title", "slug", "summary", "image",
       "start_date", "end_date", "all_day", "location_name", "featured",
+      "content", "address", "ticket_info", "booking_url", "website_url", "phone", "email",
     ],
     sort: "-start_date",
     limit: 250,
   },
   places: {
     fields: [
-      "id", "status", "sort", "title", "slug", "summary", "image", "featured",
+      "id", "status", "sort", "title", "slug", "summary", "description", "image", "featured",
       "place_type", "detail_mode", "canonical_path", "external_detail_url",
       "address", "phone", "email", "website_url", "booking_url",
       "opening_hours", "ticket_info", "visit_duration",
@@ -32,6 +33,7 @@ export const contentHubCollections: Record<
       "start_latitude", "start_longitude", "family_friendly", "accessible",
       "public_transport", "loop_route", "featured", "recommended",
       "route_highlight", "gpx_file",
+      "season", "audience", "komoot_url", "outdooractive_url",
     ],
     sort: "sort,title",
     limit: 250,
@@ -40,6 +42,7 @@ export const contentHubCollections: Record<
     fields: [
       "id", "status", "sort", "title", "slug", "excerpt", "body", "image",
       "audio_file", "audio_title", "featured", "source_url", "source_label",
+      "place", "route",
     ],
     sort: "sort,title",
     limit: 250,

@@ -18,6 +18,16 @@ import {
 } from "@/lib/content-hub-collections";
 import { getDirectusCollectionFields } from "@/lib/content-hub-directus-schema";
 
+// Se lo schema Directus non è leggibile si chiedono solo i campi presenti da sempre:
+// un campo inesistente farebbe fallire l'intera lista.
+const OPTIONAL_FIELDS = new Set([
+  "address", "phone", "email", "website_url", "booking_url",
+  "access_notes", "parking_notes", "public_transport_notes",
+  "events.content", "events.ticket_info", "places.description",
+  "routes.season", "routes.audience", "routes.komoot_url", "routes.outdooractive_url",
+  "stories.place", "stories.route",
+]);
+
 export async function GET(
   _request: NextRequest,
   context: { params: Promise<{ collection: string }> }
@@ -34,16 +44,9 @@ export async function GET(
     const directusFields = await getDirectusCollectionFields(collection, config.fields);
     const fields = directusFields
       ? contentHubFieldsForSchema(collection, directusFields)
-      : config.fields.filter((field) => ![
-          "address",
-          "phone",
-          "email",
-          "website_url",
-          "booking_url",
-          "access_notes",
-          "parking_notes",
-          "public_transport_notes",
-        ].includes(field));
+      : config.fields.filter(
+          (field) => !OPTIONAL_FIELDS.has(field) && !OPTIONAL_FIELDS.has(`${collection}.${field}`)
+        );
 
     const params = new URLSearchParams({
       fields: fields.join(","),

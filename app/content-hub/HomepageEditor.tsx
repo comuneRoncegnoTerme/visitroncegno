@@ -3,6 +3,7 @@
 import { FormEvent, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { HomepageContent } from "@/lib/directus";
+import MediaField from "./MediaField";
 import styles from "./editor.module.css";
 
 interface HomepageEditorProps {
@@ -82,6 +83,7 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
   const router = useRouter();
   const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [message, setMessage] = useState("");
+  const [heroImage, setHeroImage] = useState<string | null>(homepage.hero_image ?? null);
 
   const initialValues = useMemo(
     () => Object.fromEntries(textFields.map((field) => [field, fieldValue(homepage, field)])),
@@ -94,10 +96,11 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
     setMessage("");
 
     const form = new FormData(event.currentTarget);
-    const payload: Record<string, string | boolean> = Object.fromEntries(
+    const payload: Record<string, string | boolean | null> = Object.fromEntries(
       textFields.map((key) => [key, String(form.get(key) ?? "")])
     );
     payload.seasonal_enabled = form.get("seasonal_enabled") === "on";
+    payload.hero_image = heroImage;
 
     try {
       const response = await fetch("/api/content-hub/homepage", {
@@ -152,6 +155,11 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
             <div><small>Apertura</small><h3>Hero principale</h3><p>Il primo messaggio della homepage, sopra la fotografia o il media hero.</p></div>
           </header>
           <div className={styles.fields}>
+            <div className={`${styles.mediaField} ${styles.full}`}>
+              <span>Fotografia principale</span>
+              <MediaField value={heroImage ?? ""} onChange={setHeroImage} kind="image" />
+              <small>Foto orizzontale, almeno 1600 px di larghezza. Senza foto il sito usa l’immagine predefinita.</small>
+            </div>
             <label><span>Soprattitolo</span><input name="hero_eyebrow" defaultValue={value("hero_eyebrow")} /></label>
             <label className={styles.full}><span>Titolo principale</span><input name="hero_title" defaultValue={value("hero_title")} /></label>
             <label className={styles.full}><span>Descrizione</span><textarea name="hero_description" rows={4} defaultValue={value("hero_description")} /></label>
