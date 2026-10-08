@@ -355,16 +355,25 @@ export function getDirectusInternalAssetUrl(fileId: string | null | undefined): 
 // DIRECTUS_IMAGE_TRANSFORMS=false disattiva la trasformazione se Directus non la consente.
 const IMAGE_TRANSFORMS_ENABLED = process.env.DIRECTUS_IMAGE_TRANSFORMS?.trim().toLowerCase() !== "false";
 
-export function getDirectusImageUrl(fileId: string | null | undefined, width = 1600): string | null {
+export function getDirectusImageUrl(
+  fileId: string | null | undefined,
+  width = 1600,
+  format: "webp" | "jpg" = "webp"
+): string | null {
   const url = getDirectusAssetUrl(fileId);
   if (!url || !IMAGE_TRANSFORMS_ENABLED) return url;
   const params = new URLSearchParams({
     width: String(width),
     quality: "78",
-    format: "webp",
+    format,
     withoutEnlargement: "true",
   });
   return `${url}?${params.toString()}`;
+}
+
+// Anteprima per social e app di messaggistica: JPEG, che tutte leggono.
+export function getDirectusShareImageUrl(fileId: string | null | undefined): string | null {
+  return getDirectusImageUrl(fileId, 1200, "jpg");
 }
 
 export async function getMapPlaces(): Promise<MapPlace[]> {

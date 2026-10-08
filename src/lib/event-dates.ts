@@ -195,3 +195,21 @@ export function googleCalendarDates(item: EventDateInput) {
   const endInstant = end && end.instant > start.instant ? end.instant : start.instant + 2 * 60 * 60 * 1000;
   return `${calendarStamp(start.instant)}/${calendarStamp(endInstant)}`;
 }
+
+// Date per i dati strutturati schema.org/Event: giorno (YYYY-MM-DD) per gli eventi
+// di giornata, istante ISO per quelli con orario. La fine compare solo se indicata.
+export function schemaEventDates(item: EventDateInput) {
+  const start = parseEventDate(item.start_date);
+  if (!start) return null;
+  const end = parseEventDate(item.end_date);
+  if (isAllDayEvent(item)) {
+    return {
+      startDate: romeDayKey(start.instant),
+      endDate: end ? romeDayKey(end.instant) : undefined,
+    };
+  }
+  return {
+    startDate: new Date(start.instant).toISOString(),
+    endDate: end ? new Date(end.instant).toISOString() : undefined,
+  };
+}

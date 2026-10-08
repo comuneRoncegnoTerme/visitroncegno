@@ -12,6 +12,7 @@ import {
 } from "@/lib/content-hub-api";
 
 const editableFields = [
+  "hero_image",
   "hero_eyebrow",
   "hero_title",
   "hero_description",

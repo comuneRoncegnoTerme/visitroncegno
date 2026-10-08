@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getDirectusImageUrl, getSiteSettings } from "@/lib/directus";
+import { getDirectusImageUrl, getDirectusShareImageUrl, getSiteSettings } from "@/lib/directus";
 import { getEditorialList, plainText, type EditorialItem } from "@/lib/editorial";
 import DirectionsLink from "./DirectionsLink";
 import EditorialHeader from "./EditorialHeader";
@@ -11,7 +11,9 @@ import {
   eventEndLabel,
   eventStartLabel,
   googleCalendarDates,
+  schemaEventDates,
 } from "@/lib/event-dates";
+import { jsonLdString, SITE_URL } from "@/lib/seo";
 import styles from "./EventDetail.module.css";
 
 const FALLBACK_HERO = "/images/hero/roncegno-hero.jpg";
@@ -21,6 +23,40 @@ type Props = { item: EditorialItem };
 function normalizeUrl(value?: string | null) {
   if (!value) return null;
   return /^https?:\/\//i.test(value) ? value : `https://${value}`;
+}
+
+// schema.org/Event costruito solo dai campi Directus compilati.
+function eventJsonLd(item: EditorialItem, location: string, image: string | null) {
+  const dates = schemaEventDates(item);
+  if (!dates) return null;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: item.title,
+    description: item.summary ?? undefined,
+    startDate: dates.startDate,
+    endDate: dates.endDate,
+    eventStatus: "https://schema.org/EventScheduled",
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    url: `${SITE_URL}/eventi/${item.slug}`,
+    // Con DIRECTUS_PUBLIC_ASSET_URL=/media l'URL è relativo: schema.org vuole un indirizzo completo.
+    image: image ? [image.startsWith("/") ? `${SITE_URL}${image}` : image] : undefined,
+    location: {
+      "@type": "Place",
+      name: location,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: item.address ?? undefined,
+        addressLocality: "Roncegno Terme",
+        addressRegion: "TN",
+        addressCountry: "IT",
+      },
+      geo:
+        typeof item.latitude === "number" && typeof item.longitude === "number"
+          ? { "@type": "GeoCoordinates", latitude: item.latitude, longitude: item.longitude }
+          : undefined,
+    },
+  };
 }
 
 function googleCalendarHref(item: EditorialItem, location: string) {
@@ -56,6 +92,7 @@ export default async function EventDetail({ item }: Props) {
   const website = normalizeUrl(item.website_url);
   const booking = normalizeUrl(item.booking_url);
   const calendar = googleCalendarHref(item, location);
+  const jsonLd = eventJsonLd(item, location, getDirectusShareImageUrl(item.image));
   const hasCoordinates = typeof item.latitude === "number" && typeof item.longitude === "number";
   const related = currentAndUpcomingEvents(allEvents)
     .filter((candidate) => candidate.id !== item.id)
@@ -64,6 +101,7 @@ export default async function EventDetail({ item }: Props) {
   return (
     <main className={styles.page}>
       <EditorialHeader settings={settings} />
+      {jsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }} />}
 
       <section
         className={styles.hero}

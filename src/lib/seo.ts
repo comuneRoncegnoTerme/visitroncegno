@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 
 export const SITE_URL = "https://www.visitroncegno.it";
 export const SITE_NAME = "Visit Roncegno";
+// Immagine di condivisione (1200×630) usata quando la pagina non ne ha una propria.
+export const DEFAULT_OG_IMAGE = "/images/og/roncegno-default.jpg";
 
 export function descriptionFrom(
   value: string | null | undefined,
@@ -29,7 +31,8 @@ export function pageMetadata({
   path: string;
   image?: string | null;
 }): Metadata {
-  const images = image ? [{ url: image }] : undefined;
+  const shareImage = image ?? DEFAULT_OG_IMAGE;
+  const images = [{ url: shareImage }];
 
   return {
     title,
@@ -49,7 +52,12 @@ export function pageMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: image ? [image] : undefined,
+      images: [shareImage],
     },
   };
+}
+
+// Serializza dati strutturati JSON-LD in modo sicuro dentro <script>.
+export function jsonLdString(data: unknown) {
+  return JSON.stringify(data).replace(/</g, "\\u003c");
 }

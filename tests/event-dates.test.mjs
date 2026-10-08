@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   currentAndUpcomingEvents, eventEndLabel, eventStartLabel, eventTimeLabel,
-  googleCalendarDates, isAllDayEvent, isEventOngoing, isEventPast, parseEventDate,
+  googleCalendarDates, isAllDayEvent, isEventOngoing, isEventPast, parseEventDate, schemaEventDates,
 } from "../src/lib/event-dates.ts";
 
 const at = (iso) => new Date(iso).getTime();
@@ -66,4 +66,16 @@ test("etichetta di fine solo se serve", () => {
 test("Google Calendar: giorni interi per eventi di giornata", () => {
   assert.equal(googleCalendarDates({ start_date: "2026-10-24", end_date: "2026-10-25" }), "20261024/20261026");
   assert.equal(googleCalendarDates({ start_date: "2026-10-24T14:00:00" }), "20261024T120000Z/20261024T140000Z");
+});
+
+test("date schema.org: giorno per eventi di giornata, istante UTC per eventi con orario", () => {
+  assert.deepEqual(schemaEventDates({ start_date: "2026-10-23", end_date: "2026-10-25", all_day: true }), {
+    startDate: "2026-10-23",
+    endDate: "2026-10-25",
+  });
+  assert.deepEqual(schemaEventDates({ start_date: "2026-10-25T19:00:00", end_date: null, all_day: false }), {
+    startDate: "2026-10-25T18:00:00.000Z",
+    endDate: undefined,
+  });
+  assert.equal(schemaEventDates({ start_date: null, end_date: null }), null);
 });

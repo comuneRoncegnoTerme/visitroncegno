@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import styles from "./not-found.module.css";
 
 // Errore imprevisto in una pagina: il visitatore vede un messaggio chiaro invece di una pagina vuota.
-export default function PageError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
+export default function PageError({ error, retry }: { error: Error & { digest?: string }; retry: () => void }) {
   useEffect(() => {
     console.error("Page render error", error.digest ?? error.message);
   }, [error]);
@@ -20,7 +20,7 @@ export default function PageError({ error, reset }: { error: Error & { digest?: 
             Si è verificato un problema momentaneo. Puoi riprovare oppure tornare alla homepage.
           </p>
           <nav className={styles.actions} aria-label="Azioni principali">
-            <button type="button" className={styles.primary} onClick={reset}>Riprova</button>
+            <button type="button" className={styles.primary} onClick={() => retry()}>Riprova</button>
             <Link className={styles.secondary} href="/">Torna alla homepage</Link>
           </nav>
         </section>

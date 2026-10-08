@@ -11,7 +11,7 @@ import storyStyles from "@/components/RouteStories.module.css";
 
 import {
   DIRECTUS_URL,
-  getDirectusImageUrl, getDirectusInternalAssetUrl,
+  getDirectusImageUrl, getDirectusInternalAssetUrl, getDirectusShareImageUrl,
   getRouteBySlug,
   getSiteSettings,
   type RoutePoint,
@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: RoutePageProps): Promise<Meta
     title: route.title,
     description: descriptionFrom(route.summary ?? route.description, `Scopri il percorso ${route.title} a Roncegno Terme: itinerario, difficoltà e informazioni utili.`),
     path: `/percorsi/${route.slug}`,
-    image: getDirectusImageUrl(route.image),
+    image: getDirectusShareImageUrl(route.image),
   });
 }
 
