@@ -59,7 +59,7 @@ export default async function MuseumsPage() {
 
       <section className={styles.bridge}>
         <div><p className={styles.kicker}>Una sola visita, due prospettive</p><h2>Dal rumore delle macine al suono degli strumenti.</h2></div>
-        <p>I due musei raccontano aspetti diversi dello stesso territorio: il lavoro, la creatività, la memoria e il rapporto con le comunità. Questa landing è pensata come porta d’accesso comune, mentre ogni museo mantiene la propria identità.</p>
+        <p>I due musei raccontano aspetti diversi dello stesso territorio: il lavoro, la creatività, la memoria e il rapporto con le comunità.</p>
       </section>
       <SiteFooter settings={settings} />
     </main>

@@ -81,11 +81,9 @@ export default async function StoryPage({ params }: StoryPageProps) {
         <div className={styles.contentGrid}>
           <article className={styles.article}>
             <p className={styles.kicker}>Approfondimento</p>
-            {paragraphs.length > 0 ? (
-              paragraphs.map((paragraph, index) => <p key={`${index}-${paragraph.slice(0, 24)}`}>{paragraph}</p>)
-            ) : (
-              <p>{story.excerpt ?? "Questo approfondimento sarà completato a breve."}</p>
-            )}
+            {paragraphs.length > 0
+              ? paragraphs.map((paragraph, index) => <p key={`${index}-${paragraph.slice(0, 24)}`}>{paragraph}</p>)
+              : story.excerpt && <p>{story.excerpt}</p>}
           </article>
 
           <aside className={styles.aside}>

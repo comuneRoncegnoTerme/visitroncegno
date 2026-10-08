@@ -140,22 +140,16 @@ export default async function EventDetail({ item }: Props) {
             </div>
           </div>
 
-          {!directusImage && (
-            <small className={styles.imageNotice}>
-              Immagine del territorio · aggiungi una foto specifica dal Content Hub
-            </small>
-          )}
         </div>
       </section>
 
       <section className={styles.contentGrid}>
         <article className={styles.editorialCopy}>
           <p className={styles.kicker}>L’appuntamento</p>
-          {paragraphs.length ? (
-            paragraphs.map((text, index) => <p key={index}>{text}</p>)
-          ) : (
-            <p>Le informazioni complete sull&apos;evento saranno disponibili a breve.</p>
-          )}
+          {/* Senza testo esteso resta il riepilogo: mai frasi segnaposto rivolte al visitatore. */}
+          {paragraphs.length
+            ? paragraphs.map((text, index) => <p key={index}>{text}</p>)
+            : item.summary && <p>{item.summary}</p>}
         </article>
 
         <aside className={styles.infoCard} aria-label="Informazioni pratiche">

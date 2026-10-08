@@ -263,9 +263,6 @@ export default async function RoutePage({ params }: RoutePageProps) {
           <p className="eyebrow">{route.category?.name ?? "Percorso"}</p>
           <h1>{route.title}</h1>
           {route.route_highlight && <p className="route-highlight">{route.route_highlight}</p>}
-          {!directusHeroImage && (
-            <small className="route-image-note">Immagine territoriale provvisoria · carica una foto del percorso in Directus</small>
-          )}
         </div>
       </section>
 
@@ -347,7 +344,6 @@ export default async function RoutePage({ params }: RoutePageProps) {
                       style={placeImage ? { backgroundImage: `url('${placeImage}')` } : undefined}
                     >
                       <span>{String(index + 1).padStart(2, "0")}</span>
-                      {!placeImage && <small>Foto da aggiungere</small>}
                     </div>
                     <div className="route-point-copy">
                       <small>{badge}</small>
