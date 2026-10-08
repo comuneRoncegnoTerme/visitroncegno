@@ -209,7 +209,7 @@ Verifica le pagine principali, tutti gli URL dei pannelli QR `/it/sentieri/*` pr
 ### Prima di puntare www.visitroncegno.it sul nuovo portale
 
 1. Rendere il sito precedente raggiungibile a un indirizzo separato (es. `archivio.visitroncegno.it`) e impostare `MEMORIA_ARCHIVE_URL`: l'archivio "Na vòlta a Ronzégno" è ancora pubblicato lì.
-2. Verificare che gli asset Directus siano serviti in HTTPS (`DIRECTUS_URL` con `https://`), altrimenti il browser blocca le immagini come contenuto misto.
+2. Verificare che gli asset Directus siano serviti in HTTPS, altrimenti il browser blocca le immagini come contenuto misto. Se Directus resta in HTTP (IP e porta), impostare `DIRECTUS_PUBLIC_ASSET_URL=/media`: foto, audio e GPX passano dal sito tramite `app/media/[id]/route.ts`.
 3. Eseguire `npm run smoke -- https://<nuovo-dominio>` e scansionare almeno un QR fisico per ciascun percorso.
 
 ## Deploy

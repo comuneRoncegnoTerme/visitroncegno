@@ -7,6 +7,13 @@ export const DIRECTUS_URL = (
   process.env.DIRECTUS_URL?.trim() || DEFAULT_DIRECTUS_URL
 ).replace(/\/+$/, "");
 
+// Indirizzo con cui il browser carica gli asset (foto, audio, GPX). Di norma è Directus stesso;
+// con DIRECTUS_PUBLIC_ASSET_URL=/media passano dal sito (vedi app/media/[id]/route.ts),
+// utile quando il sito è in HTTPS e Directus no.
+export const DIRECTUS_PUBLIC_ASSET_BASE = (
+  process.env.DIRECTUS_PUBLIC_ASSET_URL?.trim() || `${DIRECTUS_URL}/assets`
+).replace(/\/+$/, "");
+
 export class DirectusRequestError extends Error {
   status: number | null;
   path: string;

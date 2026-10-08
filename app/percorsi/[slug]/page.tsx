@@ -11,7 +11,7 @@ import storyStyles from "@/components/RouteStories.module.css";
 
 import {
   DIRECTUS_URL,
-  getDirectusAssetUrl, getDirectusImageUrl, getDirectusShareImageUrl,
+  getDirectusImageUrl, getDirectusInternalAssetUrl, getDirectusShareImageUrl,
   getRouteBySlug,
   getSiteSettings,
   type RoutePoint,
@@ -218,7 +218,7 @@ export default async function RoutePage({ params }: RoutePageProps) {
 
   const directusHeroImage = getDirectusImageUrl(route.image);
   const heroImage = directusHeroImage ?? FALLBACK_ROUTE_IMAGE;
-  const gpxUrl = getDirectusAssetUrl(route.gpx_file);
+  const gpxUrl = getDirectusInternalAssetUrl(route.gpx_file);
   const gpxText = await loadGpxText(gpxUrl);
   const duration = formatDuration(route.duration_minutes);
 

@@ -39,7 +39,8 @@ function eventJsonLd(item: EditorialItem, location: string, image: string | null
     eventStatus: "https://schema.org/EventScheduled",
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
     url: `${SITE_URL}/eventi/${item.slug}`,
-    image: image ? [image] : undefined,
+    // Con DIRECTUS_PUBLIC_ASSET_URL=/media l'URL è relativo: schema.org vuole un indirizzo completo.
+    image: image ? [image.startsWith("/") ? `${SITE_URL}${image}` : image] : undefined,
     location: {
       "@type": "Place",
       name: location,
