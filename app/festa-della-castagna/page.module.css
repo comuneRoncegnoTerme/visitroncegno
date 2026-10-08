@@ -289,3 +289,16 @@
 @media (prefers-reduced-motion:reduce){
   .photoGrid img{transition:none}
 }
+.infoGrid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.mapLinks{display:flex;flex-direction:column;gap:6px;margin-top:14px}
+.mapLinks a{display:inline-flex;align-items:center;min-height:44px;color:#7d321b;font-size:14px;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.dayTabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:18px 0 4px}
+.dayTab{display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-height:64px;padding:12px 14px;border:1px solid rgba(255,255,255,.22);border-radius:4px;background:transparent;color:#fff;font:inherit;text-align:left;cursor:pointer}
+.dayTab small{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#d5a37b}
+.dayTab span{font-family:Georgia,serif;font-size:18px;line-height:1.15}
+.dayTab[aria-selected="true"]{background:#fff4e4;border-color:#fff4e4;color:#1f3529}
+.dayTab[aria-selected="true"] small{color:#9d4a24}
+.dayTab:focus-visible{outline:3px solid #d5a37b;outline-offset:2px}
+@media(max-width:1280px){.infoGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:1000px){.infoGrid{grid-template-columns:1fr}}
+@media(max-width:520px){.dayTabs{gap:6px}.dayTab{padding:10px}.dayTab small{font-size:8px;letter-spacing:.08em}.dayTab span{font-size:15px}}

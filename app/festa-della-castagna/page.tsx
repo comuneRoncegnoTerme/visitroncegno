@@ -5,6 +5,7 @@ import SiteFooter from "@/components/SiteFooter";
 import { getSiteSettings } from "@/lib/directus";
 import styles from "./page.module.css";
 import FestaAtmosphereVideo from "./FestaAtmosphereVideo";
+import FestaProgramme, { type ProgrammeDay } from "./FestaProgramme";
 
 export const metadata: Metadata = {
   title: "Festa della Castagna 2026",
@@ -28,6 +29,7 @@ const practical = [
 
 const programme = [
   {
+    date: "2026-10-23",
     day: "Venerdì 23 ottobre",
     label: "Aspettando la Festa",
     events: [
@@ -37,6 +39,7 @@ const programme = [
     ],
   },
   {
+    date: "2026-10-24",
     day: "Sabato 24 ottobre",
     label: "La Festa entra nel vivo",
     events: [
@@ -52,6 +55,7 @@ const programme = [
     ],
   },
   {
+    date: "2026-10-25",
     day: "Domenica 25 ottobre",
     label: "La domenica della Castagna",
     events: [
@@ -60,7 +64,11 @@ const programme = [
       ["13:00", "Musica con i Trifisa", "Musica dal vivo presso il piazzale dei pompieri."],
     ],
   },
-] as const;
+] as const satisfies readonly ProgrammeDay[];
+
+function mapsSearch(query: string) {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+}
 
 export default async function FestaDellaCastagnaPage() {
   const siteSettings = await getSiteSettings();
@@ -140,16 +148,7 @@ export default async function FestaDellaCastagnaPage() {
           <p>Da venerdì sera a domenica, il programma alterna comunità, passeggiate, spettacoli, musica, gastronomia e attività per famiglie.</p>
           <div className={styles.alwaysOn}><strong>Tutti i giorni</strong><p>Servizio navetta gratuito, intrattenimento e laboratori per bambini, giardino con animali, gonfiabili, dolci di castagne, bancarelle e musica itinerante.</p></div>
         </div>
-        <div className={styles.timeline}>
-          {programme.map((day) => (
-            <section className={styles.programDay} key={day.day}>
-              <div className={styles.dayHeading}><span>{day.label}</span><h3>{day.day}</h3></div>
-              {day.events.map(([time, title, description]) => (
-                <article key={`${day.day}-${time}-${title}`}><time>{time}</time><div><h4>{title}</h4><p>{description}</p></div></article>
-              ))}
-            </section>
-          ))}
-        </div>
+        <FestaProgramme days={programme} />
       </section>
 
       <section className={styles.flavours} id="sapori">
@@ -171,9 +170,24 @@ export default async function FestaDellaCastagnaPage() {
       <section className={styles.info} id="come-arrivare">
         <div><p className={styles.eyebrow}>Organizza la visita</p><h2>Arriva, parcheggia, poi dimentica l’auto.</h2></div>
         <div className={styles.infoGrid}>
-          <article><span>01</span><h3>Parcheggi</h3><p>Parcheggi disponibili nei pressi della festa, presso l’oratorio parrocchiale di Roncegno e in via Ferme, arrivando da Borgo Valsugana.</p></article>
-          <article><span>02</span><h3>Navetta domenicale</h3><p>Domenica 25 saranno disponibili parcheggi organizzati a 600–800 metri in direzione Marter e Borgo Valsugana, con bus navetta gratuito verso il centro dalle 11:00 alle 18:30.</p></article>
-          <article><span>03</span><h3>Accessibilità</h3><p>Parcheggio riservato alle persone con disabilità in prossimità del centro della manifestazione.</p></article>
+          <article>
+            <span>01</span><h3>Dove</h3>
+            <p>Nel centro di Roncegno Terme. Inaugurazione e Torta Gigante in Piazza A. De Giovanni; burattini, forno di comunità e DJ set in Piazza Montebello.</p>
+            <div className={styles.mapLinks}>
+              <a href={mapsSearch("Piazza A. De Giovanni, Roncegno Terme")} target="_blank" rel="noopener noreferrer">Piazza A. De Giovanni su Maps ↗</a>
+              <a href={mapsSearch("Piazza Montebello, Roncegno Terme")} target="_blank" rel="noopener noreferrer">Piazza Montebello su Maps ↗</a>
+            </div>
+          </article>
+          <article>
+            <span>02</span><h3>Parcheggi</h3>
+            <p>Parcheggi disponibili nei pressi della festa, presso l’oratorio parrocchiale di Roncegno e in via Ferme, arrivando da Borgo Valsugana.</p>
+            <div className={styles.mapLinks}>
+              <a href={mapsSearch("Oratorio parrocchiale, Roncegno Terme")} target="_blank" rel="noopener noreferrer">Oratorio su Maps ↗</a>
+              <a href={mapsSearch("Via Ferme, Roncegno Terme")} target="_blank" rel="noopener noreferrer">Via Ferme su Maps ↗</a>
+            </div>
+          </article>
+          <article><span>03</span><h3>Navetta domenicale</h3><p>Domenica 25 saranno disponibili parcheggi organizzati a 600–800 metri in direzione Marter e Borgo Valsugana, con bus navetta gratuito verso il centro dalle 11:00 alle 18:30.</p></article>
+          <article><span>04</span><h3>Accessibilità</h3><p>Parcheggio riservato alle persone con disabilità in prossimità del centro della manifestazione.</p></article>
         </div>
         <div className={styles.contactBox}><span>Informazioni</span><strong>Comune di Roncegno Terme</strong><a href="tel:+390461764061">0461 764061</a><a href="mailto:comunicazione@comune.roncegnoterme.tn.it">comunicazione@comune.roncegnoterme.tn.it</a></div>
       </section>
