@@ -18,7 +18,8 @@
     "directus:audit-route-images": "node scripts/directus-audit-route-images.mjs",
     "directus:audit-routes": "node scripts/directus-audit-routes.mjs",
     "directus:ensure-home-full-model": "node scripts/directus-home-full-model.mjs",
-    "smoke": "node scripts/smoke-http.mjs"
+    "smoke": "node scripts/smoke-http.mjs",
+    "audit:legacy-qr": "node scripts/audit-legacy-qr.mjs"
   },
   "dependencies": {
     "maplibre-gl": "^6.2.0",
