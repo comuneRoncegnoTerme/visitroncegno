@@ -283,15 +283,9 @@
 }
 
 
-/* Video fallback and reachable playback controls. */
-.videoFallback{
-  position:absolute;
-  inset:0;
-  background:url('/images/festa-castagna/benvenuti.jpg') center/cover no-repeat;
-}
+/* Video: la didascalia e la sfumatura non intercettano i tocchi sul pulsante di riproduzione. */
 .videoStoryShade,
 .videoStoryCaption{pointer-events:none}
-.videoStoryMedia{pointer-events:auto}
 @media (prefers-reduced-motion:reduce){
   .photoGrid img{transition:none}
 }
