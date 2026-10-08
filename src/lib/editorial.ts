@@ -51,8 +51,7 @@ type EditorialResponse = { data?: EditorialItem[] };
 async function fetchItems(collection: string, params: URLSearchParams) {
   try {
     const result = await directusJson<EditorialResponse>(
-      `/items/${collection}?${params.toString()}`,
-      { cache: "no-store" }
+      `/items/${collection}?${params.toString()}`
     );
     return result.data ?? [];
   } catch (error) {

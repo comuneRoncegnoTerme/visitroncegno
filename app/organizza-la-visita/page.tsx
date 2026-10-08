@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { connection } from "next/server";
 import Link from "next/link";
 import HomeMap from "@/components/HomeMap";
 import SiteFooter from "@/components/SiteFooter";
@@ -16,8 +17,6 @@ import {
   isSleepingPlace,
 } from "@/lib/place-taxonomy";
 import styles from "./page.module.css";
-
-export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Organizza la visita",
@@ -64,6 +63,7 @@ function PlaceStrip({ places, emptyText }: { places: EditorialItem[]; emptyText:
 }
 
 export default async function OrganizzaLaVisitaPage() {
+  await connection();
   const [siteSettings, mapPlaces, allPlaces] = await Promise.all([
     getSiteSettings(),
     getMapPlaces(),

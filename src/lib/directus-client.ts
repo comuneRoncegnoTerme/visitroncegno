@@ -1,3 +1,5 @@
+import { publicDirectusCache } from "@/lib/directus-cache";
+
 const DEFAULT_DIRECTUS_URL = "http://127.0.0.1:8055";
 const DEFAULT_TIMEOUT_MS = 10_000;
 
@@ -96,7 +98,9 @@ export async function directusJson<T>(
   path: string,
   options: DirectusRequestOptions = {}
 ): Promise<T> {
-  const response = await directusFetch(path, options);
+  // Letture pubbliche: in cache con tag, salvo indicazione esplicita del chiamante.
+  const cacheOptions = options.cache === undefined && options.next === undefined ? publicDirectusCache : {};
+  const response = await directusFetch(path, { ...cacheOptions, ...options });
 
   if (!response.ok) {
     throw new DirectusRequestError(
