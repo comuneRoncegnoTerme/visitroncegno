@@ -5,11 +5,40 @@ import SiteFooter from "@/components/SiteFooter";
 import { getSiteSettings } from "@/lib/directus";
 import styles from "./page.module.css";
 import FestaAtmosphereVideo from "./FestaAtmosphereVideo";
+import { jsonLdString, pageMetadata, SITE_URL } from "@/lib/seo";
 
-export const metadata: Metadata = {
+const FESTA_DESCRIPTION = "Programma, sapori, musica e informazioni utili per la Festa della Castagna di Roncegno Terme, dal 23 al 25 ottobre 2026.";
+const FESTA_OG_IMAGE = "/images/og/festa-della-castagna.jpg";
+
+export const metadata: Metadata = pageMetadata({
   title: "Festa della Castagna 2026",
-  description: "Programma, sapori, musica e informazioni utili per la Festa della Castagna di Roncegno Terme, dal 23 al 25 ottobre 2026.",
-  alternates: { canonical: "/festa-della-castagna" },
+  description: FESTA_DESCRIPTION,
+  path: "/festa-della-castagna",
+  image: FESTA_OG_IMAGE,
+});
+
+// Dati strutturati schema.org/Event: solo informazioni già presenti nella pagina.
+const festaJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Event",
+  name: "Festa della Castagna 2026",
+  description: FESTA_DESCRIPTION,
+  startDate: "2026-10-23",
+  endDate: "2026-10-25",
+  eventStatus: "https://schema.org/EventScheduled",
+  eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+  url: `${SITE_URL}/festa-della-castagna`,
+  image: [`${SITE_URL}${FESTA_OG_IMAGE}`],
+  location: {
+    "@type": "Place",
+    name: "Roncegno Terme",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Roncegno Terme",
+      addressRegion: "TN",
+      addressCountry: "IT",
+    },
+  },
 };
 
 const stories = [
@@ -68,13 +97,16 @@ export default async function FestaDellaCastagnaPage() {
   return (
     <main className={styles.page}>
       <SiteHeader settings={siteSettings} overlay />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdString(festaJsonLd) }} />
 
       <section className={styles.hero}>
         <div className={styles.heroImage} />
         <div className={styles.heroOverlay} />
         <div className={styles.heroContent}>
           <p className={styles.kicker}>23–25 ottobre 2026 · Roncegno Terme</p>
-          <img className={styles.officialLogo} src="/images/festa-castagna/logo-festa-ufficiale.webp" width={1200} height={614} alt="Logo ufficiale Festa della Castagna Roncegno Terme" />
+          <h1 className={styles.title}>
+            <img className={styles.officialLogo} src="/images/festa-castagna/logo-festa-ufficiale.webp" width={1200} height={614} alt="Festa della Castagna 2026 a Roncegno Terme" />
+          </h1>
           <p className={styles.lead}>Caldarroste sul fuoco, bancarelle tra gli alberi, musica, famiglie e un paese intero che si ritrova. Tre giorni per vivere l’autunno di Roncegno.</p>
           <div className={styles.heroActions}>
             <a href="#programma" className={styles.primaryButton}>Scopri il programma →</a>

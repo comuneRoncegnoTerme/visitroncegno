@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import EventDetail from "@/components/EventDetail";
+import { getDirectusShareImageUrl } from "@/lib/directus";
 import { getEditorialItem } from "@/lib/editorial";
 import { descriptionFrom, pageMetadata } from "@/lib/seo";
 
@@ -19,6 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       `Informazioni e programma di ${item.title} a Roncegno Terme.`
     ),
     path: `/eventi/${item.slug}`,
+    image: getDirectusShareImageUrl(item.image),
   });
 }
 
