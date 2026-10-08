@@ -5,6 +5,13 @@ import DirectionsLink from "./DirectionsLink";
 import EditorialHeader from "./EditorialHeader";
 import HomeMap from "./HomeMap";
 import SiteFooter from "./SiteFooter";
+import {
+  currentAndUpcomingEvents,
+  eventDayBadge,
+  eventEndLabel,
+  eventStartLabel,
+  googleCalendarDates,
+} from "@/lib/event-dates";
 import styles from "./EventDetail.module.css";
 
 const FALLBACK_HERO = "/images/hero/roncegno-hero.jpg";
@@ -16,59 +23,14 @@ function normalizeUrl(value?: string | null) {
   return /^https?:\/\//i.test(value) ? value : `https://${value}`;
 }
 
-function formatDate(value?: string | null) {
-  if (!value) return null;
-  return new Intl.DateTimeFormat("it-IT", {
-    dateStyle: "full",
-    timeZone: "Europe/Rome",
-  }).format(new Date(value));
-}
-
-function formatDateTime(value?: string | null) {
-  if (!value) return null;
-  return new Intl.DateTimeFormat("it-IT", {
-    dateStyle: "full",
-    timeStyle: "short",
-    timeZone: "Europe/Rome",
-  }).format(new Date(value));
-}
-
-function dateBadge(value?: string | null) {
-  if (!value) return null;
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return null;
-
-  return {
-    day: new Intl.DateTimeFormat("it-IT", {
-      day: "2-digit",
-      timeZone: "Europe/Rome",
-    }).format(date),
-    month: new Intl.DateTimeFormat("it-IT", {
-      month: "short",
-      timeZone: "Europe/Rome",
-    }).format(date).replace(".", "").toUpperCase(),
-  };
-}
-
-function calendarStamp(date: Date) {
-  return date.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
-}
-
 function googleCalendarHref(item: EditorialItem, location: string) {
-  if (!item.start_date) return null;
-
-  const start = new Date(item.start_date);
-  if (Number.isNaN(start.getTime())) return null;
-
-  const explicitEnd = item.end_date ? new Date(item.end_date) : null;
-  const end = explicitEnd && !Number.isNaN(explicitEnd.getTime())
-    ? explicitEnd
-    : new Date(start.getTime() + 2 * 60 * 60 * 1000);
+  const dates = googleCalendarDates(item);
+  if (!dates) return null;
 
   const params = new URLSearchParams({
     action: "TEMPLATE",
     text: item.title,
-    dates: `${calendarStamp(start)}/${calendarStamp(end)}`,
+    dates,
     location,
   });
 
@@ -87,22 +49,16 @@ export default async function EventDetail({ item }: Props) {
   const heroImage = directusImage ?? FALLBACK_HERO;
   const location = item.address ?? item.location_name ?? item.place?.title ?? "Roncegno Terme";
   const categoryLabel = item.map_label ?? item.category?.name ?? "Evento";
-  const eventDate = formatDateTime(item.start_date);
-  const eventEnd = formatDateTime(item.end_date);
-  const badge = dateBadge(item.start_date);
+  const eventDate = eventStartLabel(item);
+  const eventEnd = eventEndLabel(item);
+  const badge = eventDayBadge(item.start_date);
   const paragraphs = plainText(item.content ?? item.description);
   const website = normalizeUrl(item.website_url);
   const booking = normalizeUrl(item.booking_url);
   const calendar = googleCalendarHref(item, location);
   const hasCoordinates = typeof item.latitude === "number" && typeof item.longitude === "number";
-  const now = Date.now();
-  const related = allEvents
+  const related = currentAndUpcomingEvents(allEvents)
     .filter((candidate) => candidate.id !== item.id)
-    .filter((candidate) => {
-      if (!candidate.start_date) return false;
-      const time = new Date(candidate.start_date).getTime();
-      return !Number.isNaN(time) && time >= now;
-    })
     .slice(0, 3);
 
   return (
@@ -132,7 +88,7 @@ export default async function EventDetail({ item }: Props) {
             <div className={styles.heroFact}>
               <small>Quando</small>
               <strong>{eventDate ?? "Data in aggiornamento"}</strong>
-              {item.end_date && <span>Fino a {formatDate(item.end_date)}</span>}
+              {eventEnd && <span>{eventEnd.includes(" ") ? `Fino a ${eventEnd}` : `Fino alle ${eventEnd}`}</span>}
             </div>
             <div className={styles.heroFact}>
               <small>Dove</small>
@@ -237,7 +193,7 @@ export default async function EventDetail({ item }: Props) {
           <div className={styles.relatedGrid}>
             {related.map((relatedItem) => {
               const image = getDirectusAssetUrl(relatedItem.image) ?? FALLBACK_HERO;
-              const date = dateBadge(relatedItem.start_date);
+              const date = eventDayBadge(relatedItem.start_date);
               return (
                 <Link className={styles.relatedCard} key={relatedItem.id} href={`/eventi/${relatedItem.slug}`}>
                   <div className={styles.relatedImage} style={{ backgroundImage: `url('${image}')` }}>
