@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
 import EditorialDetail from "@/components/EditorialDetail";
+import { getDirectusShareImageUrl } from "@/lib/directus";
 import { getEditorialItem } from "@/lib/editorial";
 import { placeHref } from "@/lib/place-detail";
 import { descriptionFrom, pageMetadata } from "@/lib/seo";
@@ -16,6 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: item.title,
     description: descriptionFrom(item.summary ?? item.description, `Scopri ${item.title}, luogo di interesse a Roncegno Terme.`),
     path: canonical.startsWith("/") ? canonical : `/luoghi/${item.slug}`,
+    image: getDirectusShareImageUrl(item.image),
   });
 }
 

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { getDirectusImageUrl, getSiteSettings } from "@/lib/directus";
+import { getDirectusImageUrl, getDirectusShareImageUrl, getSiteSettings } from "@/lib/directus";
 import { getLegacyStoryPath, getStoryBySlug, storyParagraphs } from "@/lib/stories";
 import { descriptionFrom, pageMetadata } from "@/lib/seo";
 import styles from "./page.module.css";
@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: StoryPageProps): Promise<Meta
     title: story.title,
     description: descriptionFrom(story.excerpt ?? story.body, `Una storia di Roncegno Terme: ${story.title}.`),
     path: canonical,
-    image: getDirectusImageUrl(story.image),
+    image: getDirectusShareImageUrl(story.image),
   });
 }
 

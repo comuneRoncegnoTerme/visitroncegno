@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,11 +29,13 @@ export const metadata: Metadata = {
     siteName: "Visit Roncegno",
     title: "Visit Roncegno Terme",
     description: "Natura, percorsi, eventi, musei, memoria e informazioni utili per vivere Roncegno Terme.",
+    images: [{ url: DEFAULT_OG_IMAGE, width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Visit Roncegno Terme",
     description: "Scopri Roncegno Terme e organizza la tua visita in Valsugana.",
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 
