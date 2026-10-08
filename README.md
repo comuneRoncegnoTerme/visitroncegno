@@ -196,6 +196,22 @@ Per ottenere un exit code non-zero quando vengono trovati problemi, utile in con
 npm run directus:audit-places -- --strict
 ```
 
+## Controlli HTTP e compatibilità QR
+
+Smoke test in sola lettura, utilizzabile in locale, su staging o sul dominio pubblico:
+
+```bash
+npm run smoke -- https://www.visitroncegno.it
+```
+
+Verifica le pagine principali, tutti gli URL dei pannelli QR `/it/sentieri/*` presenti nel codice, i redirect degli URL del sito precedente, ogni voce della sitemap, i link all'archivio della memoria e il formato del video della Festa. Esce con errore se qualcosa non risponde come previsto. Alcuni pannelli (ad esempio `/it/sentieri/bostrico-tipografo-11-2`) esistono solo come storia in Directus: in un ambiente senza quei contenuti risultano 404.
+
+### Prima di puntare www.visitroncegno.it sul nuovo portale
+
+1. Rendere il sito precedente raggiungibile a un indirizzo separato (es. `archivio.visitroncegno.it`) e impostare `MEMORIA_ARCHIVE_URL`: l'archivio "Na vòlta a Ronzégno" è ancora pubblicato lì.
+2. Verificare che gli asset Directus siano serviti in HTTPS (`DIRECTUS_URL` con `https://`), altrimenti il browser blocca le immagini come contenuto misto.
+3. Eseguire `npm run smoke -- https://<nuovo-dominio>` e scansionare almeno un QR fisico per ciascun percorso.
+
 ## Deploy
 
 Il deploy di produzione è automatizzato con GitHub Actions su push verso `main`.
