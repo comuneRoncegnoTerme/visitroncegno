@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getDirectusAssetUrl, getSiteSettings } from "@/lib/directus";
+import { getDirectusAssetUrl, getDirectusImageUrl, getSiteSettings } from "@/lib/directus";
 import { getEditorialItem, plainText } from "@/lib/editorial";
 import KioskDetail from "../../KioskDetail";
 
@@ -16,7 +16,7 @@ export default async function KioskPlaceDetailPage({ params }: Props) {
   if (!item) notFound();
 
   const logo = getDirectusAssetUrl(settings.logo);
-  const image = getDirectusAssetUrl(item.image);
+  const image = getDirectusImageUrl(item.image);
   const paragraphs = plainText(item.description ?? item.content ?? item.summary);
   const facts = [
     item.address ? { label: "Dove", value: item.address } : null,

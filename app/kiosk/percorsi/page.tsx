@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getDirectusAssetUrl, getSiteSettings } from "@/lib/directus";
+import { getDirectusAssetUrl, getDirectusImageUrl, getSiteSettings } from "@/lib/directus";
 import { getEditorialList } from "@/lib/editorial";
 import KioskChrome from "../KioskChrome";
 import styles from "../KioskList.module.css";
@@ -38,7 +38,7 @@ export default async function KioskRoutesPage() {
       {items.length ? (
         <section className={styles.grid} aria-label="Percorsi">
           {items.slice(0, 12).map((item) => {
-            const image = getDirectusAssetUrl(item.image);
+            const image = getDirectusImageUrl(item.image);
             const meta = [
               item.distance_km ? `${item.distance_km} km` : null,
               durationLabel(item.duration_minutes),

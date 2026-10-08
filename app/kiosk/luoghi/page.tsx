@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getDirectusAssetUrl, getSiteSettings } from "@/lib/directus";
+import { getDirectusAssetUrl, getDirectusImageUrl, getSiteSettings } from "@/lib/directus";
 import { getEditorialList } from "@/lib/editorial";
 import KioskChrome from "../KioskChrome";
 import styles from "../KioskList.module.css";
@@ -31,7 +31,7 @@ export default async function KioskPlacesPage() {
       {items.length ? (
         <section className={styles.grid} aria-label="Luoghi da scoprire">
           {items.slice(0, 12).map((item) => {
-            const image = getDirectusAssetUrl(item.image);
+            const image = getDirectusImageUrl(item.image);
             return (
               <Link className={styles.card} href={`/kiosk/luoghi/${item.slug}`} key={item.id}>
                 <div className={styles.image} style={image ? { backgroundImage: `url('${image}')` } : undefined} />

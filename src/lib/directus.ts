@@ -343,6 +343,23 @@ export function getDirectusAssetUrl(fileId: string | null | undefined): string |
   return fileId ? `${DIRECTUS_URL}/assets/${fileId}` : null;
 }
 
+// Fotografie: Directus restituisce una versione ridimensionata in WebP invece dell'originale
+// (spesso 4000-6000 px e diversi MB). Usare solo per immagini raster, non per file, audio, GPX o SVG.
+// DIRECTUS_IMAGE_TRANSFORMS=false disattiva la trasformazione se Directus non la consente.
+const IMAGE_TRANSFORMS_ENABLED = process.env.DIRECTUS_IMAGE_TRANSFORMS?.trim().toLowerCase() !== "false";
+
+export function getDirectusImageUrl(fileId: string | null | undefined, width = 1600): string | null {
+  const url = getDirectusAssetUrl(fileId);
+  if (!url || !IMAGE_TRANSFORMS_ENABLED) return url;
+  const params = new URLSearchParams({
+    width: String(width),
+    quality: "78",
+    format: "webp",
+    withoutEnlargement: "true",
+  });
+  return `${url}?${params.toString()}`;
+}
+
 export async function getMapPlaces(): Promise<MapPlace[]> {
   const params = new URLSearchParams();
   params.set("filter[status][_eq]", "published");

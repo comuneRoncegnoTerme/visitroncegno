@@ -48,7 +48,9 @@ export default function FestaHomepageBanner({
       <div className={styles.identity}>
         <img
           className={styles.logo}
-          src="/images/festa-castagna/logo-festa.png"
+          src="/images/festa-castagna/logo-festa-ufficiale.webp"
+          width={1200}
+          height={614}
           alt="Festa della Castagna – Roncegno Terme"
         />
       </div>

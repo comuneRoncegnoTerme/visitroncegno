@@ -4,7 +4,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import FestaHomepageBanner from "@/components/FestaHomepageBanner";
 import {
-  getDirectusAssetUrl,
+  getDirectusImageUrl,
   getFeaturedPlaces,
   getHomepageRoutes,
   getHomepage,
@@ -91,7 +91,7 @@ export default async function Home() {
     getEditorialList("places"),
   ]);
 
-  const heroImage = getDirectusAssetUrl(homepage.hero_image) ?? "/images/hero/roncegno-hero.jpg";
+  const heroImage = getDirectusImageUrl(homepage.hero_image) ?? "/images/hero/roncegno-hero.jpg";
   const heroConfig = homepage as typeof homepage & HomepageHeroConfig;
   const heroHotspots = parseHeroHotspots(heroConfig.hero_hotspots);
   const visibleEvents = events.slice(0, 4);
@@ -100,11 +100,11 @@ export default async function Home() {
   const nextEvent = visibleEvents[0] ?? null;
   const nextEventDate = nextEvent ? eventDate(nextEvent.start_date) : null;
   const nextEventTime = nextEvent ? eventTime(nextEvent.start_date) : null;
-  const sleepingImage = getDirectusAssetUrl(allPlaces.find(isSleepingPlace)?.image) ?? "/images/homepage/roncegno-skyline.webp";
-  const eatingImage = getDirectusAssetUrl(allPlaces.find(isEatingPlace)?.image) ?? "/images/festa-castagna/caldarroste.jpg";
-  const serviceImage = getDirectusAssetUrl(allPlaces.find(isServicePlace)?.image) ?? "/images/cartina/cartina-roncegno-preview.webp";
+  const sleepingImage = getDirectusImageUrl(allPlaces.find(isSleepingPlace)?.image) ?? "/images/homepage/roncegno-skyline.webp";
+  const eatingImage = getDirectusImageUrl(allPlaces.find(isEatingPlace)?.image) ?? "/images/festa-castagna/caldarroste.jpg";
+  const serviceImage = getDirectusImageUrl(allPlaces.find(isServicePlace)?.image) ?? "/images/cartina/cartina-roncegno-preview.webp";
   const planningItems = [
-    { label: "Come arrivare", note: "Auto, treno e mobilità", href: "/organizza-la-visita#come-arrivare", image: "/images/homepage/APT_Valsugana_Roncegno_2025_10_07_Luca_Matassoni_HD_12.jpg" },
+    { label: "Come arrivare", note: "Auto, treno e mobilità", href: "/organizza-la-visita#come-arrivare", image: "/images/homepage/roncegno-panorama.webp" },
     { label: "Dove dormire", note: "Ospitalità e soggiorno", href: "/organizza-la-visita#dormire", image: sleepingImage },
     { label: "Dove mangiare", note: "Ristoranti e sapori", href: "/organizza-la-visita#mangiare", image: eatingImage },
     { label: "Informazioni utili", note: "Servizi, contatti e accessibilità", href: "/organizza-la-visita#servizi", image: serviceImage },
@@ -175,7 +175,7 @@ export default async function Home() {
 
             <div className={editorial.routesGrid}>
               {visibleRoutes.map((route, index) => {
-                const image = getDirectusAssetUrl(route.image) ?? heroImage;
+                const image = getDirectusImageUrl(route.image) ?? heroImage;
                 const hours = route.duration_minutes ? Math.floor(route.duration_minutes / 60) : 0;
                 const minutes = route.duration_minutes ? route.duration_minutes % 60 : 0;
                 const duration = route.duration_minutes
@@ -240,7 +240,7 @@ export default async function Home() {
 
             <div className={editorial.highlightsGrid}>
               {visibleFeaturedPlaces.map((place, index) => {
-                const image = getDirectusAssetUrl(place.image) ?? heroImage;
+                const image = getDirectusImageUrl(place.image) ?? heroImage;
                 return (
                   <Link className={editorial.highlightCard} href={placeHref(place)} key={place.id}>
                     <div className={editorial.highlightImage} style={{ backgroundImage: `url('${image}')` }} />
@@ -284,7 +284,7 @@ export default async function Home() {
           <div className={`${styles.eventsGrid} ${refine.eventsGrid} ${feedback.eventsGrid}${visibleEvents.length === 3 ? ` ${refine.eventsGridThree}` : ""}`}>
             {visibleEvents.map((event, index) => {
               const date = eventDate(event.start_date);
-              const image = getDirectusAssetUrl(event.image) ?? heroImage;
+              const image = getDirectusImageUrl(event.image) ?? heroImage;
               const location = event.location_name ?? event.place?.title ?? "Roncegno Terme";
               const time = eventTime(event.start_date);
               const primary = index === 0;
