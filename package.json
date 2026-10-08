@@ -14,7 +14,8 @@
     "directus:audit-places": "node scripts/directus-audit-places.mjs",
     "directus:audit-route-images": "node scripts/directus-audit-route-images.mjs",
     "directus:audit-routes": "node scripts/directus-audit-routes.mjs",
-    "directus:ensure-home-full-model": "node scripts/directus-home-full-model.mjs"
+    "directus:ensure-home-full-model": "node scripts/directus-home-full-model.mjs",
+    "smoke": "node scripts/smoke-http.mjs"
   },
   "dependencies": {
     "maplibre-gl": "^6.2.0",
