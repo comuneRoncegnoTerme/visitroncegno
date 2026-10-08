@@ -9,6 +9,7 @@ import {
 } from "maplibre-gl";
 
 import "maplibre-gl/dist/maplibre-gl.css";
+import { configureMapLibreWorker } from "@/lib/maplibre-worker";
 
 import {
   flattenGpxSegments,
@@ -57,6 +58,8 @@ export default function RouteMap({ gpxText }: RouteMapProps) {
     const first = allPoints[0];
     const last = allPoints[allPoints.length - 1];
     const isMobile = window.matchMedia("(max-width: 800px)").matches;
+
+    configureMapLibreWorker();
 
     const map = new Map({
       container: containerRef.current,

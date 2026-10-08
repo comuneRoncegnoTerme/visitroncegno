@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
-  getDirectusAssetUrl,
+  getDirectusAssetUrl, getDirectusImageUrl,
   getExperiences,
   getFeaturedPlaces,
   getHomepage,
@@ -52,15 +52,15 @@ export default async function KioskPage() {
   ]);
 
   const heroImage =
-    getDirectusAssetUrl(homepage.hero_image) ??
+    getDirectusImageUrl(homepage.hero_image) ??
     "/images/hero/roncegno-hero.jpg";
   const logo = getDirectusAssetUrl(settings.logo_light ?? settings.logo);
   const nextEvent = events[0] ?? null;
   const nextEventDate = nextEvent ? formatEventDate(nextEvent.start_date) : null;
   const highlight = experiences[0] ?? null;
   const highlightImage =
-    getDirectusAssetUrl(highlight?.image) ??
-    getDirectusAssetUrl(places[0]?.image) ??
+    getDirectusImageUrl(highlight?.image) ??
+    getDirectusImageUrl(places[0]?.image) ??
     heroImage;
 
   const attractSlides: KioskAttractSlide[] = [
@@ -74,7 +74,7 @@ export default async function KioskPage() {
       eyebrow: "Prossimo appuntamento",
       title: nextEvent.title,
       description: nextEvent.location_name ?? nextEvent.place?.title ?? "Roncegno Terme",
-      image: getDirectusAssetUrl(nextEvent.image) ?? heroImage,
+      image: getDirectusImageUrl(nextEvent.image) ?? heroImage,
     }] : []),
     ...(highlight ? [{
       eyebrow: "Da scoprire",

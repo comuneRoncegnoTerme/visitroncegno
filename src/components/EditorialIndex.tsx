@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getDirectusAssetUrl, getSiteSettings } from "@/lib/directus";
+import { getDirectusImageUrl, getSiteSettings } from "@/lib/directus";
 import type { EditorialItem } from "@/lib/editorial";
 import { placeHref } from "@/lib/place-detail";
 import EditorialHeader from "./EditorialHeader";
@@ -30,9 +30,9 @@ function itemHref(item: EditorialItem, basePath: string) {
 export default async function EditorialIndex(props: Props) {
   const settings = await getSiteSettings();
   const isEvents = props.basePath === "/eventi";
-  const heroImage = getDirectusAssetUrl(props.items[0]?.image);
-  const heroPhotoA = getDirectusAssetUrl(props.items[1]?.image ?? props.items[0]?.image);
-  const heroPhotoB = getDirectusAssetUrl(props.items[2]?.image ?? props.items[0]?.image);
+  const heroImage = getDirectusImageUrl(props.items[0]?.image);
+  const heroPhotoA = getDirectusImageUrl(props.items[1]?.image ?? props.items[0]?.image);
+  const heroPhotoB = getDirectusImageUrl(props.items[2]?.image ?? props.items[0]?.image);
 
   return (
     <main className={styles.page}>
@@ -66,7 +66,7 @@ export default async function EditorialIndex(props: Props) {
         {props.items.length ? (
           <div className={`${styles.cardGrid} ${isEvents ? styles.eventGrid : styles.placeGrid}`}>
             {props.items.map((item, index) => {
-              const image = getDirectusAssetUrl(item.image);
+              const image = getDirectusImageUrl(item.image);
               return (
                 <Link
                   className={`${styles.card}${index === 0 ? ` ${styles.featuredIndexCard}` : ""}`}

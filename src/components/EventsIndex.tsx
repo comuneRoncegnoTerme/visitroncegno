@@ -1,7 +1,15 @@
 import Link from "next/link";
-import { getDirectusAssetUrl, getSiteSettings } from "@/lib/directus";
+import { getDirectusImageUrl, getSiteSettings } from "@/lib/directus";
 import type { EditorialItem } from "@/lib/editorial";
 import EditorialHeader from "./EditorialHeader";
+import {
+  currentAndUpcomingEvents,
+  eventDayBadge,
+  eventStartInstant,
+  formatEventDate,
+  isEventOngoing,
+  isEventPast,
+} from "@/lib/event-dates";
 import SiteFooter from "./SiteFooter";
 import styles from "./EventsIndex.module.css";
 
@@ -12,80 +20,26 @@ type EventBucket = {
   past: EditorialItem[];
 };
 
-function eventStart(item: EditorialItem) {
-  return item.start_date ? new Date(item.start_date).getTime() : Number.POSITIVE_INFINITY;
-}
-
-function eventEnd(item: EditorialItem) {
-  return item.end_date ? new Date(item.end_date).getTime() : null;
-}
-
-function romeDayKey(value: Date | string) {
-  const date = typeof value === "string" ? new Date(value) : value;
-  const parts = new Intl.DateTimeFormat("en-CA", {
-    timeZone: "Europe/Rome",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).formatToParts(date);
-  const map = Object.fromEntries(parts.map((part) => [part.type, part.value]));
-  return `${map.year}-${map.month}-${map.day}`;
-}
-
-function isOngoing(item: EditorialItem, now: number, today: string) {
-  if (!item.start_date || eventStart(item) > now) return false;
-  const end = eventEnd(item);
-  if (end !== null) return end >= now;
-  return romeDayKey(item.start_date) === today;
-}
-
-function isPast(item: EditorialItem, now: number, today: string) {
-  if (!item.start_date) return false;
-  const end = eventEnd(item);
-  if (end !== null) return end < now;
-  return romeDayKey(item.start_date) < today;
-}
-
 function splitEvents(items: EditorialItem[]): EventBucket {
   const now = Date.now();
-  const today = romeDayKey(new Date(now));
-
-  const ongoing = items
-    .filter((item) => isOngoing(item, now, today))
-    .sort((a, b) => eventStart(a) - eventStart(b));
-
-  const upcoming = items
-    .filter((item) => item.start_date && eventStart(item) > now)
-    .sort((a, b) => eventStart(a) - eventStart(b));
-
+  const upcoming = currentAndUpcomingEvents(items, now);
+  const ongoing = upcoming.filter((item) => isEventOngoing(item, now));
   const featured = ongoing[0] ?? upcoming[0] ?? null;
   const featuredIsOngoing = Boolean(featured && ongoing.some((item) => item.id === featured.id));
-
   const future = upcoming.filter((item) => item.id !== featured?.id);
-
   const past = items
-    .filter((item) => isPast(item, now, today))
-    .sort((a, b) => eventStart(b) - eventStart(a));
+    .filter((item) => isEventPast(item, now))
+    .sort((a, b) => (eventStartInstant(b) ?? 0) - (eventStartInstant(a) ?? 0));
 
   return { featured, featuredIsOngoing, future, past };
 }
 
 function formatDate(value?: string | null, options?: Intl.DateTimeFormatOptions) {
-  if (!value) return "";
-  return new Intl.DateTimeFormat("it-IT", {
-    timeZone: "Europe/Rome",
-    ...options,
-  }).format(new Date(value));
+  return formatEventDate(value, options ?? { dateStyle: "long" });
 }
 
 function dateParts(value?: string | null) {
-  if (!value) return { day: "", month: "", year: "" };
-  const date = new Date(value);
-  return {
-    day: formatDate(value, { day: "2-digit" }),
-    month: formatDate(value, { month: "short" }).replace(".", "").toUpperCase(),
-    year: formatDate(value, { year: "numeric" }),
-  };
+  return eventDayBadge(value) ?? { day: "", month: "", year: "" };
 }
 
 function location(item: EditorialItem) {
@@ -93,7 +47,7 @@ function location(item: EditorialItem) {
 }
 
 function EventCard({ item, compact = false }: { item: EditorialItem; compact?: boolean }) {
-  const image = getDirectusAssetUrl(item.image);
+  const image = getDirectusImageUrl(item.image);
   const date = dateParts(item.start_date);
 
   return (
@@ -119,9 +73,9 @@ function EventCard({ item, compact = false }: { item: EditorialItem; compact?: b
 export default async function EventsIndex({ items }: { items: EditorialItem[] }) {
   const settings = await getSiteSettings();
   const { featured, featuredIsOngoing, future, past } = splitEvents(items);
-  const heroImage = getDirectusAssetUrl(featured?.image);
-  const heroPhotoA = getDirectusAssetUrl(future[0]?.image ?? featured?.image);
-  const heroPhotoB = getDirectusAssetUrl(future[1]?.image ?? featured?.image);
+  const heroImage = getDirectusImageUrl(featured?.image);
+  const heroPhotoA = getDirectusImageUrl(future[0]?.image ?? featured?.image);
+  const heroPhotoB = getDirectusImageUrl(future[1]?.image ?? featured?.image);
 
   return (
     <main className={styles.page}>
@@ -156,7 +110,7 @@ export default async function EventsIndex({ items }: { items: EditorialItem[] })
           <Link className={styles.featuredCard} href={`/eventi/${featured.slug}`}>
             <div
               className={styles.featuredImage}
-              style={getDirectusAssetUrl(featured.image) ? { backgroundImage: `url('${getDirectusAssetUrl(featured.image)}')` } : undefined}
+              style={getDirectusImageUrl(featured.image) ? { backgroundImage: `url('${getDirectusImageUrl(featured.image)}')` } : undefined}
             />
             <div className={styles.featuredShade} />
             <div className={styles.featuredCopy}>
