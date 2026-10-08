@@ -12,6 +12,7 @@ import {
   getUpcomingEvents,
 } from "@/lib/directus";
 import { placeHref } from "@/lib/place-detail";
+import { eventDayBadge, eventTimeLabel, isEventOngoing } from "@/lib/event-dates";
 import { getEditorialList } from "@/lib/editorial";
 import { isEatingPlace, isServicePlace, isSleepingPlace } from "@/lib/place-taxonomy";
 import styles from "./home-v2.module.css";
@@ -42,23 +43,6 @@ function parseHeroHotspots(value: HomepageHeroConfig["hero_hotspots"]): HeroHots
   } catch {
     return [];
   }
-}
-
-function eventDate(value: string) {
-  const date = new Date(value);
-  return {
-    day: new Intl.DateTimeFormat("it-IT", { day: "2-digit", timeZone: "Europe/Rome" }).format(date),
-    month: new Intl.DateTimeFormat("it-IT", { month: "short", timeZone: "Europe/Rome" }).format(date).replace(".", "").toUpperCase(),
-  };
-}
-
-function eventTime(value: string) {
-  return new Intl.DateTimeFormat("it-IT", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-    timeZone: "Europe/Rome",
-  }).format(new Date(value));
 }
 
 function UtilityIcon({ name }: { name: UtilityIconName }) {
@@ -98,8 +82,8 @@ export default async function Home() {
   const visibleRoutes = homepageRoutes.slice(0, 3);
   const visibleFeaturedPlaces = featuredPlaces.slice(0, 3);
   const nextEvent = visibleEvents[0] ?? null;
-  const nextEventDate = nextEvent ? eventDate(nextEvent.start_date) : null;
-  const nextEventTime = nextEvent ? eventTime(nextEvent.start_date) : null;
+  const nextEventDate = nextEvent ? eventDayBadge(nextEvent.start_date) : null;
+  const nextEventTime = nextEvent ? eventTimeLabel(nextEvent) : null;
   const sleepingImage = getDirectusImageUrl(allPlaces.find(isSleepingPlace)?.image) ?? "/images/homepage/roncegno-skyline.webp";
   const eatingImage = getDirectusImageUrl(allPlaces.find(isEatingPlace)?.image) ?? "/images/festa-castagna/caldarroste.jpg";
   const serviceImage = getDirectusImageUrl(allPlaces.find(isServicePlace)?.image) ?? "/images/cartina/cartina-roncegno-preview.webp";
@@ -138,11 +122,11 @@ export default async function Home() {
 
         {nextEvent && nextEventDate && (
           <Link className={refine.heroEvent} href={`/eventi/${nextEvent.slug}`}>
-            <span className={refine.heroEventEyebrow}>Prossimo appuntamento</span>
+            <span className={refine.heroEventEyebrow}>{isEventOngoing(nextEvent) ? "In corso" : "Prossimo appuntamento"}</span>
             <span className={refine.heroEventDate}><strong>{nextEventDate.day}</strong>{nextEventDate.month}</span>
             <span className={refine.heroEventCopy}>
               <span className={refine.heroEventTitle}>{nextEvent.title}</span>
-              {nextEventTime && <span className={refine.heroEventMeta}>Ore {nextEventTime} · Roncegno Terme</span>}
+              <span className={refine.heroEventMeta}>{[nextEventTime ? `Ore ${nextEventTime}` : null, nextEvent.location_name ?? nextEvent.place?.title ?? "Roncegno Terme"].filter(Boolean).join(" · ")}</span>
             </span>
             <span className={refine.heroEventArrow} aria-hidden="true">→</span>
           </Link>
@@ -275,6 +259,7 @@ export default async function Home() {
         />
       )}
 
+      {visibleEvents.length > 0 && (
       <section className={`${styles.section} ${styles.eventsSection}`}>
         <div className={styles.sectionInner}>
           <div className={styles.sectionHeading}>
@@ -283,10 +268,10 @@ export default async function Home() {
           </div>
           <div className={`${styles.eventsGrid} ${refine.eventsGrid} ${feedback.eventsGrid}${visibleEvents.length === 3 ? ` ${refine.eventsGridThree}` : ""}`}>
             {visibleEvents.map((event, index) => {
-              const date = eventDate(event.start_date);
+              const date = eventDayBadge(event.start_date) ?? { day: "", month: "" };
               const image = getDirectusImageUrl(event.image) ?? heroImage;
               const location = event.location_name ?? event.place?.title ?? "Roncegno Terme";
-              const time = eventTime(event.start_date);
+              const time = eventTimeLabel(event);
               const primary = index === 0;
               return (
                 <Link className={`${styles.eventCard} ${refine.eventCard} ${feedback.eventCard}${primary ? ` ${styles.eventCardPrimary} ${refine.eventCardPrimary} ${feedback.eventCardPrimary}` : ""}`} href={`/eventi/${event.slug}`} key={event.id}>
@@ -306,6 +291,7 @@ export default async function Home() {
           </div>
         </div>
       </section>
+      )}
 
       <section className={editorial.mapStory} aria-labelledby="map-story-title">
         <div className={editorial.mapStoryInner}>
