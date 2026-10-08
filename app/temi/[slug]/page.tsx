@@ -4,7 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { getDirectusAssetUrl, getHomepage, getSiteSettings, getUpcomingEvents } from "@/lib/directus";
+import { getDirectusImageUrl, getHomepage, getSiteSettings, getUpcomingEvents } from "@/lib/directus";
 import { getEditorialList, type EditorialItem } from "@/lib/editorial";
 import { placeHref } from "@/lib/place-detail";
 import styles from "./theme.module.css";
@@ -150,8 +150,8 @@ export default async function ThemePage({ params }: { params: Promise<{ slug: st
   const cards = [...placeCards(places, theme), ...routeCards(routes, theme)].slice(0, 6);
   const relatedEvents = eventCards(events as EditorialItem[], theme);
   const heroImage =
-    getDirectusAssetUrl(cards.find((item) => item.image)?.image ?? null) ??
-    getDirectusAssetUrl(homepage.hero_image) ??
+    getDirectusImageUrl(cards.find((item) => item.image)?.image ?? null) ??
+    getDirectusImageUrl(homepage.hero_image) ??
     "/images/hero/roncegno-hero.jpg";
 
   return (
@@ -187,7 +187,7 @@ export default async function ThemePage({ params }: { params: Promise<{ slug: st
             </div>
             <div className={styles.cardsGrid}>
               {cards.map((item, index) => {
-                const image = getDirectusAssetUrl(item.image) ?? heroImage;
+                const image = getDirectusImageUrl(item.image) ?? heroImage;
                 return (
                   <Link className={`${styles.card}${index === 0 ? ` ${styles.cardPrimary}` : ""}`} href={item.href} key={item.id}>
                     <div className={styles.cardImage} style={{ backgroundImage: `url('${image}')` }} />

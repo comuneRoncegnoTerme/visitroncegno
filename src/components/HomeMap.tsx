@@ -11,6 +11,7 @@ import {
 } from "maplibre-gl";
 
 import "maplibre-gl/dist/maplibre-gl.css";
+import { configureMapLibreWorker } from "@/lib/maplibre-worker";
 import { placeHref, type PlaceDetailMode, type PlaceType } from "@/lib/place-detail";
 import { placeCategory, type PlaceCategory } from "@/lib/place-taxonomy";
 import styles from "./HomeMap.module.css";
@@ -120,6 +121,8 @@ export default function HomeMap({ places, compact = false, showFilters = true }:
     mapRef.current = null;
 
     const isMobile = window.matchMedia("(max-width: 760px)").matches;
+
+    configureMapLibreWorker();
 
     const map = new Map({
       container: containerRef.current,

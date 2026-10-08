@@ -4,7 +4,7 @@ import Link from "next/link";
 import EditorialHeader from "@/components/EditorialHeader";
 import RoutesEditorialList from "@/components/RoutesEditorialList";
 import SiteFooter from "@/components/SiteFooter";
-import { getDirectusAssetUrl, getSiteSettings } from "@/lib/directus";
+import { getDirectusImageUrl, getSiteSettings } from "@/lib/directus";
 import { getEditorialList } from "@/lib/editorial";
 import styles from "@/components/RoutesIndex.module.css";
 
@@ -21,9 +21,9 @@ export default async function RoutesPage() {
     getSiteSettings(),
   ]);
 
-  const heroImage = getDirectusAssetUrl(items[0]?.image);
-  const heroPhotoA = getDirectusAssetUrl(items[1]?.image ?? items[0]?.image);
-  const heroPhotoB = getDirectusAssetUrl(items[2]?.image ?? items[0]?.image);
+  const heroImage = getDirectusImageUrl(items[0]?.image);
+  const heroPhotoA = getDirectusImageUrl(items[1]?.image ?? items[0]?.image);
+  const heroPhotoB = getDirectusImageUrl(items[2]?.image ?? items[0]?.image);
 
   return (
     <main className={styles.page}>
@@ -50,7 +50,7 @@ export default async function RoutesPage() {
 
       <section className={styles.content} aria-label="Elenco dei percorsi">
         {items.length ? (
-          <RoutesEditorialList items={items} />
+          <RoutesEditorialList items={items.map((item) => ({ ...item, imageUrl: getDirectusImageUrl(item.image, 1000) }))} />
         ) : (
           <p className={styles.empty}>I percorsi saranno pubblicati a breve.</p>
         )}

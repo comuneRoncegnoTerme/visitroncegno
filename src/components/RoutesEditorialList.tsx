@@ -2,27 +2,31 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { getDirectusAssetUrl } from "@/lib/directus";
 import type { EditorialItem } from "@/lib/editorial";
 import styles from "./RoutesIndex.module.css";
 
 type Filter = "all" | "easy" | "moderate" | "family";
 
+// L'URL dell'immagine arriva già calcolato dal server: qui (nel browser) l'indirizzo di Directus non è disponibile.
+export type RouteListItem = EditorialItem & { imageUrl: string | null };
+
 type Props = {
-  items: EditorialItem[];
+  items: RouteListItem[];
 };
 
 function normalizedDifficulty(value?: string | null) {
   return (value ?? "").trim().toLowerCase();
 }
 
+// In Directus la difficoltà può essere salvata come codice (easy/medium/hard) o come testo italiano.
 function isEasy(item: EditorialItem) {
-  return normalizedDifficulty(item.difficulty).includes("facil");
+  const value = normalizedDifficulty(item.difficulty);
+  return value === "easy" || value.includes("facil");
 }
 
 function isModerate(item: EditorialItem) {
   const value = normalizedDifficulty(item.difficulty);
-  return value.includes("moderat") || value.includes("media");
+  return value === "medium" || value.includes("moderat") || value.includes("media");
 }
 
 function durationLabel(minutes?: number | null) {
@@ -42,8 +46,8 @@ function routeFacts(item: EditorialItem) {
   ].filter(Boolean);
 }
 
-function RouteImage({ item, index }: { item: EditorialItem; index: number }) {
-  const image = getDirectusAssetUrl(item.image);
+function RouteImage({ item, index }: { item: RouteListItem; index: number }) {
+  const image = item.imageUrl;
   if (image) {
     return <div className={styles.image} style={{ backgroundImage: `url('${image}')` }} />;
   }
@@ -51,12 +55,11 @@ function RouteImage({ item, index }: { item: EditorialItem; index: number }) {
   return (
     <div className={`${styles.image} ${styles.imageFallback}`}>
       <span>{String(index + 1).padStart(2, "0")}</span>
-      <small>Immagine in arrivo</small>
     </div>
   );
 }
 
-function RouteCard({ item, index, featured = false }: { item: EditorialItem; index: number; featured?: boolean }) {
+function RouteCard({ item, index, featured = false }: { item: RouteListItem; index: number; featured?: boolean }) {
   const facts = routeFacts(item);
   return (
     <Link className={`${styles.card} ${featured ? styles.featuredCard : ""}`} href={`/percorsi/${item.slug}`}>

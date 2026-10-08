@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getDirectusAssetUrl, getSiteSettings } from "@/lib/directus";
+import { getDirectusImageUrl, getSiteSettings } from "@/lib/directus";
 import { getEditorialList, plainText, type EditorialItem } from "@/lib/editorial";
 import { getRoutesForPlace } from "@/lib/place-routes";
 import { getLegacyStoryPath, getStoriesForPlace } from "@/lib/stories";
@@ -45,7 +45,7 @@ export default async function EditorialDetail({ item, type }: Props) {
     type === "place" ? getStoriesForPlace(item.id) : Promise.resolve([]),
   ]);
 
-  const directusImage = getDirectusAssetUrl(item.image);
+  const directusImage = getDirectusImageUrl(item.image);
   const heroImage = directusImage ?? FALLBACK_HERO;
   const paragraphs = plainText(item.content ?? item.description ?? item.summary);
   const location = item.address ?? item.location_name ?? item.place?.title ?? "Roncegno Terme";
@@ -71,6 +71,13 @@ export default async function EditorialDetail({ item, type }: Props) {
   const related = relatedItems
     .filter((candidate) => candidate.id !== item.id)
     .filter((candidate) => !foodPlace || candidate.place_type === "food")
+    .sort((a, b) => {
+      if (type !== "place") return 0;
+      const relevance = (candidate: EditorialItem) =>
+        (candidate.place_type && candidate.place_type === item.place_type ? 2 : 0) +
+        (candidate.category?.name && candidate.category.name === item.category?.name ? 1 : 0);
+      return relevance(b) - relevance(a);
+    })
     .slice(0, 3);
   const eventDate = type === "event" ? formatDateTime(item.start_date) : null;
 
@@ -87,7 +94,6 @@ export default async function EditorialDetail({ item, type }: Props) {
           <p>{categoryLabel}</p>
           <h1>{item.title}</h1>
           {item.summary && <div>{item.summary}</div>}
-          {!directusImage && <small>Immagine del territorio · aggiungi una foto specifica dal Content Hub</small>}
         </div>
       </section>
 
@@ -195,7 +201,7 @@ export default async function EditorialDetail({ item, type }: Props) {
           </div>
           <div className={styles.memoryGrid}>
             {relatedStories.slice(0, 3).map((story, index) => {
-              const storyImage = getDirectusAssetUrl(story.image) ?? heroImage;
+              const storyImage = getDirectusImageUrl(story.image) ?? heroImage;
               const href = getLegacyStoryPath(story) ?? `/storie/${story.slug}`;
               return (
                 <Link className={styles.memoryCard} href={href} key={story.id}>
@@ -226,7 +232,7 @@ export default async function EditorialDetail({ item, type }: Props) {
           </div>
           <div className={styles.relatedGrid}>
             {relatedRoutes.slice(0, 3).map((route) => {
-              const routeImage = getDirectusAssetUrl(route.image) ?? FALLBACK_HERO;
+              const routeImage = getDirectusImageUrl(route.image) ?? FALLBACK_HERO;
               const routeHours = route.duration_minutes ? Math.floor(route.duration_minutes / 60) : 0;
               const routeMinutes = route.duration_minutes ? route.duration_minutes % 60 : 0;
               const routeDuration = route.duration_minutes
@@ -268,7 +274,7 @@ export default async function EditorialDetail({ item, type }: Props) {
           </div>
           <div className={`${styles.relatedGrid}${foodPlace ? ` ${foodStyles.relatedGrid}` : ""}`}>
             {related.map((relatedItem) => {
-              const relatedImage = getDirectusAssetUrl(relatedItem.image) ?? FALLBACK_HERO;
+              const relatedImage = getDirectusImageUrl(relatedItem.image) ?? FALLBACK_HERO;
               const href = type === "place" ? placeHref(relatedItem) : `/eventi/${relatedItem.slug}`;
               return (
                 <Link className={`${styles.relatedCard}${foodPlace ? ` ${foodStyles.relatedCard}` : ""}`} key={relatedItem.id} href={href}>

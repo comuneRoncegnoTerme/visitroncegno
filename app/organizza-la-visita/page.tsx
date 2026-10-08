@@ -5,7 +5,7 @@ import HomeMap from "@/components/HomeMap";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import {
-  getDirectusAssetUrl,
+  getDirectusImageUrl,
   getMapPlaces,
   getSiteSettings,
 } from "@/lib/directus";
@@ -45,7 +45,7 @@ function PlaceStrip({ places, emptyText }: { places: EditorialItem[]; emptyText:
   return (
     <div className={styles.placeGrid}>
       {places.slice(0, 6).map((place) => {
-        const image = getDirectusAssetUrl(place.image);
+        const image = getDirectusImageUrl(place.image);
         return (
           <Link className={styles.placeCard} href={placeHref(place)} key={place.id}>
             <div className={styles.placeImage} style={{ backgroundImage: image ? `url('${image}')` : undefined }} />
@@ -80,7 +80,7 @@ export default async function OrganizzaLaVisitaPage() {
         title: place.title,
         slug: place.slug,
         summary: place.summary,
-        imageUrl: getDirectusAssetUrl(place.image),
+        imageUrl: getDirectusImageUrl(place.image),
         latitude: place.latitude as number,
         longitude: place.longitude as number,
         mapLabel: place.map_label,
@@ -95,8 +95,8 @@ export default async function OrganizzaLaVisitaPage() {
   const sleeping = allPlaces.filter(isSleepingPlace);
   const eating = allPlaces.filter(isEatingPlace);
   const services = allPlaces.filter(isServicePlace);
-  const heroPhotoA = getDirectusAssetUrl(sleeping[0]?.image ?? eating[0]?.image);
-  const heroPhotoB = getDirectusAssetUrl(eating[0]?.image ?? services[0]?.image);
+  const heroPhotoA = getDirectusImageUrl(sleeping[0]?.image ?? eating[0]?.image);
+  const heroPhotoB = getDirectusImageUrl(eating[0]?.image ?? services[0]?.image);
 
   return (
     <main className={styles.page}>

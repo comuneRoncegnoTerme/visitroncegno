@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { getDirectusAssetUrl, getSiteSettings } from "@/lib/directus";
+import { getDirectusImageUrl, getSiteSettings } from "@/lib/directus";
 import { getLegacyStoryPath, getStoryBySlug, storyParagraphs } from "@/lib/stories";
 import { descriptionFrom, pageMetadata } from "@/lib/seo";
 import styles from "./page.module.css";
@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: StoryPageProps): Promise<Meta
     title: story.title,
     description: descriptionFrom(story.excerpt ?? story.body, `Una storia di Roncegno Terme: ${story.title}.`),
     path: canonical,
-    image: getDirectusAssetUrl(story.image),
+    image: getDirectusImageUrl(story.image),
   });
 }
 
@@ -51,7 +51,7 @@ export default async function StoryPage({ params }: StoryPageProps) {
   const legacyPath = getLegacyStoryPath(story);
   if (legacyPath) permanentRedirect(legacyPath);
 
-  const storyImage = getDirectusAssetUrl(story.image);
+  const storyImage = getDirectusImageUrl(story.image);
   const heroImage = storyImage ?? FALLBACK_IMAGE;
   const paragraphs = storyParagraphs(story.body);
   const routeHref = story.route?.slug ? `/percorsi/${story.route.slug}` : "/percorsi";
@@ -81,11 +81,9 @@ export default async function StoryPage({ params }: StoryPageProps) {
         <div className={styles.contentGrid}>
           <article className={styles.article}>
             <p className={styles.kicker}>Approfondimento</p>
-            {paragraphs.length > 0 ? (
-              paragraphs.map((paragraph, index) => <p key={`${index}-${paragraph.slice(0, 24)}`}>{paragraph}</p>)
-            ) : (
-              <p>{story.excerpt ?? "Questo approfondimento sarà completato a breve."}</p>
-            )}
+            {paragraphs.length > 0
+              ? paragraphs.map((paragraph, index) => <p key={`${index}-${paragraph.slice(0, 24)}`}>{paragraph}</p>)
+              : story.excerpt && <p>{story.excerpt}</p>}
           </article>
 
           <aside className={styles.aside}>
