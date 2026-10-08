@@ -1,4 +1,4 @@
-import { DIRECTUS_URL, directusJson } from "@/lib/directus-client";
+import { DIRECTUS_PUBLIC_ASSET_BASE, DIRECTUS_URL, directusJson } from "@/lib/directus-client";
 import { currentAndUpcomingEvents, directusUpcomingLowerBound } from "@/lib/event-dates";
 
 export { DIRECTUS_URL } from "@/lib/directus-client";
@@ -340,7 +340,13 @@ export async function getExperiences(): Promise<Experience[]> {
   }
 }
 
+// URL per il browser (immagini, audio, link).
 export function getDirectusAssetUrl(fileId: string | null | undefined): string | null {
+  return fileId ? `${DIRECTUS_PUBLIC_ASSET_BASE}/${fileId}` : null;
+}
+
+// URL per le richieste fatte dal server verso Directus.
+export function getDirectusInternalAssetUrl(fileId: string | null | undefined): string | null {
   return fileId ? `${DIRECTUS_URL}/assets/${fileId}` : null;
 }
 
