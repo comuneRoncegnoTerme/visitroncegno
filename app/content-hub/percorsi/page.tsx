@@ -15,7 +15,7 @@ const fields: EditorField[] = [
   { name: "summary", label: "Descrizione breve", type: "textarea", full: true },
   { name: "description", label: "Descrizione completa", type: "textarea", full: true },
   { name: "image", label: "Immagine del percorso", type: "media", mediaKind: "image", full: true, help: "Scegli una foto già presente oppure caricane una nuova direttamente da questa scheda." },
-  { name: "difficulty", label: "Difficoltà" },
+  { name: "difficulty", label: "Difficoltà", help: "Scrivi Facile, Media o Impegnativa: il filtro della pagina Percorsi riconosce queste parole." },
   { name: "distance_km", label: "Distanza (km)", type: "number", step: "0.1" },
   { name: "duration_minutes", label: "Durata (minuti)", type: "number", step: "1" },
   { name: "elevation_gain_m", label: "Dislivello + (m)", type: "number", step: "1" },
@@ -26,6 +26,10 @@ const fields: EditorField[] = [
   { name: "public_transport", label: "Raggiungibile con trasporto pubblico", type: "checkbox" },
   { name: "loop_route", label: "Percorso ad anello", type: "checkbox" },
   { name: "route_highlight", label: "Punto di forza", type: "textarea", full: true },
+  { name: "season", label: "Periodo consigliato", help: "Esempio: da aprile a novembre." },
+  { name: "audience", label: "Adatto a", help: "Esempio: famiglie, escursionisti allenati." },
+  { name: "komoot_url", label: "Link Komoot", type: "url", full: true },
+  { name: "outdooractive_url", label: "Link Outdooractive", type: "url", full: true },
   { name: "gpx_file", label: "File GPX", type: "media", mediaKind: "file", full: true, help: "Scegli un GPX esistente oppure caricalo direttamente dalla scheda del percorso." },
 ];
 

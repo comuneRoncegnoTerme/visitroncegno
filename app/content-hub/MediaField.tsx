@@ -185,8 +185,8 @@ export default function MediaField({ value, onChange, kind = "image" }: Props) {
             type="file"
             accept={
               kind === "image"
-                ? "image/jpeg,image/png,image/webp,image/svg+xml"
-                : undefined
+                ? "image/jpeg,image/png,image/webp"
+                : ".gpx,.mp3,.m4a,.wav,audio/mpeg,audio/mp4,audio/wav"
             }
             disabled={uploading}
             onChange={upload}
