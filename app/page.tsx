@@ -145,6 +145,21 @@ export default async function Home() {
         </nav>
       </div>
 
+      {/* Banner stagionale subito dopo l’apertura: si spegne da Content Hub (seasonal_enabled). */}
+      {(homepage.seasonal_enabled ?? true) && (
+        <FestaHomepageBanner
+          eyebrow={homepage.seasonal_eyebrow}
+          title={homepage.seasonal_title}
+          description={homepage.seasonal_description}
+          primaryLabel={homepage.seasonal_primary_label}
+          primaryUrl={homepage.seasonal_primary_url}
+          secondaryLabel={homepage.seasonal_secondary_label}
+          secondaryUrl={homepage.seasonal_secondary_url}
+          noteSmall={homepage.seasonal_note_small}
+          noteStrong={homepage.seasonal_note_strong}
+        />
+      )}
+
       {visibleRoutes.length > 0 && (
         <section className={`${styles.section} ${editorial.routesSection}`} aria-labelledby="routes-title">
           <div className={styles.sectionInner}>
@@ -242,21 +257,6 @@ export default async function Home() {
             </div>
           </div>
         </section>
-      )}
-
-
-      {(homepage.seasonal_enabled ?? true) && (
-        <FestaHomepageBanner
-          eyebrow={homepage.seasonal_eyebrow}
-          title={homepage.seasonal_title}
-          description={homepage.seasonal_description}
-          primaryLabel={homepage.seasonal_primary_label}
-          primaryUrl={homepage.seasonal_primary_url}
-          secondaryLabel={homepage.seasonal_secondary_label}
-          secondaryUrl={homepage.seasonal_secondary_url}
-          noteSmall={homepage.seasonal_note_small}
-          noteStrong={homepage.seasonal_note_strong}
-        />
       )}
 
       {visibleEvents.length > 0 && (
