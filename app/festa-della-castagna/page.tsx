@@ -160,8 +160,8 @@ export default async function FestaDellaCastagnaPage() {
             <figcaption><span>Al braciere</span><strong>Castagne girate a mano, una tostatura dopo l’altra</strong></figcaption>
           </figure>
           <figure className={styles.photoCake}>
-            <img src="/images/festa-castagna/caldarroste-bambino.webp" width={1066} height={1600} loading="lazy" alt="Un bambino guarda le castagne tostare tra il fumo, in mezzo alla gente" />
-            <figcaption><span>In attesa</span><strong>Il fumo, il profumo e l’attesa</strong></figcaption>
+            <img src="/images/festa-castagna/festa-casette-albergo-vittoria.webp" width={1600} height={1200} loading="lazy" alt="Le casette di legno delle caldarroste davanti all’Albergo Vittoria, con la piazza affollata" />
+            <figcaption><span>In piazza</span><strong>Le casette delle caldarroste e la gente del paese</strong></figcaption>
           </figure>
         </div>
       </section>
