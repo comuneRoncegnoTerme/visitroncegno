@@ -307,4 +307,12 @@
 .heroImage{background-image:url('/images/festa-castagna/festa-folla-centro.webp');background-position:center 60%}
 .storyPhoto{background-image:url('/images/festa-castagna/festa-insegne-via.webp');background-position:center 45%}
 .flavourImage{background-image:url('/images/festa-castagna/caldarroste-cassetta.webp');background-position:center 62%;filter:none}
-.photoCake img{object-position:center 58%}
+.photoCake img{object-position:center 70%}
+/* Rifinitura: niente ingrandimenti CSS sulle foto (le renderebbero più morbide), velature più leggere. */
+.heroImage{transform:none}
+.photoGrid figure:hover img{transform:none}
+.photoGrid img{transition:none}
+@media(min-width:761px){
+  .heroOverlay{background:linear-gradient(90deg,rgba(24,13,8,.78) 0%,rgba(24,13,8,.5) 40%,rgba(24,13,8,.08) 76%),linear-gradient(0deg,rgba(24,13,8,.66),transparent 55%)}
+  .photoGrid figcaption{padding:64px 24px 20px;background:linear-gradient(transparent,rgba(24,13,8,.7))}
+}
