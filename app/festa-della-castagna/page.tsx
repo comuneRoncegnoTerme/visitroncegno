@@ -152,16 +152,16 @@ export default async function FestaDellaCastagnaPage() {
         </div>
         <div className={styles.photoGrid}>
           <figure className={styles.photoTall}>
-            <img src="/images/festa-castagna/caldarroste.jpg" alt="Caldarroste durante la Festa della Castagna di Roncegno" />
-            <figcaption><span>Il fuoco</span><strong>Caldarroste, profumi e sapori d’autunno</strong></figcaption>
+            <img src="/images/festa-castagna/caldarroste-fuoco-piazza.webp" width={1066} height={1600} loading="lazy" alt="Il fuoco sotto il tamburo delle caldarroste, con la piazza piena di gente sullo sfondo" />
+            <figcaption><span>Il fuoco</span><strong>Caldarroste cotte in piazza</strong></figcaption>
           </figure>
           <figure className={styles.photoWide}>
-            <img src="/images/festa-castagna/festa-banda-strada.webp" alt="La banda suona tra la gente nel centro di Roncegno durante la Festa" />
-            <figcaption><span>Roncegno in festa</span><strong>Persone, musica e il paese che si incontra</strong></figcaption>
+            <img src="/images/festa-castagna/caldarroste-fuoco-cesto.webp" width={1600} height={1066} loading="lazy" alt="Due uomini con il grembiule verde girano le castagne sul fuoco accanto a un cesto di vimini" />
+            <figcaption><span>Al braciere</span><strong>Castagne girate a mano, una tostatura dopo l’altra</strong></figcaption>
           </figure>
           <figure className={styles.photoCake}>
-            <img src="/images/festa-castagna/festa-castagne-cesto.webp" alt="Castagne raccolte in un cesto di vimini" />
-            <figcaption><span>Atmosfera</span><strong>La tradizione diventa esperienza</strong></figcaption>
+            <img src="/images/festa-castagna/caldarroste-bambino.webp" width={1066} height={1600} loading="lazy" alt="Un bambino guarda le castagne tostare tra il fumo, in mezzo alla gente" />
+            <figcaption><span>In attesa</span><strong>Il fumo, il profumo e l’attesa</strong></figcaption>
           </figure>
         </div>
       </section>

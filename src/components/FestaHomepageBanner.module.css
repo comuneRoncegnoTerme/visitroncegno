@@ -5,7 +5,7 @@
 .wrapper{
   width:92vw;
   max-width:none;
-  margin:0 auto;
+  margin:clamp(36px,4vw,56px) auto 0;
   border-radius:24px;
 }
 .content h2{
@@ -24,3 +24,5 @@
     border-radius:20px;
   }
 }
+
+.image{background-image:url('/images/festa-castagna/caldarroste-fuoco-cesto.webp');background-position:center 55%}
