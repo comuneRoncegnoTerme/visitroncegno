@@ -166,6 +166,16 @@ export default async function FestaDellaCastagnaPage() {
             <figcaption><span>In piazza</span><strong>Le casette delle caldarroste e la gente del paese</strong></figcaption>
           </figure>
         </div>
+        <div className={styles.photoPair}>
+          <figure>
+            <img src="/images/festa-castagna/caldarroste-griglia.webp" width={944} height={1600} loading="lazy" alt="Castagne incise sulla griglia del tamburo, mescolate dalle pale di ferro" />
+            <figcaption><span>Sulla griglia</span><strong>Le castagne incise girano sul fuoco</strong></figcaption>
+          </figure>
+          <figure>
+            <img src="/images/festa-castagna/caldarroste-pronte.webp" width={1197} height={1600} loading="lazy" alt="Le caldarroste appena cotte scendono dal bordo del tamburo" />
+            <figcaption><span>Pronte</span><strong>Le caldarroste appena tolte dal fuoco</strong></figcaption>
+          </figure>
+        </div>
       </section>
 
       <section className={styles.highlights}>
@@ -206,7 +216,13 @@ export default async function FestaDellaCastagnaPage() {
       </section>
 
       <section className={styles.stories} id="storie">
-        <div className={styles.sectionHeading}><p className={styles.eyebrow}>Circuito del Castagno</p><h2>La festa continua lungo i sentieri.</h2></div>
+        <div className={styles.storiesHeading}>
+          <div className={styles.sectionHeading}><p className={styles.eyebrow}>Circuito del Castagno</p><h2>La festa continua lungo i sentieri.</h2><p>Prima delle caldarroste in piazza ci sono i castagneti: un paesaggio curato da generazioni, che il Circuito del Castagno racconta in quattro tappe.</p></div>
+          <figure className={styles.vintagePhoto}>
+            <img src="/images/festa-castagna/castagno-foto-epoca.webp" width={1060} height={1280} loading="lazy" alt="Foto d’epoca: un uomo con il cappello accanto a un grande castagno, su un pendio erboso con le montagne sullo sfondo" />
+            <figcaption><span>Foto d’epoca</span>Un grande castagno sul pendio: il paesaggio dei castagneti.</figcaption>
+          </figure>
+        </div>
         <div className={styles.storyGrid}>{stories.map(([number, title, href, text]) => <Link href={href} className={styles.storyCard} key={href}><span>{number}</span><h3>{title}</h3><p>{text}</p><strong>Apri la storia →</strong></Link>)}</div>
       </section>
 
