@@ -304,7 +304,8 @@
 @media(max-width:520px){.dayTabs{gap:6px}.dayTab{padding:10px}.dayTab small{font-size:8px;letter-spacing:.08em}.dayTab span{font-size:15px}}
 .title{margin:0;font-size:inherit;line-height:0}
 /* Foto della Festa fornite dal Comune (ottobre 2026). */
-.heroImage{background-image:url('/images/festa-castagna/festa-folla-centro.webp');background-position:center 60%}
+/* Apertura: la foto più nitida, con il soggetto a destra (il testo sta a sinistra). */
+.heroImage{background-image:url('/images/festa-castagna/caldarroste-fuoco-cesto.webp');background-position:72% 40%}
 .storyPhoto{background-image:url('/images/festa-castagna/festa-insegne-via.webp');background-position:center 45%}
 .flavourImage{background-image:url('/images/festa-castagna/caldarroste-cassetta.webp');background-position:center 62%;filter:none}
 .photoCake img{object-position:center 70%}
