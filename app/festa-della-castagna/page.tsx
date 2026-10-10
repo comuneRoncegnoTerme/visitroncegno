@@ -6,6 +6,8 @@ import { getSiteSettings } from "@/lib/directus";
 import styles from "./page.module.css";
 import FestaAtmosphereVideo from "./FestaAtmosphereVideo";
 import FestaProgramme, { type ProgrammeDay } from "./FestaProgramme";
+import FestaMap, { type FestaPoint } from "./FestaMap";
+import festaMap from "@/data/festa-mappa.json";
 import { jsonLdString, pageMetadata, SITE_URL } from "@/lib/seo";
 
 const FESTA_DESCRIPTION = "Programma, sapori, musica e informazioni utili per la Festa della Castagna di Roncegno Terme, dal 23 al 25 ottobre 2026.";
@@ -52,7 +54,7 @@ const stories = [
 const practical = [
   ["01", "Programma", "#programma"],
   ["02", "Come arrivare", "#come-arrivare"],
-  ["03", "Dove mangiare", "#sapori"],
+  ["03", "Mappa della Festa", "#mappa"],
   ["04", "Castagneti", "#storie"],
 ] as const;
 
@@ -181,6 +183,15 @@ export default async function FestaDellaCastagnaPage() {
           <div className={styles.alwaysOn}><strong>Tutti i giorni</strong><p>Servizio navetta gratuito, intrattenimento e laboratori per bambini, giardino con animali, gonfiabili, dolci di castagne, bancarelle e musica itinerante.</p></div>
         </div>
         <FestaProgramme days={programme} />
+      </section>
+
+      <section className={styles.festaMap} id="mappa" aria-labelledby="mappa-title">
+        <div className={styles.festaMapHeading}>
+          <p className={styles.eyebrowLight}>Mappa della Festa</p>
+          <h2 id="mappa-title">Stand, eventi e servizi, punto per punto.</h2>
+          <p>Scegli una categoria per vedere dove mangiare, dove si suona, dove parcheggiare e dove prendere la navetta. Ogni stand ha il suo menù.</p>
+        </div>
+        <FestaMap points={festaMap.points as FestaPoint[]} edition={festaMap.edition} />
       </section>
 
       <section className={styles.flavours} id="sapori">

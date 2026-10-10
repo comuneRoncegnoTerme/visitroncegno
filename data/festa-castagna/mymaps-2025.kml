@@ -1,0 +1,1237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>FESTA DELLA CASTAGNA 2025</name>
+    <description><![CDATA[Scopri tutti i punti di interesse e gli eventi principali della Festa della Castagna 2025 direttamente sulla mappa!<br><br>In questa mappa troverai:<br><br>- Stand gastronomici con castagne, prodotti tipici, dolci e bevande.<br><br>- Spazi dedicati a musica e intrattenimento, tra DJ set, concerti e animazioni per grandi e piccoli.<br><br>- Eventi e attività speciali durante tutto il weekend, inclusi laboratori, giochi e presentazioni.<br><br>Punti utili come parcheggi e servizi igienici.<br><br>📍 Pianifica il tuo percorso, non perdere nessun evento e vivi al meglio l’atmosfera della festa!]]></description>
+    <Style id="icon-1511-558B2F-nodesc-normal">
+      <IconStyle>
+        <color>ff2f8b55</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1511-558B2F-nodesc-highlight">
+      <IconStyle>
+        <color>ff2f8b55</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="icon-1511-558B2F-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1511-558B2F-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1511-558B2F-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1516-0F9D58-normal">
+      <IconStyle>
+        <color>ff589d0f</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1516-0F9D58-highlight">
+      <IconStyle>
+        <color>ff589d0f</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1516-0F9D58">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1516-0F9D58-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1516-0F9D58-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1517-F57C00-normal">
+      <IconStyle>
+        <color>ff007cf5</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1517-F57C00-highlight">
+      <IconStyle>
+        <color>ff007cf5</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1517-F57C00">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1517-F57C00-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1517-F57C00-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1526-AFB42B-normal">
+      <IconStyle>
+        <color>ff2bb4af</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1526-AFB42B-highlight">
+      <IconStyle>
+        <color>ff2bb4af</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1526-AFB42B">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1526-AFB42B-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1526-AFB42B-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1530-0288D1-normal">
+      <IconStyle>
+        <color>ffd18802</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1530-0288D1-highlight">
+      <IconStyle>
+        <color>ffd18802</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1530-0288D1">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1530-0288D1-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1530-0288D1-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1532-FF5252-nodesc-normal">
+      <IconStyle>
+        <color>ff5252ff</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1532-FF5252-nodesc-highlight">
+      <IconStyle>
+        <color>ff5252ff</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="icon-1532-FF5252-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1532-FF5252-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1532-FF5252-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1535-673AB7-normal">
+      <IconStyle>
+        <color>ffb73a67</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1535-673AB7-highlight">
+      <IconStyle>
+        <color>ffb73a67</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1535-673AB7">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1535-673AB7-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1535-673AB7-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1540-F57C00-normal">
+      <IconStyle>
+        <color>ff007cf5</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1540-F57C00-highlight">
+      <IconStyle>
+        <color>ff007cf5</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1540-F57C00">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1540-F57C00-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1540-F57C00-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1553-0288D1-nodesc-normal">
+      <IconStyle>
+        <color>ffd18802</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1553-0288D1-nodesc-highlight">
+      <IconStyle>
+        <color>ffd18802</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="icon-1553-0288D1-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1553-0288D1-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1553-0288D1-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1577-F57C00-normal">
+      <IconStyle>
+        <color>ff007cf5</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1577-F57C00-highlight">
+      <IconStyle>
+        <color>ff007cf5</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1577-F57C00">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1577-F57C00-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1577-F57C00-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1587-FFEA00-normal">
+      <IconStyle>
+        <color>ff00eaff</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1587-FFEA00-highlight">
+      <IconStyle>
+        <color>ff00eaff</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1587-FFEA00">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1587-FFEA00-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1587-FFEA00-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1595-7CB342-normal">
+      <IconStyle>
+        <color>ff42b37c</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1595-7CB342-highlight">
+      <IconStyle>
+        <color>ff42b37c</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1595-7CB342">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1595-7CB342-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1595-7CB342-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1598-9C27B0-normal">
+      <IconStyle>
+        <color>ffb0279c</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1598-9C27B0-highlight">
+      <IconStyle>
+        <color>ffb0279c</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1598-9C27B0">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1598-9C27B0-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1598-9C27B0-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1637-673AB7-normal">
+      <IconStyle>
+        <color>ffb73a67</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1637-673AB7-highlight">
+      <IconStyle>
+        <color>ffb73a67</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1637-673AB7">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1637-673AB7-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1637-673AB7-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1644-0097A7-nodesc-normal">
+      <IconStyle>
+        <color>ffa79700</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1644-0097A7-nodesc-highlight">
+      <IconStyle>
+        <color>ffa79700</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="icon-1644-0097A7-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1644-0097A7-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1644-0097A7-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1651-F57C00-normal">
+      <IconStyle>
+        <color>ff007cf5</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1651-F57C00-highlight">
+      <IconStyle>
+        <color>ff007cf5</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1651-F57C00">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1651-F57C00-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1651-F57C00-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1720-0F9D58-normal">
+      <IconStyle>
+        <color>ff589d0f</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1720-0F9D58-highlight">
+      <IconStyle>
+        <color>ff589d0f</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1720-0F9D58">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1720-0F9D58-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1720-0F9D58-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1733-FF5252-nodesc-normal">
+      <IconStyle>
+        <color>ff5252ff</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1733-FF5252-nodesc-highlight">
+      <IconStyle>
+        <color>ff5252ff</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="icon-1733-FF5252-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1733-FF5252-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1733-FF5252-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1735-7CB342-nodesc-normal">
+      <IconStyle>
+        <color>ff42b37c</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1735-7CB342-nodesc-highlight">
+      <IconStyle>
+        <color>ff42b37c</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="icon-1735-7CB342-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1735-7CB342-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1735-7CB342-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1801-795548-normal">
+      <IconStyle>
+        <color>ff485579</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1801-795548-highlight">
+      <IconStyle>
+        <color>ff485579</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1801-795548">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1801-795548-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1801-795548-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1801-A52714-nodesc-normal">
+      <IconStyle>
+        <color>ff1427a5</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1801-A52714-nodesc-highlight">
+      <IconStyle>
+        <color>ff1427a5</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="icon-1801-A52714-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1801-A52714-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1801-A52714-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1879-0288D1-normal">
+      <IconStyle>
+        <color>ffd18802</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1879-0288D1-highlight">
+      <IconStyle>
+        <color>ffd18802</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1879-0288D1">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1879-0288D1-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1879-0288D1-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Folder>
+      <name>PARCHEGGI</name>
+      <Placemark>
+        <name>Parcheggio Marter</name>
+        <styleUrl>#icon-1644-0097A7-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            11.4005924,46.0390112,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Parcheggio Roncegno - oratorio</name>
+        <styleUrl>#icon-1644-0097A7-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            11.4059008,46.0489192,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Parcheggio Loc. Ferme</name>
+        <styleUrl>#icon-1644-0097A7-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            11.4214222,46.0497544,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Parcheggio Camper - Golf Club</name>
+        <styleUrl>#icon-1644-0097A7-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            11.4202742,46.0467871,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Parcheggio Roncegno - Oratorio</name>
+        <styleUrl>#icon-1644-0097A7-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            11.4059727,46.0499754,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FERMATA BUS NAVETTA</name>
+        <styleUrl>#icon-1532-FF5252-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            11.4218331,46.0488103,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FERMATA BUS NAVETTA
+</name>
+        <styleUrl>#icon-1532-FF5252-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            11.4005888,46.0397787,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FERMATA BUS NAVETTA
+</name>
+        <styleUrl>#icon-1532-FF5252-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            11.4111969,46.049647,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>PARCHEGGIO DISABILI</name>
+        <styleUrl>#icon-1735-7CB342-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            11.4113385,46.0495556,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>STAND GASTRONOMICI</name>
+      <Placemark>
+        <name>PRAGA 6</name>
+        <description><![CDATA[Simigastro. Stand a cura di Praga 6, quartiere della città ceca, gemellata con Roncegno Terme da oltre 20 anni.<br>Proposte gastronomiche:<br>• CUCINA TIPICA BOEMA]]></description>
+        <styleUrl>#icon-1577-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            11.4097172,46.0506932,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>CASTANICOLTORI</name>
+        <description><![CDATA[Stand a cura dell’Associazione Produttori di Castagne di Roncegno.<br>Proposte gastronomiche:<br>• BEVANDE<br>• CALDARROSTE<br>• CASTAGNE CRUDE]]></description>
+        <styleUrl>#icon-1577-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            11.4096159,46.0508444,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>R.O.C.</name>
+        <description><![CDATA[Stand a cura dell’Associazione Roncegno Oltre i Confini<br>Proposte gastronomiche:<br>• PANINO WÜRSTEL<br>• PANINO PULLED PORK<br>• PANINO SALSICCIA<br>• PANINO PORCHETTA<br>• PANINO VEGETARIANO<br>• TIRAMISÙ<br>• BIRRA<br>• PROSECCO<br>• BIBITE E ACQUA<br>• GIN TONIC<br>• GIN LEMON]]></description>
+        <styleUrl>#icon-1577-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            11.4096622,46.0510443,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>VILLA ROSA</name>
+        <description><![CDATA[Stand gastronomico a cura del Ristorante Villa Rosa.<br>Proposte gastronomiche:<br>• TORTEL DI PATATE CON LONZINO E CAPPUCCIO CONDITO<br>• POLENTA CONCIA<br>• CANEDERLO, CRAUTI E GOULASCH<br>• TIRAMISÙ ALLE CASTAGNE<br>• PANINO CON SALSICCIA, PEPERONI E CIPOLLE]]></description>
+        <styleUrl>#icon-1577-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            11.4098938,46.0515389,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>COMITATO TRADIZIONI LOCALI</name>
+        <description><![CDATA[Stand a cura del Comitato Tradizioni Locali.<br>Proposte gastronomiche:<br>• PUNTINE IN UMIDO CON CECI, FAGIOLI, POLENTA E UNA SPOLVERATA DI GRANIGLIA DI CASTAGNE<br>• ARROSTO AL SUGO DI CASTAGNE CON CECI, FAGIOLI, POLENTA E UNA SPOLVERATA DI GRANIGLIA DI CASTAGNE<br>• SPEZZATINO DI CERVO CON CECI, FAGIOLI, POLENTA E UNA SPOLVERATA DI GRANIGLIA DI CASTAGNE<br>• PIATTO VEGETARIANO CON FORMAGGIO E PEPERONATA<br>• PATATE FRITTE<br>• PANINO CON PORCHETTA E FORMAGGIO]]></description>
+        <styleUrl>#icon-1577-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            11.4102826,46.052742,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>SCI CLUB FRAVORT</name>
+        <description><![CDATA[Stand a cura dello Sci Club Fravor.<br>Proposte gastronomiche:<br>• STRAUBEN ACCOMPAGNATI DA MARMELLATA DI CASTAGNE<br>• STRAUBEN CON MARMELLATA DI MIRTILLO ROSSO<br>• STRAUBEN CON NUTELLA<br>• PARAMPAMPOLI]]></description>
+        <styleUrl>#icon-1577-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            11.410477,46.0529216,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>CASTANICOLTORI</name>
+        <description><![CDATA[Stand a cura dell’Associazione Produttori di Castagne di Roncegno.<br>Proposte gastronomiche:<br>• BEVANDE<br>• CALDARROSTE<br>• CASTAGNE CRUDE]]></description>
+        <styleUrl>#icon-1577-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            11.4103992,46.0527411,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>STIVOR ETS</name>
+        <description><![CDATA[Stand gastronomico a cura dell’Associazione STIVOR ETS.<br>Proposte gastronomiche:<br>• PORCHETTA ALLO SPIEDO CON CONTORNO DI INSALATA DI CAPPUCCIO<br>• CEVAPCICI ALLA PIASTRA CON SALSA AJVAR E CIPOLLA<br>• COCA COLA<br>• LEMON SODA<br>• TÈ PESCA / LIMONE<br>• VINO ROSSO<br>• PROSECCO<br>• CAFFÈ TURCO]]></description>
+        <styleUrl>#icon-1577-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            11.4107211,46.0516484,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>VIGILI DEL FUOCO DI RONCEGNO</name>
+        <description><![CDATA[Stand gastronomico a cura del Corpo Vigili del Fuoco Volontari di Roncegno.<br>Proposte gastronomiche:<br>• CREMA ALLA ZUCCA<br>• TORTEL DE PATATA DA PASSEGGIO FARCITO<br>• PANNA COTTA CON CASTAGNE<br>• BIRRA<br>• BIRRA ANALCOLICA<br>• BIBITE<br>• ACQUA<br>• PARAMPAMPOLI]]></description>
+        <styleUrl>#icon-1577-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            11.4102812,46.0504142,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>GSD RONCEGNO CALCIO</name>
+        <description><![CDATA[Stand gastronomico a cura del GSD Roncegno Calcio.<br>Proposte gastronomiche:<br>• PANINI<br>• PATATINE FRITTE<br>• BEVANDE VARIE]]></description>
+        <styleUrl>#icon-1577-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            11.4115606,46.0493978,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>DOLCI FESTA DELLA CASTAGNA</name>
+        <description><![CDATA[Punto per la vendita dei prodotti dolciari di castagne a cura dell'associazione produttori di castagne di Roncegno]]></description>
+        <styleUrl>#icon-1577-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            11.4115928,46.049504,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name><![CDATA[CORO SANT'OSVALDO]]></name>
+        <description><![CDATA[Stand gastronomico a cura dell’Associazione Coro Sant’Osvaldo.<br>Proposte gastronomiche:<br>• ARROSTICINI E PATATINE<br>• CRÈPES<br>• ZUCCHERO FILATO<br>• BIRRA<br>• APERITIVI E COCKTAIL<br>• CAFFÈ<br>• BEVANDE VARIE]]></description>
+        <styleUrl>#icon-1577-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            11.410055,46.0507965,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>BAR TRE VENEZIE</name>
+        <description>Bar Tre Venezie aperto tutto il giorno durante la festa! </description>
+        <styleUrl>#icon-1517-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            11.4102876,46.0529139,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>BOCCIOFILA TOR TONDA</name>
+        <description><![CDATA[Stand gastronomico a cura dell’Associazione Marter C’è.<br>Proposte gastronomiche:<br>• TOSELLA DELL’AZIENDA AGRICOLA MONTIBELLER LEOPOLDA<br>• POLENTA<br>• FAGIOLI]]></description>
+        <styleUrl>#icon-1577-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            11.4101324,46.0523623,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>PER BAMBINI</name>
+      <Placemark>
+        <name>GONFIABILI</name>
+        <styleUrl>#icon-1511-558B2F-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            11.4089711,46.0503908,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FATTORIA DEGLI ANIMALI</name>
+        <styleUrl>#icon-1553-0288D1-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            11.4087398,46.0508261,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>MULINO LENZI</name>
+        <description>laboratorio a cura del Mulino Lenzi di Palù del Fersina</description>
+        <styleUrl>#icon-1587-FFEA00</styleUrl>
+        <Point>
+          <coordinates>
+            11.4091135,46.0509168,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>CANTÓN DEI SELFIE</name>
+        <description>Scatta la foto più bella del tuo rullino di oggi ! </description>
+        <styleUrl>#icon-1535-673AB7</styleUrl>
+        <Point>
+          <coordinates>
+            11.4111073,46.0530052,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>RONZEGNO DE NA VOLTA</name>
+        <description>Le foto più iconiche di una Roncegno che fu </description>
+        <styleUrl>#icon-1598-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            11.4108845,46.0528966,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>EVENTI PRINCIPALI DELLA FESTA</name>
+      <Placemark>
+        <name>MUSICA CON I TRIFISA</name>
+        <description>DOMENICA ore 13:00</description>
+        <styleUrl>#icon-1801-795548</styleUrl>
+        <Point>
+          <coordinates>
+            11.4115251,46.0495423,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>GSD CALCIO: PRESENTAZIONE SQUADRE </name>
+        <description>VENERDì 24 ore 18:00. Cucina aperta con panini, patatine e castagne</description>
+        <styleUrl>#icon-1530-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            11.4115872,46.0493838,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>PIAZZETTA DEL CORO</name>
+        <description><![CDATA[VENERDì e SABATO ore 18:00. Apericoro con cicchetti e musica anni '70 e '80. Punto Ristoro con arrosticini, patatine e crepes a cura del Coro S. Osvaldo. ]]></description>
+        <styleUrl>#icon-1879-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            11.4100361,46.0507756,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>PRESENTAZIONE LIBRO</name>
+        <description><![CDATA[VENERDì ore 20:30. presentazione libro "Le maestre: piccole storie scolastiche d'altri tempi" di Rosanna Cavallini.  ]]></description>
+        <styleUrl>#icon-1526-AFB42B</styleUrl>
+        <Point>
+          <coordinates>
+            11.4098268,46.0509478,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>PARTENZA PASSEGGIATA</name>
+        <description>SABATO e DOMENICA ore 9:00. Passeggiata sul sentiero del castagno con accompagnatori forestali e castagnata tra i masi di Roncegno. Info e prenotazione 0461 727700</description>
+        <styleUrl>#icon-1595-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            11.4097955,46.050987,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name><![CDATA[GLI ALBERI DEL PARCO, FACCIAMO L'ERBARIO]]></name>
+        <description>SABATO ore 10:00. aTTIVITà PER BAMBINI DAI 7 ANNI</description>
+        <styleUrl>#icon-1720-0F9D58</styleUrl>
+        <Point>
+          <coordinates>
+            11.4097677,46.0509095,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name><![CDATA[INAUGURAZIONE DEL FORNO DI COMUNITA']]></name>
+        <description>SABATO ore 16:30. </description>
+        <styleUrl>#icon-1651-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            11.4124763,46.053111,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name><![CDATA[THE CAPSTON ROCK ANNI '70 e '80 ]]></name>
+        <styleUrl>#icon-1801-A52714-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            11.4115451,46.0494398,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>DJ SET STEFANO CENCI</name>
+        <description>SABATO ore 21:00</description>
+        <styleUrl>#icon-1637-673AB7</styleUrl>
+        <Point>
+          <coordinates>
+            11.4104703,46.0528759,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>PENTOLINA, PENTOLETTA, PENTOLACCIA</name>
+        <description>SABATO ore 15:00. Spettacolo per famiglie con i burattini a cura di Luciano Gottardi. IN CASO DI MALTEMPO IN TEATRO.</description>
+        <styleUrl>#icon-1540-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            11.4117245,46.053529,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>PREMIAZIONE DISEGNI BAMBINI</name>
+        <description>ore 16:00 di domenica 26. Premiazione dei disegni dei bambini della scuola materna di Roncegno. </description>
+        <styleUrl>#icon-1516-0F9D58</styleUrl>
+        <Point>
+          <coordinates>
+            11.4097743,46.0508768,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>BAGNI</name>
+      <Placemark>
+        <name>WC</name>
+        <styleUrl>#icon-1733-FF5252-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            11.4098361,46.0508963,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>WC</name>
+        <styleUrl>#icon-1733-FF5252-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            11.4091507,46.0505444,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>WC</name>
+        <styleUrl>#icon-1733-FF5252-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            11.4116728,46.0494231,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>WC</name>
+        <styleUrl>#icon-1733-FF5252-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            11.4110164,46.0530705,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>WC</name>
+        <styleUrl>#icon-1733-FF5252-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            11.4106293,46.0504564,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>

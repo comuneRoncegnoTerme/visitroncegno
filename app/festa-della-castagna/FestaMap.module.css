@@ -1,0 +1,203 @@
+.shell {
+  --food: #b4532a;
+  --events: #6a4a8c;
+  --kids: #3f7d3a;
+  --see: #a8457a;
+  --parking: #1f6f78;
+  --shuttle: #b8322f;
+  --services: #4f5d66;
+  margin-top: 36px;
+}
+
+.notice {
+  margin: 0 0 16px;
+  padding: 12px 16px;
+  border-left: 3px solid #d5a37b;
+  background: rgba(255, 255, 255, .06);
+  color: rgba(255, 255, 255, .82);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.filters {
+  display: flex;
+  gap: 8px;
+  margin: 0 0 16px;
+  padding-bottom: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.filters::-webkit-scrollbar { display: none; }
+
+.filters button {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid rgba(255, 255, 255, .24);
+  border-radius: 999px;
+  background: transparent;
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.filters button span { color: rgba(255, 255, 255, .6); font-weight: 400; }
+.filters button[aria-pressed="true"] { background: #fff4e4; border-color: #fff4e4; color: #1f3529; }
+.filters button[aria-pressed="true"] span { color: #6b5e54; }
+.filters button:focus-visible,
+.list button:focus-visible,
+.back:focus-visible,
+.directions:focus-visible { outline: 3px solid #d5a37b; outline-offset: 2px; }
+
+.filters i,
+.list i,
+.kicker i {
+  width: 10px;
+  height: 10px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--dot, #fff);
+}
+.shell [data-category="food"] { --dot: var(--food); }
+.shell [data-category="events"] { --dot: var(--events); }
+.shell [data-category="kids"] { --dot: var(--kids); }
+.shell [data-category="see"] { --dot: var(--see); }
+.shell [data-category="parking"] { --dot: var(--parking); }
+.shell [data-category="shuttle"] { --dot: var(--shuttle); }
+.shell [data-category="services"] { --dot: var(--services); }
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(300px, 1fr);
+  overflow: hidden;
+  border-radius: 6px;
+  background: #fbf7f0;
+  color: #2d211b;
+}
+
+.mapFrame { position: relative; min-height: 600px; }
+.map { position: absolute; inset: 0; }
+
+.panel {
+  max-height: 600px;
+  overflow-y: auto;
+  border-left: 1px solid rgba(70, 43, 27, .12);
+}
+
+.panelHint {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  margin: 0;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(70, 43, 27, .12);
+  background: #fbf7f0;
+  color: #675b54;
+  font-size: 14px;
+}
+
+.list { margin: 0; padding: 0; list-style: none; }
+.list button {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  min-height: 56px;
+  padding: 14px 20px;
+  border: 0;
+  border-bottom: 1px solid rgba(70, 43, 27, .08);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.list button:hover { background: #f3eadc; }
+.list i { margin-top: 6px; }
+.list strong { display: block; font-family: Georgia, serif; font-size: 18px; font-weight: 400; line-height: 1.25; }
+.list small { display: block; margin-top: 4px; color: #75685f; font-size: 13px; line-height: 1.45; }
+
+.detail { padding: 18px 22px 26px; }
+.detail h3 { margin: 6px 0 12px; font-family: Georgia, serif; font-size: 28px; font-weight: 400; line-height: 1.1; }
+.detail h4 { margin: 20px 0 8px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #9d4a24; }
+.detail p { margin: 0; color: #5f534b; line-height: 1.6; }
+
+.back {
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #7d321b;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.kicker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0 0 !important;
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.menu { margin: 0; padding-left: 18px; color: #3f342d; line-height: 1.55; }
+.menu li + li { margin-top: 4px; }
+
+.directions {
+  display: inline-flex;
+  align-items: center;
+  min-height: 46px;
+  margin-top: 22px;
+  padding: 0 20px;
+  border-radius: 999px;
+  background: #1f3529;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* Segnaposto creati da MapLibre fuori dall'albero React. */
+.shell :global(.festa-marker) {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: var(--marker, #1f3529);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(24, 13, 8, .35);
+  cursor: pointer;
+  transition: transform .15s ease;
+}
+.shell :global(.festa-marker.is-hidden) { display: none; }
+.shell :global(.festa-marker:hover),
+.shell :global(.festa-marker:focus-visible) { transform: scale(1.12); outline: none; }
+.shell :global(.festa-marker.is-active) { z-index: 2; transform: scale(1.3); box-shadow: 0 0 0 4px rgba(255, 244, 228, .9), 0 6px 16px rgba(24, 13, 8, .4); }
+.shell :global(.festa-marker-food) { --marker: var(--food); }
+.shell :global(.festa-marker-events) { --marker: var(--events); }
+.shell :global(.festa-marker-kids) { --marker: var(--kids); }
+.shell :global(.festa-marker-see) { --marker: var(--see); }
+.shell :global(.festa-marker-parking) { --marker: var(--parking); }
+.shell :global(.festa-marker-shuttle) { --marker: var(--shuttle); }
+.shell :global(.festa-marker-services) { --marker: var(--services); }
+
+@media (max-width: 1000px) {
+  .layout { grid-template-columns: 1fr; }
+  .mapFrame { min-height: 62svh; }
+  .panel { max-height: none; border-left: 0; border-top: 1px solid rgba(70, 43, 27, .12); }
+  .list { max-height: 420px; overflow-y: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shell :global(.festa-marker) { transition: none; }
+}
