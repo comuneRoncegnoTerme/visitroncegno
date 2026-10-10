@@ -166,23 +166,10 @@ export default async function FestaDellaCastagnaPage() {
             <figcaption><span>In piazza</span><strong>Le casette delle caldarroste e la gente del paese</strong></figcaption>
           </figure>
         </div>
-        <div className={styles.photoPair}>
-          <figure>
-            <img src="/images/festa-castagna/caldarroste-griglia.webp" width={944} height={1600} loading="lazy" alt="Castagne incise sulla griglia del tamburo, mescolate dalle pale di ferro" />
-            <figcaption><span>Sulla griglia</span><strong>Le castagne incise girano sul fuoco</strong></figcaption>
-          </figure>
-          <figure>
-            <img src="/images/festa-castagna/caldarroste-pronte.webp" width={1197} height={1600} loading="lazy" alt="Le caldarroste appena cotte scendono dal bordo del tamburo" />
-            <figcaption><span>Pronte</span><strong>Le caldarroste appena tolte dal fuoco</strong></figcaption>
-          </figure>
-        </div>
-      </section>
-
-      <section className={styles.highlights}>
-        <div><span>01</span><strong>Mercatino</strong><p>Sabato e domenica, 10:00–19:00.</p></div>
-        <div><span>02</span><strong>Torta Gigante</strong><p>Sabato alle 14:00 in Piazza A. De Giovanni.</p></div>
-        <div><span>03</span><strong>Sentiero del Castagno</strong><p>Passeggiata guidata sabato e domenica alle 9:00.</p></div>
-        <div><span>04</span><strong>Sapori e Praga 6</strong><p>Punti ristoro, menù a tema e lo stand degli amici cechi.</p></div>
+        <figure className={styles.photoBanner}>
+          <img src="/images/festa-castagna/caldarroste-pronte.webp" width={1197} height={1600} loading="lazy" alt="Le caldarroste appena cotte scendono dal bordo del tamburo" />
+          <figcaption><span>Pronte</span><strong>Le caldarroste appena tolte dal fuoco</strong></figcaption>
+        </figure>
       </section>
 
       <section className={styles.program} id="programma">
