@@ -206,7 +206,7 @@ export default async function FestaDellaCastagnaPage() {
       </section>
 
       <section className={styles.stories} id="storie">
-        <div className={styles.sectionHeading}><p className={styles.eyebrow}>Circuito del Castagno</p><h2>La festa continua lungo i sentieri.</h2><p>Nei castagneti trovi i cartelli del Circuito: inquadra il QR per leggere o ascoltare la storia di quel posto, dei suoi alberi e di chi li ha curati. Funzionano tutto l’anno, non solo nei giorni della festa.</p></div>
+        <div className={styles.sectionHeading}><p className={styles.eyebrow}>Circuito del Castagno</p><h2>La festa continua lungo i sentieri.</h2></div>
         <div className={styles.storyGrid}>{stories.map(([number, title, href, text]) => <Link href={href} className={styles.storyCard} key={href}><span>{number}</span><h3>{title}</h3><p>{text}</p><strong>Apri la storia →</strong></Link>)}</div>
       </section>
 
