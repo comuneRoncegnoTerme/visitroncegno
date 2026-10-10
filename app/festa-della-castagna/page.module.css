@@ -322,19 +322,16 @@
 .festaMapHeading h2{margin:0;font-family:Georgia,serif;font-size:clamp(40px,4.6vw,66px);font-weight:400;line-height:.98;letter-spacing:-.04em}
 .festaMapHeading>p:last-child{max-width:640px;margin:18px 0 0;line-height:1.65;color:rgba(255,255,255,.76)}
 @media(max-width:760px){.festaMap{padding:64px 5vw}}
-/* Altre foto: caldarroste sul fuoco e un castagno in una foto d’epoca. */
-.photoPair{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
-.photoPair figure{position:relative;margin:0;height:560px;overflow:hidden;background:#493224}
-.photoPair img{width:100%;height:100%;object-fit:cover;display:block}
-.photoPair figure:last-child img{object-position:center 55%}
-.photoPair figcaption{position:absolute;right:0;bottom:0;left:0;padding:64px 24px 20px;color:#fff;background:linear-gradient(transparent,rgba(24,13,8,.7))}
-.photoPair figcaption span{display:block;margin-bottom:7px;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#e9c5a5}
-.photoPair figcaption strong{font-family:Georgia,serif;font-size:23px;font-weight:400}
-.storiesHeading{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,400px);gap:6vw;align-items:end}
+/* Altra foto: le caldarroste pronte, in una fascia orizzontale sotto la griglia. */
+.photoBanner{position:relative;margin:14px 0 0;height:380px;overflow:hidden;background:#493224}
+.photoBanner img{width:100%;height:100%;object-fit:cover;object-position:center 45%;display:block}
+.photoBanner figcaption{position:absolute;right:0;bottom:0;left:0;padding:64px 24px 20px;color:#fff;background:linear-gradient(transparent,rgba(24,13,8,.7))}
+.photoBanner figcaption span{display:block;margin-bottom:7px;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#e9c5a5}
+.photoBanner figcaption strong{font-family:Georgia,serif;font-size:23px;font-weight:400}
+.storiesHeading{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,440px);gap:5vw;align-items:center}
 .vintagePhoto{margin:0}
-.vintagePhoto img{display:block;width:100%;height:auto;aspect-ratio:1060/1280;object-fit:cover;box-shadow:0 18px 44px rgba(45,33,27,.18)}
+.vintagePhoto img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:center 62%;box-shadow:0 18px 44px rgba(45,33,27,.18)}
 .vintagePhoto figcaption{margin-top:12px;color:#675b54;font-size:14px;line-height:1.5}
 .vintagePhoto figcaption span{display:block;margin-bottom:4px;font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#9d4a24}
 @media(max-width:1000px){.storiesHeading{grid-template-columns:1fr;gap:34px}.vintagePhoto{max-width:520px}}
-@media(max-width:760px){.photoPair{gap:10px;margin-top:10px}.photoPair figure{height:420px}.photoPair figcaption{padding:44px 14px 14px}.photoPair figcaption strong{font-size:17px}}
-@media(max-width:520px){.photoPair{grid-template-columns:1fr}.photoPair figure{height:440px}.photoPair figcaption strong{font-size:20px}}
+@media(max-width:760px){.photoBanner{height:300px;margin-top:10px}.photoBanner figcaption{padding:44px 18px 18px}.photoBanner figcaption strong{font-size:20px}}
