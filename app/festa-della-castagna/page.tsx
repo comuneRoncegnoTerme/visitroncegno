@@ -191,7 +191,7 @@ export default async function FestaDellaCastagnaPage() {
           <h2 id="mappa-title">Stand, eventi e servizi, punto per punto.</h2>
           <p>Scegli una categoria per vedere dove mangiare, dove si suona, dove parcheggiare e dove prendere la navetta. Ogni stand ha il suo menù.</p>
         </div>
-        <FestaMap points={festaMap.points as FestaPoint[]} edition={festaMap.edition} />
+        <FestaMap points={festaMap.points as FestaPoint[]} />
       </section>
 
       <section className={styles.flavours} id="sapori">
@@ -206,7 +206,7 @@ export default async function FestaDellaCastagnaPage() {
       </section>
 
       <section className={styles.stories} id="storie">
-        <div className={styles.sectionHeading}><p className={styles.eyebrow}>Circuito del Castagno</p><h2>La festa continua lungo i sentieri.</h2><p>La segnaletica già presente nei castagneti collega il paesaggio fisico a testi, audio e approfondimenti digitali. Gli stessi QR accompagnano il visitatore anche dopo la festa.</p></div>
+        <div className={styles.sectionHeading}><p className={styles.eyebrow}>Circuito del Castagno</p><h2>La festa continua lungo i sentieri.</h2><p>Nei castagneti trovi i cartelli del Circuito: inquadra il QR per leggere o ascoltare la storia di quel posto, dei suoi alberi e di chi li ha curati. Funzionano tutto l’anno, non solo nei giorni della festa.</p></div>
         <div className={styles.storyGrid}>{stories.map(([number, title, href, text]) => <Link href={href} className={styles.storyCard} key={href}><span>{number}</span><h3>{title}</h3><p>{text}</p><strong>Apri la storia →</strong></Link>)}</div>
       </section>
 
