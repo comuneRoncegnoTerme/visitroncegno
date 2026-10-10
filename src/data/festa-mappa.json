@@ -1,0 +1,476 @@
+{
+  "edition": 2025,
+  "source": "mymaps-2025.kml",
+  "points": [
+    {
+      "id": "parking-1",
+      "category": "parking",
+      "name": "Parcheggio Marter",
+      "text": null,
+      "menu": [],
+      "lng": 11.400592,
+      "lat": 46.039011
+    },
+    {
+      "id": "parking-2",
+      "category": "parking",
+      "name": "Parcheggio dell’oratorio",
+      "text": null,
+      "menu": [],
+      "lng": 11.405901,
+      "lat": 46.048919
+    },
+    {
+      "id": "parking-3",
+      "category": "parking",
+      "name": "Parcheggio località Ferme",
+      "text": null,
+      "menu": [],
+      "lng": 11.421422,
+      "lat": 46.049754
+    },
+    {
+      "id": "parking-4",
+      "category": "parking",
+      "name": "Parcheggio camper · Golf Club",
+      "text": null,
+      "menu": [],
+      "lng": 11.420274,
+      "lat": 46.046787
+    },
+    {
+      "id": "parking-5",
+      "category": "parking",
+      "name": "Parcheggio dell’oratorio",
+      "text": null,
+      "menu": [],
+      "lng": 11.405973,
+      "lat": 46.049975
+    },
+    {
+      "id": "shuttle-6",
+      "category": "shuttle",
+      "name": "Fermata della navetta",
+      "text": null,
+      "menu": [],
+      "lng": 11.421833,
+      "lat": 46.04881
+    },
+    {
+      "id": "shuttle-7",
+      "category": "shuttle",
+      "name": "Fermata della navetta",
+      "text": null,
+      "menu": [],
+      "lng": 11.400589,
+      "lat": 46.039779
+    },
+    {
+      "id": "shuttle-8",
+      "category": "shuttle",
+      "name": "Fermata della navetta",
+      "text": null,
+      "menu": [],
+      "lng": 11.411197,
+      "lat": 46.049647
+    },
+    {
+      "id": "services-9",
+      "category": "services",
+      "name": "Parcheggio per persone con disabilità",
+      "text": null,
+      "menu": [],
+      "lng": 11.411338,
+      "lat": 46.049556
+    },
+    {
+      "id": "food-10",
+      "category": "food",
+      "name": "Praga 6",
+      "text": "Simigastro. Stand a cura di Praga 6, quartiere della città ceca, gemellata con Roncegno Terme da oltre 20 anni.",
+      "menu": [
+        "Cucina tipica boema"
+      ],
+      "lng": 11.409717,
+      "lat": 46.050693
+    },
+    {
+      "id": "food-11",
+      "category": "food",
+      "name": "Castanicoltori di Roncegno",
+      "text": "Stand a cura dell’Associazione Produttori di Castagne di Roncegno.",
+      "menu": [
+        "Bevande",
+        "Caldarroste",
+        "Castagne crude"
+      ],
+      "lng": 11.409616,
+      "lat": 46.050844
+    },
+    {
+      "id": "food-12",
+      "category": "food",
+      "name": "R.O.C. · Roncegno Oltre i Confini",
+      "text": "Stand a cura dell’Associazione Roncegno Oltre i Confini",
+      "menu": [
+        "Panino würstel",
+        "Panino pulled pork",
+        "Panino salsiccia",
+        "Panino porchetta",
+        "Panino vegetariano",
+        "Tiramisù",
+        "Birra",
+        "Prosecco",
+        "Bibite e acqua",
+        "Gin tonic",
+        "Gin lemon"
+      ],
+      "lng": 11.409662,
+      "lat": 46.051044
+    },
+    {
+      "id": "food-13",
+      "category": "food",
+      "name": "Ristorante Villa Rosa",
+      "text": "Stand gastronomico a cura del Ristorante Villa Rosa.",
+      "menu": [
+        "Tortel di patate con lonzino e cappuccio condito",
+        "Polenta concia",
+        "Canederlo, crauti e goulasch",
+        "Tiramisù alle castagne",
+        "Panino con salsiccia, peperoni e cipolle"
+      ],
+      "lng": 11.409894,
+      "lat": 46.051539
+    },
+    {
+      "id": "food-14",
+      "category": "food",
+      "name": "Comitato Tradizioni Locali",
+      "text": "Stand a cura del Comitato Tradizioni Locali.",
+      "menu": [
+        "Puntine in umido con ceci, fagioli, polenta e una spolverata di graniglia di castagne",
+        "Arrosto al sugo di castagne con ceci, fagioli, polenta e una spolverata di graniglia di castagne",
+        "Spezzatino di cervo con ceci, fagioli, polenta e una spolverata di graniglia di castagne",
+        "Piatto vegetariano con formaggio e peperonata",
+        "Patate fritte",
+        "Panino con porchetta e formaggio"
+      ],
+      "lng": 11.410283,
+      "lat": 46.052742
+    },
+    {
+      "id": "food-15",
+      "category": "food",
+      "name": "Sci Club Fravort",
+      "text": "Stand a cura dello Sci Club Fravort.",
+      "menu": [
+        "Strauben accompagnati da marmellata di castagne",
+        "Strauben con marmellata di mirtillo rosso",
+        "Strauben con Nutella",
+        "Parampampoli"
+      ],
+      "lng": 11.410477,
+      "lat": 46.052922
+    },
+    {
+      "id": "food-16",
+      "category": "food",
+      "name": "Castanicoltori di Roncegno",
+      "text": "Stand a cura dell’Associazione Produttori di Castagne di Roncegno.",
+      "menu": [
+        "Bevande",
+        "Caldarroste",
+        "Castagne crude"
+      ],
+      "lng": 11.410399,
+      "lat": 46.052741
+    },
+    {
+      "id": "food-17",
+      "category": "food",
+      "name": "Stivor ETS",
+      "text": "Stand gastronomico a cura dell’Associazione STIVOR ETS.",
+      "menu": [
+        "Porchetta allo spiedo con contorno di insalata di cappuccio",
+        "Cevapcici alla piastra con salsa ajvar e cipolla",
+        "Coca-Cola",
+        "Lemon Soda",
+        "Tè pesca / limone",
+        "Vino rosso",
+        "Prosecco",
+        "Caffè turco"
+      ],
+      "lng": 11.410721,
+      "lat": 46.051648
+    },
+    {
+      "id": "food-18",
+      "category": "food",
+      "name": "Vigili del Fuoco di Roncegno",
+      "text": "Stand gastronomico a cura del Corpo Vigili del Fuoco Volontari di Roncegno.",
+      "menu": [
+        "Crema alla zucca",
+        "Tortel de patata da passeggio farcito",
+        "Panna cotta con castagne",
+        "Birra",
+        "Birra analcolica",
+        "Bibite",
+        "Acqua",
+        "Parampampoli"
+      ],
+      "lng": 11.410281,
+      "lat": 46.050414
+    },
+    {
+      "id": "food-19",
+      "category": "food",
+      "name": "GSD Roncegno Calcio",
+      "text": "Stand gastronomico a cura del GSD Roncegno Calcio.",
+      "menu": [
+        "Panini",
+        "Patatine fritte",
+        "Bevande varie"
+      ],
+      "lng": 11.411561,
+      "lat": 46.049398
+    },
+    {
+      "id": "food-20",
+      "category": "food",
+      "name": "Dolci della Festa",
+      "text": "Punto per la vendita dei prodotti dolciari di castagne a cura dell'associazione produttori di castagne di Roncegno",
+      "menu": [],
+      "lng": 11.411593,
+      "lat": 46.049504
+    },
+    {
+      "id": "food-21",
+      "category": "food",
+      "name": "Coro Sant’Osvaldo",
+      "text": "Stand gastronomico a cura dell’Associazione Coro Sant’Osvaldo.",
+      "menu": [
+        "Arrosticini e patatine",
+        "Crêpes",
+        "Zucchero filato",
+        "Birra",
+        "Aperitivi e cocktail",
+        "Caffè",
+        "Bevande varie"
+      ],
+      "lng": 11.410055,
+      "lat": 46.050796
+    },
+    {
+      "id": "food-22",
+      "category": "food",
+      "name": "Bar Tre Venezie",
+      "text": "Bar Tre Venezie aperto tutto il giorno durante la festa!",
+      "menu": [],
+      "lng": 11.410288,
+      "lat": 46.052914
+    },
+    {
+      "id": "food-23",
+      "category": "food",
+      "name": "Bocciofila Tor Tonda",
+      "text": "Stand gastronomico a cura dell’Associazione Marter C’è.",
+      "menu": [
+        "Tosella dell’azienda agricola Montibeller Leopolda",
+        "Polenta",
+        "Fagioli"
+      ],
+      "lng": 11.410132,
+      "lat": 46.052362
+    },
+    {
+      "id": "kids-24",
+      "category": "kids",
+      "name": "Gonfiabili",
+      "text": null,
+      "menu": [],
+      "lng": 11.408971,
+      "lat": 46.050391
+    },
+    {
+      "id": "kids-25",
+      "category": "kids",
+      "name": "Fattoria degli animali",
+      "text": null,
+      "menu": [],
+      "lng": 11.40874,
+      "lat": 46.050826
+    },
+    {
+      "id": "kids-26",
+      "category": "kids",
+      "name": "Laboratorio del Mulino Lenzi",
+      "text": "Laboratorio a cura del Mulino Lenzi di Palù del Fersina",
+      "menu": [],
+      "lng": 11.409114,
+      "lat": 46.050917
+    },
+    {
+      "id": "see-27",
+      "category": "see",
+      "name": "Cantón dei selfie",
+      "text": "Scatta la foto più bella del tuo rullino di oggi!",
+      "menu": [],
+      "lng": 11.411107,
+      "lat": 46.053005
+    },
+    {
+      "id": "see-28",
+      "category": "see",
+      "name": "Ronzégno de na volta",
+      "text": "Le foto più iconiche di una Roncegno che fu",
+      "menu": [],
+      "lng": 11.410884,
+      "lat": 46.052897
+    },
+    {
+      "id": "events-29",
+      "category": "events",
+      "name": "Musica con i Trifisa",
+      "text": "Domenica ore 13:00",
+      "menu": [],
+      "lng": 11.411525,
+      "lat": 46.049542
+    },
+    {
+      "id": "events-30",
+      "category": "events",
+      "name": "Presentazione delle squadre del GSD Calcio",
+      "text": "Venerdì ore 18:00. Cucina aperta con panini, patatine e castagne",
+      "menu": [],
+      "lng": 11.411587,
+      "lat": 46.049384
+    },
+    {
+      "id": "events-31",
+      "category": "events",
+      "name": "Piazzetta del Coro",
+      "text": "Venerdì e Sabato ore 18:00. Apericoro con cicchetti e musica anni '70 e '80. Punto Ristoro con arrosticini, patatine e crêpes a cura del Coro S. Osvaldo.",
+      "menu": [],
+      "lng": 11.410036,
+      "lat": 46.050776
+    },
+    {
+      "id": "events-32",
+      "category": "events",
+      "name": "Presentazione del libro",
+      "text": "Venerdì ore 20:30. Presentazione libro \"Le maestre: piccole storie scolastiche d'altri tempi\" di Rosanna Cavallini.",
+      "menu": [],
+      "lng": 11.409827,
+      "lat": 46.050948
+    },
+    {
+      "id": "events-33",
+      "category": "events",
+      "name": "Partenza della passeggiata",
+      "text": "Sabato e Domenica ore 9:00. Passeggiata sul sentiero del castagno con accompagnatori forestali e castagnata tra i masi di Roncegno. Info e prenotazione 0461 727700",
+      "menu": [],
+      "lng": 11.409795,
+      "lat": 46.050987
+    },
+    {
+      "id": "events-34",
+      "category": "events",
+      "name": "Gli alberi del parco: facciamo l’erbario",
+      "text": "Sabato ore 10:00. Attività per bambini dai 7 anni",
+      "menu": [],
+      "lng": 11.409768,
+      "lat": 46.05091
+    },
+    {
+      "id": "events-35",
+      "category": "events",
+      "name": "Inaugurazione del forno di comunità",
+      "text": "Sabato ore 16:30.",
+      "menu": [],
+      "lng": 11.412476,
+      "lat": 46.053111
+    },
+    {
+      "id": "events-36",
+      "category": "events",
+      "name": "The Capston · rock anni ’70 e ’80",
+      "text": null,
+      "menu": [],
+      "lng": 11.411545,
+      "lat": 46.04944
+    },
+    {
+      "id": "events-37",
+      "category": "events",
+      "name": "DJ set Stefano Cenci",
+      "text": "Sabato ore 21:00",
+      "menu": [],
+      "lng": 11.41047,
+      "lat": 46.052876
+    },
+    {
+      "id": "events-38",
+      "category": "events",
+      "name": "Pentolina, pentoletta, pentolaccia",
+      "text": "Sabato ore 15:00. Spettacolo per famiglie con i burattini a cura di Luciano Gottardi. In caso di maltempo in teatro.",
+      "menu": [],
+      "lng": 11.411725,
+      "lat": 46.053529
+    },
+    {
+      "id": "events-39",
+      "category": "events",
+      "name": "Premiazione dei disegni dei bambini",
+      "text": "Ore 16:00 di Domenica. Premiazione dei disegni dei bambini della scuola materna di Roncegno.",
+      "menu": [],
+      "lng": 11.409774,
+      "lat": 46.050877
+    },
+    {
+      "id": "services-40",
+      "category": "services",
+      "name": "Servizi igienici",
+      "text": null,
+      "menu": [],
+      "lng": 11.409836,
+      "lat": 46.050896
+    },
+    {
+      "id": "services-41",
+      "category": "services",
+      "name": "Servizi igienici",
+      "text": null,
+      "menu": [],
+      "lng": 11.409151,
+      "lat": 46.050544
+    },
+    {
+      "id": "services-42",
+      "category": "services",
+      "name": "Servizi igienici",
+      "text": null,
+      "menu": [],
+      "lng": 11.411673,
+      "lat": 46.049423
+    },
+    {
+      "id": "services-43",
+      "category": "services",
+      "name": "Servizi igienici",
+      "text": null,
+      "menu": [],
+      "lng": 11.411016,
+      "lat": 46.05307
+    },
+    {
+      "id": "services-44",
+      "category": "services",
+      "name": "Servizi igienici",
+      "text": null,
+      "menu": [],
+      "lng": 11.410629,
+      "lat": 46.050456
+    }
+  ]
+}
