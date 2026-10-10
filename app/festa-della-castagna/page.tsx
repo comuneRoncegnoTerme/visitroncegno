@@ -156,8 +156,8 @@ export default async function FestaDellaCastagnaPage() {
             <figcaption><span>Il fuoco</span><strong>Caldarroste cotte in piazza</strong></figcaption>
           </figure>
           <figure className={styles.photoWide}>
-            <img src="/images/festa-castagna/caldarroste-fuoco-cesto.webp" width={1600} height={1066} loading="lazy" alt="Due uomini con il grembiule verde girano le castagne sul fuoco accanto a un cesto di vimini" />
-            <figcaption><span>Al braciere</span><strong>Castagne girate a mano, una tostatura dopo l’altra</strong></figcaption>
+            <img src="/images/festa-castagna/festa-folla-centro.webp" width={1600} height={1066} loading="lazy" alt="La folla della Festa nel centro di Roncegno, davanti all’Hotel Semiramis" />
+            <figcaption><span>In centro</span><strong>Il centro del paese pieno di gente</strong></figcaption>
           </figure>
           <figure className={styles.photoCake}>
             <img src="/images/festa-castagna/festa-casette-albergo-vittoria.webp" width={1600} height={1200} loading="lazy" alt="Le casette di legno delle caldarroste davanti all’Albergo Vittoria, con la piazza affollata" />
