@@ -63,7 +63,7 @@ const MAP_STYLE: StyleSpecification = {
   layers: [{ id: "osm", type: "raster", source: "osm", paint: { "raster-saturation": -0.35, "raster-brightness-max": 0.96 } }],
 };
 
-export default function FestaMap({ points, edition }: { points: FestaPoint[]; edition: number }) {
+export default function FestaMap({ points }: { points: FestaPoint[] }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<Map | null>(null);
   const markersRef = useRef(new globalThis.Map<string, HTMLButtonElement>());
@@ -152,11 +152,6 @@ export default function FestaMap({ points, edition }: { points: FestaPoint[]; ed
 
   return (
     <div className={styles.shell}>
-      {edition < 2026 && (
-        <p className={styles.notice}>
-          Mappa dell’edizione {edition}: posizioni degli stand e menù saranno aggiornati per il 2026.
-        </p>
-      )}
       <div className={styles.filters} role="group" aria-label="Filtra i punti della mappa">
         <button type="button" aria-pressed={filter === "all"} onClick={() => choose("all")}>
           Tutto <span>{points.length}</span>
