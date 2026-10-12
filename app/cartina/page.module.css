@@ -2,241 +2,87 @@
   background: var(--paper);
 }
 
+/* La cartina si vede intera nello schermo: la colonna segue la sua proporzione. */
 .intro,
-.mapSection,
-.nextSteps {
-  padding-inline: 5vw;
-}
-
-.eyebrow,
-.eyebrowLight {
-  margin: 0 0 14px;
-  color: var(--orange);
-  font-size: 0.82rem;
-  font-weight: 800;
-  letter-spacing: 0;
-  text-transform: none;
+.mapSection {
+  width: min(calc(84vh * 1.4), 90vw);
+  margin: 0 auto;
 }
 
 .intro {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(220px, 0.45fr);
-  gap: 6vw;
-  align-items: end;
-  padding-top: 128px;
-  padding-bottom: 48px;
-  background: var(--cream);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 128px 0 28px;
 }
 
 .introCopy {
-  max-width: 860px;
-}
-
-.intro h1,
-.mapHeading h2,
-.nextSteps h2,
-.mapCta h2 {
-  margin: 0;
-  font-family: Georgia, serif;
-  font-weight: 400;
-  line-height: 1;
+  max-width: 760px;
 }
 
 .intro h1 {
-  max-width: 800px;
-  font-size: clamp(3rem, 5.2vw, 5.6rem);
-}
-
-.lead,
-.mapHeading > p {
-  color: var(--muted);
-  font-size: 1rem;
-  line-height: 1.7;
+  margin: 0;
+  font: 400 clamp(2.6rem, 4.6vw, 4.4rem) / 1 Georgia, "Times New Roman", serif;
+  letter-spacing: -0.02em;
 }
 
 .lead {
-  max-width: 680px;
-  margin: 22px 0 0;
+  max-width: 640px;
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.6;
 }
 
-.introActions {
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
-}
-
-.primaryAction {
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 28px;
-  min-width: 210px;
-  padding: 14px 19px;
+.download {
+  flex-shrink: 0;
+  padding: 12px 20px;
+  border: 1px solid rgba(23, 55, 46, 0.25);
   border-radius: 999px;
-  color: white;
-  background: var(--forest);
+  color: var(--forest);
+  background: #fff;
+  font-size: 0.95rem;
   font-weight: 700;
+}
+
+.download:hover {
+  border-color: var(--forest);
 }
 
 .mapSection {
-  padding-top: 54px;
-  padding-bottom: 72px;
-}
-
-.mapHeading {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.5fr);
-  gap: 5vw;
-  align-items: end;
-  margin-bottom: 24px;
-}
-
-.mapHeading h2,
-.nextSteps h2 {
-  font-size: clamp(2.4rem, 4vw, 4.2rem);
-}
-
-.mapHeading > p {
-  max-width: 540px;
-  margin: 0;
-}
-
-.viewerWrap {
-  width: 100%;
+  padding-bottom: 88px;
 }
 
 .attribution {
-  margin: 12px 4px 0;
+  max-width: 760px;
+  margin: 28px 0 0;
   color: var(--muted);
-  font-size: 0.74rem;
-  text-align: right;
+  font-size: 0.9rem;
+  line-height: 1.6;
 }
 
-.nextSteps {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.5fr);
-  gap: 5vw;
-  align-items: end;
-  padding-top: 58px;
-  padding-bottom: 62px;
-  border-top: 1px solid rgba(23, 32, 29, 0.1);
-  background: var(--paper);
-}
-
-.nextLinks {
-  display: grid;
-  gap: 12px;
-  justify-items: start;
-}
-
-.nextLinks a,
-.mapCta a {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding-bottom: 5px;
-  border-bottom: 1px solid rgba(23, 32, 29, 0.28);
-  font-weight: 700;
-}
-
-.mapCta {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 32px;
-  align-items: end;
-  padding: 50px 5vw;
-  color: white;
-  background: var(--forest);
-}
-
-.eyebrowLight {
-  color: #b9d8cc;
-}
-
-.mapCta h2 {
-  max-width: 720px;
-  font-size: clamp(2.1rem, 3.5vw, 3.7rem);
-}
-
-.mapCta a {
-  border-bottom-color: currentColor;
-}
-
-@media (max-width: 900px) {
-  .intro,
-  .mapHeading,
-  .nextSteps,
-  .mapCta {
-    grid-template-columns: 1fr;
-  }
-
-  .introActions {
-    margin-top: 2px;
-  }
-
-  .mapHeading,
-  .nextSteps {
-    gap: 20px;
-  }
-
-  .mapCta a {
-    justify-self: start;
-  }
+.attribution a {
+  color: var(--forest);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 @media (max-width: 760px) {
   .intro,
-  .mapSection,
-  .nextSteps {
-    padding-inline: 24px;
+  .mapSection {
+    width: auto;
+    margin: 0 16px;
   }
 
   .intro {
-    padding-top: 108px;
-    padding-bottom: 40px;
-  }
-
-  .intro h1 {
-    font-size: clamp(2.8rem, 12.5vw, 4rem);
-  }
-
-  .lead {
-    margin-top: 18px;
-  }
-
-  .introActions {
-    margin-top: 8px;
-  }
-
-  .primaryAction {
-    width: 100%;
-    min-width: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 104px 0 24px;
   }
 
   .mapSection {
-    padding-top: 42px;
-    padding-bottom: 54px;
-  }
-
-  .mapHeading {
-    margin-bottom: 20px;
-  }
-
-  .attribution {
-    margin-top: 10px;
-    text-align: left;
-  }
-
-  .nextSteps {
-    padding-top: 46px;
-    padding-bottom: 50px;
-  }
-
-  .mapCta {
-    padding: 48px 24px;
-  }
-
-  .mapCta h2 {
-    font-size: clamp(2.1rem, 9.5vw, 3.1rem);
+    padding-bottom: 56px;
   }
 }
