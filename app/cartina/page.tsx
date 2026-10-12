@@ -42,6 +42,7 @@ function resolvePoints(places: EditorialItem[], routes: EditorialItem[]): Illust
       href,
       text: item?.summary ?? point.note ?? null,
       image: getDirectusImageUrl(item?.image, 800),
+      meta: point.meta ?? null,
     };
   });
 }
@@ -79,6 +80,7 @@ export default async function CartinaPage({ searchParams }: PageProps<"/cartina"
       <section className={styles.mapSection} aria-label="Cartina illustrata">
         <IllustratedMapViewer
           src="/images/cartina/cartina-roncegno-1.webp"
+          hdSrc="/images/cartina/cartina-roncegno-hd.webp"
           alt="Cartina illustrata di Roncegno Terme e del suo territorio, disegnata da Fabio Vettori"
           aspect={3583 / 2560}
           points={points}

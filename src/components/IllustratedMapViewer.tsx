@@ -14,10 +14,13 @@ export type IllustratedMapPoint = {
   href: string | null;
   text: string | null;
   image: string | null;
+  meta?: string | null;
 };
 
 type Props = {
   src: string;
+  /** Versione ad alta risoluzione, scaricata solo quando si ingrandisce. */
+  hdSrc?: string;
   alt: string;
   /** Larghezza / altezza dell'illustrazione. */
   aspect: number;
@@ -32,7 +35,7 @@ const MAX_SCALE = 4;
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 
-export default function IllustratedMapViewer({ src, alt, aspect, points, groups, initialPointId }: Props) {
+export default function IllustratedMapViewer({ src, hdSrc, alt, aspect, points, groups, initialPointId }: Props) {
   const shellRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<{ x: number; y: number; left: number; top: number; moved: boolean } | null>(null);
@@ -49,6 +52,8 @@ export default function IllustratedMapViewer({ src, alt, aspect, points, groups,
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [touring, setTouring] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  const [hdLoaded, setHdLoaded] = useState(false);
+  const hdRequestedRef = useRef(false);
 
   const selectedIndex = points.findIndex((point) => point.id === selectedId);
   const selected = selectedIndex >= 0 ? points[selectedIndex] : null;
@@ -126,6 +131,17 @@ export default function IllustratedMapViewer({ src, alt, aspect, points, groups,
       window.clearTimeout(timeoutId);
     };
   }, [baseScale, centerOn, expanded]);
+
+  // Oltre un certo ingrandimento la versione normale si sgrana: si scarica l'HD e si scambia
+  // l'immagine solo quando è pronta, senza vuoti.
+  const zoomedIn = scale / baseScale > 1.4 || (expanded && scale > 1.2);
+  useEffect(() => {
+    if (!hdSrc || !zoomedIn || hdRequestedRef.current) return;
+    hdRequestedRef.current = true;
+    const image = new Image();
+    image.onload = () => setHdLoaded(true);
+    image.src = hdSrc;
+  }, [hdSrc, zoomedIn]);
 
   // Zoom con due dita (iOS non supporta il pinch dentro un riquadro scorrevole senza aiuto).
   useEffect(() => {
@@ -264,7 +280,7 @@ export default function IllustratedMapViewer({ src, alt, aspect, points, groups,
           >
             {/* Immagine nativa: lo zoom cambia la larghezza del contenitore senza i vincoli di next/image. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={src} alt={alt} draggable={false} />
+            <img src={hdLoaded && hdSrc ? hdSrc : src} alt={alt} draggable={false} />
             {touring && (
               <svg className={styles.tourPath} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
                 <polyline points={points.map((point) => `${point.x},${point.y}`).join(" ")} />
@@ -314,7 +330,7 @@ export default function IllustratedMapViewer({ src, alt, aspect, points, groups,
               <small>
                 {touring
                   ? `Tappa ${selectedIndex + 1} di ${points.length}`
-                  : groups.find((group) => group.id === selected.group)?.label}
+                  : [groups.find((group) => group.id === selected.group)?.label, selected.meta].filter(Boolean).join(" · ")}
               </small>
               <h3>{selected.title}</h3>
               {selected.text && <p>{selected.text}</p>}
