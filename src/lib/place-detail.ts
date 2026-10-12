@@ -31,15 +31,15 @@ export function isCompactPlace(place: PlaceDetailInput) {
 
 export function placeEditorialHeading(place: PlaceDetailInput) {
   switch (place.place_type) {
-    case "museum": return "Cosa trovi qui.";
-    case "institution": return "Funzione e interesse del luogo.";
-    case "parking": return "Informazioni per la sosta.";
-    case "station": return "Informazioni per il viaggio.";
-    case "food": return "Sapori da scoprire.";
-    case "sleep": return "Un posto dove fermarsi.";
-    case "heritage": return "Perché vale la visita.";
-    case "nature": return "Un luogo da vivere all’aperto.";
-    case "service": return "Informazioni utili sul territorio.";
-    default: return "Una storia da incontrare.";
+    case "museum": return "Cosa c’è da vedere";
+    case "institution": return "Il luogo";
+    case "parking": return "Informazioni per la sosta";
+    case "station": return "Informazioni per il viaggio";
+    case "food": return "La cucina";
+    case "sleep": return "La struttura";
+    case "heritage": return "Storia e cosa vedere";
+    case "nature": return "Il luogo";
+    case "service": return "Informazioni utili";
+    default: return "Il luogo";
   }
 }

@@ -19,10 +19,10 @@
 .eyebrow,.sectionKicker{
   margin:0 0 14px;
   color:#d97843;
-  font-size:10px;
+  font-size:13px;
   font-weight:800;
-  letter-spacing:.18em;
-  text-transform:uppercase;
+  letter-spacing:0;
+  text-transform:none;
 }
 .hero h1{
   max-width:760px;
@@ -97,10 +97,10 @@
   gap:10px 18px;
   margin-bottom:16px;
   color:#efb083;
-  font-size:10px;
+  font-size:13px;
   font-weight:800;
-  letter-spacing:.14em;
-  text-transform:uppercase;
+  letter-spacing:0;
+  text-transform:none;
 }
 .featuredCopy h2{
   max-width:820px;
@@ -207,10 +207,10 @@
 }
 .futureCopy small,.pastCopy small{
   color:#b65d32;
-  font-size:9px;
+  font-size:12px;
   font-weight:800;
-  letter-spacing:.13em;
-  text-transform:uppercase;
+  letter-spacing:0;
+  text-transform:none;
 }
 .futureCopy h3,.pastCopy h3{
   margin:10px 0 12px;
@@ -294,10 +294,10 @@
   display:block;
   margin-bottom:8px;
   color:#b65d32;
-  font-size:.65rem;
+  font-size:0.78rem;
   font-weight:800;
-  letter-spacing:.15em;
-  text-transform:uppercase;
+  letter-spacing:0;
+  text-transform:none;
 }
 .footerNav strong{
   font:400 1.6rem Georgia,serif;

@@ -113,10 +113,10 @@ export default async function Home() {
         <div className={`${styles.heroContent} ${refine.heroContent}`}>
           <p className={styles.eyebrow}>{homepage.hero_eyebrow ?? "Trentino · Valsugana"}</p>
           <h1>{homepage.hero_title ?? "Semplicemente, Roncegno Terme"}</h1>
-          <p className={styles.heroIntro}>{homepage.hero_description ?? "Natura, montagna, terme e memoria. Un paese da scoprire con il proprio ritmo."}</p>
+          <p className={styles.heroIntro}>{homepage.hero_description ?? "Un paese della Valsugana tra le terme, i castagneti e la montagna."}</p>
           <div className={styles.heroActions}>
-            <Link className={styles.primaryButton} href={homepage.hero_primary_url ?? "/luoghi"}>{homepage.hero_primary_label ?? "Esplora il territorio"}<span aria-hidden="true">→</span></Link>
-            <Link className={styles.secondaryButton} href={homepage.hero_secondary_url ?? "/organizza-la-visita"}>{homepage.hero_secondary_label ?? "Organizza la visita"} <span aria-hidden="true">→</span></Link>
+            <Link className={styles.primaryButton} href={homepage.hero_primary_url ?? "/luoghi"}>{homepage.hero_primary_label ?? "Esplora il territorio"}</Link>
+            <Link className={styles.secondaryButton} href={homepage.hero_secondary_url ?? "/organizza-la-visita"}>{homepage.hero_secondary_label ?? "Organizza la visita"}</Link>
           </div>
         </div>
 
@@ -139,7 +139,6 @@ export default async function Home() {
             <Link className={`${styles.utilityCard} ${feedback.utilityCard} ${refine.utilityCard}`} href={item.href} key={item.label}>
               <span className={styles.utilityIcon}><UtilityIcon name={item.icon} /></span>
               <span className={styles.utilityText}><strong>{item.label}</strong><small>{item.note}</small></span>
-              <span className={styles.utilityArrow} aria-hidden="true">→</span>
             </Link>
           ))}
         </nav>
@@ -165,15 +164,15 @@ export default async function Home() {
           <div className={styles.sectionInner}>
             <div className={styles.sectionHeading}>
               <div>
-                <p>{homepage.routes_eyebrow ?? "Esperienze da vivere"}</p>
-                <h2 className={styles.sectionTitle} id="routes-title">{homepage.routes_title ?? "Scegli come vivere Roncegno."}</h2>
-                <span className={styles.sectionLead}>{homepage.routes_description ?? "Percorsi e idee per conoscere Roncegno, dalla montagna al paese."}</span>
+                {homepage.routes_eyebrow && <p>{homepage.routes_eyebrow}</p>}
+                <h2 className={styles.sectionTitle} id="routes-title">{homepage.routes_title ?? "Percorsi consigliati"}</h2>
+                <span className={styles.sectionLead}>{homepage.routes_description ?? "Dalle passeggiate in paese ai giri in quota."}</span>
               </div>
-              <Link className={styles.sectionLink} href={homepage.routes_link_url ?? "/percorsi"}>{homepage.routes_link_label ?? "Scopri tutti i percorsi"} →</Link>
+              <Link className={styles.sectionLink} href={homepage.routes_link_url ?? "/percorsi"}>{homepage.routes_link_label ?? "Tutti i percorsi"} →</Link>
             </div>
 
             <div className={editorial.routesGrid}>
-              {visibleRoutes.map((route, index) => {
+              {visibleRoutes.map((route) => {
                 const image = getDirectusImageUrl(route.image) ?? heroImage;
                 const hours = route.duration_minutes ? Math.floor(route.duration_minutes / 60) : 0;
                 const minutes = route.duration_minutes ? route.duration_minutes % 60 : 0;
@@ -181,7 +180,7 @@ export default async function Home() {
                   ? [hours ? `${hours} h` : null, minutes ? `${minutes} min` : null].filter(Boolean).join(" ")
                   : null;
                 const meta = [
-                  route.distance_km != null ? `${route.distance_km} km` : null,
+                  route.distance_km != null ? `${route.distance_km.toLocaleString("it-IT")} km` : null,
                   duration,
                   route.elevation_gain_m != null ? `+${route.elevation_gain_m} m` : null,
                 ].filter(Boolean).join(" · ");
@@ -190,13 +189,11 @@ export default async function Home() {
                   <Link className={editorial.routeCard} href={`/percorsi/${route.slug}`} key={route.id}>
                     <div className={editorial.routeImage} style={{ backgroundImage: `url('${image}')` }} />
                     <div className={editorial.routeShade} />
-                    <span className={editorial.routeNumber}>{String(index + 1).padStart(2, "0")}</span>
                     <div className={editorial.routeCopy}>
                       <small>{route.route_highlight ?? route.category?.name ?? "Percorso consigliato"}</small>
                       <h3>{route.title}</h3>
                       {route.summary && <p>{route.summary}</p>}
                       {meta && <span className={editorial.routeMeta}>{meta}</span>}
-                      <span className={editorial.routeArrow} aria-hidden="true">→</span>
                     </div>
                   </Link>
                 );
@@ -211,8 +208,8 @@ export default async function Home() {
         <div className={editorial.identityLandscape} aria-hidden="true" />
         <div className={editorial.identityInner}>
           <div className={editorial.identityCopy}>
-            <p>{homepage.identity_eyebrow ?? "Un paese, molti paesaggi"}</p>
-            <h2 id="identity-title">{homepage.identity_title ?? "Dal fondovalle ai masi."}</h2>
+            {homepage.identity_eyebrow && <p>{homepage.identity_eyebrow}</p>}
+            <h2 id="identity-title">{homepage.identity_title ?? "Dal fondovalle ai masi"}</h2>
             <span>
               {homepage.identity_description ?? "Il centro storico, Marter, le terme, i castagneti e la montagna raccontano parti diverse di Roncegno."}
             </span>
@@ -230,26 +227,24 @@ export default async function Home() {
           <div className={styles.sectionInner}>
             <div className={styles.sectionHeading}>
               <div>
-                <p>{homepage.highlights_eyebrow ?? "Da non perdere"}</p>
-                <h2 className={styles.sectionTitle} id="highlights-title">{homepage.highlights_title ?? "Tre luoghi da cui cominciare."}</h2>
-                <span className={styles.sectionLead}>{homepage.highlights_description ?? "Tre luoghi diversi tra loro, per iniziare a conoscere Roncegno."}</span>
+                {homepage.highlights_eyebrow && <p>{homepage.highlights_eyebrow}</p>}
+                <h2 className={styles.sectionTitle} id="highlights-title">{homepage.highlights_title ?? "Da vedere"}</h2>
+                <span className={styles.sectionLead}>{homepage.highlights_description ?? "Alcuni posti da cui cominciare a conoscere il paese."}</span>
               </div>
-              <Link className={styles.sectionLink} href={homepage.highlights_link_url ?? "/luoghi"}>{homepage.highlights_link_label ?? "Scopri tutti i luoghi"} →</Link>
+              <Link className={styles.sectionLink} href={homepage.highlights_link_url ?? "/luoghi"}>{homepage.highlights_link_label ?? "Tutti i luoghi"} →</Link>
             </div>
 
             <div className={editorial.highlightsGrid}>
-              {visibleFeaturedPlaces.map((place, index) => {
+              {visibleFeaturedPlaces.map((place) => {
                 const image = getDirectusImageUrl(place.image) ?? heroImage;
                 return (
                   <Link className={editorial.highlightCard} href={placeHref(place)} key={place.id}>
                     <div className={editorial.highlightImage} style={{ backgroundImage: `url('${image}')` }} />
                     <div className={editorial.highlightShade} />
-                    <span className={editorial.highlightNumber}>{String(index + 1).padStart(2, "0")}</span>
                     <div className={editorial.highlightCopy}>
                       <small>{place.category?.name ?? place.map_label ?? "Luogo da scoprire"}</small>
                       <h3>{place.title}</h3>
                       {place.summary && <p>{place.summary}</p>}
-                      <span className={editorial.highlightArrow} aria-hidden="true">→</span>
                     </div>
                   </Link>
                 );
@@ -263,8 +258,8 @@ export default async function Home() {
       <section className={`${styles.section} ${styles.eventsSection}`}>
         <div className={styles.sectionInner}>
           <div className={styles.sectionHeading}>
-            <div><p>{homepage.events_eyebrow ?? "In primo piano"}</p><h2 className={styles.sectionTitle}>{homepage.events_title ?? "Eventi a Roncegno"}</h2><span className={styles.sectionLead}>{homepage.events_description ?? "Tradizioni, cultura e vita di paese. I prossimi appuntamenti a Roncegno."}</span></div>
-            <Link className={styles.sectionLink} href={homepage.events_link_url ?? "/eventi"}>{homepage.events_link_label ?? "Vedi tutti gli eventi"} →</Link>
+            <div>{homepage.events_eyebrow && <p>{homepage.events_eyebrow}</p>}<h2 className={styles.sectionTitle}>{homepage.events_title ?? "Eventi a Roncegno"}</h2><span className={styles.sectionLead}>{homepage.events_description ?? "Feste, concerti, mercati e camminate in programma."}</span></div>
+            <Link className={styles.sectionLink} href={homepage.events_link_url ?? "/eventi"}>{homepage.events_link_label ?? "Tutti gli eventi"} →</Link>
           </div>
           <div className={`${styles.eventsGrid} ${refine.eventsGrid} ${feedback.eventsGrid}${visibleEvents.length === 3 ? ` ${refine.eventsGridThree}` : ""}`}>
             {visibleEvents.map((event, index) => {
@@ -283,7 +278,6 @@ export default async function Home() {
                     <div className={`${styles.eventMeta} ${refine.eventMeta}`}>{event.category?.name ?? "Evento"} · {location}{time ? ` · ore ${time}` : ""}</div>
                     <h3>{event.title}</h3>
                     {primary && event.summary && <p>{event.summary}</p>}
-                    <span className={`${styles.cardArrow} ${refine.cardArrow}`} aria-hidden="true">→</span>
                   </div>
                 </Link>
               );
@@ -296,13 +290,13 @@ export default async function Home() {
       <section className={editorial.mapStory} aria-labelledby="map-story-title">
         <div className={editorial.mapStoryInner}>
           <div className={editorial.mapStoryCopy}>
-            <p className={styles.eyebrow}>{homepage.map_eyebrow ?? "Esplora il territorio"}</p>
-            <h2 id="map-story-title">{homepage.map_title ?? "Roncegno, tutto in una cartina."}</h2>
-            <p>{homepage.map_description ?? "Luoghi, percorsi e servizi per orientarti e scegliere cosa vedere."}</p>
+            {homepage.map_eyebrow && <p className={styles.eyebrow}>{homepage.map_eyebrow}</p>}
+            <h2 id="map-story-title">{homepage.map_title ?? "La cartina di Roncegno"}</h2>
+            <p>{homepage.map_description ?? "L’illustrazione di Fabio Vettori con i sentieri e i luoghi da vedere. Per orientarti sul posto c’è anche la mappa interattiva."}</p>
           </div>
           <div className={editorial.mapStoryActions}>
-            <Link className={editorial.mapPrimary} href={homepage.map_primary_url ?? "/cartina"}>{homepage.map_primary_label ?? "Apri la cartina illustrata"} <span aria-hidden="true">→</span></Link>
-            <Link className={editorial.mapSecondary} href={homepage.map_secondary_url ?? "/organizza-la-visita#mappa-visita"}>{homepage.map_secondary_label ?? "Mappa interattiva"} <span aria-hidden="true">→</span></Link>
+            <Link className={editorial.mapPrimary} href={homepage.map_primary_url ?? "/cartina"}>{homepage.map_primary_label ?? "Apri la cartina illustrata"}</Link>
+            <Link className={editorial.mapSecondary} href={homepage.map_secondary_url ?? "/organizza-la-visita#mappa-visita"}>{homepage.map_secondary_label ?? "Mappa interattiva"}</Link>
           </div>
         </div>
       </section>
@@ -311,9 +305,9 @@ export default async function Home() {
         <div className={feedback.memoryLandscape} aria-hidden="true" />
         <div className={`${styles.storyCopy} ${feedback.storyCopy}`}>
           <p className={styles.eyebrow}>{homepage.memory_eyebrow ?? "Storie e memoria"}</p>
-          <h2 id="memoria-title">{homepage.memory_title ?? "Na vòlta a Ronzégno."}</h2>
-          <p>{homepage.memory_description ?? "Fotografie, testimonianze e documenti raccontano Roncegno attraverso le persone che lo hanno vissuto. Un archivio della memoria del paese, costruito nel tempo."}</p>
-          <Link className={styles.darkButton} href={homepage.memory_link_url ?? "/memoria"}>{homepage.memory_link_label ?? "Scopri la memoria di Roncegno"} <span aria-hidden="true">→</span></Link>
+          <h2 id="memoria-title">{homepage.memory_title ?? "Na vòlta a Ronzégno"}</h2>
+          <p>{homepage.memory_description ?? "Fotografie, testimonianze e manoscritti raccolti dal Progetto Memoria: com’era il paese e chi ci viveva."}</p>
+          <Link className={styles.darkButton} href={homepage.memory_link_url ?? "/memoria"}>{homepage.memory_link_label ?? "Sfoglia l’archivio"}</Link>
           <div className={feedback.memoryPhotos} aria-hidden="true">
             <span className={feedback.memoryPhotoLarge} />
             <span className={feedback.memoryPhotoSmall} />
@@ -324,42 +318,20 @@ export default async function Home() {
       <section className={styles.planningSection}>
         <div className={`${styles.sectionInner} ${styles.planningGrid}`}>
           <div className={styles.planningCopy}>
-            <p className={styles.eyebrow}>{homepage.planning_eyebrow ?? "Tutto a portata di mano"}</p>
-            <h2>{homepage.planning_title ?? "Pianifica la tua visita."}</h2>
-            <p>{homepage.planning_description ?? "Come arrivare, dove dormire, dove mangiare e le informazioni utili per organizzare il soggiorno."}</p>
+            {homepage.planning_eyebrow && <p className={styles.eyebrow}>{homepage.planning_eyebrow}</p>}
+            <h2>{homepage.planning_title ?? "Organizza la visita"}</h2>
+            <p>{homepage.planning_description ?? "Come arrivare, dove dormire e dove mangiare, più i numeri e i servizi utili."}</p>
           </div>
           <div className={styles.planningCards}>
-            {planningItems.map((item, index) => (
+            {planningItems.map((item) => (
               <Link className={styles.planningCard} href={item.href} key={item.label}>
                 <span className={styles.planningImage} style={{ backgroundImage: `url('${item.image}')` }} aria-hidden="true" />
                 <span className={styles.planningContent}>
-                  <span className={styles.planningNumber}>{String(index + 1).padStart(2, "0")}</span>
                   <small>{item.note}</small>
                   <strong>{item.label}</strong>
-                  <span className={styles.planningArrow}>Apri <span aria-hidden="true">→</span></span>
                 </span>
               </Link>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section className={styles.closing} aria-labelledby="closing-title">
-        <div className={`${styles.sectionInner} ${styles.closingInner}`}>
-          <div className={styles.closingCopy}>
-            <p className={styles.eyebrow}>{homepage.closing_eyebrow ?? "Continua a esplorare"}</p>
-            <h2 id="closing-title">{homepage.closing_title ?? "Roncegno, da vivere con il tuo ritmo."}</h2>
-            <p>
-              {homepage.closing_description ?? "Luoghi, percorsi e appuntamenti per continuare a conoscere Roncegno, con il tuo ritmo."}
-            </p>
-          </div>
-          <div className={styles.closingActions}>
-            <Link className={styles.closingPrimary} href={homepage.closing_primary_url ?? "/luoghi"}>
-              {homepage.closing_primary_label ?? "Esplora i luoghi"} <span aria-hidden="true">→</span>
-            </Link>
-            <Link className={styles.closingSecondary} href={homepage.closing_secondary_url ?? "/eventi"}>
-              {homepage.closing_secondary_label ?? "Guarda gli eventi"} <span aria-hidden="true">→</span>
-            </Link>
           </div>
         </div>
       </section>

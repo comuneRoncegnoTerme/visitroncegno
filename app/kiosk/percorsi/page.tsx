@@ -40,7 +40,7 @@ export default async function KioskRoutesPage() {
           {items.slice(0, 12).map((item) => {
             const image = getDirectusImageUrl(item.image);
             const meta = [
-              item.distance_km ? `${item.distance_km} km` : null,
+              item.distance_km ? `${item.distance_km.toLocaleString("it-IT")} km` : null,
               durationLabel(item.duration_minutes),
               item.elevation_gain_m ? `+${item.elevation_gain_m} m` : null,
             ].filter(Boolean);

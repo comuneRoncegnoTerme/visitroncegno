@@ -42,7 +42,7 @@ export default async function EditorialIndex(props: Props) {
         {heroImage && <div className={styles.indexHeroBackdrop} style={{ backgroundImage: `url('${heroImage}')` }} aria-hidden="true" />}
         <div className={styles.indexHeroInner}>
           <div className={styles.indexHeroTitle}>
-            <p className={styles.indexEyebrow}>{props.eyebrow}</p>
+            {props.eyebrow && <p className={styles.indexEyebrow}>{props.eyebrow}</p>}
             <h1>{props.title}</h1>
           </div>
           <div className={styles.indexHeroCopy}>
@@ -60,7 +60,7 @@ export default async function EditorialIndex(props: Props) {
       <section className={styles.indexContent}>
         <div className={styles.indexLead}>
           <p><strong>{props.items.length}</strong> {isEvents ? "appuntamenti" : "luoghi"}</p>
-          <span>{isEvents ? "Scopri cosa succede sul territorio." : "Esplora il territorio attraverso i suoi luoghi."}</span>
+          <span>{isEvents ? "Cosa succede sul territorio." : "Musei, natura, terme e posti dove fermarsi."}</span>
         </div>
 
         {props.items.length ? (
@@ -77,8 +77,8 @@ export default async function EditorialIndex(props: Props) {
                   <div className={styles.cardCopy}>
                     <small>{meta(item, props.basePath)}</small>
                     <h2>{item.title}</h2>
-                    <p>{item.summary ?? item.route_highlight ?? "Scopri informazioni, dettagli e consigli utili."}</p>
-                    <strong>{isEvents ? "Scopri l’evento" : "Scopri il luogo"} →</strong>
+                    {(item.summary ?? item.route_highlight) && <p>{item.summary ?? item.route_highlight}</p>}
+                    <strong>{isEvents ? "Programma e orari" : "Apri la scheda"} →</strong>
                   </div>
                 </Link>
               );
@@ -88,8 +88,8 @@ export default async function EditorialIndex(props: Props) {
       </section>
 
       <nav className={styles.indexFooterNav} aria-label="Continua a esplorare">
-        <Link href="/cartina"><small>Orientati</small><strong>Esplora la cartina illustrata →</strong></Link>
-        <Link href="/organizza-la-visita"><small>Organizza</small><strong>Prepara la tua visita →</strong></Link>
+        <Link href="/cartina"><small>Orientati</small><strong>La cartina illustrata →</strong></Link>
+        <Link href="/organizza-la-visita"><small>Organizza</small><strong>Come arrivare, dove dormire →</strong></Link>
       </nav>
 
       <SiteFooter settings={settings} />

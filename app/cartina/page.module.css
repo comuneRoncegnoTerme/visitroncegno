@@ -12,10 +12,10 @@
 .eyebrowLight {
   margin: 0 0 14px;
   color: var(--orange);
-  font-size: 0.7rem;
+  font-size: 0.82rem;
   font-weight: 800;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .intro {

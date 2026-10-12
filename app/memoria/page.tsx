@@ -36,17 +36,15 @@ export default async function MemoryPage() {
         <div className={styles.heroShade} />
         <div className={styles.heroContent}>
           <p className={styles.eyebrow}>Progetto Memoria · Roncegno Terme</p>
-          <h1>Na vòlta<br />a Ronzégno.</h1>
-          <p>Le immagini, le voci e i documenti di una comunità diventano un racconto da custodire e condividere.</p>
-          <a className={styles.scrollLink} href="#progetto">Scopri il progetto <span aria-hidden="true">↓</span></a>
+          <h1>Na vòlta<br />a Ronzégno</h1>
+          <p>Fotografie, testimonianze e manoscritti raccolti dal Progetto Memoria, nato nel 2022.</p>
+          <a className={styles.scrollLink} href="#progetto">Il progetto <span aria-hidden="true">↓</span></a>
         </div>
-        <p className={styles.heroCaption}>Memoria collettiva · Archivio di comunità</p>
       </section>
 
       <section className={styles.intro} id="progetto">
-        <p className={styles.kicker}>Il progetto</p>
         <div className={styles.introGrid}>
-          <h2>La memoria come punto di partenza.</h2>
+          <h2>Il progetto</h2>
           <div>
             <p>Il Progetto Memoria “Na vòlta a Ronzégno” nasce nel novembre 2022 dalla volontà di un gruppo di giovani di conservare la memoria collettiva e rafforzare il senso di comunità.</p>
             <p>Nel 2024, grazie al bando “Turismo delle Radici”, il progetto ha proposto 22 incontri dedicati alla condivisione di storie, informazioni, fotografie e manoscritti. Questa pagina apre una porta sul patrimonio raccolto.</p>
@@ -56,15 +54,14 @@ export default async function MemoryPage() {
 
       <section className={styles.archive} aria-labelledby="archivio-title">
         <div className={styles.archiveHeading}>
-          <div><p className={styles.kicker}>Esplora l’archivio</p><h2 id="archivio-title">Sei tracce,<br />un solo racconto.</h2></div>
-          <p>Paesaggi, volti, mestieri, edifici e parole: scegli una sezione per proseguire nell’archivio storico già pubblicato.</p>
+          <div><h2 id="archivio-title">L’archivio</h2></div>
+          <p>Sei sezioni: paesaggi, volti, mestieri, edifici e parole. Ogni sezione si apre sul sito dell’archivio storico.</p>
         </div>
         <div className={styles.archiveGrid}>
           {archiveSections.map((section) => (
             <a className={styles.archiveCard} href={memoriaArchiveUrl(section.path)} key={section.title}>
               <span className={styles.cardImage} style={{ backgroundImage: `url('${section.image}')` }} />
               <span className={styles.cardShade} />
-              <span className={styles.cardNumber}>{section.number}</span>
               <span className={styles.cardTitle}>{section.title}</span>
               <span className={styles.cardArrow} aria-hidden="true">↗</span>
             </a>
@@ -73,11 +70,10 @@ export default async function MemoryPage() {
       </section>
 
       <section className={styles.closing}>
-        <p className={styles.kicker}>Storia per immagini</p>
-        <h2>Ogni fotografia<br />riporta a casa una storia.</h2>
+        <h2>Storia per immagini</h2>
         <div className={styles.closingActions}>
           <a href={memoriaArchiveUrl("/it/memoria/storia-per-immagini")}>Sfoglia la storia per immagini <span aria-hidden="true">→</span></a>
-          <a href={memoriaArchiveUrl("/it/memoria/progetto-memoria-na-volt")}>Scopri le pubblicazioni <span aria-hidden="true">→</span></a>
+          <a href={memoriaArchiveUrl("/it/memoria/progetto-memoria-na-volt")}>Le pubblicazioni <span aria-hidden="true">→</span></a>
         </div>
         <Link className={styles.homeLink} href="/">Torna a Visit Roncegno</Link>
       </section>

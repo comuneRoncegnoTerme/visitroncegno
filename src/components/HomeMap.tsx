@@ -180,7 +180,7 @@ export default function HomeMap({ places, compact = false, showFilters = true }:
 
       const link = document.createElement("a");
       link.href = hrefForPlace(place);
-      link.textContent = "Scopri il luogo →";
+      link.textContent = "Apri la scheda →";
       content.appendChild(link);
       popupContent.appendChild(content);
 

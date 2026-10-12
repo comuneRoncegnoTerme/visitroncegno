@@ -108,8 +108,7 @@ export default async function EditorialDetail({ item, type }: Props) {
       <section className={`${styles.detailGrid}${foodPlace ? ` ${foodStyles.detailGrid}${!hasFoodEditorial ? ` ${foodStyles.singleColumn}` : ""}` : ""}`}>
         {(!compactPlace || foodEditorialParagraphs.length > 0) && (!foodPlace || foodEditorialParagraphs.length > 0) && (
           <article className={foodPlace ? foodStyles.editorial : undefined}>
-            <p className={styles.kicker}>{foodPlace ? "A tavola" : type === "place" ? "Conosci il territorio" : "Vivi Roncegno"}</p>
-            <h2>{foodPlace ? item.title : type === "place" ? placeEditorialHeading(item) : "Tutto quello che c’è da sapere."}</h2>
+            <h2>{foodPlace ? item.title : type === "place" ? placeEditorialHeading(item) : "Informazioni"}</h2>
             {foodEditorialParagraphs.length ? foodEditorialParagraphs.map((text, index) => <p key={index}>{text}</p>) : (
               <p>Le informazioni complete saranno disponibili a breve. Nel frattempo trovi qui posizione, contatti e indicazioni pratiche disponibili.</p>
             )}
@@ -160,7 +159,7 @@ export default async function EditorialDetail({ item, type }: Props) {
             </div>
           ) : (
             <div className={styles.sectionHeading}>
-              <div><p className={styles.kicker}>Dove si trova</p><h2>Trovalo sulla mappa.</h2></div>
+              <div><h2>Dove si trova</h2></div>
               <DirectionsLink latitude={item.latitude} longitude={item.longitude} address={item.address}>
                 Apri indicazioni ↗
               </DirectionsLink>
@@ -195,19 +194,18 @@ export default async function EditorialDetail({ item, type }: Props) {
           <div className={styles.memoryIntro}>
             <div>
               <p className={styles.kicker}>Storie e memoria</p>
-              <h2>Questo luogo ha ancora qualcosa da raccontare.</h2>
+              <h2>Storie legate a questo luogo</h2>
             </div>
             <p>Fotografie, testimonianze e approfondimenti collegano il luogo di oggi alla memoria di Roncegno.</p>
           </div>
           <div className={styles.memoryGrid}>
-            {relatedStories.slice(0, 3).map((story, index) => {
+            {relatedStories.slice(0, 3).map((story) => {
               const storyImage = getDirectusImageUrl(story.image) ?? heroImage;
               const href = getLegacyStoryPath(story) ?? `/storie/${story.slug}`;
               return (
                 <Link className={styles.memoryCard} href={href} key={story.id}>
                   <div className={styles.memoryImage} style={{ backgroundImage: `url('${storyImage}')` }} />
                   <div className={styles.memoryShade} />
-                  <span className={styles.memoryNumber}>{String(index + 1).padStart(2, "0")}</span>
                   <div className={styles.memoryCopy}>
                     <small>{story.category?.name ?? "Memoria del territorio"}</small>
                     <strong>{story.title}</strong>
@@ -219,7 +217,7 @@ export default async function EditorialDetail({ item, type }: Props) {
             })}
           </div>
           <div className={styles.memoryFooter}>
-            <Link href="/memoria">Esplora Na vòlta a Ronzégno →</Link>
+            <Link href="/memoria">L’archivio Na vòlta a Ronzégno →</Link>
           </div>
         </section>
       )}
@@ -227,8 +225,8 @@ export default async function EditorialDetail({ item, type }: Props) {
       {type === "place" && !compactPlace && !foodPlace && relatedRoutes.length > 0 && (
         <section className={styles.relatedEditorial}>
           <div className={styles.sectionHeading}>
-            <div><p className={styles.kicker}>Da qui puoi partire</p><h2>Percorsi collegati a questo luogo.</h2></div>
-            <Link href="/percorsi">Vedi tutti i percorsi →</Link>
+            <div><h2>Percorsi che passano di qui</h2></div>
+            <Link href="/percorsi">Tutti i percorsi →</Link>
           </div>
           <div className={styles.relatedGrid}>
             {relatedRoutes.slice(0, 3).map((route) => {
@@ -240,7 +238,7 @@ export default async function EditorialDetail({ item, type }: Props) {
                 : null;
               const routeMeta = [
                 route.category?.name ?? "Percorso",
-                route.distance_km !== null ? `${route.distance_km} km` : null,
+                route.distance_km != null ? `${route.distance_km.toLocaleString("it-IT")} km` : null,
                 routeDuration,
                 route.elevation_gain_m !== null ? `+${route.elevation_gain_m} m` : null,
               ].filter(Boolean).join(" · ");
@@ -265,8 +263,7 @@ export default async function EditorialDetail({ item, type }: Props) {
         <section className={`${styles.relatedEditorial}${foodPlace ? ` ${foodStyles.related}` : ""}`}>
           <div className={`${styles.sectionHeading}${foodPlace ? ` ${foodStyles.relatedHeading}` : ""}`}>
             <div>
-              <p className={styles.kicker}>{foodPlace ? "Dove mangiare" : "Continua a esplorare"}</p>
-              <h2>{foodPlace ? "Altri posti dove mangiare." : "Potrebbe interessarti anche."}</h2>
+              <h2>{foodPlace ? "Altri posti dove mangiare" : "Nei dintorni"}</h2>
             </div>
             <Link href={foodPlace ? "/organizza-la-visita" : type === "place" ? "/luoghi" : "/eventi"}>
               {foodPlace ? "Vedi dove mangiare →" : "Vedi tutto →"}
@@ -298,7 +295,7 @@ export default async function EditorialDetail({ item, type }: Props) {
       ) : (
         <section className={styles.relatedLinks}>
           <Link href="/organizza-la-visita"><small>Organizza</small><strong>Dove mangiare e dormire →</strong></Link>
-          <Link href={type === "place" ? "/eventi" : "/luoghi"}><small>Continua a esplorare</small><strong>{type === "place" ? "Vedi i prossimi eventi" : "Conosci i luoghi"} →</strong></Link>
+          <Link href={type === "place" ? "/eventi" : "/luoghi"}><small>Ancora</small><strong>{type === "place" ? "Vedi i prossimi eventi" : "Conosci i luoghi"} →</strong></Link>
         </section>
       )}
       <SiteFooter settings={settings} />

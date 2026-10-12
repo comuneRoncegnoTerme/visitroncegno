@@ -40,7 +40,7 @@ function durationLabel(minutes?: number | null) {
 
 function routeFacts(item: EditorialItem) {
   return [
-    item.distance_km ? `${item.distance_km} km` : null,
+    item.distance_km ? `${item.distance_km.toLocaleString("it-IT")} km` : null,
     durationLabel(item.duration_minutes),
     item.elevation_gain_m ? `+${item.elevation_gain_m} m` : null,
   ].filter(Boolean);
@@ -70,13 +70,13 @@ function RouteCard({ item, index, featured = false }: { item: RouteListItem; ind
           {item.family_friendly && <span>Adatto alle famiglie</span>}
         </div>
         <h2>{item.title}</h2>
-        <p>{item.summary ?? item.route_highlight ?? "Scopri informazioni, dettagli e consigli utili per questo percorso."}</p>
+        {(item.summary ?? item.route_highlight) && <p>{item.summary ?? item.route_highlight}</p>}
         {facts.length > 0 && (
           <div className={styles.facts} aria-label="Dati del percorso">
             {facts.map((fact) => <span key={fact}>{fact}</span>)}
           </div>
         )}
-        <strong>Scopri il percorso <span aria-hidden="true">→</span></strong>
+        <strong>Vai al percorso <span aria-hidden="true">→</span></strong>
       </div>
     </Link>
   );

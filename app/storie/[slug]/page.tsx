@@ -55,7 +55,7 @@ export default async function StoryPage({ params }: StoryPageProps) {
   const heroImage = storyImage ?? FALLBACK_IMAGE;
   const paragraphs = storyParagraphs(story.body);
   const routeHref = story.route?.slug ? `/percorsi/${story.route.slug}` : "/percorsi";
-  const routeLabel = story.route?.title ?? "Scopri i percorsi";
+  const routeLabel = story.route?.title ?? "Tutti i percorsi";
   const placeHref = story.place?.slug ? `/luoghi/${story.place.slug}` : null;
   const placeLabel = story.place?.title ?? null;
   const sourceUrl = publicSourceUrl(story.source_url);
@@ -88,8 +88,7 @@ export default async function StoryPage({ params }: StoryPageProps) {
 
           <aside className={styles.aside}>
             <div className={styles.asideCard}>
-              <p className={styles.kicker}>Lungo il cammino</p>
-              <h2>Continua a esplorare.</h2>
+              <h2>Collegamenti</h2>
               <p>Questa storia fa parte del racconto diffuso di Roncegno: luoghi, paesaggio, memoria e percorsi sono collegati tra loro.</p>
               {placeHref && placeLabel ? (
                 <Link href={placeHref}>{placeLabel} →</Link>
@@ -117,7 +116,7 @@ export default async function StoryPage({ params }: StoryPageProps) {
         </Link>
         <Link href={story.route?.slug ? routeHref : "/luoghi"}>
           <small>Continua a conoscere Roncegno</small>
-          <strong>{story.route?.slug ? `${routeLabel} →` : "Esplora i luoghi →"}</strong>
+          <strong>{story.route?.slug ? `${routeLabel} →` : "Tutti i luoghi →"}</strong>
         </Link>
       </section>
 

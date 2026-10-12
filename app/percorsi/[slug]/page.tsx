@@ -223,10 +223,10 @@ export default async function RoutePage({ params }: RoutePageProps) {
   const duration = formatDuration(route.duration_minutes);
 
   const primaryStats = [
-    route.distance_km !== null ? ["Distanza", `${route.distance_km} km`] : null,
+    route.distance_km != null ? ["Distanza", `${route.distance_km.toLocaleString("it-IT")} km`] : null,
     duration ? ["Durata", duration] : null,
     ["Difficoltà", difficultyLabel(route.difficulty)],
-    route.elevation_gain_m !== null ? ["Dislivello", `+${route.elevation_gain_m} m`] : null,
+    route.elevation_gain_m != null ? ["Dislivello", `+${route.elevation_gain_m} m`] : null,
   ].filter(Boolean) as [string, string][];
 
   const audience = route.audience
@@ -303,8 +303,7 @@ export default async function RoutePage({ params }: RoutePageProps) {
           <div className="section-shell">
             <div className="route-map-heading">
               <div>
-                <p className="eyebrow dark">Il tracciato</p>
-                <h2>Segui il percorso<br />sulla mappa.</h2>
+                <h2>Mappa del percorso</h2>
               </div>
               <p>Consulta il tracciato completo, individua partenza e arrivo e orientati lungo il percorso.</p>
             </div>
@@ -319,10 +318,9 @@ export default async function RoutePage({ params }: RoutePageProps) {
           <div className="section-shell">
             <div className="route-points-heading">
               <div>
-                <p className="eyebrow dark">Lungo il percorso</p>
-                <h2>Tappe e luoghi<br />da non perdere.</h2>
+                <h2>Tappe e luoghi lungo il percorso</h2>
               </div>
-              <p>Apri le singole schede per scoprire storia, informazioni pratiche e posizione dei luoghi attraversati.</p>
+              <p>Ogni scheda ha storia, informazioni pratiche e posizione del luogo.</p>
             </div>
 
             <div className="route-points-grid">
@@ -348,7 +346,7 @@ export default async function RoutePage({ params }: RoutePageProps) {
                       <small>{badge}</small>
                       <h3>{point.place?.title ?? point.title}</h3>
                       {point.description && <p>{point.description}</p>}
-                      {href && <strong>Scopri il luogo →</strong>}
+                      {href && <strong>Apri la scheda →</strong>}
                     </div>
                   </article>
                 );
@@ -369,8 +367,7 @@ export default async function RoutePage({ params }: RoutePageProps) {
           <div className="section-shell">
             <div className="route-stories-heading">
               <div>
-                <p className="eyebrow light">Lungo il percorso</p>
-                <h2>{allRouteContentsArePanels ? "I pannelli che incontri lungo il cammino." : "Pannelli e approfondimenti lungo il cammino."}</h2>
+                <h2>{allRouteContentsArePanels ? "I pannelli lungo il percorso" : "Pannelli e approfondimenti lungo il percorso"}</h2>
               </div>
               <p>{allRouteContentsArePanels
                 ? "Sono gli approfondimenti presenti fisicamente sul territorio: aprili durante il percorso, consulta le immagini e ascolta le audioguide quando disponibili."
@@ -421,8 +418,7 @@ export default async function RoutePage({ params }: RoutePageProps) {
         <section className="route-platforms route-platforms-v2">
           <div className="section-shell route-platform-inner">
             <div>
-              <p className="eyebrow light">Sul telefono</p>
-              <h2>Porta il percorso con te.</h2>
+              <h2>Sul telefono</h2>
             </div>
             <div className="route-platform-buttons">
               {route.komoot_url && <a href={route.komoot_url} target="_blank" rel="noreferrer" className="button button-dark-outline">Komoot ↗</a>}
@@ -433,8 +429,8 @@ export default async function RoutePage({ params }: RoutePageProps) {
       )}
 
       <section className="route-end-links">
-        <Link href="/percorsi"><small>Continua a esplorare</small><strong>Scopri tutti i percorsi →</strong></Link>
-        <Link href="/luoghi"><small>Conosci il territorio</small><strong>Esplora i luoghi →</strong></Link>
+        <Link href="/percorsi"><small>Altri percorsi</small><strong>Tutti i percorsi →</strong></Link>
+        <Link href="/luoghi"><small>Sul territorio</small><strong>Tutti i luoghi →</strong></Link>
       </section>
 
       <SiteFooter settings={siteSettings} />

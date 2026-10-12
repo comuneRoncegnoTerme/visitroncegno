@@ -52,10 +52,10 @@ const stories = [
 ] as const;
 
 const practical = [
-  ["01", "Programma", "#programma"],
-  ["02", "Come arrivare", "#come-arrivare"],
-  ["03", "Mappa della Festa", "#mappa"],
-  ["04", "Castagneti", "#storie"],
+  ["Programma", "#programma"],
+  ["Come arrivare", "#come-arrivare"],
+  ["Mappa della Festa", "#mappa"],
+  ["Castagneti", "#storie"],
 ] as const;
 
 const programme = [
@@ -117,25 +117,24 @@ export default async function FestaDellaCastagnaPage() {
           <h1 className={styles.title}>
             <img className={styles.officialLogo} src="/images/festa-castagna/logo-festa-ufficiale.webp" width={1200} height={614} alt="Festa della Castagna 2026 a Roncegno Terme" />
           </h1>
-          <p className={styles.lead}>Caldarroste sul fuoco, bancarelle tra gli alberi, musica, famiglie e un paese intero che si ritrova. Tre giorni per vivere l’autunno di Roncegno.</p>
+          <p className={styles.lead}>Caldarroste sul fuoco, bancarelle, musica e il paese che si ritrova in piazza. Da venerdì sera a domenica.</p>
           <div className={styles.heroActions}>
-            <a href="#programma" className={styles.primaryButton}>Scopri il programma →</a>
-            <a href="#come-arrivare" className={styles.secondaryButton}>Come arrivare →</a>
+            <a href="#programma" className={styles.primaryButton}>Il programma</a>
+            <a href="#come-arrivare" className={styles.secondaryButton}>Come arrivare</a>
           </div>
         </div>
         <div className={styles.heroNote}><span>Festa: sabato 24 e domenica 25</span><strong>Aspettando la Festa: venerdì 23</strong></div>
       </section>
 
       <section className={styles.practical}>
-        <div className={styles.practicalIntro}><p className={styles.eyebrow}>Tutto a portata di mano</p><h2>Vivi la festa, senza perderti nulla.</h2></div>
-        <div className={styles.practicalGrid}>{practical.map(([number, label, href]) => <a href={href} className={styles.practicalCard} key={label}><span>{number}</span><strong>{label}</strong><b>↗</b></a>)}</div>
+        <div className={styles.practicalIntro}><h2>Informazioni utili</h2></div>
+        <div className={styles.practicalGrid}>{practical.map(([label, href]) => <a href={href} className={styles.practicalCard} key={label}><strong>{label}</strong></a>)}</div>
       </section>
 
       <section className={styles.storyIntro} id="atmosfera">
         <div className={styles.storyPhoto} />
         <div className={styles.storyIntroCopy}>
-          <p className={styles.eyebrow}>Benvenuti a Roncegno</p>
-          <h2>Qui la castagna è una festa di paese, davvero.</h2>
+          <h2>Una festa di paese</h2>
           <p>Sabato 24 e domenica 25 ottobre, dalle 10:00 alle 19:00, il centro si riempie del tradizionale mercatino della castagna e degli hobbisti, con artigianato e prodotti dell’agricoltura locale.</p>
           <p>Per tutto il fine settimana ci saranno intrattenimenti per bambini, gonfiabili, laboratori creativi, musica itinerante, un giardino con animali e punti ristoro con piatti tipici, dolci alla castagna e prodotti locali.</p>
           <p>Ristoranti e agritur del paese proporranno menù a tema e torna anche lo stand gastronomico degli amici di Praga 6, distretto della città ceca gemellato con Roncegno Terme.</p>
@@ -147,10 +146,9 @@ export default async function FestaDellaCastagnaPage() {
       <section className={styles.moments}>
         <div className={styles.momentsHeading}>
           <div className={styles.momentsTitle}>
-            <p className={styles.eyebrow}>Dentro la Festa</p>
-            <h2>Una giornata fatta di piazze, profumi e incontri.</h2>
+            <h2>Com’è la festa</h2>
           </div>
-          <p>Le immagini della Festa raccontano meglio di qualsiasi slogan ciò che succede a Roncegno: il paese diventa spazio pubblico, mercato, tavola e luogo d’incontro.</p>
+          <p>Per due giorni il centro del paese diventa mercato, cucina e luogo d’incontro.</p>
         </div>
         <div className={styles.photoGrid}>
           <figure className={styles.photoTall}>
@@ -175,7 +173,7 @@ export default async function FestaDellaCastagnaPage() {
       <section className={styles.program} id="programma">
         <div className={styles.programTitle}>
           <p className={styles.eyebrowLight}>Programma 2026</p>
-          <h2>Tre giorni, un paese intero in festa.</h2>
+          <h2>Il programma, giorno per giorno</h2>
           <p>Da venerdì sera a domenica, il programma alterna comunità, passeggiate, spettacoli, musica, gastronomia e attività per famiglie.</p>
           <div className={styles.alwaysOn}><strong>Tutti i giorni</strong><p>Servizio navetta gratuito, intrattenimento e laboratori per bambini, giardino con animali, gonfiabili, dolci di castagne, bancarelle e musica itinerante.</p></div>
         </div>
@@ -184,8 +182,7 @@ export default async function FestaDellaCastagnaPage() {
 
       <section className={styles.festaMap} id="mappa" aria-labelledby="mappa-title">
         <div className={styles.festaMapHeading}>
-          <p className={styles.eyebrowLight}>Mappa della Festa</p>
-          <h2 id="mappa-title">Stand, eventi e servizi, punto per punto.</h2>
+          <h2 id="mappa-title">Mappa della festa</h2>
           <p>Scegli una categoria per vedere dove mangiare, dove si suona, dove parcheggiare e dove prendere la navetta. Ogni stand ha il suo menù.</p>
         </div>
         <FestaMap points={festaMap.points as FestaPoint[]} />
@@ -194,17 +191,16 @@ export default async function FestaDellaCastagnaPage() {
       <section className={styles.flavours} id="sapori">
         <div className={styles.flavourImage} />
         <div className={styles.flavourCopy}>
-          <p className={styles.eyebrowLight}>Sapori di Roncegno</p>
-          <h2>Il fuoco è parte della festa.</h2>
+          <h2>Cosa si mangia</h2>
           <p>Durante la manifestazione saranno disponibili punti di ristoro con piatti tipici, dolci alla castagna e prodotti locali. Ristoranti e agritur di Roncegno Terme proporranno menù a tema per tutto il fine settimana.</p>
           <p>Tra i sapori della festa torna anche lo stand gastronomico degli amici di Praga 6, nel segno del gemellaggio con il Comune di Roncegno Terme.</p>
-          <a href="#storie" className={styles.lightButton}>Dai sapori alle storie →</a>
+          <a href="#storie" className={styles.lightButton}>Il Circuito del Castagno</a>
         </div>
       </section>
 
       <section className={styles.stories} id="storie">
         <div className={styles.storiesHeading}>
-          <div className={styles.sectionHeading}><p className={styles.eyebrow}>Circuito del Castagno</p><h2>La festa continua lungo i sentieri.</h2><p>Prima delle caldarroste in piazza ci sono i castagneti: un paesaggio curato da generazioni, che il Circuito del Castagno racconta in quattro tappe.</p></div>
+          <div className={styles.sectionHeading}><p className={styles.eyebrow}>Circuito del Castagno</p><h2>I castagneti intorno al paese</h2><p>Prima delle caldarroste in piazza ci sono i castagneti: un paesaggio curato da generazioni, che il Circuito del Castagno racconta in quattro tappe.</p></div>
           <figure className={styles.vintagePhoto}>
             <img src="/images/festa-castagna/castagno-foto-epoca.webp" width={1060} height={1280} loading="lazy" alt="Foto d’epoca: un uomo con il cappello accanto a un grande castagno, su un pendio erboso con le montagne sullo sfondo" />
             <figcaption><span>Foto d’epoca</span>Un grande castagno sul pendio: il paesaggio dei castagneti.</figcaption>
@@ -214,10 +210,10 @@ export default async function FestaDellaCastagnaPage() {
       </section>
 
       <section className={styles.info} id="come-arrivare">
-        <div><p className={styles.eyebrow}>Organizza la visita</p><h2>Arriva, parcheggia, poi dimentica l’auto.</h2></div>
+        <div><h2>Come arrivare e dove parcheggiare</h2></div>
         <div className={styles.infoGrid}>
           <article>
-            <span>01</span><h3>Dove</h3>
+            <h3>Dove</h3>
             <p>Nel centro di Roncegno Terme. Inaugurazione e Torta Gigante in Piazza A. De Giovanni; burattini, forno di comunità e DJ set in Piazza Montebello.</p>
             <div className={styles.mapLinks}>
               <a href={mapsSearch("Piazza A. De Giovanni, Roncegno Terme")} target="_blank" rel="noopener noreferrer">Piazza A. De Giovanni su Maps ↗</a>
@@ -225,20 +221,20 @@ export default async function FestaDellaCastagnaPage() {
             </div>
           </article>
           <article>
-            <span>02</span><h3>Parcheggi</h3>
+            <h3>Parcheggi</h3>
             <p>Parcheggi disponibili nei pressi della festa, presso l’oratorio parrocchiale di Roncegno e in via Ferme, arrivando da Borgo Valsugana.</p>
             <div className={styles.mapLinks}>
               <a href={mapsSearch("Oratorio parrocchiale, Roncegno Terme")} target="_blank" rel="noopener noreferrer">Oratorio su Maps ↗</a>
               <a href={mapsSearch("Via Ferme, Roncegno Terme")} target="_blank" rel="noopener noreferrer">Via Ferme su Maps ↗</a>
             </div>
           </article>
-          <article><span>03</span><h3>Navetta domenicale</h3><p>Domenica 25 saranno disponibili parcheggi organizzati a 600–800 metri in direzione Marter e Borgo Valsugana, con bus navetta gratuito verso il centro dalle 11:00 alle 18:30.</p></article>
-          <article><span>04</span><h3>Accessibilità</h3><p>Parcheggio riservato alle persone con disabilità in prossimità del centro della manifestazione.</p></article>
+          <article><h3>Navetta domenicale</h3><p>Domenica 25 saranno disponibili parcheggi organizzati a 600–800 metri in direzione Marter e Borgo Valsugana, con bus navetta gratuito verso il centro dalle 11:00 alle 18:30.</p></article>
+          <article><h3>Accessibilità</h3><p>Parcheggio riservato alle persone con disabilità in prossimità del centro della manifestazione.</p></article>
         </div>
         <div className={styles.contactBox}><span>Informazioni</span><strong>Comune di Roncegno Terme</strong><a href="tel:+390461764061">0461 764061</a><a href="mailto:comunicazione@comune.roncegnoterme.tn.it">comunicazione@comune.roncegnoterme.tn.it</a></div>
       </section>
 
-      <section className={styles.cta}><div><p className={styles.eyebrowLight}>Visit Roncegno</p><h2>Portati a casa qualcosa di più di un sacchetto di castagne.</h2><p>Scopri i luoghi, i percorsi e le storie che fanno di Roncegno un territorio da vivere tutto l’anno.</p></div><Link href="/" className={styles.lightButton}>Esplora Roncegno →</Link></section>
+      <section className={styles.cta}><div><h2>Roncegno, anche dopo la festa</h2><p>Sentieri, musei, terme e i posti dove mangiare e dormire, tutto l’anno.</p></div><Link href="/" className={styles.lightButton}>Vai al sito di Roncegno</Link></section>
       <SiteFooter settings={siteSettings} />
     </main>
   );

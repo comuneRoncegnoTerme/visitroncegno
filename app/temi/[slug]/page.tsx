@@ -12,45 +12,41 @@ import styles from "./theme.module.css";
 const THEMES = {
   "natura-e-montagna": {
     title: "Natura e montagna",
-    eyebrow: "Respira il territorio",
-    intro: "Boschi, castagneti, sentieri e paesaggi alpini: Roncegno si scopre soprattutto camminando, con tempi lenti e punti di vista sempre diversi.",
-    lead: "Dalla valle ai versanti del Lagorai, una selezione di luoghi e percorsi per entrare nel paesaggio.",
+    intro: "Boschi, castagneti, sentieri e pascoli in quota. Il modo migliore per conoscerli è a piedi.",
+    lead: "Dal fondovalle ai versanti del Lagorai: luoghi e percorsi.",
     placeTypes: ["nature"],
     keywords: ["natura", "bosco", "castagno", "montagna", "parco", "laghetto", "cinque valli", "panarotta"],
     eventKeywords: ["passeggiata", "escurs", "sentiero", "natura", "cammin", "montagna"],
     showRoutes: true,
     primaryHref: "/percorsi",
-    primaryLabel: "Esplora i percorsi",
+    primaryLabel: "Vedi i percorsi",
   },
   "terme-e-benessere": {
     title: "Terme e benessere",
-    eyebrow: "Acque, quiete, salute",
     intro: "La storia termale di Roncegno incontra il paesaggio, i parchi e i luoghi dedicati alla cura e al benessere.",
-    lead: "Un modo diverso di vivere il territorio: più lento, raccolto e legato alla tradizione delle acque.",
+    lead: "Il parco, le acque e i luoghi legati alla storia termale del paese.",
     placeTypes: ["nature", "service", "institution", "other"],
     keywords: ["terme", "termale", "benessere", "raphael", "salute", "acqua", "parco delle terme"],
     eventKeywords: ["benessere", "salute", "terme", "acqua"],
     showRoutes: false,
     primaryHref: "/luoghi",
-    primaryLabel: "Scopri i luoghi",
+    primaryLabel: "Vedi i luoghi",
   },
   "cultura-e-memoria": {
     title: "Cultura e memoria",
-    eyebrow: "Storie che restano",
     intro: "Musei, architetture, tradizioni e memoria locale raccontano un paese che ha conservato molte tracce del proprio passato.",
-    lead: "Dal Mulino Angeli alla musica, dalle chiese alle storie del territorio: qui il paesaggio diventa racconto.",
+    lead: "Dal Mulino Angeli al Museo degli Strumenti Musicali, dalle chiese alle storie raccolte dal Progetto Memoria.",
     placeTypes: ["museum", "heritage", "institution"],
     keywords: ["museo", "mulino", "chiesa", "cultura", "memoria", "storia", "musica", "borgo"],
     eventKeywords: ["cultura", "musica", "teatro", "mostra", "storia", "tradizion", "concerto"],
     showRoutes: false,
     primaryHref: "/luoghi",
-    primaryLabel: "Scopri luoghi e musei",
+    primaryLabel: "Luoghi e musei",
   },
   "sport-e-movimento": {
     title: "Sport e movimento",
-    eyebrow: "Muoversi all'aperto",
     intro: "Camminare, correre, pedalare e vivere gli impianti sportivi: Roncegno offre occasioni per muoversi tra fondovalle e montagna.",
-    lead: "Percorsi, attività e appuntamenti per chi vuole esplorare il territorio in modo attivo.",
+    lead: "Percorsi, attività e appuntamenti per chi vuole muoversi all’aperto.",
     placeTypes: ["other", "service"],
     keywords: ["sport", "palestra", "tennis", "campo", "movimento"],
     eventKeywords: ["sport", "gara", "torneo", "corsa", "calcio", "pallavolo", "passeggiata", "camminata", "escurs"],
@@ -162,18 +158,16 @@ export default async function ThemePage({ params }: { params: Promise<{ slug: st
         <div className={styles.heroShade} />
         <div className={styles.heroInner}>
           <Link className={styles.back} href="/">← Home</Link>
-          <p>{theme.eyebrow}</p>
           <h1>{theme.title}</h1>
           <div className={styles.heroBottom}>
             <p className={styles.heroIntro}>{theme.intro}</p>
-            <Link className={styles.heroButton} href={theme.primaryHref}>{theme.primaryLabel} →</Link>
+            <Link className={styles.heroButton} href={theme.primaryHref}>{theme.primaryLabel}</Link>
           </div>
         </div>
       </section>
 
       <section className={styles.introSection}>
         <div className={styles.introInner}>
-          <span>Un modo di vivere Roncegno</span>
           <p>{theme.lead}</p>
         </div>
       </section>
@@ -182,8 +176,8 @@ export default async function ThemePage({ params }: { params: Promise<{ slug: st
         <section className={styles.discoverySection}>
           <div className={styles.sectionInner}>
             <div className={styles.sectionHeading}>
-              <div><p>Da scoprire</p><h2>Parti da qui.</h2></div>
-              <span>{cards.length} proposte dal territorio</span>
+              <div><h2>Da vedere</h2></div>
+              <span>{cards.length === 1 ? "1 scheda" : `${cards.length} schede`}</span>
             </div>
             <div className={styles.cardsGrid}>
               {cards.map((item, index) => {
@@ -196,7 +190,7 @@ export default async function ThemePage({ params }: { params: Promise<{ slug: st
                       <small>{item.label}</small>
                       <h3>{item.title}</h3>
                       {index === 0 && item.summary && <p>{item.summary}</p>}
-                      <span>Scopri →</span>
+                      <span>Apri →</span>
                     </div>
                   </Link>
                 );
@@ -210,7 +204,7 @@ export default async function ThemePage({ params }: { params: Promise<{ slug: st
         <section className={styles.eventsSection}>
           <div className={styles.sectionInner}>
             <div className={styles.sectionHeading}>
-              <div><p>Da vivere adesso</p><h2>Appuntamenti collegati.</h2></div>
+              <div><h2>Appuntamenti in programma</h2></div>
               <Link href="/eventi">Tutti gli eventi →</Link>
             </div>
             <div className={styles.eventList}>
@@ -226,7 +220,7 @@ export default async function ThemePage({ params }: { params: Promise<{ slug: st
 
       <nav className={styles.themeNav} aria-label="Altri temi">
         <div className={styles.sectionInner}>
-          <p>Continua a esplorare</p>
+          <p>Altri temi</p>
           <div className={styles.themeLinks}>
             {Object.entries(THEMES).map(([themeSlug, item]) => (
               <Link className={themeSlug === slug ? styles.activeTheme : ""} href={`/temi/${themeSlug}`} key={themeSlug}>

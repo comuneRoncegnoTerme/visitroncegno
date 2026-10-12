@@ -111,8 +111,7 @@ export default function FestaAtmosphereVideo() {
       )}
       <div className={pageStyles.videoStoryShade} aria-hidden="true" />
       <div className={`${pageStyles.videoStoryCaption} ${styles.caption}`}>
-        <p>Dentro la Festa</p>
-        <h2>Roncegno, in un giorno d’autunno.</h2>
+        <h2>Un giorno d’autunno a Roncegno</h2>
       </div>
       {status !== "failed" && (
         <button

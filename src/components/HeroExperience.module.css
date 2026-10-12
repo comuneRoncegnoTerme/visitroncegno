@@ -60,9 +60,9 @@
   gap: 7px;
   align-items: center;
   color: rgba(255, 255, 255, 0.74);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .hotspots {
@@ -192,9 +192,9 @@
   .mobileHotspotsLead {
     width: 100%;
     color: rgba(255, 255, 255, 0.62);
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0;
+    text-transform: none;
   }
 
   .mobileHotspots a {

@@ -63,10 +63,10 @@
   display: block;
   margin-bottom: 9px;
   color: #efb083;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .routeCopy h3 {
@@ -102,10 +102,10 @@
   display: block;
   margin-top: 16px;
   color: rgba(255, 255, 255, 0.72);
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .routeArrow {
@@ -196,10 +196,10 @@
   display: block;
   margin-bottom: 10px;
   color: #efb083;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .highlightCopy h3 {
@@ -487,10 +487,10 @@
 .identityCopy>p{
   margin:0 0 12px;
   color:#b65d32;
-  font-size:10px;
+  font-size:13px;
   font-weight:700;
-  letter-spacing:.18em;
-  text-transform:uppercase;
+  letter-spacing:0;
+  text-transform:none;
 }
 .identityCopy h2{
   max-width:620px;
@@ -526,10 +526,10 @@
 }
 .identityFacts small{
   color:#75807b;
-  font-size:9px;
+  font-size:12px;
   font-weight:700;
-  letter-spacing:.09em;
-  text-transform:uppercase;
+  letter-spacing:0;
+  text-transform:none;
 }
 @media(max-width:900px){
   .identityInner{grid-template-columns:1fr;gap:30px}

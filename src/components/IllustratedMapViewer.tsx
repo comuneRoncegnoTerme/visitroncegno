@@ -182,7 +182,7 @@ export default function IllustratedMapViewer({
           <p>{selected.text}</p>
           <div className={styles.storyActions}>
             {tourActive && <button type="button" onClick={() => moveTour(-1)} aria-label="Tappa precedente">←</button>}
-            <Link href={selected.href}>Scopri di più →</Link>
+            <Link href={selected.href}>Apri la scheda →</Link>
             {tourActive && <button type="button" onClick={() => moveTour(1)} aria-label="Tappa successiva">→</button>}
           </div>
         </aside>
