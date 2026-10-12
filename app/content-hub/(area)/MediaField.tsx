@@ -164,7 +164,7 @@ export default function MediaField({ value, onChange, kind = "image" }: Props) {
             <small>
               {current?.width && current?.height
                 ? `${current.width} × ${current.height}px`
-                : "Media Directus selezionato"}
+                : "File scelto"}
             </small>
           </div>
           <button type="button" onClick={() => onChange(null)}>
@@ -172,7 +172,7 @@ export default function MediaField({ value, onChange, kind = "image" }: Props) {
           </button>
         </div>
       ) : (
-        <div className={styles.empty}>Nessun media selezionato.</div>
+        <div className={styles.empty}>Nessun file scelto.</div>
       )}
 
       <div className={styles.controls}>
@@ -201,12 +201,12 @@ export default function MediaField({ value, onChange, kind = "image" }: Props) {
           <input
             className={styles.search}
             type="search"
-            placeholder="Cerca nei media…"
+            placeholder="Cerca per titolo o nome del file"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
           />
           {loading ? (
-            <p>Caricamento media…</p>
+            <p>Caricamento…</p>
           ) : (
             <div className={styles.grid}>
               {filtered.map((item) => (
@@ -230,7 +230,7 @@ export default function MediaField({ value, onChange, kind = "image" }: Props) {
                   <span>{item.title || item.filename_download || item.id}</span>
                 </button>
               ))}
-              {!filtered.length && <p>Nessun media corrispondente.</p>}
+              {!filtered.length && <p>Nessun file trovato.</p>}
             </div>
           )}
         </div>

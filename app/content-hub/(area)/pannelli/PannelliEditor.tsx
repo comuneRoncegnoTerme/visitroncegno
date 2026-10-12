@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import MediaField from "../MediaField";
 import styles from "../collection-editor.module.css";
@@ -124,11 +123,11 @@ export default function PannelliEditor() {
     <div className={styles.workspace}>
       <aside className={styles.listPane}>
         <div className={styles.listHeader}>
-          <div><span>{items.length} contenuti</span><h2>Pannelli e contenuti</h2></div>
+          <div><h2>Pannelli</h2><span>{items.length === 1 ? "1 scheda" : `${items.length} schede`}</span></div>
         </div>
         <div className={styles.searchBox}>
-          <label htmlFor="panel-search">Cerca</label>
-          <input id="panel-search" type="search" value={query} placeholder="Titolo, slug o URL legacy" onChange={(event) => setQuery(event.target.value)} />
+          <label htmlFor="panel-search" className={styles.srOnly}>Cerca</label>
+          <input id="panel-search" type="search" value={query} placeholder="Cerca per titolo o indirizzo" onChange={(event) => setQuery(event.target.value)} />
           {query && <span>{filtered.length} risultati</span>}
         </div>
         <div className={styles.items}>
@@ -142,14 +141,13 @@ export default function PannelliEditor() {
       </aside>
 
       <section className={styles.editorPane}>
-        <Link href="/content-hub" className={styles.backToHub}>← Content Hub</Link>
         <div className={styles.editorHeading}>
           <div>
-            <p>{draft ? `Modifica #${draft.id}` : "Seleziona un contenuto"}</p>
-            <h1>{draft?.title ?? "Pannelli, contenuti e audioguide"}</h1>
-            <span>I contenuti collegati a URL legacy /it/sentieri sono pannelli fisici del percorso: testi, immagini e audio vengono riutilizzati nel sito senza cambiare QR o URL.</span>
+            <p>Pannelli e audioguide</p>
+            <h1>{draft?.title ?? "Scegli un pannello"}</h1>
+            <span>Queste schede corrispondono ai pannelli sui sentieri. Il QR stampato punta sempre allo stesso indirizzo: puoi cambiare testo, foto e audio senza toccarlo.</span>
           </div>
-          {draft?.source_url && <a href={draft.source_url.replace("https://www.visitroncegno.it", "")} target="_blank" rel="noreferrer">Anteprima ↗</a>}
+          {draft?.source_url && <a href={draft.source_url.replace("https://www.visitroncegno.it", "")} target="_blank" rel="noreferrer">Vedi sul sito</a>}
         </div>
 
         {!hasAudioFields && fields.length > 0 && (
@@ -207,7 +205,7 @@ export default function PannelliEditor() {
             </div>
           </div>
         ) : (
-          <p className={styles.muted}>Seleziona una scheda dalla colonna a sinistra.</p>
+          <p className={styles.muted}>Scegli un pannello dall’elenco.</p>
         )}
       </section>
     </div>

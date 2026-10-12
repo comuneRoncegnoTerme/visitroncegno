@@ -66,7 +66,7 @@ export default async function ContentHubPlacesPage() {
     <CollectionEditor
       collection="places"
       title="Luoghi, mangiare e dormire"
-      description="Gestisci contenuti, informazioni pratiche, coordinate e comportamento della scheda."
+      description="Musei, ristoranti, alloggi, servizi e punti d’interesse. Senza latitudine e longitudine un luogo non compare sulla mappa."
       fields={fields}
       previewBase="/luoghi"
     />

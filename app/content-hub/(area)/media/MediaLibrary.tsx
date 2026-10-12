@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import PageHeader from "../PageHeader";
 import styles from "./page.module.css";
 
 type MediaItem = {
@@ -143,19 +144,15 @@ export default function MediaLibrary() {
 
   return (
     <main className={styles.page}>
-      <header className={styles.header}>
-        <div>
-          <p>Content Hub · Media</p>
-          <h1>Immagini, audio e GPX</h1>
-          <span>Carica asset direttamente in Directus e riutilizzali nei contenuti.</span>
-        </div>
-        <a href="/content-hub">← Dashboard</a>
-      </header>
+      <PageHeader
+        title="Immagini e file"
+        intro="Foto, audio delle audioguide e tracce GPX. Quello che carichi qui si può poi scegliere in eventi, luoghi, percorsi e pannelli."
+      />
 
       <form className={styles.upload} onSubmit={upload}>
         <label>
-          <span>Titolo</span>
-          <input name="title" placeholder="Titolo facoltativo" />
+          <span>Titolo (facoltativo)</span>
+          <input name="title" placeholder="Es. Piazza Montebello d’estate" />
         </label>
         <label className={styles.file}>
           <span>File</span>
@@ -168,27 +165,34 @@ export default function MediaLibrary() {
           />
         </label>
         <button type="submit" disabled={uploading}>
-          {uploading ? "Caricamento…" : "Carica in Directus"}
+          {uploading ? "Caricamento…" : "Carica"}
         </button>
         {message && <p className={error ? styles.error : styles.success}>{message}</p>}
       </form>
 
-      <div>
+      <div className={styles.toolbar}>
         <label>
-          <span className="sr-only">Cerca nella libreria media</span>
+          <span className={styles.srOnly}>Cerca tra i file</span>
           <input
             type="search"
-            placeholder="Cerca per titolo, nome file o tipo…"
+            placeholder="Cerca per titolo o nome del file"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
           />
         </label>
+        {!loading && (
+          <span>
+            {query
+              ? `${filteredItems.length} di ${items.length} file`
+              : `${items.length} file`}
+          </span>
+        )}
       </div>
 
       <section className={styles.grid}>
-        {loading && <p>Caricamento libreria…</p>}
+        {loading && <p className={styles.empty}>Caricamento…</p>}
         {!loading && filteredItems.length === 0 && (
-          <p>Nessun file corrisponde alla ricerca.</p>
+          <p className={styles.empty}>Nessun file trovato.</p>
         )}
         {!loading &&
           filteredItems.map((item) => (
@@ -205,12 +209,16 @@ export default function MediaLibrary() {
               </div>
               <div className={styles.meta}>
                 <strong>{item.title || item.filename_download}</strong>
-                <small>{item.filename_download}</small>
                 <small>
-                  {[item.type, formatSize(item.filesize)].filter(Boolean).join(" · ")}
+                  {[
+                    item.filename_download.split(".").pop()?.toUpperCase(),
+                    item.width && item.height ? `${item.width} × ${item.height}` : null,
+                    formatSize(item.filesize),
+                  ]
+                    .filter(Boolean)
+                    .join(" · ")}
                 </small>
-                <code>{item.id}</code>
-                <button type="button" onClick={() => copyId(item.id)}>
+                <button type="button" onClick={() => copyId(item.id)} title={item.id}>
                   Copia ID
                 </button>
               </div>

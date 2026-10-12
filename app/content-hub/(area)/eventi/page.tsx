@@ -37,7 +37,7 @@ export default async function ContentHubEventsPage() {
     <CollectionEditor
       collection="events"
       title="Eventi"
-      description="Pubblica un appuntamento completo: prima le informazioni essenziali, poi immagine, luogo e contatti. I campi non disponibili nello schema Directus vengono nascosti automaticamente."
+      description="Un evento resta in bozza finché non lo metti su “Pubblicato”. Titolo, data e luogo sono le cose che servono davvero; il resto si può aggiungere dopo."
       fields={fields}
       previewBase="/eventi"
     />

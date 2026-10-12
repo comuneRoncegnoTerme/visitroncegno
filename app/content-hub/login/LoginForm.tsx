@@ -8,6 +8,7 @@ export default function LoginForm() {
   const router = useRouter();
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const [message, setMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -15,19 +16,25 @@ export default function LoginForm() {
     setMessage("");
 
     const form = new FormData(event.currentTarget);
-    const response = await fetch("/api/content-hub/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: String(form.get("email") ?? ""),
-        password: String(form.get("password") ?? ""),
-      }),
-    });
+    try {
+      const response = await fetch("/api/content-hub/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: String(form.get("email") ?? ""),
+          password: String(form.get("password") ?? ""),
+        }),
+      });
 
-    const result = await response.json().catch(() => null);
-    if (!response.ok) {
+      const result = await response.json().catch(() => null);
+      if (!response.ok) {
+        setStatus("error");
+        setMessage(result?.error ?? "Accesso non riuscito");
+        return;
+      }
+    } catch {
       setStatus("error");
-      setMessage(result?.error ?? "Accesso non riuscito");
+      setMessage("Connessione non disponibile. Riprova tra poco.");
       return;
     }
 
@@ -43,12 +50,31 @@ export default function LoginForm() {
       </label>
       <label>
         <span>Password</span>
-        <input type="password" name="password" autoComplete="current-password" required />
+        <span className={styles.passwordRow}>
+          <input
+            type={showPassword ? "text" : "password"}
+            name="password"
+            autoComplete="current-password"
+            required
+          />
+          <button
+            type="button"
+            className={styles.toggle}
+            onClick={() => setShowPassword((value) => !value)}
+            aria-pressed={showPassword}
+          >
+            {showPassword ? "Nascondi" : "Mostra"}
+          </button>
+        </span>
       </label>
-      <button type="submit" disabled={status === "loading"}>
-        {status === "loading" ? "Accesso…" : "Accedi al Content Hub"}
+      {message && (
+        <p className={styles.error} role="alert">
+          {message}
+        </p>
+      )}
+      <button type="submit" className={styles.submit} disabled={status === "loading"}>
+        {status === "loading" ? "Accesso in corso…" : "Accedi"}
       </button>
-      {message && <p className={styles.error}>{message}</p>}
     </form>
   );
 }

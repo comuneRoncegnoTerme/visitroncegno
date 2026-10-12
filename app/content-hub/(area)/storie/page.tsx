@@ -43,7 +43,7 @@ export default async function ContentHubStoriesPage() {
     <CollectionEditor
       collection="stories"
       title="Storie e memoria"
-      description="Gestisci racconti, testimonianze e approfondimenti e collegali ai luoghi e ai percorsi del territorio."
+      description="Racconti, testimonianze e ricordi del paese. Ogni storia si può collegare a un luogo o a un percorso."
       fields={fields}
       previewBase="/storie"
     />
