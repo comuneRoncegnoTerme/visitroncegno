@@ -20,6 +20,7 @@ import styles from "./home-v2.module.css";
 import refine from "./home-v2-refine.module.css";
 import feedback from "./home-feedback.module.css";
 import editorial from "./home-editorial.module.css";
+import spacing from "./home-spacing.module.css";
 
 type HomepageHeroConfig = {
   hero_mode?: HeroMode | null;
@@ -160,7 +161,7 @@ export default async function Home() {
       )}
 
       {visibleRoutes.length > 0 && (
-        <section className={`${styles.section} ${editorial.routesSection}`} aria-labelledby="routes-title">
+        <section className={`${styles.section} ${editorial.routesSection} ${spacing.band}`} aria-labelledby="routes-title">
           <div className={styles.sectionInner}>
             <div className={styles.sectionHeading}>
               <div>
@@ -204,26 +205,8 @@ export default async function Home() {
       )}
 
 
-      <section className={editorial.identityStrip} aria-labelledby="identity-title">
-        <div className={editorial.identityLandscape} aria-hidden="true" />
-        <div className={editorial.identityInner}>
-          <div className={editorial.identityCopy}>
-            {homepage.identity_eyebrow && <p>{homepage.identity_eyebrow}</p>}
-            <h2 id="identity-title">{homepage.identity_title ?? "Dal fondovalle ai masi"}</h2>
-            <span>
-              {homepage.identity_description ?? "Il centro storico, Marter, le terme, i castagneti e la montagna raccontano parti diverse di Roncegno."}
-            </span>
-          </div>
-          <div className={editorial.identityFacts} aria-label="Tratti distintivi di Roncegno">
-            <span><strong>{homepage.identity_fact_1_value ?? "Terme"}</strong><small>{homepage.identity_fact_1_label ?? "Acque e parco"}</small></span>
-            <span><strong>{homepage.identity_fact_2_value ?? "44 masi"}</strong><small>{homepage.identity_fact_2_label ?? "Sul territorio"}</small></span>
-            <span><strong>{homepage.identity_fact_3_value ?? "Montagna"}</strong><small>{homepage.identity_fact_3_label ?? "Dal fondovalle in su"}</small></span>
-          </div>
-        </div>
-      </section>
-
       {visibleFeaturedPlaces.length > 0 && (
-        <section className={`${styles.section} ${editorial.highlightsSection}`} aria-labelledby="highlights-title">
+        <section className={`${styles.section} ${editorial.highlightsSection} ${spacing.band} ${spacing.bandFollow}`} aria-labelledby="highlights-title">
           <div className={styles.sectionInner}>
             <div className={styles.sectionHeading}>
               <div>
@@ -255,7 +238,7 @@ export default async function Home() {
       )}
 
       {visibleEvents.length > 0 && (
-      <section className={`${styles.section} ${styles.eventsSection}`}>
+      <section className={`${styles.section} ${styles.eventsSection} ${spacing.band} ${spacing.bandFollow}`}>
         <div className={styles.sectionInner}>
           <div className={styles.sectionHeading}>
             <div>{homepage.events_eyebrow && <p>{homepage.events_eyebrow}</p>}<h2 className={styles.sectionTitle}>{homepage.events_title ?? "Eventi a Roncegno"}</h2><span className={styles.sectionLead}>{homepage.events_description ?? "Feste, concerti, mercati e camminate in programma."}</span></div>
@@ -287,7 +270,7 @@ export default async function Home() {
       </section>
       )}
 
-      <section className={editorial.mapStory} aria-labelledby="map-story-title">
+      <section className={`${editorial.mapStory} ${spacing.bandEnd}`} aria-labelledby="map-story-title">
         <div className={editorial.mapStoryInner}>
           <div className={editorial.mapStoryCopy}>
             {homepage.map_eyebrow && <p className={styles.eyebrow}>{homepage.map_eyebrow}</p>}
@@ -315,7 +298,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className={styles.planningSection}>
+      <section className={`${styles.planningSection} ${spacing.band}`}>
         <div className={`${styles.sectionInner} ${styles.planningGrid}`}>
           <div className={styles.planningCopy}>
             {homepage.planning_eyebrow && <p className={styles.eyebrow}>{homepage.planning_eyebrow}</p>}

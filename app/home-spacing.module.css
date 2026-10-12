@@ -1,0 +1,35 @@
+/*
+ * Spaziatura verticale delle sezioni della homepage.
+ * Le sezioni con lo stesso sfondo non sommano i margini: quella che segue
+ * usa .bandFollow e parte senza padding superiore.
+ * Le classi sono doppie (.band.band) per prevalere sulle regole dei moduli
+ * home-v2 / home-editorial / home-feedback senza dover usare !important.
+ */
+.band.band {
+  padding-top: 88px;
+  padding-bottom: 88px;
+  background-color: transparent;
+}
+
+.bandFollow.bandFollow {
+  padding-top: 0;
+}
+
+.bandEnd.bandEnd {
+  padding-bottom: 88px;
+}
+
+@media (max-width: 760px) {
+  .band.band {
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+
+  .bandFollow.bandFollow {
+    padding-top: 0;
+  }
+
+  .bandEnd.bandEnd {
+    padding-bottom: 56px;
+  }
+}
