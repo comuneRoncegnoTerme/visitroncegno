@@ -216,8 +216,7 @@ export default async function EventDetail({ item }: Props) {
         <section className={styles.relatedSection}>
           <div className={styles.sectionHeading}>
             <div>
-              <p className={styles.kicker}>Prossimi appuntamenti</p>
-              <h2>Da segnare in agenda.</h2>
+              <h2>Altri appuntamenti</h2>
             </div>
             <Link href="/eventi">Tutti gli eventi →</Link>
           </div>
@@ -249,7 +248,7 @@ export default async function EventDetail({ item }: Props) {
           <strong>Dove mangiare e dormire →</strong>
         </Link>
         <Link href="/luoghi">
-          <small>Continua a esplorare</small>
+          <small>Sul territorio</small>
           <strong>Conosci i luoghi →</strong>
         </Link>
       </section>

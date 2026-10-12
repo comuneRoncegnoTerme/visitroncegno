@@ -94,7 +94,7 @@ export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) 
   const isChestnutHistory = slug === "il-castagno-nella-storia-3-1";
   const routeHref = panel.relatedRouteHref ??
     (panel.relatedRouteLabel === "Circuito del Castagno" ? "/percorsi/circuito-del-castagno" : "/percorsi");
-  const routeLabel = panel.relatedRouteLabel ?? "Scopri i percorsi";
+  const routeLabel = panel.relatedRouteLabel ?? "Tutti i percorsi";
   const audioFileId = storyMedia?.audio_file ?? getPanelAudioFileId(slug);
   const audioUrl = getDirectusAssetUrl(audioFileId);
   const audioTitle = storyMedia?.audio_title?.trim() || panel.audioTitle;
@@ -154,8 +154,8 @@ export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) 
         <aside className={`${styles.sideColumn} ${mediaStyles.sideColumn}`}>
           <div className={styles.routeCard}>
             <p className={styles.routeKicker}>Lungo il territorio</p>
-            <h2>Continua il percorso.</h2>
-            <p>Ritrova questa storia nel paesaggio di Roncegno e scopri le altre tappe collegate.</p>
+            <h2>Il percorso</h2>
+            <p>Questo pannello fa parte di un percorso: sulla sua pagina trovi mappa, tappe e informazioni pratiche.</p>
             <Link href={routeHref}>{routeLabel} →</Link>
           </div>
 
@@ -178,13 +178,11 @@ export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) 
       {panel.relatedPanels && (
         <section className={styles.relatedSection}>
           <div className={styles.relatedHeading}>
-            <p className={styles.eyebrowDark}>Continua lungo il circuito</p>
-            <h2>Il territorio, da altri punti di vista.</h2>
+            <h2>Gli altri pannelli del circuito</h2>
           </div>
           <div className={styles.relatedGrid}>
-            {panel.relatedPanels.map((related, index) => (
+            {panel.relatedPanels.map((related) => (
               <Link href={related.href} className={styles.relatedCard} key={related.href}>
-                <span>{String(index + 1).padStart(2, "0")}</span>
                 <small>{related.label}</small>
                 <h3>{related.title}</h3>
                 <strong>Apri la storia →</strong>
@@ -196,9 +194,8 @@ export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) 
 
       <section className={styles.footerCta}>
         <div>
-          <p className={styles.eyebrowLight}>Dalla storia al paesaggio</p>
-          <h2>Cammina dentro il racconto.</h2>
-          <p>Ogni approfondimento è una porta sul territorio: continua a esplorare i luoghi, i percorsi e le storie di Roncegno.</p>
+          <h2>Torna al percorso</h2>
+          <p>Mappa, tappe e informazioni pratiche per percorrerlo.</p>
         </div>
         <Link href={routeHref} className={styles.ctaButton}>Torna a {routeLabel}</Link>
       </section>

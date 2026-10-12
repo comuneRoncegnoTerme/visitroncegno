@@ -2,12 +2,12 @@
 .heroOverlay{background:linear-gradient(90deg,rgba(6,31,25,.95) 0%,rgba(6,31,25,.74) 32%,rgba(6,31,25,.25) 66%,rgba(6,31,25,.04) 100%),linear-gradient(0deg,rgba(6,31,25,.72) 0%,rgba(6,31,25,.18) 46%,transparent 68%)}
 .heroContent{min-height:96vh;max-width:920px;padding-top:158px;padding-bottom:230px}
 .heroEvent{position:absolute;right:5vw;bottom:104px;z-index:3;display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"eyebrow eyebrow arrow" "date copy arrow";column-gap:20px;align-items:end;width:min(500px,34vw);padding:23px 0 22px;border-top:1px solid rgba(255,255,255,.54);border-bottom:1px solid rgba(255,255,255,.28);color:#fff;background:transparent}
-.heroEventEyebrow{grid-area:eyebrow;margin-bottom:15px;color:#efb083;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase}
+.heroEventEyebrow{grid-area:eyebrow;margin-bottom:15px;color:#efb083;font-size:12px;font-weight:700;letter-spacing:0;text-transform:none}
 .heroEventDate{grid-area:date;display:flex;min-width:58px;flex-direction:column;color:rgba(255,255,255,.78);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
 .heroEventDate strong{font:400 38px/.9 Georgia,serif;color:#fff;letter-spacing:-.04em}
 .heroEventCopy{grid-area:copy;display:flex;min-width:0;flex-direction:column;gap:9px;padding-left:19px;border-left:1px solid rgba(255,255,255,.28)}
 .heroEventTitle{font:400 24px/1.02 Georgia,serif;text-wrap:balance}
-.heroEventMeta{color:rgba(255,255,255,.68);font-size:9px;font-weight:600;letter-spacing:.15em;text-transform:uppercase}
+.heroEventMeta{color:rgba(255,255,255,.68);font-size:12px;font-weight:600;letter-spacing:0;text-transform:none}
 .heroEventArrow{grid-area:arrow;align-self:center;display:grid;width:44px;height:44px;place-items:center;border:1px solid rgba(255,255,255,.38);border-radius:50%;font-size:19px;transition:transform .18s ease,background .18s ease}
 .heroEvent:hover .heroEventArrow{transform:translateX(3px);background:rgba(255,255,255,.09)}
 

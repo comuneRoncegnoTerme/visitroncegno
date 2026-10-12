@@ -15,7 +15,7 @@ export default function PageError({ error, retry }: { error: Error & { digest?: 
       <div className={styles.shell}>
         <section className={styles.copy}>
           <p className={styles.eyebrow}>Errore temporaneo</p>
-          <h1>Questa pagina non si è caricata.</h1>
+          <h1>La pagina non si è caricata</h1>
           <p className={styles.intro}>
             Si è verificato un problema momentaneo. Puoi riprovare oppure tornare alla homepage.
           </p>

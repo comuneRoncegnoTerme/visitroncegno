@@ -64,7 +64,7 @@ function EventCard({ item, compact = false }: { item: EditorialItem; compact?: b
         <small>{item.category?.name ?? "Evento"} · {location(item)}</small>
         <h3>{item.title}</h3>
         {!compact && item.summary && <p>{item.summary}</p>}
-        <span className={styles.cardLink}>{compact ? "Rivedi l’evento" : "Scopri l’evento"} →</span>
+        <span className={styles.cardLink}>{compact ? "Vedi la scheda" : "Programma e orari"} →</span>
       </div>
     </Link>
   );
@@ -85,8 +85,7 @@ export default async function EventsIndex({ items }: { items: EditorialItem[] })
         {heroImage && <div className={styles.heroBackdrop} style={{ backgroundImage: `url('${heroImage}')` }} aria-hidden="true" />}
         <div className={styles.heroInner}>
           <div className={styles.heroTitle}>
-            <p className={styles.eyebrow}>Agenda</p>
-            <h1>Vivi Roncegno,<br />insieme.</h1>
+            <h1>Eventi a Roncegno</h1>
           </div>
           <p className={styles.heroIntro}>
             Feste di paese, cultura, sport e sapori: gli appuntamenti per incontrare la comunità e vivere il territorio nel momento giusto.
@@ -120,7 +119,7 @@ export default async function EventsIndex({ items }: { items: EditorialItem[] })
               </div>
               <h2 id="featured-event-title">{featured.title}</h2>
               {featured.summary && <p>{featured.summary}</p>}
-              <strong>Scopri l’evento <span aria-hidden="true">→</span></strong>
+              <strong>Programma e orari <span aria-hidden="true">→</span></strong>
             </div>
           </Link>
         </section>
@@ -129,8 +128,7 @@ export default async function EventsIndex({ items }: { items: EditorialItem[] })
       <section className={styles.futureSection} aria-labelledby="future-events-title">
         <div className={styles.sectionHeading}>
           <div>
-            <p className={styles.sectionKicker}>Prossimamente</p>
-            <h2 id="future-events-title">Eventi futuri.</h2>
+            <h2 id="future-events-title">In programma</h2>
           </div>
           <p>Gli appuntamenti già programmati, in ordine cronologico.</p>
         </div>
@@ -148,8 +146,7 @@ export default async function EventsIndex({ items }: { items: EditorialItem[] })
         <section className={styles.pastSection} aria-labelledby="past-events-title">
           <div className={styles.sectionHeading}>
             <div>
-              <p className={styles.sectionKicker}>Archivio</p>
-              <h2 id="past-events-title">Eventi passati.</h2>
+              <h2 id="past-events-title">Eventi passati</h2>
             </div>
             <p>Gli appuntamenti già conclusi restano consultabili come memoria della vita del territorio.</p>
           </div>
@@ -161,8 +158,8 @@ export default async function EventsIndex({ items }: { items: EditorialItem[] })
       ) : null}
 
       <nav className={styles.footerNav} aria-label="Continua a esplorare">
-        <Link href="/cartina"><small>Orientati</small><strong>Esplora la cartina illustrata →</strong></Link>
-        <Link href="/organizza-la-visita"><small>Organizza</small><strong>Prepara la tua visita →</strong></Link>
+        <Link href="/cartina"><small>Orientati</small><strong>La cartina illustrata →</strong></Link>
+        <Link href="/organizza-la-visita"><small>Organizza</small><strong>Come arrivare, dove dormire →</strong></Link>
       </nav>
 
       <SiteFooter settings={settings} />

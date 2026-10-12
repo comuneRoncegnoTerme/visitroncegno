@@ -37,7 +37,7 @@ export default function FestaHomepageBanner({
         </p>
         <div className={styles.actions}>
           <Link className={styles.primary} href={primaryUrl ?? "/festa-della-castagna"}>
-            {primaryLabel ?? "Scopri il programma"} →
+            {primaryLabel ?? "Il programma"}
           </Link>
           <Link className={styles.secondary} href={secondaryUrl ?? "/eventi"}>
             {secondaryLabel ?? "Tutti gli appuntamenti"}

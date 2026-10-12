@@ -2,9 +2,9 @@
 .visual { position: relative; min-height: 620px; overflow: hidden; }
 .image { position: absolute; inset: 0; background: url('/images/cartina/cartina-roncegno-preview.webp') center / cover no-repeat; transition: transform 700ms ease; }
 .visual:hover .image { transform: scale(1.025); }
-.badge { position: absolute; top: 28px; left: 28px; padding: 11px 16px; border-radius: 999px; color: var(--forest); background: rgba(255,255,255,.92); font-size: .7rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+.badge { position: absolute; top: 28px; left: 28px; padding: 11px 16px; border-radius: 999px; color: var(--forest); background: rgba(255,255,255,.92); font-size: 0.82rem; font-weight: 800; letter-spacing: 0; text-transform: none; }
 .copy { display: flex; flex-direction: column; justify-content: center; padding: 70px 5vw; color: white; background: #099ccd; }
-.copy > p { margin: 0 0 22px; font-size: .72rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+.copy > p { margin: 0 0 22px; font-size: 0.82rem; font-weight: 800; letter-spacing: 0; text-transform: none; }
 .copy h2 { margin: 0; font-family: Georgia, serif; font-size: clamp(3rem, 5vw, 5.5rem); font-weight: 400; line-height: .96; }
 .copy > span { max-width: 480px; margin-top: 28px; font-size: 1.05rem; line-height: 1.65; }
 .copy a { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 44px; padding: 20px 0 14px; border-bottom: 1px solid rgba(255,255,255,.55); font-weight: 700; }

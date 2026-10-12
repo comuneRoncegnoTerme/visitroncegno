@@ -79,9 +79,9 @@ export default async function CartinaPage() {
       <section className={styles.intro} aria-labelledby="cartina-page-title">
         <div className={styles.introCopy}>
           <p className={styles.eyebrow}>La cartina ufficiale</p>
-          <h1 id="cartina-page-title">La cartina illustrata di Roncegno.</h1>
+          <h1 id="cartina-page-title">La cartina illustrata di Roncegno</h1>
           <p className={styles.lead}>
-            Esplora il territorio attraverso l’illustrazione ufficiale e apri i punti evidenziati per approfondire luoghi e percorsi nel sito.
+            L’illustrazione ufficiale del territorio. Tocca i punti evidenziati per aprire la scheda del luogo o del percorso.
           </p>
         </div>
         <div className={styles.introActions}>
@@ -94,8 +94,7 @@ export default async function CartinaPage() {
       <section className={styles.mapSection} aria-labelledby="cartina-title">
         <div className={styles.mapHeading}>
           <div>
-            <p className={styles.eyebrow}>Esplora</p>
-            <h2 id="cartina-title">Muoviti nella cartina.</h2>
+            <h2 id="cartina-title">I punti della cartina</h2>
           </div>
           <p>Tocca i punti numerati oppure avvia il tour illustrato. La rappresentazione è orientativa e non sostituisce la cartografia escursionistica.</p>
         </div>
@@ -111,12 +110,11 @@ export default async function CartinaPage() {
 
       <section className={styles.nextSteps} aria-labelledby="approfondisci-title">
         <div>
-          <p className={styles.eyebrow}>Approfondisci</p>
-          <h2 id="approfondisci-title">Dalla cartina alle informazioni utili.</h2>
+          <h2 id="approfondisci-title">Prima di partire</h2>
         </div>
         <div className={styles.nextLinks}>
-          <Link href="/percorsi">Scopri i percorsi <span aria-hidden="true">→</span></Link>
-          <Link href="/luoghi">Esplora i luoghi <span aria-hidden="true">→</span></Link>
+          <Link href="/percorsi">Percorsi <span aria-hidden="true">→</span></Link>
+          <Link href="/luoghi">Luoghi <span aria-hidden="true">→</span></Link>
           <Link href="/organizza-la-visita">Organizza la visita <span aria-hidden="true">→</span></Link>
         </div>
       </section>

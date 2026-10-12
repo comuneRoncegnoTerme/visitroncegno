@@ -66,13 +66,6 @@ const textFields = [
   "planning_eyebrow",
   "planning_title",
   "planning_description",
-  "closing_eyebrow",
-  "closing_title",
-  "closing_description",
-  "closing_primary_label",
-  "closing_primary_url",
-  "closing_secondary_label",
-  "closing_secondary_url",
 ] as const;
 
 function fieldValue(homepage: HomepageContent, field: (typeof textFields)[number]) {
@@ -168,7 +161,7 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
             <h3>Percorsi</h3><p>Titolo e testo della sezione. Le tre schede sono i percorsi consigliati.</p>
           </header>
           <div className={styles.fields}>
-            <label><span>Soprattitolo</span><input name="routes_eyebrow" defaultValue={value("routes_eyebrow")} /></label>
+            <label><span>Soprattitolo (facoltativo)</span><input name="routes_eyebrow" defaultValue={value("routes_eyebrow")} /></label>
             <label className={styles.full}><span>Titolo</span><input name="routes_title" defaultValue={value("routes_title")} /></label>
             <label className={styles.full}><span>Descrizione</span><textarea name="routes_description" rows={3} defaultValue={value("routes_description")} /></label>
             <label><span>Testo link</span><input name="routes_link_label" defaultValue={value("routes_link_label")} /></label>
@@ -182,7 +175,7 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
             <h3>Un paese, molti paesaggi</h3><p>La fascia che racconta in poche righe il carattere del territorio.</p>
           </header>
           <div className={styles.fields}>
-            <label><span>Soprattitolo</span><input name="identity_eyebrow" defaultValue={value("identity_eyebrow")} /></label>
+            <label><span>Soprattitolo (facoltativo)</span><input name="identity_eyebrow" defaultValue={value("identity_eyebrow")} /></label>
             <label className={styles.full}><span>Titolo</span><input name="identity_title" defaultValue={value("identity_title")} /></label>
             <label className={styles.full}><span>Descrizione</span><textarea name="identity_description" rows={3} defaultValue={value("identity_description")} /></label>
             <label><span>Dato 1</span><input name="identity_fact_1_value" defaultValue={value("identity_fact_1_value")} /></label>
@@ -199,7 +192,7 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
             <h3>Luoghi in evidenza</h3><p>Titolo e testo della sezione. Le tre schede sono i luoghi segnati “in evidenza”.</p>
           </header>
           <div className={styles.fields}>
-            <label><span>Soprattitolo</span><input name="highlights_eyebrow" defaultValue={value("highlights_eyebrow")} /></label>
+            <label><span>Soprattitolo (facoltativo)</span><input name="highlights_eyebrow" defaultValue={value("highlights_eyebrow")} /></label>
             <label className={styles.full}><span>Titolo</span><input name="highlights_title" defaultValue={value("highlights_title")} /></label>
             <label className={styles.full}><span>Descrizione</span><textarea name="highlights_description" rows={3} defaultValue={value("highlights_description")} /></label>
             <label><span>Testo link</span><input name="highlights_link_label" defaultValue={value("highlights_link_label")} /></label>
@@ -234,7 +227,7 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
             <h3>Eventi a Roncegno</h3><p>Testi della sezione che introduce gli appuntamenti futuri.</p>
           </header>
           <div className={styles.fields}>
-            <label><span>Soprattitolo</span><input name="events_eyebrow" defaultValue={value("events_eyebrow")} /></label>
+            <label><span>Soprattitolo (facoltativo)</span><input name="events_eyebrow" defaultValue={value("events_eyebrow")} /></label>
             <label className={styles.full}><span>Titolo</span><input name="events_title" defaultValue={value("events_title")} /></label>
             <label className={styles.full}><span>Descrizione</span><textarea name="events_description" rows={3} defaultValue={value("events_description")} /></label>
             <label><span>Testo link</span><input name="events_link_label" defaultValue={value("events_link_label")} /></label>
@@ -248,7 +241,7 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
             <h3>Cartina e mappa</h3><p>Il richiamo che porta alla cartina illustrata e alla mappa operativa.</p>
           </header>
           <div className={styles.fields}>
-            <label><span>Soprattitolo</span><input name="map_eyebrow" defaultValue={value("map_eyebrow")} /></label>
+            <label><span>Soprattitolo (facoltativo)</span><input name="map_eyebrow" defaultValue={value("map_eyebrow")} /></label>
             <label className={styles.full}><span>Titolo</span><input name="map_title" defaultValue={value("map_title")} /></label>
             <label className={styles.full}><span>Descrizione</span><textarea name="map_description" rows={3} defaultValue={value("map_description")} /></label>
             <label><span>Pulsante cartina</span><input name="map_primary_label" defaultValue={value("map_primary_label")} /></label>
@@ -263,7 +256,7 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
             <h3>Na vòlta a Ronzégno</h3><p>Il blocco narrativo dedicato alla memoria del paese.</p>
           </header>
           <div className={styles.fields}>
-            <label><span>Soprattitolo</span><input name="memory_eyebrow" defaultValue={value("memory_eyebrow")} /></label>
+            <label><span>Soprattitolo (facoltativo)</span><input name="memory_eyebrow" defaultValue={value("memory_eyebrow")} /></label>
             <label className={styles.full}><span>Titolo</span><input name="memory_title" defaultValue={value("memory_title")} /></label>
             <label className={styles.full}><span>Descrizione</span><textarea name="memory_description" rows={3} defaultValue={value("memory_description")} /></label>
             <label><span>Testo pulsante</span><input name="memory_link_label" defaultValue={value("memory_link_label")} /></label>
@@ -277,26 +270,11 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
             <h3>Pianifica la tua visita</h3><p>Il testo sopra le quattro schede: arrivare, dormire, mangiare e servizi.</p>
           </header>
           <div className={styles.fields}>
-            <label><span>Soprattitolo</span><input name="planning_eyebrow" defaultValue={value("planning_eyebrow")} /></label>
+            <label><span>Soprattitolo (facoltativo)</span><input name="planning_eyebrow" defaultValue={value("planning_eyebrow")} /></label>
             <label className={styles.full}><span>Titolo</span><input name="planning_title" defaultValue={value("planning_title")} /></label>
             <label className={styles.full}><span>Descrizione</span><textarea name="planning_description" rows={3} defaultValue={value("planning_description")} /></label>
           </div>
           <div className={styles.automaticNote}><strong>Struttura</strong><span>Le quattro card puntano alle sezioni stabili di “Organizza la visita”.</span></div>
-        </section>
-
-        <section className={styles.block}>
-          <header className={styles.blockHeading}>
-            <h3>Continua a esplorare</h3><p>L’ultimo invito in fondo alla pagina, prima del footer.</p>
-          </header>
-          <div className={styles.fields}>
-            <label><span>Soprattitolo</span><input name="closing_eyebrow" defaultValue={value("closing_eyebrow")} /></label>
-            <label className={styles.full}><span>Titolo</span><input name="closing_title" defaultValue={value("closing_title")} /></label>
-            <label className={styles.full}><span>Descrizione</span><textarea name="closing_description" rows={3} defaultValue={value("closing_description")} /></label>
-            <label><span>Pulsante principale</span><input name="closing_primary_label" defaultValue={value("closing_primary_label")} /></label>
-            <label><span>Destinazione</span><input name="closing_primary_url" defaultValue={value("closing_primary_url")} /></label>
-            <label><span>Pulsante secondario</span><input name="closing_secondary_label" defaultValue={value("closing_secondary_label")} /></label>
-            <label><span>Destinazione</span><input name="closing_secondary_url" defaultValue={value("closing_secondary_url")} /></label>
-          </div>
         </section>
 
         <div className={styles.actions}>

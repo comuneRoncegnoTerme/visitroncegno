@@ -230,10 +230,10 @@
   display: block;
   margin-bottom: 8px;
   color: #c45f2d;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .shell :global(.roncegno-map-popup-content strong) {

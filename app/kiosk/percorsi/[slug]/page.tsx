@@ -26,7 +26,7 @@ export default async function KioskRouteDetailPage({ params }: Props) {
   const image = getDirectusImageUrl(route.image);
   const paragraphs = plainText(route.description ?? route.summary);
   const facts = [
-    route.distance_km !== null ? { label: "Distanza", value: `${route.distance_km} km` } : null,
+    route.distance_km != null ? { label: "Distanza", value: `${route.distance_km.toLocaleString("it-IT")} km` } : null,
     durationLabel(route.duration_minutes) ? { label: "Durata", value: durationLabel(route.duration_minutes) as string } : null,
     route.difficulty ? { label: "Difficoltà", value: route.difficulty.replaceAll("-", " ") } : null,
     route.elevation_gain_m !== null ? { label: "Dislivello", value: `+${route.elevation_gain_m} m` } : null,

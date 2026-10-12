@@ -64,7 +64,7 @@ export default function MobileMenu() {
       {open && (
         <div ref={panelRef} className={styles.mobilePanel} id="mobile-navigation" role="dialog" aria-modal="true" aria-label="Menu">
           <div className={styles.mobilePanelTop}>
-            <span>Esplora Roncegno</span>
+            <span>Menu</span>
             <button type="button" onClick={close} aria-label="Chiudi menu">
               ×
             </button>

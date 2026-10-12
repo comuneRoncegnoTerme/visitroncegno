@@ -42,14 +42,14 @@ export default function NotFound() {
       <div className={styles.shell}>
         <section className={styles.copy}>
           <p className={styles.eyebrow}>Errore 404</p>
-          <h1>Ti sei perso lungo il sentiero.</h1>
+          <h1>Pagina non trovata</h1>
           <p className={styles.intro}>
             La pagina che stavi cercando potrebbe essere stata spostata o non essere più disponibile. Da qui puoi tornare all’inizio oppure continuare a scoprire Roncegno Terme.
           </p>
           <nav className={styles.actions} aria-label="Azioni principali">
             <Link className={styles.primary} href="/">Torna alla homepage</Link>
-            <Link className={styles.secondary} href="/percorsi">Esplora i percorsi</Link>
-            <Link className={styles.secondary} href="/luoghi">Scopri i luoghi</Link>
+            <Link className={styles.secondary} href="/percorsi">Percorsi</Link>
+            <Link className={styles.secondary} href="/luoghi">Luoghi</Link>
           </nav>
           <nav className={styles.useful} aria-label="Link utili">
             <Link href="/eventi">Eventi</Link>

@@ -33,8 +33,7 @@ export default async function RoutesPage() {
         {heroImage && <div className={styles.heroBackdrop} style={{ backgroundImage: `url('${heroImage}')` }} aria-hidden="true" />}
         <div className={styles.heroInner}>
           <div className={styles.heroTitle}>
-            <p className={styles.eyebrow}>Camminare</p>
-            <h1>Percorsi e sentieri.</h1>
+            <h1>Percorsi e sentieri</h1>
           </div>
           <p className={styles.heroIntro}>
             Itinerari tra castagneti, masi e panorami del Lagorai. Scegli il percorso in base al tempo, alla difficoltà e al tipo di uscita, poi preparati e parti con rispetto per la montagna.
@@ -59,7 +58,7 @@ export default async function RoutesPage() {
       <nav className={styles.footerNav} aria-label="Continua a esplorare">
         <Link href="/cartina">
           <small>Orientati</small>
-          <strong>Esplora la cartina illustrata →</strong>
+          <strong>La cartina illustrata →</strong>
         </Link>
         <Link href="/organizza-la-visita#mappa-visita">
           <small>Organizza</small>
