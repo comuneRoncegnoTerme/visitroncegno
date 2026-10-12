@@ -205,26 +205,8 @@ export default async function Home() {
       )}
 
 
-      <section className={editorial.identityStrip} aria-labelledby="identity-title">
-        <div className={editorial.identityLandscape} aria-hidden="true" />
-        <div className={editorial.identityInner}>
-          <div className={editorial.identityCopy}>
-            {homepage.identity_eyebrow && <p>{homepage.identity_eyebrow}</p>}
-            <h2 id="identity-title">{homepage.identity_title ?? "Dal fondovalle ai masi"}</h2>
-            <span>
-              {homepage.identity_description ?? "Il centro storico, Marter, le terme, i castagneti e la montagna raccontano parti diverse di Roncegno."}
-            </span>
-          </div>
-          <div className={editorial.identityFacts} aria-label="Tratti distintivi di Roncegno">
-            <span><strong>{homepage.identity_fact_1_value ?? "Terme"}</strong><small>{homepage.identity_fact_1_label ?? "Acque e parco"}</small></span>
-            <span><strong>{homepage.identity_fact_2_value ?? "44 masi"}</strong><small>{homepage.identity_fact_2_label ?? "Sul territorio"}</small></span>
-            <span><strong>{homepage.identity_fact_3_value ?? "Montagna"}</strong><small>{homepage.identity_fact_3_label ?? "Dal fondovalle in su"}</small></span>
-          </div>
-        </div>
-      </section>
-
       {visibleFeaturedPlaces.length > 0 && (
-        <section className={`${styles.section} ${editorial.highlightsSection} ${spacing.band}`} aria-labelledby="highlights-title">
+        <section className={`${styles.section} ${editorial.highlightsSection} ${spacing.band} ${spacing.bandFollow}`} aria-labelledby="highlights-title">
           <div className={styles.sectionInner}>
             <div className={styles.sectionHeading}>
               <div>

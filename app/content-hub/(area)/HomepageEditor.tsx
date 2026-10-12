@@ -23,15 +23,6 @@ const textFields = [
   "routes_description",
   "routes_link_label",
   "routes_link_url",
-  "identity_eyebrow",
-  "identity_title",
-  "identity_description",
-  "identity_fact_1_value",
-  "identity_fact_1_label",
-  "identity_fact_2_value",
-  "identity_fact_2_label",
-  "identity_fact_3_value",
-  "identity_fact_3_label",
   "highlights_eyebrow",
   "highlights_title",
   "highlights_description",
@@ -168,23 +159,6 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
             <label><span>Destinazione</span><input name="routes_link_url" defaultValue={value("routes_link_url")} /></label>
           </div>
           <div className={styles.automaticNote}><strong>Contenuti</strong><span>Fino a tre percorsi con flag “recommended”, poi “featured” come fallback.</span><a href="/content-hub/percorsi">Gestisci percorsi </a></div>
-        </section>
-
-        <section className={styles.block}>
-          <header className={styles.blockHeading}>
-            <h3>Un paese, molti paesaggi</h3><p>La fascia che racconta in poche righe il carattere del territorio.</p>
-          </header>
-          <div className={styles.fields}>
-            <label><span>Soprattitolo (facoltativo)</span><input name="identity_eyebrow" defaultValue={value("identity_eyebrow")} /></label>
-            <label className={styles.full}><span>Titolo</span><input name="identity_title" defaultValue={value("identity_title")} /></label>
-            <label className={styles.full}><span>Descrizione</span><textarea name="identity_description" rows={3} defaultValue={value("identity_description")} /></label>
-            <label><span>Dato 1</span><input name="identity_fact_1_value" defaultValue={value("identity_fact_1_value")} /></label>
-            <label><span>Etichetta dato 1</span><input name="identity_fact_1_label" defaultValue={value("identity_fact_1_label")} /></label>
-            <label><span>Dato 2</span><input name="identity_fact_2_value" defaultValue={value("identity_fact_2_value")} /></label>
-            <label><span>Etichetta dato 2</span><input name="identity_fact_2_label" defaultValue={value("identity_fact_2_label")} /></label>
-            <label><span>Dato 3</span><input name="identity_fact_3_value" defaultValue={value("identity_fact_3_value")} /></label>
-            <label><span>Etichetta dato 3</span><input name="identity_fact_3_label" defaultValue={value("identity_fact_3_label")} /></label>
-          </div>
         </section>
 
         <section className={styles.block}>
