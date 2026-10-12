@@ -4,6 +4,7 @@ import HeroExperience, { type HeroHotspot, type HeroMode } from "@/components/He
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import FestaHomepageBanner from "@/components/FestaHomepageBanner";
+import CartinaTeaser from "@/components/CartinaTeaser";
 import {
   getDirectusImageUrl,
   getFeaturedPlaces,
@@ -270,19 +271,14 @@ export default async function Home() {
       </section>
       )}
 
-      <section className={`${editorial.mapStory} ${spacing.bandEnd}`} aria-labelledby="map-story-title">
-        <div className={editorial.mapStoryInner}>
-          <div className={editorial.mapStoryCopy}>
-            {homepage.map_eyebrow && <p className={styles.eyebrow}>{homepage.map_eyebrow}</p>}
-            <h2 id="map-story-title">{homepage.map_title ?? "La cartina di Roncegno"}</h2>
-            <p>{homepage.map_description ?? "L’illustrazione di Fabio Vettori con i sentieri e i luoghi da vedere. Per orientarti sul posto c’è anche la mappa interattiva."}</p>
-          </div>
-          <div className={editorial.mapStoryActions}>
-            <Link className={editorial.mapPrimary} href={homepage.map_primary_url ?? "/cartina"}>{homepage.map_primary_label ?? "Apri la cartina illustrata"}</Link>
-            <Link className={editorial.mapSecondary} href={homepage.map_secondary_url ?? "/mappa"}>{homepage.map_secondary_label ?? "Mappa interattiva"}</Link>
-          </div>
-        </div>
-      </section>
+      <CartinaTeaser
+        title={homepage.map_title ?? "La cartina di Roncegno"}
+        description={homepage.map_description ?? "Disegnata da Fabio Vettori con le sue formiche. Tocca un nome per aprirlo sulla cartina."}
+        primaryLabel={homepage.map_primary_label ?? "Apri la cartina"}
+        primaryUrl={homepage.map_primary_url ?? "/cartina"}
+        secondaryLabel={homepage.map_secondary_label ?? "Mappa reale"}
+        secondaryUrl={homepage.map_secondary_url ?? "/mappa"}
+      />
 
       <section className={`${styles.storySection} ${feedback.storySection}`} aria-labelledby="memoria-title">
         <div className={feedback.memoryLandscape} aria-hidden="true" />

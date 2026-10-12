@@ -46,7 +46,8 @@ function resolvePoints(places: EditorialItem[], routes: EditorialItem[]): Illust
   });
 }
 
-export default async function CartinaPage() {
+export default async function CartinaPage({ searchParams }: PageProps<"/cartina">) {
+  const { punto } = await searchParams;
   const [settings, places, routes] = await Promise.all([
     getSiteSettings(),
     getEditorialList("places"),
@@ -82,6 +83,7 @@ export default async function CartinaPage() {
           aspect={3583 / 2560}
           points={points}
           groups={groups}
+          initialPointId={typeof punto === "string" ? punto : undefined}
         />
         <p className={styles.attribution}>
           Illustrazione “Le Formiche” di Fabio Vettori, cartina ufficiale 2026. Il disegno è

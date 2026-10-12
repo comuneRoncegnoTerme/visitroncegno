@@ -23,6 +23,8 @@ type Props = {
   aspect: number;
   points: IllustratedMapPoint[];
   groups: { id: string; label: string }[];
+  /** Punto da aprire subito (dai nomi della cartina in homepage). */
+  initialPointId?: string;
 };
 
 const MIN_SCALE = 1;
@@ -30,7 +32,7 @@ const MAX_SCALE = 4;
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 
-export default function IllustratedMapViewer({ src, alt, aspect, points, groups }: Props) {
+export default function IllustratedMapViewer({ src, alt, aspect, points, groups, initialPointId }: Props) {
   const shellRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<{ x: number; y: number; left: number; top: number; moved: boolean } | null>(null);
@@ -188,6 +190,22 @@ export default function IllustratedMapViewer({ src, alt, aspect, points, groups 
     requestAnimationFrame(() => centerOn(point.x, point.y, target));
     window.setTimeout(() => centerOn(point.x, point.y, target), 520);
   }
+
+  // Arrivando da un nome della homepage, la cartina si apre già su quel punto.
+  const openedInitialRef = useRef(false);
+  useEffect(() => {
+    if (openedInitialRef.current || !initialPointId || baseScale === 1 && (frameRef.current?.clientWidth ?? 0) < 760) return;
+    const point = points.find((item) => item.id === initialPointId);
+    if (!point) return;
+    const timeout = window.setTimeout(() => {
+      openedInitialRef.current = true;
+      shellRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      focusPoint(point);
+    }, 300);
+    return () => window.clearTimeout(timeout);
+    // focusPoint cambia a ogni render: qui serve solo all'apertura.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [baseScale, initialPointId, points]);
 
   function step(direction: number) {
     const next = points[(selectedIndex + direction + points.length) % points.length];

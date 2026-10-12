@@ -1,0 +1,221 @@
+.section {
+  position: relative;
+  height: min(78vh, 720px);
+  min-height: 520px;
+  overflow: hidden;
+  background: #8fc6dd;
+  isolation: isolate;
+}
+
+.illustration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+
+.illustration img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+}
+
+/* Nomi dei luoghi sulla cartina */
+
+.tag {
+  position: absolute;
+  z-index: 2;
+  transform: translate(-50%, -100%);
+  pointer-events: none;
+}
+
+.tag::after {
+  position: absolute;
+  bottom: -9px;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: #d66b2c;
+  box-shadow: 0 2px 6px rgba(13, 42, 34, 0.45);
+  content: "";
+  opacity: 0;
+  transform: translate(-50%, 50%) scale(0.4);
+  transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.tag span {
+  display: block;
+  margin-bottom: 12px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  color: #17372e;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(13, 42, 34, 0.25);
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(8px) scale(0.92);
+  transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+
+.tagLit {
+  pointer-events: auto;
+}
+
+.tagLit::after {
+  opacity: 1;
+  transform: translate(-50%, 50%) scale(1);
+}
+
+.tagLit span {
+  opacity: 1;
+  transform: none;
+}
+
+.tagLit:hover span,
+.tag:focus-visible span {
+  color: #fff;
+  background: #17372e;
+}
+
+.tag:focus-visible {
+  outline: none;
+}
+
+/* Formica in parapendio */
+
+.ant {
+  position: absolute;
+  z-index: 3;
+  width: clamp(76px, 9vw, 120px);
+  height: auto;
+  filter: drop-shadow(0 10px 12px rgba(13, 42, 34, 0.28));
+  pointer-events: none;
+  transform-origin: 50% 20%;
+  animation: glide 5s ease-in-out infinite alternate;
+}
+
+@keyframes glide {
+  from { translate: 0 -6px; }
+  to { translate: 0 8px; }
+}
+
+/* Testo */
+
+.shade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(90deg, rgba(10, 34, 27, 0.72) 0%, rgba(10, 34, 27, 0.35) 34%, rgba(10, 34, 27, 0) 56%);
+  pointer-events: none;
+}
+
+.copy {
+  position: absolute;
+  bottom: clamp(28px, 6vh, 64px);
+  left: 5vw;
+  z-index: 4;
+  max-width: 430px;
+  color: #fff;
+}
+
+.copy h2 {
+  margin: 0;
+  font: 400 clamp(2.4rem, 4.4vw, 4rem) / 1 Georgia, "Times New Roman", serif;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.35);
+}
+
+.copy p {
+  margin: 14px 0 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.05rem;
+  line-height: 1.55;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.actions a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 46px;
+  padding: 0 20px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.primary {
+  color: #fff;
+  background: #d66b2c;
+}
+
+.secondary {
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  color: #fff;
+  background: rgba(10, 34, 27, 0.35);
+}
+
+.actions a:focus-visible,
+.tag:focus-visible span {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+.copy small {
+  display: block;
+  margin-top: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+}
+
+@media (max-width: 760px) {
+  .section {
+    height: 82svh;
+    min-height: 560px;
+  }
+
+  .shade {
+    background: linear-gradient(0deg, rgba(10, 34, 27, 0.82) 0%, rgba(10, 34, 27, 0.45) 38%, rgba(10, 34, 27, 0) 62%);
+  }
+
+  .copy {
+    right: 16px;
+    bottom: 24px;
+    left: 16px;
+  }
+
+  .copy h2 {
+    font-size: 2.3rem;
+  }
+
+  .copy p {
+    font-size: 1rem;
+  }
+
+  .tag span {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ant {
+    animation: none;
+  }
+
+  .tag::after,
+  .tag span {
+    transition: none;
+  }
+}
