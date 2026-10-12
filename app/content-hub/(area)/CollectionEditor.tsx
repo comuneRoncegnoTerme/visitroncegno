@@ -1,7 +1,6 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import MediaField from "./MediaField";
 import styles from "./collection-editor.module.css";
@@ -284,24 +283,24 @@ export default function CollectionEditor({
       <aside className={styles.listPane}>
         <div className={styles.listHeader}>
           <div>
-            <span>{items.length} contenuti</span>
             <h2>{title}</h2>
+            <span>{loading ? "…" : items.length === 1 ? "1 contenuto" : `${items.length} contenuti`}</span>
           </div>
           <button type="button" onClick={createNew}>
-            + Nuovo
+            Nuovo
           </button>
         </div>
 
         <div className={styles.searchBox}>
-          <label htmlFor={`content-search-${collection}`}>Cerca</label>
+          <label htmlFor={`content-search-${collection}`} className={styles.srOnly}>Cerca</label>
           <input
             id={`content-search-${collection}`}
             type="search"
             value={query}
-            placeholder="Titolo, slug, stato o tipologia"
+            placeholder="Cerca per titolo o indirizzo"
             onChange={(event) => setQuery(event.target.value)}
           />
-          {query && <span>{filteredItems.length} risultati</span>}
+          {query && <span>{filteredItems.length === 1 ? "1 risultato" : `${filteredItems.length} risultati`}</span>}
         </div>
 
         <div className={styles.items}>
@@ -316,14 +315,22 @@ export default function CollectionEditor({
               >
                 <strong>{item.title || `#${item.id}`}</strong>
                 <span>
-                  {item.status === "published"
-                    ? "Pubblicato"
-                    : item.status === "archived"
-                      ? "Archiviato"
-                      : "Bozza"}
-                  {" · "}
-                  {item.map_label ? `${item.map_label} · ` : ""}
-                  {item.slug}
+                  <em
+                    className={
+                      item.status === "published"
+                        ? styles.published
+                        : item.status === "archived"
+                          ? styles.archived
+                          : styles.draft
+                    }
+                  >
+                    {item.status === "published"
+                      ? "Pubblicato"
+                      : item.status === "archived"
+                        ? "Archiviato"
+                        : "Bozza"}
+                  </em>
+                  {item.map_label ? ` · ${item.map_label}` : ""}
                 </span>
               </button>
             ))}
@@ -334,14 +341,10 @@ export default function CollectionEditor({
       </aside>
 
       <section className={styles.editorPane}>
-        <Link href="/content-hub" className={styles.backToHub}>
-          ← Torna al Content Hub
-        </Link>
-
         <div className={styles.editorHeading}>
           <div>
-            <p>{selected ? `Modifica #${selected.id}` : "Nuovo contenuto"}</p>
-            <h1>{selected?.title || title}</h1>
+            <p>{selected ? title : `${title} · nuovo`}</p>
+            <h1>{selected ? selected.title || `Senza titolo (#${selected.id})` : "Nuovo contenuto"}</h1>
             <span>{description}</span>
           </div>
           {selected && previewBase && selected.slug && (
@@ -350,7 +353,7 @@ export default function CollectionEditor({
               target="_blank"
               rel="noreferrer"
             >
-              Anteprima ↗
+              Vedi sul sito
             </a>
           )}
         </div>

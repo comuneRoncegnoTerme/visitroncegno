@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import PageHeader from "../PageHeader";
 import styles from "./page.module.css";
 
 type Item = Record<string, unknown> & {
@@ -149,54 +150,48 @@ export default function QualityDashboard() {
     return list;
   }, [data, referenceTime]);
 
-  const stats = [
-    ["Eventi", data.events.length],
-    ["Luoghi", data.places.length],
-    ["Percorsi", data.routes.length],
-    ["Da sistemare", problems.length],
-  ] as const;
+  const groups = ["Eventi", "Luoghi", "Percorsi"]
+    .map((group) => ({ group, problems: problems.filter((problem) => problem.group === group) }))
+    .filter((entry) => entry.problems.length > 0);
+
+  const checked = data.events.length + data.places.length + data.routes.length;
 
   return (
     <main className={styles.page}>
-      <header className={styles.header}>
-        <div>
-          <p>Content Hub · Controllo editoriale</p>
-          <h1>Qualità contenuti</h1>
-          <span>
-            Segnala automaticamente i contenuti pubblicati che mancano di informazioni
-            utili al sito.
-          </span>
-        </div>
-        <Link href="/content-hub">← Dashboard</Link>
-      </header>
+      <PageHeader
+        title="Cose da sistemare"
+        intro="Contenuti pubblicati a cui manca qualcosa: foto, testo breve, coordinate, GPX o luogo. Segnala anche gli eventi già finiti ma ancora online."
+      />
 
-      <section className={styles.stats}>
-        {stats.map(([label, value]) => (
-          <article key={label}>
-            <strong>{loading ? "—" : value}</strong>
-            <span>{label}</span>
-          </article>
-        ))}
-      </section>
-
+      {loading && <p className={styles.muted}>Controllo in corso…</p>}
       {error && <p className={styles.error}>{error}</p>}
-      {!loading && !error && problems.length === 0 && (
-        <div className={styles.ok}>Nessuna criticità rilevata sui campi controllati.</div>
+      {!loading && !error && (
+        <p className={styles.summary}>
+          {problems.length === 0
+            ? `Tutto a posto: ${checked} contenuti controllati.`
+            : `${problems.length === 1 ? "1 cosa" : `${problems.length} cose`} da sistemare su ${checked} contenuti controllati.`}
+        </p>
       )}
-      {!loading && !error && problems.length > 0 && (
-        <section className={styles.list}>
-          {problems.map((problem) => (
-            <Link href={problem.href} key={problem.key}>
-              <span>{problem.group}</span>
-              <div>
-                <strong>{problem.title}</strong>
-                <small>{problem.detail}</small>
-              </div>
-              <b>Correggi →</b>
-            </Link>
-          ))}
-        </section>
-      )}
+      {!loading &&
+        !error &&
+        groups.map(({ group, problems: groupProblems }) => (
+          <section className={styles.group} key={group}>
+            <h2>
+              {group} <span>{groupProblems.length}</span>
+            </h2>
+            <ul className={styles.list}>
+              {groupProblems.map((problem) => (
+                <li key={problem.key}>
+                  <div>
+                    <strong>{problem.title}</strong>
+                    <small>{problem.detail}</small>
+                  </div>
+                  <Link href={problem.href}>Apri</Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
     </main>
   );
 }

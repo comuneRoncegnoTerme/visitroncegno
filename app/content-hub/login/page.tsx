@@ -13,80 +13,54 @@ export default async function ContentHubLoginPage() {
   if (session) redirect("/content-hub");
 
   const settings = await getSiteSettings();
-  const siteLogo = getDirectusAssetUrl(settings.logo);
+  const siteLogo = getDirectusAssetUrl(settings.logo) ?? "/images/logo/visit-roncegno.png";
   const siteName = settings.site_name ?? "Visit Roncegno";
+  const helpEmail = settings.contact_email;
 
   return (
     <main className={styles.page}>
-      <div className={styles.shell}>
-        <header className={styles.header}>
-          <Link href="/" className={styles.brand} aria-label={siteName}>
-            {siteLogo ? (
-              <img className={styles.siteLogo} src={siteLogo} alt={siteName} />
+      <figure className={styles.photo}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/images/homepage/roncegno-panorama.webp" alt="" />
+        <figcaption>
+          Roncegno Terme, Valsugana
+          <span>Foto Luca Matassoni · APT Valsugana</span>
+        </figcaption>
+      </figure>
+
+      <div className={styles.panel}>
+        <div className={styles.top}>
+          <Link href="/" className={styles.siteLink}>← visitroncegno.it</Link>
+        </div>
+
+        <div className={styles.box}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className={styles.logo} src={siteLogo} alt={siteName} />
+
+          <h1>Area redazione</h1>
+          <p className={styles.intro}>
+            Per aggiornare eventi, luoghi, percorsi e pagine del sito.
+            Entra con l’email e la password del tuo account Directus.
+          </p>
+
+          <LoginForm />
+
+          <p className={styles.help}>
+            {helpEmail ? (
+              <>
+                Non riesci ad accedere? Scrivi a{" "}
+                <a href={`mailto:${helpEmail}`}>{helpEmail}</a>.
+              </>
             ) : (
-              <span>{siteName}</span>
+              <>Non riesci ad accedere? Chiedi a chi gestisce gli account del Comune.</>
             )}
-            <small>Content Hub</small>
-          </Link>
-
-          <div className={styles.headerMeta}>
-            <span>Area redazione</span>
-            <Link href="/" className={styles.siteLink}>← Torna al sito</Link>
-          </div>
-        </header>
-
-        <section className={styles.loginArea}>
-          <div className={styles.introPanel}>
-            <div className={styles.introTop}>
-              <p className={styles.eyebrow}>Visit Roncegno · redazione</p>
-              <h1>Il sito, tutto da qui.</h1>
-              <p className={styles.lead}>
-                Aggiorna ciò che le persone vedono: appuntamenti, luoghi,
-                percorsi, storie e contenuti della homepage.
-              </p>
-            </div>
-
-            <div className={styles.editorialIndex} aria-label="Aree del Content Hub">
-              <div><span>01</span><strong>Contenuti</strong><small>Homepage · eventi · storie</small></div>
-              <div><span>02</span><strong>Territorio</strong><small>Luoghi · percorsi · pannelli</small></div>
-              <div><span>03</span><strong>Media</strong><small>Immagini · documenti · audio</small></div>
-            </div>
-
-            <div className={styles.institutionalSignature}>
-              <img
-                src={MUNICIPAL_CREST_URL}
-                alt="Stemma del Comune di Roncegno Terme"
-                className={styles.municipalCrest}
-              />
-              <div>
-                <small>Uno strumento del</small>
-                <strong>Comune di Roncegno Terme</strong>
-                <span>per la gestione di Visit Roncegno</span>
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.accessPanel}>
-            <div className={styles.cardHeading}>
-              <span>Accesso riservato</span>
-              <h2>Accedi al Content Hub</h2>
-              <p>
-                Usa le credenziali della tua utenza Directus.
-              </p>
-            </div>
-
-            <LoginForm />
-
-            <div className={styles.securityNote}>
-              <span aria-hidden="true">●</span>
-              <p>Sessione protetta con scadenza automatica dopo 8 ore.</p>
-            </div>
-          </div>
-        </section>
+          </p>
+        </div>
 
         <footer className={styles.footer}>
-          <span>Visit Roncegno Digital Platform</span>
-          <small>Content management · territorio · comunicazione</small>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={MUNICIPAL_CREST_URL} alt="" className={styles.crest} />
+          <span>Comune di Roncegno Terme</span>
         </footer>
       </div>
     </main>

@@ -1,0 +1,78 @@
+.page {
+  max-width: 980px;
+  padding: 32px clamp(18px, 4vw, 48px) 64px;
+}
+
+.summary,
+.muted {
+  margin: 20px 0 0;
+  color: var(--hub-muted);
+}
+
+.error {
+  margin: 20px 0 0;
+  color: var(--hub-danger);
+}
+
+.group {
+  margin-top: 22px;
+}
+
+.group h2 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.group h2 span {
+  margin-left: 4px;
+  color: var(--hub-faint);
+  font-weight: 400;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--hub-line);
+  border-radius: 6px;
+  background: var(--hub-surface);
+  list-style: none;
+}
+
+.list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 14px;
+  border-top: 1px solid var(--hub-line-soft);
+}
+
+.list li:first-child {
+  border-top: 0;
+}
+
+.list li > div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.list strong {
+  font-weight: 500;
+}
+
+.list small {
+  color: var(--hub-accent);
+  font-size: 13px;
+}
+
+.list a {
+  flex-shrink: 0;
+  color: var(--hub-green);
+  font-size: 13px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

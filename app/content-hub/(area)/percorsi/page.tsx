@@ -40,7 +40,7 @@ export default async function ContentHubRoutesPage() {
     <CollectionEditor
       collection="routes"
       title="Percorsi"
-      description="Gestisci schede, dati tecnici, accessibilità, immagini e file GPX dei percorsi."
+      description="Sentieri e itinerari: lunghezza, dislivello, punto di partenza e traccia GPX da scaricare."
       fields={fields}
       previewBase="/percorsi"
     />
