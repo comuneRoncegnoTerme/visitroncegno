@@ -60,7 +60,7 @@ export default async function RoutesPage() {
           <small>Orientati</small>
           <strong>La cartina illustrata →</strong>
         </Link>
-        <Link href="/organizza-la-visita#mappa-visita">
+        <Link href="/mappa">
           <small>Organizza</small>
           <strong>Apri la mappa del territorio →</strong>
         </Link>

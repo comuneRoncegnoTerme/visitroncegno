@@ -3,6 +3,7 @@ import Link from "next/link";
 import IllustratedMapViewer, { type IllustratedMapPoint } from "@/components/IllustratedMapViewer";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
+import MapSwitch from "@/components/MapSwitch";
 import { CARTINA_GROUPS, CARTINA_POINTS, type CartinaPoint } from "@/lib/cartina-points";
 import { getDirectusImageUrl, getSiteSettings } from "@/lib/directus";
 import { getEditorialList, type EditorialItem } from "@/lib/editorial";
@@ -66,9 +67,12 @@ export default async function CartinaPage() {
             i musei e le cime intorno. Tocca un punto per aprire la scheda del luogo.
           </p>
         </div>
-        <a className={styles.download} href="/downloads/cartina-ufficiale-roncegno-terme.pdf" download>
-          Scarica il PDF
-        </a>
+        <div className={styles.introActions}>
+          <MapSwitch current="cartina" />
+          <a className={styles.download} href="/downloads/cartina-ufficiale-roncegno-terme.pdf" download>
+            Scarica il PDF
+          </a>
+        </div>
       </section>
 
       <section className={styles.mapSection} aria-label="Cartina illustrata">
@@ -82,7 +86,7 @@ export default async function CartinaPage() {
         <p className={styles.attribution}>
           Illustrazione “Le Formiche” di Fabio Vettori, cartina ufficiale 2026. Il disegno è
           indicativo e non sostituisce le carte escursionistiche: per orientarti sul posto usa
-          la <Link href="/organizza-la-visita#mappa-visita">mappa interattiva</Link>.
+          la <Link href="/mappa">mappa reale</Link>.
         </p>
       </section>
 

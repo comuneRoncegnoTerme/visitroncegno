@@ -1,0 +1,41 @@
+/* La mappa occupa lo schermo sotto l'intestazione: niente footer, si usa sul posto. */
+.page {
+  display: flex;
+  height: 100svh;
+  flex-direction: column;
+  background: var(--paper);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 5vw 14px;
+}
+
+.bar h1 {
+  margin: 0;
+  font: 400 2rem/1 Georgia, "Times New Roman", serif;
+}
+
+.mapArea {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+@media (max-width: 760px) {
+  .bar {
+    padding: 10px 16px;
+  }
+
+  /* Su telefono basta l'interruttore: il titolo resta per gli screen reader. */
+  .bar h1 {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+}

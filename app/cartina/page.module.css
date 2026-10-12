@@ -14,7 +14,7 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: 32px;
-  padding: 128px 0 28px;
+  padding: 56px 0 28px;
 }
 
 .introCopy {
@@ -33,6 +33,14 @@
   color: var(--muted);
   font-size: 1.05rem;
   line-height: 1.6;
+}
+
+.introActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
 }
 
 .download {
@@ -79,10 +87,14 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 20px;
-    padding: 104px 0 24px;
+    padding: 32px 0 24px;
   }
 
   .mapSection {
     padding-bottom: 56px;
+  }
+
+  .introActions {
+    justify-content: flex-start;
   }
 }

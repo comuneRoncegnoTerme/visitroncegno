@@ -279,7 +279,7 @@ export default async function Home() {
           </div>
           <div className={editorial.mapStoryActions}>
             <Link className={editorial.mapPrimary} href={homepage.map_primary_url ?? "/cartina"}>{homepage.map_primary_label ?? "Apri la cartina illustrata"}</Link>
-            <Link className={editorial.mapSecondary} href={homepage.map_secondary_url ?? "/organizza-la-visita#mappa-visita"}>{homepage.map_secondary_label ?? "Mappa interattiva"}</Link>
+            <Link className={editorial.mapSecondary} href={homepage.map_secondary_url ?? "/mappa"}>{homepage.map_secondary_label ?? "Mappa interattiva"}</Link>
           </div>
         </div>
       </section>

@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
 import { connection } from "next/server";
 import Link from "next/link";
-import HomeMap from "@/components/HomeMap";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import {
   getDirectusImageUrl,
-  getMapPlaces,
   getSiteSettings,
 } from "@/lib/directus";
 import { getEditorialList, type EditorialItem } from "@/lib/editorial";
@@ -64,33 +62,10 @@ function PlaceStrip({ places, emptyText }: { places: EditorialItem[]; emptyText:
 
 export default async function OrganizzaLaVisitaPage() {
   await connection();
-  const [siteSettings, mapPlaces, allPlaces] = await Promise.all([
+  const [siteSettings, allPlaces] = await Promise.all([
     getSiteSettings(),
-    getMapPlaces(),
     getEditorialList("places"),
   ]);
-
-  const editorialById = new Map(allPlaces.map((place) => [place.id, place]));
-  const placesWithCoordinates = mapPlaces
-    .filter((place) => place.latitude !== null && place.longitude !== null)
-    .map((place) => {
-      const editorial = editorialById.get(place.id);
-      return {
-        id: place.id,
-        title: place.title,
-        slug: place.slug,
-        summary: place.summary,
-        imageUrl: getDirectusImageUrl(place.image),
-        latitude: place.latitude as number,
-        longitude: place.longitude as number,
-        mapLabel: place.map_label,
-        mapIcon: place.map_icon,
-        placeType: editorial?.place_type,
-        detailMode: editorial?.detail_mode,
-        canonicalPath: editorial?.canonical_path,
-        externalDetailUrl: editorial?.external_detail_url,
-      };
-    });
 
   const sleeping = allPlaces.filter(isSleepingPlace);
   const eating = allPlaces.filter(isEatingPlace);
@@ -114,7 +89,7 @@ export default async function OrganizzaLaVisitaPage() {
               <a href="#dormire">Dormire</a>
               <a href="#mangiare">Mangiare</a>
               <a href="#come-arrivare">Come arrivare</a>
-              <a href="#mappa-visita">Mappa</a>
+              <Link href="/mappa">Mappa</Link>
               <a href="#servizi">Servizi</a>
             </nav>
           </div>
@@ -152,13 +127,23 @@ export default async function OrganizzaLaVisitaPage() {
           <article className={styles.travelCard}><h3>In auto</h3><p>Roncegno Terme si trova in Valsugana ed è raggiungibile attraverso la SS47. Per chi arriva dall’autostrada A22, il collegamento indicato dall’APT Valsugana passa da Trento Sud verso la Valsugana.</p><a href={OFFICIAL_TRAVEL_LINKS.valsugana} target="_blank" rel="noreferrer">Indicazioni APT Valsugana ↗</a></article>
           <article className={styles.travelCard}><h3>In treno</h3><p>La ferrovia della Valsugana serve il territorio con la stazione Roncegno Bagni-Marter, sulla direttrice Trento–Borgo Valsugana–Bassano.</p><a href={OFFICIAL_TRAVEL_LINKS.railway} target="_blank" rel="noreferrer">Consulta ferrovia e avvisi ↗</a></article>
           <article className={styles.travelCard}><h3>In autobus</h3><p>Roncegno è servita anche dal trasporto pubblico extraurbano. Linee e frequenze possono cambiare tra periodo scolastico, feriale e stagionale.</p><a href={OFFICIAL_TRAVEL_LINKS.trentinoTrasporti} target="_blank" rel="noreferrer">Orari Trentino Trasporti ↗</a></article>
-          <article className={styles.travelCard}><h3>Muoversi sul posto</h3><p>Per pianificare spostamenti, verificare fermate e tempi reali di attesa puoi usare il servizio ufficiale Muoversi in Trentino. Per parcheggi e servizi locali usa anche la mappa qui sotto.</p><div className={styles.travelLinks}><a href={OFFICIAL_TRAVEL_LINKS.muoversi} target="_blank" rel="noreferrer">Muoversi in Trentino ↗</a><a href="#mappa-visita">Apri la mappa ↓</a></div></article>
+          <article className={styles.travelCard}><h3>Muoversi sul posto</h3><p>Per pianificare spostamenti, verificare fermate e tempi reali di attesa puoi usare il servizio ufficiale Muoversi in Trentino. Per parcheggi e servizi locali usa anche la mappa del sito.</p><div className={styles.travelLinks}><a href={OFFICIAL_TRAVEL_LINKS.muoversi} target="_blank" rel="noreferrer">Muoversi in Trentino ↗</a><Link href="/mappa">Apri la mappa</Link></div></article>
         </div>
       </section>
 
       <section className={styles.mapSection} id="mappa-visita">
-        <div className={styles.mapHeading}><h2>Mappa</h2><p>Filtra luoghi, ristorazione, ospitalità e servizi per capire subito cosa trovi vicino a te e come distribuire la visita.</p></div>
-        <div className={styles.mapFrame}><HomeMap places={placesWithCoordinates} compact /></div>
+        <div className={styles.mapHeading}>
+          <h2>Mappa</h2>
+          <p>Luoghi da vedere, ristoranti, alloggi e servizi sulla mappa, con le indicazioni per arrivarci. Oppure la cartina disegnata da Fabio Vettori.</p>
+          <div className={styles.mapLinks}>
+            <Link href="/mappa">Apri la mappa</Link>
+            <Link href="/cartina">La cartina disegnata</Link>
+          </div>
+        </div>
+        <Link href="/cartina" className={styles.mapPreview} aria-label="La cartina disegnata di Roncegno">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/cartina/cartina-roncegno-preview.webp" alt="" loading="lazy" />
+        </Link>
       </section>
 
       <section className={`${styles.contentSection} ${styles.alt}`} id="servizi">
