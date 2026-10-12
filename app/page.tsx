@@ -20,6 +20,7 @@ import styles from "./home-v2.module.css";
 import refine from "./home-v2-refine.module.css";
 import feedback from "./home-feedback.module.css";
 import editorial from "./home-editorial.module.css";
+import spacing from "./home-spacing.module.css";
 
 type HomepageHeroConfig = {
   hero_mode?: HeroMode | null;
@@ -160,7 +161,7 @@ export default async function Home() {
       )}
 
       {visibleRoutes.length > 0 && (
-        <section className={`${styles.section} ${editorial.routesSection}`} aria-labelledby="routes-title">
+        <section className={`${styles.section} ${editorial.routesSection} ${spacing.band}`} aria-labelledby="routes-title">
           <div className={styles.sectionInner}>
             <div className={styles.sectionHeading}>
               <div>
@@ -223,7 +224,7 @@ export default async function Home() {
       </section>
 
       {visibleFeaturedPlaces.length > 0 && (
-        <section className={`${styles.section} ${editorial.highlightsSection}`} aria-labelledby="highlights-title">
+        <section className={`${styles.section} ${editorial.highlightsSection} ${spacing.band}`} aria-labelledby="highlights-title">
           <div className={styles.sectionInner}>
             <div className={styles.sectionHeading}>
               <div>
@@ -255,7 +256,7 @@ export default async function Home() {
       )}
 
       {visibleEvents.length > 0 && (
-      <section className={`${styles.section} ${styles.eventsSection}`}>
+      <section className={`${styles.section} ${styles.eventsSection} ${spacing.band} ${spacing.bandFollow}`}>
         <div className={styles.sectionInner}>
           <div className={styles.sectionHeading}>
             <div>{homepage.events_eyebrow && <p>{homepage.events_eyebrow}</p>}<h2 className={styles.sectionTitle}>{homepage.events_title ?? "Eventi a Roncegno"}</h2><span className={styles.sectionLead}>{homepage.events_description ?? "Feste, concerti, mercati e camminate in programma."}</span></div>
@@ -287,7 +288,7 @@ export default async function Home() {
       </section>
       )}
 
-      <section className={editorial.mapStory} aria-labelledby="map-story-title">
+      <section className={`${editorial.mapStory} ${spacing.bandEnd}`} aria-labelledby="map-story-title">
         <div className={editorial.mapStoryInner}>
           <div className={editorial.mapStoryCopy}>
             {homepage.map_eyebrow && <p className={styles.eyebrow}>{homepage.map_eyebrow}</p>}
@@ -315,7 +316,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className={styles.planningSection}>
+      <section className={`${styles.planningSection} ${spacing.band}`}>
         <div className={`${styles.sectionInner} ${styles.planningGrid}`}>
           <div className={styles.planningCopy}>
             {homepage.planning_eyebrow && <p className={styles.eyebrow}>{homepage.planning_eyebrow}</p>}

@@ -123,7 +123,7 @@
 
   .utilityCard {
     min-width: 0 !important;
-    min-height: 116px !important;
+    min-height: 0 !important;
     scroll-snap-align: none !important;
     border-right: 1px solid rgba(23, 55, 46, 0.1) !important;
     border-bottom: 1px solid rgba(23, 55, 46, 0.1) !important;
@@ -208,7 +208,7 @@
   .utilityCard {
     grid-template-columns: 34px 1fr auto !important;
     gap: 10px !important;
-    padding: 18px 14px !important;
+    padding: 16px 14px !important;
   }
 
   .themesGrid {
