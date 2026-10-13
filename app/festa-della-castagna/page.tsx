@@ -7,7 +7,6 @@ import styles from "./page.module.css";
 import FestaAtmosphereVideo from "./FestaAtmosphereVideo";
 import FestaProgramme, { type ProgrammeDay } from "./FestaProgramme";
 import FestaMap, { type FestaPoint } from "./FestaMap";
-import FestaEmbers from "./FestaEmbers";
 import FestaNow from "./FestaNow";
 import FestaWeather from "./FestaWeather";
 import FestaThenNow from "./FestaThenNow";
@@ -57,9 +56,10 @@ const stories = [
 
 const practical = [
   ["Programma", "#programma"],
-  ["Come arrivare", "#come-arrivare"],
-  ["Mappa della Festa", "#mappa"],
+  ["Mappa", "#mappa"],
+  ["Cosa si mangia", "#sapori"],
   ["Castagneti", "#storie"],
+  ["Come arrivare", "#come-arrivare"],
 ] as const;
 
 const programme = [
@@ -116,7 +116,6 @@ export default async function FestaDellaCastagnaPage() {
       <section className={styles.hero}>
         <div className={styles.heroImage} />
         <div className={styles.heroOverlay} />
-        <FestaEmbers />
         <div className={styles.heroContent}>
           <p className={styles.kicker}>23–25 ottobre 2026 · Roncegno Terme</p>
           <h1 className={styles.title}>
@@ -129,13 +128,11 @@ export default async function FestaDellaCastagnaPage() {
           </div>
           <FestaNow days={programme} />
         </div>
-        <div className={styles.heroNote}><span>Festa: sabato 24 e domenica 25</span><strong>Aspettando la Festa: venerdì 23</strong></div>
       </section>
 
-      <section className={styles.practical}>
-        <div className={styles.practicalIntro}><h2>Informazioni utili</h2></div>
-        <div className={styles.practicalGrid}>{practical.map(([label, href]) => <a href={href} className={styles.practicalCard} key={label}><strong>{label}</strong></a>)}</div>
-      </section>
+      <nav className={styles.quickNav} aria-label="In questa pagina">
+        {practical.map(([label, href]) => <a href={href} key={label}>{label}</a>)}
+      </nav>
 
       <FestaWeather />
 
