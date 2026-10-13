@@ -1,4 +1,4 @@
-// Compila le schede degli anelli del Circuito del Castagno a partire dai GPX in data/percorsi/circuito-del-castagno.
+// Compila la scheda del Circuito del Castagno e quelle dei suoi tre percorsi a partire dai GPX in data/percorsi/circuito-del-castagno.
 //
 // Per ogni anello: carica il GPX nei file di Directus e riempie i campi della bozza creata da
 // scripts/directus-route-circuit-model.mjs (km, dislivelli, quote, partenza, testi).
@@ -42,6 +42,42 @@ async function directus(pathname, options = {}) {
 // Dati presi dai tracciati Outdooractive (APT Valsugana e Lagorai): dislivello e tempi sono quelli
 // ufficiali della scheda Outdooractive, km e quote sono calcolati dal GPX.
 const LOOPS = [
+  {
+    // Scheda del circuito: solo i testi, la mappa e i numeri li prende dagli anelli pubblicati.
+    slug: "circuito-del-castagno",
+    fields: {
+      summary:
+        "Tre percorsi tra masi e castagneti sopra Roncegno: l'anello del castagno di Maso Molini, quello di Santa Brigida " +
+        "e il collegamento da Maso Zonti a Maso Montibelleri, che unisce i due anelli.",
+      route_highlight: "Tre percorsi tra masi e castagneti, collegati tra loro",
+    },
+  },
+  {
+    slug: "castagno-maso-molini",
+    gpx: "castagno-maso-molini.gpx",
+    fields: {
+      summary:
+        "Anello di 4,4 km che dal paese sale tra i castagneti fino a Maso Zonti e torna in paese per un'altra strada.",
+      route_highlight: "Il castagno di Maso Molini",
+      description:
+        "È l'anello più breve del Circuito del Castagno. Si parte dal paese, a circa 520 m, e si sale tra castagneti e vecchi masi " +
+        "fino a Maso Zonti, a circa 745 m, il punto più alto del giro. Da qui parte il collegamento per Maso Montibelleri e " +
+        "l'anello di Santa Brigida, per chi vuole allungare la passeggiata. Il ritorno scende per un'altra strada e nell'ultimo " +
+        "tratto ripercorre la via dell'andata fino al punto di partenza. Circa 230 m di dislivello, adatti a chi è abituato a camminare.",
+      difficulty: "facile-moderata",
+      distance_km: 4.4,
+      duration_minutes: 90,
+      elevation_gain_m: 228,
+      elevation_loss_m: 228,
+      min_elevation_m: 518,
+      max_elevation_m: 746,
+      start_latitude: 46.050099,
+      start_longitude: 11.406525,
+      loop_route: true,
+      outdooractive_url:
+        "https://www.outdooractive.com/it/route/escursione/valsugana-lagorai-tesino/percorso-castagno-maso-molini/804079943/",
+    },
+  },
   {
     slug: "santa-brigida-e-del-castagno",
     gpx: "santa-brigida-e-del-castagno.gpx",
@@ -124,7 +160,7 @@ for (const loop of LOOPS) {
     // loop_route è già true nelle bozze create dallo script del circuito: va corretto anche se "pieno".
     if (force || isEmpty(route[field]) || field === "loop_route") patch[field] = value;
   }
-  if (force || isEmpty(route.gpx_file)) {
+  if (loop.gpx && (force || isEmpty(route.gpx_file))) {
     patch.gpx_file = await uploadGpx(loop.gpx, `GPX · ${route.title}`);
   }
 
