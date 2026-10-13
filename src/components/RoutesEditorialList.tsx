@@ -59,14 +59,23 @@ function RouteImage({ item, index }: { item: RouteListItem; index: number }) {
   );
 }
 
-function RouteCard({ item, index, featured = false }: { item: RouteListItem; index: number; featured?: boolean }) {
+function parentId(item: EditorialItem) {
+  const value = item.parent_route;
+  if (typeof value === "number") return value;
+  return value && typeof value === "object" ? value.id : null;
+}
+
+// Etichetta per i circuiti ("Circuito · 3 anelli") e per i loro anelli ("Anello del Circuito del Castagno").
+type CircuitInfo = { label: string } | null;
+
+function RouteCard({ item, index, featured = false, circuit = null }: { item: RouteListItem; index: number; featured?: boolean; circuit?: CircuitInfo }) {
   const facts = routeFacts(item);
   return (
     <Link className={`${styles.card} ${featured ? styles.featuredCard : ""}`} href={`/percorsi/${item.slug}`}>
       <RouteImage item={item} index={index} />
       <div className={styles.cardBody}>
         <div className={styles.metaRow}>
-          <span>{item.difficulty || "Percorso"}</span>
+          {circuit ? <span className={styles.circuitTag}>{circuit.label}</span> : <span>{item.difficulty || "Percorso"}</span>}
           {item.family_friendly && <span>Adatto alle famiglie</span>}
         </div>
         <h2>{item.title}</h2>
@@ -90,6 +99,23 @@ export default function RoutesEditorialList({ items }: Props) {
     if (items.some(isEasy)) result.push({ id: "easy", label: "Facili" });
     if (items.some(isModerate)) result.push({ id: "moderate", label: "Moderati" });
     if (items.some((item) => item.family_friendly)) result.push({ id: "family", label: "Famiglie" });
+    return result;
+  }, [items]);
+
+  const circuits = useMemo(() => {
+    const titles = new Map(items.map((item) => [item.id, item.title]));
+    const loopCount = new Map<number, number>();
+    for (const item of items) {
+      const parent = parentId(item);
+      if (parent !== null) loopCount.set(parent, (loopCount.get(parent) ?? 0) + 1);
+    }
+    const result = new Map<number, CircuitInfo>();
+    for (const item of items) {
+      const parent = parentId(item);
+      const count = loopCount.get(item.id);
+      if (count) result.set(item.id, { label: `Circuito · ${count} ${count === 1 ? "anello" : "anelli"}` });
+      else if (parent !== null && titles.has(parent)) result.set(item.id, { label: `Anello del ${titles.get(parent)}` });
+    }
     return result;
   }, [items]);
 
@@ -121,7 +147,7 @@ export default function RoutesEditorialList({ items }: Props) {
 
       <div className={styles.editorialGrid}>
         {visibleItems.map((item, index) => (
-          <RouteCard item={item} index={index} featured={index === 0} key={item.id} />
+          <RouteCard item={item} index={index} featured={index === 0} circuit={circuits.get(item.id) ?? null} key={item.id} />
         ))}
       </div>
     </>

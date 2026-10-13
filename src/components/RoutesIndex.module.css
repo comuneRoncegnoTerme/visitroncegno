@@ -222,3 +222,4 @@
     font-size:clamp(3.2rem,13vw,5rem);
   }
 }
+.circuitTag{padding:3px 9px;border-radius:999px;background:#17372e;color:#fff;letter-spacing:0}

@@ -1,0 +1,86 @@
+/* "Questo anello fa parte del…" nelle pagine degli anelli di un circuito. */
+
+.partOf {
+  padding: 28px 0;
+  border-top: 1px solid rgba(23, 55, 46, 0.1);
+  border-bottom: 1px solid rgba(23, 55, 46, 0.1);
+  background: #f1ece2;
+}
+
+.partOfInner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px 40px;
+}
+
+.partOfInner small {
+  display: block;
+  color: #7b4c2c;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.partOfLink {
+  display: inline-block;
+  margin-top: 4px;
+  color: #17372e;
+  font: 400 28px/1.1 Georgia, "Times New Roman", serif;
+  letter-spacing: -0.02em;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+}
+
+.partOfLink:hover {
+  color: #d66b2c;
+}
+
+.siblings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.siblings a,
+.siblings span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px 7px 7px;
+  border: 1px solid rgba(23, 55, 46, 0.18);
+  border-radius: 999px;
+  background: #fff;
+  color: #17372e;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.siblings span[aria-current] {
+  border-width: 2px;
+}
+
+.siblings a:hover {
+  border-color: #17372e;
+}
+
+.siblings i {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+}
+
+@media (max-width: 760px) {
+  .partOfLink {
+    font-size: 24px;
+  }
+}

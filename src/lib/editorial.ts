@@ -22,6 +22,8 @@ export type EditorialItem = {
   accessible?: boolean;
   public_transport?: boolean;
   route_highlight?: string | null;
+  /** Circuito di cui fa parte il percorso (routes.parent_route). */
+  parent_route?: number | { id: number } | null;
   map_label?: string | null;
   map_icon?: string | null;
   address?: string | null;
