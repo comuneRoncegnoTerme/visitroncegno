@@ -58,6 +58,23 @@ const textFields = [
   "planning_description",
 ] as const;
 
+// Destinazioni suggerite nei campi "Destinazione". Si può scrivere anche un altro indirizzo.
+// Le voci con # portano a una sezione della homepage (vedi gli id in app/page.tsx).
+const DESTINATIONS = [
+  ["#scopri", "Homepage · percorsi consigliati"],
+  ["#da-vedere", "Homepage · da vedere"],
+  ["#eventi", "Homepage · eventi"],
+  ["#memoria", "Homepage · memoria"],
+  ["/luoghi", "Luoghi"],
+  ["/percorsi", "Percorsi"],
+  ["/eventi", "Eventi"],
+  ["/musei", "Musei"],
+  ["/cartina", "Cartina illustrata"],
+  ["/mappa", "Mappa"],
+  ["/organizza-la-visita", "Organizza la visita"],
+  ["/festa-della-castagna", "Festa della Castagna"],
+] as const;
+
 function fieldValue(homepage: HomepageContent, field: (typeof textFields)[number]) {
   return String(homepage[field] ?? "");
 }
@@ -118,6 +135,9 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
   return (
     <div className={styles.editor}>
       <form className={styles.form} onSubmit={handleSubmit}>
+        <datalist id="homepage-destinations">
+          {DESTINATIONS.map(([href, label]) => <option key={href} value={href}>{label}</option>)}
+        </datalist>
         <section className={styles.block}>
           <header className={styles.blockHeading}>
             <h3>Prima schermata</h3><p>La foto grande e il testo che si vedono appena si apre il sito.</p>
@@ -132,9 +152,9 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
             <label className={styles.full}><span>Titolo principale</span><input name="hero_title" defaultValue={value("hero_title")} /></label>
             <label className={styles.full}><span>Descrizione</span><textarea name="hero_description" rows={4} defaultValue={value("hero_description")} /></label>
             <label><span>Pulsante principale</span><input name="hero_primary_label" defaultValue={value("hero_primary_label")} /></label>
-            <label><span>Destinazione</span><input name="hero_primary_url" defaultValue={value("hero_primary_url")} /></label>
+            <label><span>Destinazione</span><input list="homepage-destinations" name="hero_primary_url" defaultValue={value("hero_primary_url")} /></label>
             <label><span>Pulsante secondario</span><input name="hero_secondary_label" defaultValue={value("hero_secondary_label")} /></label>
-            <label><span>Destinazione</span><input name="hero_secondary_url" defaultValue={value("hero_secondary_url")} /></label>
+            <label><span>Destinazione</span><input list="homepage-destinations" name="hero_secondary_url" defaultValue={value("hero_secondary_url")} /></label>
           </div>
           <div className={styles.automaticNote}><strong>Automatico</strong><span>Il box “Prossimo appuntamento” usa il primo evento futuro pubblicato.</span><a href="/content-hub/eventi">Gestisci eventi </a></div>
         </section>
@@ -155,7 +175,7 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
             <label className={styles.full}><span>Titolo</span><input name="routes_title" defaultValue={value("routes_title")} /></label>
             <label className={styles.full}><span>Descrizione</span><textarea name="routes_description" rows={3} defaultValue={value("routes_description")} /></label>
             <label><span>Testo link</span><input name="routes_link_label" defaultValue={value("routes_link_label")} /></label>
-            <label><span>Destinazione</span><input name="routes_link_url" defaultValue={value("routes_link_url")} /></label>
+            <label><span>Destinazione</span><input list="homepage-destinations" name="routes_link_url" defaultValue={value("routes_link_url")} /></label>
           </div>
           <div className={styles.automaticNote}><strong>Contenuti</strong><span>Fino a tre percorsi con flag “recommended”, poi “featured” come fallback.</span><a href="/content-hub/percorsi">Gestisci percorsi </a></div>
         </section>
@@ -169,7 +189,7 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
             <label className={styles.full}><span>Titolo</span><input name="highlights_title" defaultValue={value("highlights_title")} /></label>
             <label className={styles.full}><span>Descrizione</span><textarea name="highlights_description" rows={3} defaultValue={value("highlights_description")} /></label>
             <label><span>Testo link</span><input name="highlights_link_label" defaultValue={value("highlights_link_label")} /></label>
-            <label><span>Destinazione</span><input name="highlights_link_url" defaultValue={value("highlights_link_url")} /></label>
+            <label><span>Destinazione</span><input list="homepage-destinations" name="highlights_link_url" defaultValue={value("highlights_link_url")} /></label>
           </div>
           <div className={styles.automaticNote}><strong>Contenuti</strong><span>Le card seguono i luoghi con flag “featured”.</span><a href="/content-hub/luoghi">Gestisci luoghi </a></div>
         </section>
@@ -187,9 +207,9 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
             <label className={styles.full}><span>Titolo</span><input name="seasonal_title" defaultValue={value("seasonal_title")} /></label>
             <label className={styles.full}><span>Descrizione</span><textarea name="seasonal_description" rows={3} defaultValue={value("seasonal_description")} /></label>
             <label><span>Pulsante principale</span><input name="seasonal_primary_label" defaultValue={value("seasonal_primary_label")} /></label>
-            <label><span>Destinazione</span><input name="seasonal_primary_url" defaultValue={value("seasonal_primary_url")} /></label>
+            <label><span>Destinazione</span><input list="homepage-destinations" name="seasonal_primary_url" defaultValue={value("seasonal_primary_url")} /></label>
             <label><span>Pulsante secondario</span><input name="seasonal_secondary_label" defaultValue={value("seasonal_secondary_label")} /></label>
-            <label><span>Destinazione</span><input name="seasonal_secondary_url" defaultValue={value("seasonal_secondary_url")} /></label>
+            <label><span>Destinazione</span><input list="homepage-destinations" name="seasonal_secondary_url" defaultValue={value("seasonal_secondary_url")} /></label>
             <label><span>Nota breve</span><input name="seasonal_note_small" defaultValue={value("seasonal_note_small")} /></label>
             <label><span>Nota in evidenza</span><input name="seasonal_note_strong" defaultValue={value("seasonal_note_strong")} /></label>
           </div>
@@ -204,7 +224,7 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
             <label className={styles.full}><span>Titolo</span><input name="events_title" defaultValue={value("events_title")} /></label>
             <label className={styles.full}><span>Descrizione</span><textarea name="events_description" rows={3} defaultValue={value("events_description")} /></label>
             <label><span>Testo link</span><input name="events_link_label" defaultValue={value("events_link_label")} /></label>
-            <label><span>Destinazione</span><input name="events_link_url" defaultValue={value("events_link_url")} /></label>
+            <label><span>Destinazione</span><input list="homepage-destinations" name="events_link_url" defaultValue={value("events_link_url")} /></label>
           </div>
           <div className={styles.automaticNote}><strong>Contenuti</strong><span>Le card mostrano automaticamente i prossimi eventi pubblicati.</span><a href="/content-hub/eventi">Gestisci eventi </a></div>
         </section>
@@ -217,9 +237,9 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
             <label className={styles.full}><span>Titolo</span><input name="map_title" defaultValue={value("map_title")} /></label>
             <label className={styles.full}><span>Descrizione</span><textarea name="map_description" rows={3} defaultValue={value("map_description")} /></label>
             <label><span>Pulsante cartina</span><input name="map_primary_label" defaultValue={value("map_primary_label")} /></label>
-            <label><span>Destinazione</span><input name="map_primary_url" defaultValue={value("map_primary_url")} /></label>
+            <label><span>Destinazione</span><input list="homepage-destinations" name="map_primary_url" defaultValue={value("map_primary_url")} /></label>
             <label><span>Pulsante mappa</span><input name="map_secondary_label" defaultValue={value("map_secondary_label")} /></label>
-            <label><span>Destinazione</span><input name="map_secondary_url" defaultValue={value("map_secondary_url")} /></label>
+            <label><span>Destinazione</span><input list="homepage-destinations" name="map_secondary_url" defaultValue={value("map_secondary_url")} /></label>
           </div>
         </section>
 
@@ -232,7 +252,7 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
             <label className={styles.full}><span>Titolo</span><input name="memory_title" defaultValue={value("memory_title")} /></label>
             <label className={styles.full}><span>Descrizione</span><textarea name="memory_description" rows={3} defaultValue={value("memory_description")} /></label>
             <label><span>Testo pulsante</span><input name="memory_link_label" defaultValue={value("memory_link_label")} /></label>
-            <label><span>Destinazione</span><input name="memory_link_url" defaultValue={value("memory_link_url")} /></label>
+            <label><span>Destinazione</span><input list="homepage-destinations" name="memory_link_url" defaultValue={value("memory_link_url")} /></label>
           </div>
           <div className={styles.automaticNote}><strong>Archivio</strong><span>Le storie e i contenuti di memoria si gestiscono nella raccolta dedicata.</span><a href="/content-hub/storie">Gestisci storie </a></div>
         </section>
