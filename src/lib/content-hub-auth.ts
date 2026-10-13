@@ -1,5 +1,5 @@
 import crypto from "node:crypto";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { directusFetch } from "@/lib/directus-client";
 
 const SESSION_COOKIE = "roncegno_content_hub_session";
@@ -38,11 +38,16 @@ function getSessionSecret() {
   return secret;
 }
 
-function cookieIsSecure() {
+// Il cookie è "Secure" quando il sito è servito in HTTPS. Senza CONTENT_HUB_COOKIE_SECURE
+// lo si capisce dall'header X-Forwarded-Proto del proxy, così il login funziona sia
+// sull'IP in HTTP sia sul dominio in HTTPS senza cambiare configurazione.
+async function cookieIsSecure() {
   const configured = process.env.CONTENT_HUB_COOKIE_SECURE?.trim().toLowerCase();
   if (configured === "true") return true;
   if (configured === "false") return false;
-  return process.env.NODE_ENV === "production";
+  // Node qui serve solo HTTP: l'HTTPS può arrivare soltanto da un proxy che lo dichiara.
+  const forwardedProto = (await headers()).get("x-forwarded-proto")?.split(",")[0]?.trim();
+  return forwardedProto === "https";
 }
 
 function encode(value: string) {
@@ -145,7 +150,7 @@ export async function setContentHubSession(user: { email: string; name: string; 
   store.set(SESSION_COOKIE, token, {
     httpOnly: true,
     sameSite: "strict",
-    secure: cookieIsSecure(),
+    secure: await cookieIsSecure(),
     path: "/",
     maxAge: SESSION_TTL_SECONDS,
   });
@@ -156,7 +161,7 @@ export async function clearContentHubSession() {
   store.set(SESSION_COOKIE, "", {
     httpOnly: true,
     sameSite: "strict",
-    secure: cookieIsSecure(),
+    secure: await cookieIsSecure(),
     path: "/",
     maxAge: 0,
   });

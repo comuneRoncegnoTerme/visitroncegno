@@ -33,6 +33,13 @@
   grid-template-columns:repeat(3,minmax(0,1fr));
   gap:18px;
 }
+/* Ripete le colonne per tablet e telefono: questa regola viene dopo le media query sopra. */
+@media(max-width:1050px){
+  .placeGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:700px){
+  .placeGrid{grid-template-columns:minmax(0,1fr)}
+}
 .placeCard{
   border:1px solid rgba(23,55,46,.08);
   border-radius:24px;
