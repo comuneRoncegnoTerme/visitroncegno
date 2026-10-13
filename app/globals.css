@@ -210,14 +210,14 @@ a {
     ),
     linear-gradient(
       90deg,
-      rgba(7, 27, 22, 0.82) 0%,
-      rgba(7, 27, 22, 0.5) 36%,
+      rgba(7,27,22,.62) 0%,
+      rgba(7,27,22,.38) 36%,
       rgba(7, 27, 22, 0.1) 72%,
       rgba(7, 27, 22, 0.06) 100%
     ),
     linear-gradient(
       0deg,
-      rgba(7, 27, 22, 0.55) 0%,
+      rgba(7,27,22,.42) 0%,
       transparent 55%
     );
 }
@@ -519,7 +519,7 @@ a {
 .card-overlay {
   background: linear-gradient(
     0deg,
-    rgba(8, 29, 23, 0.9),
+    rgba(8,29,23,.68),
     rgba(8, 29, 23, 0.05) 66%
   );
 }
@@ -1196,8 +1196,8 @@ a {
   background:
     linear-gradient(
       to top,
-      rgba(12, 36, 29, 0.88) 0%,
-      rgba(12, 36, 29, 0.42) 48%,
+      rgba(12,36,29,.67) 0%,
+      rgba(12,36,29,.32) 48%,
       rgba(12, 36, 29, 0.15) 100%
     );
 }
@@ -1572,4 +1572,10 @@ a {
 }
 .skip-link:focus {
   top: 12px;
+}
+
+/* Velature più leggere sulle foto: ombra morbida sotto i testi degli hero dei percorsi. */
+.route-hero-content h1,
+.route-hero-content p {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.18), 0 2px 24px rgba(0, 0, 0, 0.28);
 }

@@ -87,7 +87,7 @@
       "id": "food-10",
       "category": "food",
       "name": "Praga 6",
-      "text": "Simigastro. Stand a cura di Praga 6, quartiere della città ceca, gemellata con Roncegno Terme da oltre 20 anni.",
+      "text": "Simigastro: lo stand di Praga 6, quartiere della città ceca gemellato con Roncegno Terme da oltre 20 anni.",
       "menu": [
         "Cucina tipica boema"
       ],
@@ -265,7 +265,7 @@
       "id": "food-22",
       "category": "food",
       "name": "Bar Tre Venezie",
-      "text": "Bar Tre Venezie aperto tutto il giorno durante la festa!",
+      "text": "Il Bar Tre Venezie resta aperto tutto il giorno durante la festa.",
       "menu": [],
       "lng": 11.410288,
       "lat": 46.052914
@@ -314,7 +314,7 @@
       "id": "see-27",
       "category": "see",
       "name": "Cantón dei selfie",
-      "text": "Scatta la foto più bella del tuo rullino di oggi!",
+      "text": "Un angolo allestito per le foto ricordo.",
       "menu": [],
       "lng": 11.411107,
       "lat": 46.053005
@@ -323,7 +323,7 @@
       "id": "see-28",
       "category": "see",
       "name": "Ronzégno de na volta",
-      "text": "Le foto più iconiche di una Roncegno che fu",
+      "text": "Fotografie di Roncegno com’era una volta.",
       "menu": [],
       "lng": 11.410884,
       "lat": 46.052897

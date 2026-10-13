@@ -89,7 +89,7 @@ export default async function StoryPage({ params }: StoryPageProps) {
           <aside className={styles.aside}>
             <div className={styles.asideCard}>
               <h2>Collegamenti</h2>
-              <p>Questa storia fa parte del racconto diffuso di Roncegno: luoghi, paesaggio, memoria e percorsi sono collegati tra loro.</p>
+              <p>Luoghi e percorsi legati a questa storia.</p>
               {placeHref && placeLabel ? (
                 <Link href={placeHref}>{placeLabel} →</Link>
               ) : (

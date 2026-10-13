@@ -6,7 +6,7 @@ import styles from "./page.module.css";
 
 export const metadata = {
   title: "Musei di Roncegno Terme",
-  description: "Due luoghi identitari per scoprire la memoria, il lavoro e i suoni di Roncegno Terme.",
+  description: "Il Mulino Angeli e il Museo degli strumenti musicali: la memoria, il lavoro e i suoni di Roncegno Terme.",
   alternates: { canonical: "/musei" },
 };
 
@@ -56,7 +56,7 @@ export default async function MuseumsPage() {
 
       <section className={styles.bridge}>
         <div><h2>Visitarli tutti e due</h2></div>
-        <p>I due musei raccontano aspetti diversi dello stesso territorio: il lavoro, la creatività, la memoria e il rapporto con le comunità.</p>
+        <p>I due musei raccontano aspetti diversi dello stesso territorio: il lavoro, la creatività e la memoria del paese.</p>
       </section>
       <SiteFooter settings={settings} />
     </main>

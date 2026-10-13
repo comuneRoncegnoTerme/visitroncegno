@@ -18,7 +18,7 @@ import styles from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "Organizza la visita",
-  description: "Dove dormire, dove mangiare, come arrivare e servizi utili per vivere Roncegno Terme.",
+  description: "Dove dormire, dove mangiare, come arrivare e servizi utili per visitare Roncegno Terme.",
   alternates: { canonical: "/organizza-la-visita" },
 };
 
@@ -84,7 +84,7 @@ export default async function OrganizzaLaVisitaPage() {
             <h1>Organizza la visita</h1>
           </div>
           <div className={styles.heroSide}>
-            <p className={styles.lead}>Trova dove dormire e mangiare, orientati sulla mappa e raccogli in un solo posto le informazioni utili per vivere Roncegno Terme con semplicità.</p>
+            <p className={styles.lead}>Dove dormire e mangiare, come arrivare e i servizi utili, tutto in una pagina.</p>
             <nav className={styles.jumpNav} aria-label="Sezioni della pagina">
               <a href="#dormire">Dormire</a>
               <a href="#mangiare">Mangiare</a>
@@ -122,7 +122,7 @@ export default async function OrganizzaLaVisitaPage() {
       </section>
 
       <section className={styles.travelSection} id="come-arrivare">
-        <div className={styles.travelHeading}><div><h2>Come arrivare</h2></div><p>Le indicazioni qui sotto restano volutamente essenziali. Per orari, coincidenze e variazioni del servizio consulta sempre i canali ufficiali prima della partenza.</p></div>
+        <div className={styles.travelHeading}><div><h2>Come arrivare</h2></div><p>Per orari, coincidenze e variazioni del servizio consulta sempre i canali ufficiali prima della partenza.</p></div>
         <div className={styles.travelGrid}>
           <article className={styles.travelCard}><h3>In auto</h3><p>Roncegno Terme si trova in Valsugana ed è raggiungibile attraverso la SS47. Per chi arriva dall’autostrada A22, il collegamento indicato dall’APT Valsugana passa da Trento Sud verso la Valsugana.</p><a href={OFFICIAL_TRAVEL_LINKS.valsugana} target="_blank" rel="noreferrer">Indicazioni APT Valsugana ↗</a></article>
           <article className={styles.travelCard}><h3>In treno</h3><p>La ferrovia della Valsugana serve il territorio con la stazione Roncegno Bagni-Marter, sulla direttrice Trento–Borgo Valsugana–Bassano.</p><a href={OFFICIAL_TRAVEL_LINKS.railway} target="_blank" rel="noreferrer">Consulta ferrovia e avvisi ↗</a></article>
@@ -153,7 +153,7 @@ export default async function OrganizzaLaVisitaPage() {
 
       <section className={styles.practicalGrid}>
         <article className={styles.practicalCard}><h2>Orari e avvisi</h2><p>Orari ferroviari e autobus, deviazioni e avvisi possono cambiare. Per il viaggio usa sempre le informazioni aggiornate degli operatori ufficiali.</p><a href={OFFICIAL_TRAVEL_LINKS.trentinoTrasporti} target="_blank" rel="noreferrer">Apri Trentino Trasporti <ArrowIcon /></a></article>
-        <article className={styles.practicalCard}><h2>Contatti utili</h2><p>Per informazioni sul territorio puoi utilizzare i riferimenti ufficiali pubblicati nel sito.</p>{siteSettings.contact_email ? <a href={`mailto:${siteSettings.contact_email}`}>Scrivi a {siteSettings.contact_email} <ArrowIcon /></a> : siteSettings.contact_phone ? <a href={`tel:${siteSettings.contact_phone.replace(/\s+/g, "")}`}>Chiama {siteSettings.contact_phone} <ArrowIcon /></a> : <Link href="/luoghi">Esplora i luoghi <ArrowIcon /></Link>}</article>
+        <article className={styles.practicalCard}><h2>Contatti utili</h2><p>Per informazioni scrivi o chiama:</p>{siteSettings.contact_email ? <a href={`mailto:${siteSettings.contact_email}`}>Scrivi a {siteSettings.contact_email} <ArrowIcon /></a> : siteSettings.contact_phone ? <a href={`tel:${siteSettings.contact_phone.replace(/\s+/g, "")}`}>Chiama {siteSettings.contact_phone} <ArrowIcon /></a> : <Link href="/luoghi">Esplora i luoghi <ArrowIcon /></Link>}</article>
       </section>
 
       <SiteFooter settings={siteSettings} />

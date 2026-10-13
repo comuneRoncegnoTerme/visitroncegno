@@ -32,7 +32,7 @@ export const trailPanels: TrailPanel[] = [
       "Un evento estremo che ha cambiato il paesaggio alpino e il modo di osservare, curare e raccontare il bosco.",
     body: [
       "Tra il 28 e il 29 ottobre 2018 la tempesta Vaia colpì con eccezionale intensità vaste aree delle Alpi. Anche il territorio di Roncegno porta i segni di quell’evento.",
-      "Questa tappa invita a leggere il bosco come un ambiente vivo: fragile, capace di rigenerarsi e profondamente legato alle comunità che lo abitano e lo curano.",
+      "Qui si vedono ancora gli effetti della tempesta e come il bosco, piano piano, sta ricrescendo.",
     ],
     audioTitle: "Ascolta la storia della tempesta Vaia",
     relatedRouteLabel: "Sentieri di Roncegno",
@@ -160,7 +160,7 @@ export const trailPanels: TrailPanel[] = [
     facts: [
       { value: "4–5 mesi", label: "Periodo in cui un tempo molte famiglie di montagna vivevano anche di castagne" },
       { value: "30 min", label: "Tempo indicativo per forno o bollitura nelle preparazioni tradizionali" },
-      { value: "0 glutine", label: "La castagna è naturalmente priva di glutine" },
+      { value: "Senza glutine", label: "La farina di castagne è naturalmente senza glutine" },
     ],
     relatedPanels: chestnutRelated.filter((item) => item.href !== "/it/sentieri/utilizzo-delle-castagne-3-3"),
     audioTitle: "Ascolta: la castagna dalla dispensa alla tavola",
@@ -200,9 +200,8 @@ export const trailPanels: TrailPanel[] = [
       },
     ],
     facts: [
-      { value: "Paesaggio", label: "Il castagneto è insieme coltura, ambiente e patrimonio culturale" },
-      { value: "Cura", label: "Potatura, sottobosco e gestione sono essenziali per mantenerlo vivo" },
-      { value: "Futuro", label: "Recuperare i castagneti significa trasmettere saperi e biodiversità" },
+      { value: "Anni ’40", label: "Il cancro della corteccia riduce drasticamente i castagneti" },
+      { value: "Anni ’80", label: "La Provincia comincia a sostenere il recupero dei castagneti" },
     ],
     relatedPanels: chestnutRelated.filter((item) => item.href !== "/it/sentieri/conservazione-castagneti-3-4"),
     audioTitle: "Ascolta: custodire i castagneti",

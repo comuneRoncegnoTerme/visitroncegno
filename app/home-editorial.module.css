@@ -36,7 +36,7 @@
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(0deg, rgba(6, 29, 23, 0.97) 0%, rgba(6, 29, 23, 0.55) 48%, rgba(6, 29, 23, 0.08) 80%);
+  background: linear-gradient(0deg, rgba(6,29,23,.74) 0%, rgba(6,29,23,.42) 48%, rgba(6, 29, 23, 0.08) 80%);
 }
 
 .routeNumber {
@@ -189,7 +189,7 @@
   inset: 0;
   z-index: 1;
   background:
-    linear-gradient(0deg, rgba(7, 31, 25, 0.95) 0%, rgba(7, 31, 25, 0.44) 50%, rgba(7, 31, 25, 0.08) 78%),
+    linear-gradient(0deg, rgba(7,31,25,.72) 0%, rgba(7,31,25,.33) 50%, rgba(7, 31, 25, 0.08) 78%),
     linear-gradient(90deg, rgba(7, 31, 25, 0.15), transparent 55%);
 }
 
