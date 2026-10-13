@@ -1,76 +1,61 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import IllustratedMapViewer, { type IllustratedMapHotspot } from "@/components/IllustratedMapViewer";
+import IllustratedMapViewer, { type IllustratedMapPoint } from "@/components/IllustratedMapViewer";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
-import { getSiteSettings } from "@/lib/directus";
+import MapSwitch from "@/components/MapSwitch";
+import { CARTINA_GROUPS, CARTINA_POINTS, type CartinaPoint } from "@/lib/cartina-points";
+import { getDirectusImageUrl, getSiteSettings } from "@/lib/directus";
+import { getEditorialList, type EditorialItem } from "@/lib/editorial";
+import { placeHref } from "@/lib/place-detail";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
-  title: "Cartina ufficiale di Roncegno Terme",
-  description: "Esplora la cartina illustrata ufficiale di Roncegno Terme e scarica il PDF.",
+  title: "Cartina illustrata di Roncegno Terme",
+  description: "La cartina di Roncegno Terme disegnata da Fabio Vettori: rifugi, chiese, musei e cime del territorio, con il PDF da scaricare.",
   alternates: { canonical: "/cartina" },
 };
 
-const MAP_HOTSPOTS: IllustratedMapHotspot[] = [
-  {
-    id: "mulino-angeli",
-    x: 10,
-    y: 68,
-    eyebrow: "Marter · Museo",
-    title: "Mulino Angeli",
-    text: "Un antico mulino e la Casa Museo degli Spaventapasseri: la porta occidentale del territorio illustrato.",
-    href: "/musei/mulino-angeli",
-  },
-  {
-    id: "centro-roncegno",
-    x: 57,
-    y: 70,
-    eyebrow: "Paese · Terme",
-    title: "Il cuore di Roncegno",
-    text: "Il centro, il parco e i luoghi della comunità sono il punto di partenza per conoscere Roncegno Terme.",
-    href: "/luoghi",
-  },
-  {
-    id: "museo-musica",
-    x: 78,
-    y: 61,
-    eyebrow: "Santa Brigida · Museo",
-    title: "Museo della Musica",
-    text: "Una collezione di strumenti popolari da tutto il mondo e un museo che invita anche ad ascoltare e suonare.",
-    href: "/musei/museo-della-musica",
-  },
-  {
-    id: "cinque-valli",
-    x: 31,
-    y: 33,
-    eyebrow: "Boschi · Cammini",
-    title: "Cinque Valli",
-    text: "Boschi, acqua e paesaggi del Lagorai: da qui si apre il racconto dei percorsi in quota.",
-    href: "/percorsi",
-  },
-  {
-    id: "laghetto-prese",
-    x: 51,
-    y: 29,
-    eyebrow: "Natura · Alta quota",
-    title: "Laghetto delle Prese",
-    text: "Uno specchio d’acqua alpino circondato dal verde, tra le mete illustrate nella guida ufficiale.",
-    href: "/percorsi",
-  },
-  {
-    id: "monte-cola",
-    x: 65,
-    y: 14,
-    eyebrow: "Lagorai · Panorama",
-    title: "Monte Cola",
-    text: "La montagna domina la cartina e invita a esplorare con preparazione i paesaggi d’alta quota.",
-    href: "/percorsi",
-  },
-];
+const normalize = (value: string) =>
+  value.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 
-export default async function CartinaPage() {
-  const settings = await getSiteSettings();
+function findItem(point: CartinaPoint, items: EditorialItem[]) {
+  if (!point.match?.length) return null;
+  return items.find((item) => {
+    const title = normalize(item.title ?? "");
+    return point.match!.some((keyword) => title.includes(normalize(keyword)));
+  }) ?? null;
+}
+
+function resolvePoints(places: EditorialItem[], routes: EditorialItem[]): IllustratedMapPoint[] {
+  return CARTINA_POINTS.map((point) => {
+    const place = findItem(point, places);
+    const route = place ? null : findItem(point, routes);
+    const item = place ?? route;
+    const href = point.href ?? (place ? placeHref(place) : route ? `/percorsi/${route.slug}` : null);
+    return {
+      id: point.id,
+      title: point.title,
+      group: point.group,
+      x: point.x,
+      y: point.y,
+      href,
+      text: item?.summary ?? point.note ?? null,
+      image: getDirectusImageUrl(item?.image, 800),
+      meta: point.meta ?? null,
+    };
+  });
+}
+
+export default async function CartinaPage({ searchParams }: PageProps<"/cartina">) {
+  const { punto } = await searchParams;
+  const [settings, places, routes] = await Promise.all([
+    getSiteSettings(),
+    getEditorialList("places"),
+    getEditorialList("routes"),
+  ]);
+  const points = resolvePoints(places, routes);
+  const groups = Object.entries(CARTINA_GROUPS).map(([id, label]) => ({ id, label }));
 
   return (
     <main className={styles.page}>
@@ -78,53 +63,35 @@ export default async function CartinaPage() {
 
       <section className={styles.intro} aria-labelledby="cartina-page-title">
         <div className={styles.introCopy}>
-          <p className={styles.eyebrow}>La cartina ufficiale</p>
-          <h1 id="cartina-page-title">La cartina illustrata di Roncegno</h1>
+          <h1 id="cartina-page-title">La cartina di Roncegno</h1>
           <p className={styles.lead}>
-            L’illustrazione ufficiale del territorio. Tocca i punti evidenziati per aprire la scheda del luogo o del percorso.
+            Disegnata da Fabio Vettori con le sue formiche: il paese, i rifugi, le chiese,
+            i musei e le cime intorno. Tocca un punto per aprire la scheda del luogo.
           </p>
         </div>
         <div className={styles.introActions}>
-          <a className={styles.primaryAction} href="/downloads/cartina-ufficiale-roncegno-terme.pdf" download>
-            Scarica il PDF <span aria-hidden="true">↓</span>
+          <MapSwitch current="cartina" />
+          <a className={styles.download} href="/downloads/cartina-ufficiale-roncegno-terme.pdf" download>
+            Scarica il PDF
           </a>
         </div>
       </section>
 
-      <section className={styles.mapSection} aria-labelledby="cartina-title">
-        <div className={styles.mapHeading}>
-          <div>
-            <h2 id="cartina-title">I punti della cartina</h2>
-          </div>
-          <p>Tocca i punti numerati oppure avvia il tour illustrato. La rappresentazione è orientativa e non sostituisce la cartografia escursionistica.</p>
-        </div>
-        <div className={styles.viewerWrap}>
-          <IllustratedMapViewer
-            src="/images/cartina/cartina-roncegno-1.webp"
-            alt="Cartina illustrata ufficiale di Roncegno Terme e del suo territorio"
-            hotspots={MAP_HOTSPOTS}
-          />
-        </div>
-        <p className={styles.attribution}>Illustrazione “Le Formiche” di Fabio Vettori · Cartina ufficiale 2026</p>
-      </section>
-
-      <section className={styles.nextSteps} aria-labelledby="approfondisci-title">
-        <div>
-          <h2 id="approfondisci-title">Prima di partire</h2>
-        </div>
-        <div className={styles.nextLinks}>
-          <Link href="/percorsi">Percorsi <span aria-hidden="true">→</span></Link>
-          <Link href="/luoghi">Luoghi <span aria-hidden="true">→</span></Link>
-          <Link href="/organizza-la-visita">Organizza la visita <span aria-hidden="true">→</span></Link>
-        </div>
-      </section>
-
-      <section className={styles.mapCta}>
-        <div>
-          <p className={styles.eyebrowLight}>Per orientarti sul posto</p>
-          <h2>Ti servono coordinate e indicazioni precise?</h2>
-        </div>
-        <Link href="/organizza-la-visita#mappa-visita">Apri la mappa interattiva <span aria-hidden="true">→</span></Link>
+      <section className={styles.mapSection} aria-label="Cartina illustrata">
+        <IllustratedMapViewer
+          src="/images/cartina/cartina-roncegno-1.webp"
+          hdSrc="/images/cartina/cartina-roncegno-hd.webp"
+          alt="Cartina illustrata di Roncegno Terme e del suo territorio, disegnata da Fabio Vettori"
+          aspect={3583 / 2560}
+          points={points}
+          groups={groups}
+          initialPointId={typeof punto === "string" ? punto : undefined}
+        />
+        <p className={styles.attribution}>
+          Illustrazione “Le Formiche” di Fabio Vettori, cartina ufficiale 2026. Il disegno è
+          indicativo e non sostituisce le carte escursionistiche: per orientarti sul posto usa
+          la <Link href="/mappa">mappa reale</Link>.
+        </p>
       </section>
 
       <SiteFooter settings={settings} />

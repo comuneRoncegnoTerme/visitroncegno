@@ -42,7 +42,6 @@ const textFields = [
   "events_description",
   "events_link_label",
   "events_link_url",
-  "map_eyebrow",
   "map_title",
   "map_description",
   "map_primary_label",
@@ -212,10 +211,9 @@ export default function HomepageEditor({ homepage }: HomepageEditorProps) {
 
         <section className={styles.block}>
           <header className={styles.blockHeading}>
-            <h3>Cartina e mappa</h3><p>Il richiamo che porta alla cartina illustrata e alla mappa operativa.</p>
+            <h3>Cartina e mappa</h3><p>La fascia con la cartina di Fabio Vettori che scorre e la formica in parapendio. I nomi dei luoghi sono quelli della cartina.</p>
           </header>
           <div className={styles.fields}>
-            <label><span>Soprattitolo (facoltativo)</span><input name="map_eyebrow" defaultValue={value("map_eyebrow")} /></label>
             <label className={styles.full}><span>Titolo</span><input name="map_title" defaultValue={value("map_title")} /></label>
             <label className={styles.full}><span>Descrizione</span><textarea name="map_description" rows={3} defaultValue={value("map_description")} /></label>
             <label><span>Pulsante cartina</span><input name="map_primary_label" defaultValue={value("map_primary_label")} /></label>

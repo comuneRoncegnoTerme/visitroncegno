@@ -12,5 +12,5 @@ export const planningLinks = [
   { href: "/organizza-la-visita#dormire", label: "Dove dormire" },
   { href: "/organizza-la-visita#mangiare", label: "Dove mangiare" },
   { href: "/organizza-la-visita#come-arrivare", label: "Come arrivare" },
-  { href: "/organizza-la-visita#mappa-visita", label: "Mappa" },
+  { href: "/mappa", label: "Mappa" },
 ] as const;

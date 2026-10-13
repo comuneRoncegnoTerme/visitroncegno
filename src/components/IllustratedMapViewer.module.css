@@ -1,165 +1,468 @@
+.viewer {
+  --map-ink: #17372e;
+  --map-paper: #faf8f2;
+  --map-orange: #d66b2c;
+}
+
 .shell {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(23, 32, 29, 0.16);
-  border-radius: 24px;
+  border-radius: 18px;
   background: #e9f5f8;
-  box-shadow: 0 24px 70px rgba(13, 42, 34, 0.14);
+  box-shadow: 0 18px 50px rgba(13, 42, 34, 0.14);
 }
-
-.controls {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 62px;
-  padding: 10px 14px;
-  color: var(--ink);
-  background: rgba(250, 249, 245, 0.96);
-  border-bottom: 1px solid var(--line);
-}
-
-.controls button {
-  display: grid;
-  place-items: center;
-  min-width: 42px;
-  min-height: 42px;
-  padding: 0 14px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  color: inherit;
-  background: white;
-  font: inherit;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.controls button:disabled { opacity: 0.35; cursor: default; }
-.controls span { min-width: 48px; font-size: 0.78rem; font-weight: 700; text-align: center; }
-.controls .reset { margin-left: auto; }
-.controls .tourButton { color: white; background: var(--forest); border-color: var(--forest); }
-.tourButton span { min-width: auto; color: #f5c45d; font-size: 1rem; }
 
 .frame {
   overflow: auto;
-  height: min(72vh, 820px);
+  aspect-ratio: 1.4;
   cursor: grab;
   overscroll-behavior: contain;
-  scrollbar-color: rgba(13, 42, 34, 0.32) transparent;
+  scrollbar-width: none;
   touch-action: pan-x pan-y;
 }
 
-.frame[data-dragging="true"] { cursor: grabbing; }
-.shell:fullscreen { border: 0; border-radius: 0; background: #e9f5f8; }
-.shell:fullscreen .frame { height: calc(100vh - 62px); }
-.canvas { position: relative; min-width: 100%; transition: width 900ms cubic-bezier(.2,.72,.2,1); }
-.canvas img { display: block; width: 100%; max-width: none; height: auto; user-select: none; }
+.frame::-webkit-scrollbar {
+  display: none;
+}
 
-.hotspot {
+.frame[data-dragging="true"] {
+  cursor: grabbing;
+}
+
+.canvas {
+  position: relative;
+  min-width: 100%;
+}
+
+.canvasAnimated {
+  transition: width 0.5s cubic-bezier(0.2, 0.72, 0.2, 1);
+}
+
+.canvas img {
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Punti */
+
+.marker {
   position: absolute;
   z-index: 2;
-  width: 36px;
-  height: 36px;
+  width: 20px;
+  height: 20px;
   padding: 0;
-  border: 2px solid white;
+  border: 3px solid #fff;
   border-radius: 50%;
-  color: white;
-  background: var(--forest);
-  box-shadow: 0 6px 22px rgba(13,42,34,.32);
+  background: var(--map-orange);
+  box-shadow: 0 2px 8px rgba(13, 42, 34, 0.4);
   transform: translate(-50%, -50%);
   cursor: pointer;
+  transition: transform 0.18s ease, background 0.18s ease;
 }
 
-.hotspot::before, .hotspotActive::after {
+.marker::before {
   position: absolute;
-  inset: -7px;
+  inset: -8px;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
   content: "";
-  border: 1px solid rgba(255,255,255,.9);
-  border-radius: inherit;
-  animation: hotspotPulse 2.4s ease-out infinite;
+  animation: markerPulse 2.6s ease-out infinite;
+  pointer-events: none;
 }
 
-.hotspot span { font-size: .63rem; font-weight: 800; letter-spacing: .03em; }
-.hotspot b {
+/* Area di tocco più grande del punto visibile. */
+.marker::after {
+  position: absolute;
+  inset: -12px;
+  content: "";
+}
+
+.marker:hover,
+.marker:focus-visible {
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+.markerActive {
+  background: var(--map-ink);
+  transform: translate(-50%, -50%) scale(1.25);
+}
+
+.markerActive::before {
+  animation: none;
+  opacity: 0;
+}
+
+.markerLabel {
   position: absolute;
   bottom: calc(100% + 10px);
   left: 50%;
   width: max-content;
-  max-width: 180px;
-  padding: 7px 10px;
-  border-radius: 8px;
-  color: var(--ink);
-  background: rgba(255,255,255,.94);
-  box-shadow: 0 7px 24px rgba(13,42,34,.2);
-  font-size: .72rem;
+  max-width: 200px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  color: var(--map-ink);
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(13, 42, 34, 0.2);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.25;
   opacity: 0;
-  transform: translate(-50%, 5px);
-  transition: opacity .2s ease, transform .2s ease;
+  transform: translate(-50%, 4px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
   pointer-events: none;
 }
-.hotspot:hover b, .hotspot:focus-visible b, .hotspotActive b { opacity: 1; transform: translate(-50%, 0); }
-.hotspotActive { background: var(--orange); transform: translate(-50%, -50%) scale(1.16); }
 
-.tourPath { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
-.tourPath polyline { fill: none; stroke: rgba(255,255,255,.88); stroke-width: .42; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1.3 1.4; filter: drop-shadow(0 2px 2px rgba(13,42,34,.45)); animation: routeFlow 18s linear infinite; }
-
-.storyCard {
-  position: absolute;
-  z-index: 5;
-  right: 24px;
-  bottom: 24px;
-  width: min(390px, calc(100% - 48px));
-  padding: 26px;
-  border-radius: 20px;
-  color: white;
-  background: rgba(13,42,34,.96);
-  box-shadow: 0 22px 60px rgba(7,24,19,.36);
-  backdrop-filter: blur(14px);
-  animation: cardIn .38s cubic-bezier(.2,.72,.2,1) both;
+.marker:hover .markerLabel,
+.marker:focus-visible .markerLabel {
+  opacity: 1;
+  transform: translate(-50%, 0);
 }
-.storyCard small { color: #b9d8cc; font-size: 0.82rem; font-weight: 800; letter-spacing: 0; text-transform: none; }
-.storyCard h3 { margin: 8px 34px 8px 0; font-family: Georgia, serif; font-size: 2rem; font-weight: 400; line-height: 1; }
-.storyCard p { margin: 0; color: rgba(255,255,255,.78); font-size: .9rem; line-height: 1.55; }
-.closeCard { position: absolute; top: 14px; right: 14px; width: 34px; height: 34px; border: 1px solid rgba(255,255,255,.3); border-radius: 50%; color: white; background: transparent; font-size: 1.2rem; cursor: pointer; }
-.storyActions { display: flex; align-items: center; gap: 10px; margin-top: 18px; }
-.storyActions a { flex: 1; padding: 11px 15px; border-radius: 999px; color: var(--forest); background: white; font-size: .82rem; font-weight: 800; text-align: center; }
-.storyActions button { width: 42px; height: 42px; border: 1px solid rgba(255,255,255,.3); border-radius: 50%; color: white; background: transparent; cursor: pointer; }
 
-@keyframes hotspotPulse { from { opacity: .75; transform: scale(.75); } to { opacity: 0; transform: scale(1.65); } }
-@keyframes routeFlow { to { stroke-dashoffset: -30; } }
-@keyframes cardIn { from { opacity: 0; transform: translateY(18px) scale(.97); } }
+.tourPath {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
 
-.hint {
-  display: none;
+.tourPath polyline {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.95);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 2 9;
+  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 1px 1px rgba(13, 42, 34, 0.5));
+  animation: pathFlow 16s linear infinite;
+}
+
+/* Comandi */
+
+.controls {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 4;
+  display: flex;
+  gap: 6px;
+}
+
+.controls button,
+.tourStart {
+  min-width: 42px;
+  height: 42px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 999px;
+  color: var(--map-ink);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 14px rgba(13, 42, 34, 0.18);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.controls button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.controls .expandButton {
+  padding: 0 16px;
+  font-size: 14px;
+}
+
+.tourStart {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  z-index: 4;
+  padding: 0 18px;
+  color: #fff;
+  background: var(--map-ink);
+  font-size: 14px;
+}
+
+.controls button:focus-visible,
+.tourStart:focus-visible,
+.marker:focus-visible,
+.index button:focus-visible {
+  outline: 3px solid rgba(214, 107, 44, 0.7);
+  outline-offset: 2px;
+}
+
+/* Scheda del punto */
+
+.card {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  z-index: 5;
+  display: flex;
+  width: min(380px, calc(100% - 32px));
+  overflow: hidden;
+  flex-direction: column;
+  border-radius: 14px;
+  color: var(--map-ink);
+  background: var(--map-paper);
+  box-shadow: 0 18px 50px rgba(7, 24, 19, 0.3);
+  animation: cardIn 0.3s cubic-bezier(0.2, 0.72, 0.2, 1) both;
+}
+
+.cardImage {
+  display: block;
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+}
+
+.cardBody {
+  padding: 16px 18px 18px;
+}
+
+.cardBody small {
+  color: #a3542a;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.cardBody h3 {
+  margin: 4px 36px 6px 0;
+  font: 400 24px/1.1 Georgia, "Times New Roman", serif;
+}
+
+.cardBody p {
+  display: -webkit-box;
   margin: 0;
-  padding: 10px 16px 12px;
-  color: var(--muted);
-  background: var(--paper);
-  font-size: 0.78rem;
+  overflow: hidden;
+  color: #55635d;
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.cardClose {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  color: var(--map-ink);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 2px 8px rgba(13, 42, 34, 0.18);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.cardActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.cardActions a {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 999px;
+  color: #fff;
+  background: var(--map-ink);
+  font-size: 14px;
+  font-weight: 700;
   text-align: center;
 }
 
+.cardActions button {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(23, 55, 46, 0.2);
+  border-radius: 50%;
+  color: var(--map-ink);
+  background: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.cardNoLink {
+  flex: 1;
+  color: #7a8580;
+  font-size: 13px;
+}
+
+/* Indice dei luoghi */
+
+.index {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.indexGroup {
+  min-width: 0;
+}
+
+.indexGroup h3 {
+  margin: 0 0 8px;
+  color: #6c7873;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.indexGroup ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.indexGroup button {
+  padding: 7px 12px;
+  border: 1px solid rgba(23, 55, 46, 0.16);
+  border-radius: 999px;
+  color: var(--map-ink);
+  background: #fff;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.indexGroup button:hover {
+  border-color: rgba(23, 55, 46, 0.4);
+}
+
+.indexGroup .indexActive {
+  border-color: var(--map-ink);
+  color: #fff;
+  background: var(--map-ink);
+}
+
+/* Tutto schermo: lo shell viene montato direttamente nel body. */
+
+.placeholder {
+  aspect-ratio: 1.4;
+  border-radius: 18px;
+  background: #e9f5f8;
+}
+
+
+.expanded .shell {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  margin: 0;
+  border-radius: 0;
+}
+
+.expanded .frame {
+  height: 100%;
+  max-height: none;
+  aspect-ratio: auto;
+}
+
+@keyframes markerPulse {
+  from { opacity: 0.8; transform: scale(0.7); }
+  to { opacity: 0; transform: scale(1.7); }
+}
+
+@keyframes pathFlow {
+  to { stroke-dashoffset: -220; }
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(14px); }
+}
+
+@media (max-width: 900px) {
+  .index {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+}
+
 @media (max-width: 760px) {
-  .shell { margin-inline: -18px; border-radius: 18px; }
-  .controls { position: sticky; top: 0; min-height: 58px; padding: 8px; }
-  .controls button { min-width: 44px; min-height: 44px; padding-inline: 12px; }
-  .controls span { display: none; }
-  .controls .reset { margin-left: 0; }
-  .controls .tourButton { flex: 1; padding-inline: 10px; font-size: .75rem; }
-  .tourButton span { display: inline; }
-  .controls .fullscreen { margin-left: auto; padding-inline: 0; font-size: 0; }
-  .controls .fullscreen::after { content: "⛶"; font-size: 1.25rem; }
-  .frame { height: 64vh; min-height: 460px; }
-  .frame::after { display: block; height: 220px; content: ""; }
-  .hotspot { width: 32px; height: 32px; }
-  .hotspot b { display: none; }
-  .storyCard { right: 10px; bottom: 48px; width: calc(100% - 20px); padding: 21px; border-radius: 18px; }
-  .storyCard h3 { font-size: 1.7rem; }
-  .hint { display: block; }
+  .shell {
+    margin-inline: -16px;
+    border-radius: 0;
+  }
+
+  .frame {
+    aspect-ratio: auto;
+    height: 68svh;
+    max-height: none;
+  }
+
+  .expanded .shell {
+    margin: 0;
+  }
+
+  .expanded .frame {
+    height: 100%;
+  }
+
+  .controls {
+    top: 10px;
+    right: 10px;
+  }
+
+  .tourStart {
+    bottom: 12px;
+    left: 12px;
+  }
+
+  .card {
+    right: 10px;
+    bottom: 10px;
+    left: 10px;
+    width: auto;
+  }
+
+  .cardImage {
+    height: 96px;
+  }
+
+  .markerLabel {
+    display: none;
+  }
+
+  .indexGroup ul {
+    flex-wrap: nowrap;
+    margin-inline: -16px;
+    padding: 2px 16px 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .indexGroup button {
+    white-space: nowrap;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .canvas, .hotspot b { transition: none; }
-  .hotspot::before, .hotspotActive::after, .tourPath polyline, .storyCard { animation: none; }
+  .canvasAnimated,
+  .marker,
+  .markerLabel {
+    transition: none;
+  }
+
+  .marker::before,
+  .tourPath polyline,
+  .card {
+    animation: none;
+  }
 }

@@ -15,9 +15,6 @@
   padding-top: 0;
 }
 
-.bandEnd.bandEnd {
-  padding-bottom: 88px;
-}
 
 @media (max-width: 760px) {
   .band.band {
@@ -29,7 +26,4 @@
     padding-top: 0;
   }
 
-  .bandEnd.bandEnd {
-    padding-bottom: 56px;
-  }
 }
