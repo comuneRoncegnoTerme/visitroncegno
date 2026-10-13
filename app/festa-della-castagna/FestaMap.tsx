@@ -145,6 +145,18 @@ export default function FestaMap({ points }: { points: FestaPoint[] }) {
     map.easeTo({ center: [selected.lng, selected.lat], zoom: Math.max(map.getZoom(), 17), duration: 450 });
   }, [selected, selectedId]);
 
+  // Programma e hero chiedono di mostrare un punto ("Dov'è").
+  useEffect(() => {
+    const open = (event: Event) => {
+      const id = (event as CustomEvent<string>).detail;
+      if (!points.some((point) => point.id === id)) return;
+      setFilter("all");
+      setSelectedId(id);
+    };
+    window.addEventListener("festa:punto", open);
+    return () => window.removeEventListener("festa:punto", open);
+  }, [points]);
+
   function choose(next: Filter) {
     setFilter(next);
     setSelectedId(null);
