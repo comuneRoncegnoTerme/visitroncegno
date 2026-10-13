@@ -124,7 +124,8 @@ function parseCsv(text) {
 
 function knownPoint(place) {
   const title = normalize(place.title);
-  return KNOWN_POINTS.find(({ match }) => match.some((candidate) => title === candidate || title.includes(candidate)));
+  // Confronto a parole intere: "villa rosa" non deve agganciare "villa rosalinda".
+  return KNOWN_POINTS.find(({ match }) => match.some((candidate) => ` ${title} `.includes(` ${candidate} `)));
 }
 
 let lastSearch = 0;
