@@ -190,6 +190,16 @@ npm run directus:ensure-route-circuit-model
 
 Lo script è idempotente: crea il campo e la relazione solo se mancano e non tocca i percorsi che esistono già con lo stesso slug. Poi, nel Content Hub (Percorsi), ogni anello si completa come un percorso normale e nel campo "Fa parte del circuito" si sceglie il circuito. La pagina del circuito mostra da sola gli anelli pubblicati su un'unica mappa, con un colore e una scheda per anello. Ogni anello rimanda al circuito e agli altri anelli, e nell'elenco Percorsi circuito e anelli hanno un'etichetta.
 
+Per compilare la scheda del circuito e le bozze dei tre percorsi con i GPX di `data/percorsi/circuito-del-castagno` (file GPX, km, dislivelli, quote, partenza, testi):
+
+```bash
+DIRECTUS_URL=https://directus.example.it \
+DIRECTUS_TOKEN=... \
+npm run directus:fill-castagno-loops
+```
+
+Scrive solo i campi vuoti (`-- --force` per sovrascrivere) e lascia le schede in bozza: foto, revisione dei testi e pubblicazione si fanno nel Content Hub.
+
 ### Audit read-only dei luoghi Directus
 
 Per elencare tutti i record di `places` e segnalare dati mancanti o incoerenti:
