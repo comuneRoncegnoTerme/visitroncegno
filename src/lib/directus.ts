@@ -472,6 +472,7 @@ export async function getHomepageRoutes(): Promise<RouteItem[]> {
         "featured",
         "recommended",
         "route_highlight",
+        "gpx_file",
         "category.name",
       ].join(",")
     );

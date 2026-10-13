@@ -5,6 +5,8 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import FestaHomepageBanner from "@/components/FestaHomepageBanner";
 import CartinaTeaser from "@/components/CartinaTeaser";
+import RouteTraceDraw from "@/components/RouteTraceDraw";
+import { getRouteTrace } from "@/lib/route-trace";
 import {
   getDirectusImageUrl,
   getFeaturedPlaces,
@@ -82,8 +84,10 @@ export default async function Home() {
   const heroHotspots = parseHeroHotspots(heroConfig.hero_hotspots);
   const visibleEvents = events.slice(0, 4);
   const visibleRoutes = homepageRoutes.slice(0, 3);
+  const routeTraces = await Promise.all(visibleRoutes.map((route) => getRouteTrace(route.gpx_file)));
   const visibleFeaturedPlaces = featuredPlaces.slice(0, 3);
   const nextEvent = visibleEvents[0] ?? null;
+  const festaEvent = events.find((event) => /castagn/i.test(event.title)) ?? null;
   const nextEventDate = nextEvent ? eventDayBadge(nextEvent.start_date) : null;
   const nextEventTime = nextEvent ? eventTimeLabel(nextEvent) : null;
   const sleepingImage = getDirectusImageUrl(allPlaces.find(isSleepingPlace)?.image) ?? "/images/homepage/roncegno-skyline.webp";
@@ -158,6 +162,8 @@ export default async function Home() {
           secondaryUrl={homepage.seasonal_secondary_url}
           noteSmall={homepage.seasonal_note_small}
           noteStrong={homepage.seasonal_note_strong}
+          eventStart={festaEvent?.start_date}
+          eventEnd={festaEvent?.end_date}
         />
       )}
 
@@ -174,7 +180,7 @@ export default async function Home() {
             </div>
 
             <div className={editorial.routesGrid}>
-              {visibleRoutes.map((route) => {
+              {visibleRoutes.map((route, index) => {
                 const image = getDirectusImageUrl(route.image) ?? heroImage;
                 const hours = route.duration_minutes ? Math.floor(route.duration_minutes / 60) : 0;
                 const minutes = route.duration_minutes ? route.duration_minutes % 60 : 0;
@@ -191,6 +197,7 @@ export default async function Home() {
                   <Link className={editorial.routeCard} href={`/percorsi/${route.slug}`} key={route.id}>
                     <div className={editorial.routeImage} style={{ backgroundImage: `url('${image}')` }} />
                     <div className={editorial.routeShade} />
+                    {routeTraces[index] && <RouteTraceDraw trace={routeTraces[index]} className={editorial.routeTrace} />}
                     <div className={editorial.routeCopy}>
                       <small>{route.route_highlight ?? route.category?.name ?? "Percorso consigliato"}</small>
                       <h3>{route.title}</h3>
