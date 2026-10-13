@@ -168,7 +168,7 @@ export default async function Home() {
       )}
 
       {visibleRoutes.length > 0 && (
-        <section className={`${styles.section} ${editorial.routesSection} ${spacing.band}`} aria-labelledby="routes-title">
+        <section id="scopri" className={`${styles.section} ${editorial.routesSection} ${spacing.band}`} aria-labelledby="routes-title">
           <div className={styles.sectionInner}>
             <div className={styles.sectionHeading}>
               <div>
@@ -214,7 +214,7 @@ export default async function Home() {
 
 
       {visibleFeaturedPlaces.length > 0 && (
-        <section className={`${styles.section} ${editorial.highlightsSection} ${spacing.band} ${spacing.bandFollow}`} aria-labelledby="highlights-title">
+        <section id={visibleRoutes.length > 0 ? "da-vedere" : "scopri"} className={`${styles.section} ${editorial.highlightsSection} ${spacing.band} ${spacing.bandFollow}`} aria-labelledby="highlights-title">
           <div className={styles.sectionInner}>
             <div className={styles.sectionHeading}>
               <div>
@@ -246,7 +246,7 @@ export default async function Home() {
       )}
 
       {visibleEvents.length > 0 && (
-      <section className={`${styles.section} ${styles.eventsSection} ${spacing.band} ${spacing.bandFollow}`}>
+      <section id="eventi" className={`${styles.section} ${styles.eventsSection} ${spacing.band} ${spacing.bandFollow}`}>
         <div className={styles.sectionInner}>
           <div className={styles.sectionHeading}>
             <div>{homepage.events_eyebrow && <p>{homepage.events_eyebrow}</p>}<h2 className={styles.sectionTitle}>{homepage.events_title ?? "Eventi a Roncegno"}</h2><span className={styles.sectionLead}>{homepage.events_description ?? "Feste, concerti, mercati e camminate in programma."}</span></div>
@@ -287,7 +287,7 @@ export default async function Home() {
         secondaryUrl={homepage.map_secondary_url ?? "/mappa"}
       />
 
-      <section className={`${styles.storySection} ${feedback.storySection}`} aria-labelledby="memoria-title">
+      <section id="memoria" className={`${styles.storySection} ${feedback.storySection}`} aria-labelledby="memoria-title">
         <div className={feedback.memoryLandscape} aria-hidden="true" />
         <div className={`${styles.storyCopy} ${feedback.storyCopy}`}>
           <p className={styles.eyebrow}>{homepage.memory_eyebrow ?? "Storie e memoria"}</p>
