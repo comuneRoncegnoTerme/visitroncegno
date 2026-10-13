@@ -50,6 +50,32 @@
   letter-spacing: 0.16em;
 }
 
+.routeTrace {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  z-index: 2;
+  width: 120px;
+  height: 120px;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+  pointer-events: none;
+}
+
+.routeCard:first-child .routeTrace {
+  width: 190px;
+  height: 190px;
+}
+
+@media (max-width: 760px) {
+  .routeTrace,
+  .routeCard:first-child .routeTrace {
+    top: 16px;
+    right: 16px;
+    width: 96px;
+    height: 96px;
+  }
+}
+
 .routeCopy {
   position: absolute;
   right: 0;

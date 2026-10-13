@@ -47,6 +47,32 @@ function getRoncegnoPeriod(): DayPeriod {
   return "night";
 }
 
+type Weather = { temperature: number; label: string; snowing: boolean };
+
+// Codici meteo WMO usati da Open-Meteo, ridotti a poche parole.
+function weatherLabel(code: number) {
+  if (code === 0) return "sereno";
+  if (code <= 2) return "poco nuvoloso";
+  if (code === 3) return "nuvoloso";
+  if (code === 45 || code === 48) return "nebbia";
+  if (code >= 51 && code <= 57) return "pioviggine";
+  if ((code >= 61 && code <= 67) || (code >= 80 && code <= 82)) return "pioggia";
+  if ((code >= 71 && code <= 77) || code === 85 || code === 86) return "neve";
+  if (code >= 95) return "temporale";
+  return null;
+}
+
+// Il sito fa da tramite verso Open-Meteo (vedi app/api/meteo/route.ts).
+const WEATHER_URL = "/api/meteo";
+
+// Fiocchi con posizioni fisse (niente valori casuali: stesso disegno a ogni visita).
+const SNOWFLAKES = Array.from({ length: 36 }, (_, index) => ({
+  left: (index * 37) % 100,
+  delay: ((index * 53) % 90) / 10,
+  duration: 7 + ((index * 29) % 50) / 10,
+  size: 2 + ((index * 17) % 4),
+}));
+
 function isSafeHotspot(hotspot: HeroHotspot) {
   if (
     !hotspot ||
@@ -83,6 +109,7 @@ export default function HeroExperience({
 }: Props) {
   const [period, setPeriod] = useState<DayPeriod>("day");
   const [playing, setPlaying] = useState(false);
+  const [weather, setWeather] = useState<Weather | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -91,6 +118,26 @@ export default function HeroExperience({
     const interval = window.setInterval(update, 60_000);
     return () => window.clearInterval(interval);
   }, []);
+
+  // Meteo attuale a Roncegno: se il servizio non risponde, l'etichetta resta com'era.
+  useEffect(() => {
+    if (!atmosphereEnabled) return;
+    const controller = new AbortController();
+    fetch(WEATHER_URL, { signal: controller.signal })
+      .then((response) => (response.ok ? response.json() : null))
+      .then((data: { current?: { temperature_2m?: number; weather_code?: number } } | null) => {
+        const current = data?.current;
+        if (typeof current?.temperature_2m !== "number" || typeof current.weather_code !== "number") return;
+        const label = weatherLabel(current.weather_code);
+        setWeather({
+          temperature: Math.round(current.temperature_2m),
+          label: label ?? "",
+          snowing: label === "neve",
+        });
+      })
+      .catch(() => {});
+    return () => controller.abort();
+  }, [atmosphereEnabled]);
 
   const safeHotspots = useMemo(
     () => (hotspots ?? []).filter(isSafeHotspot).slice(0, 3),
@@ -144,10 +191,37 @@ export default function HeroExperience({
             className={`${styles.atmosphere} ${styles[period]}`}
             aria-hidden="true"
           />
-          <div className={styles.contextLabel} aria-label={`Roncegno Terme, ${PERIOD_LABELS[period]}`}>
-            <span>Roncegno Terme</span>
+          {weather?.snowing && (
+            <div className={styles.snow} aria-hidden="true">
+              {SNOWFLAKES.map((flake, index) => (
+                <span
+                  key={index}
+                  style={{
+                    left: `${flake.left}%`,
+                    width: flake.size,
+                    height: flake.size,
+                    animationDelay: `-${flake.delay}s`,
+                    animationDuration: `${flake.duration}s`,
+                  }}
+                />
+              ))}
+            </div>
+          )}
+          <div
+            className={styles.contextLabel}
+            aria-label={`Adesso a Roncegno Terme: ${PERIOD_LABELS[period]}${weather ? `, ${weather.temperature} gradi${weather.label ? `, ${weather.label}` : ""}` : ""}`}
+          >
+            <span>Adesso a Roncegno</span>
             <span aria-hidden="true">·</span>
             <span>{PERIOD_LABELS[period]}</span>
+            {weather && (
+              <>
+                <span aria-hidden="true">·</span>
+                <span className={styles.weather}>
+                  {weather.temperature}°{weather.label ? ` ${weather.label}` : ""}
+                </span>
+              </>
+            )}
           </div>
         </>
       )}

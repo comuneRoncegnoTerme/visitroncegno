@@ -26,3 +26,9 @@
 }
 
 .image{background-image:url('/images/festa-castagna/caldarroste-fuoco-cesto.webp');background-position:center 55%}
+
+.countdown{display:inline-flex;align-items:center;gap:8px;margin:0 0 16px;padding:7px 14px 7px 12px;border-radius:999px;background:#d66b2c;color:#fff;font-size:14px;font-weight:700;box-shadow:0 6px 18px rgba(0,0,0,.25);animation:countdownIn .5s cubic-bezier(.3,1.4,.5,1) both}
+.countdown::before{width:8px;height:8px;border-radius:50%;background:#fff;content:"";animation:countdownPulse 1.8s ease-in-out infinite}
+@keyframes countdownIn{from{opacity:0;transform:translateY(6px) scale(.94)}}
+@keyframes countdownPulse{50%{opacity:.35}}
+@media(prefers-reduced-motion:reduce){.countdown,.countdown::before{animation:none}}

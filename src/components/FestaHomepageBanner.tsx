@@ -1,4 +1,5 @@
 import Link from "next/link";
+import EventCountdown from "./EventCountdown";
 import styles from "./FestaHomepageBanner.module.css";
 
 type Props = {
@@ -11,6 +12,9 @@ type Props = {
   secondaryUrl?: string | null;
   noteSmall?: string | null;
   noteStrong?: string | null;
+  /** Date della festa prese dall'evento in Directus: abilitano il conto alla rovescia. */
+  eventStart?: string | null;
+  eventEnd?: string | null;
 };
 
 export default function FestaHomepageBanner({
@@ -23,6 +27,8 @@ export default function FestaHomepageBanner({
   secondaryUrl,
   noteSmall,
   noteStrong,
+  eventStart,
+  eventEnd,
 }: Props) {
   return (
     <section className={styles.wrapper} aria-labelledby="festa-home-title">
@@ -30,6 +36,7 @@ export default function FestaHomepageBanner({
       <div className={styles.overlay} />
 
       <div className={styles.content}>
+        {eventStart && <EventCountdown start={eventStart} end={eventEnd ?? null} className={styles.countdown} />}
         <p className={styles.eyebrow}>{eyebrow ?? "23–25 ottobre 2026 · Roncegno Terme"}</p>
         <h2 id="festa-home-title">{title ?? "Festa della Castagna 2026"}</h2>
         <p className={styles.lead}>
