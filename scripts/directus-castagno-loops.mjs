@@ -52,7 +52,7 @@ const LOOPS = [
       description:
         "Una passeggiata che riporta indietro nel tempo, tra gli antichi masi e i castagni del versante sopra Roncegno. " +
         "Dal paese, a circa 495 m, si sale con pendenza costante fino a sfiorare i 890 m, si raggiunge la chiesetta di Santa Brigida " +
-        "e si torna al punto di partenza scendendo per un'altra strada. Lungo la salita si passa da Maso Montibelleri, " +
+        "e si torna al punto di partenza scendendo quasi tutto per un'altra strada. Lungo la salita si passa da Maso Montibelleri, " +
         "dove arriva il collegamento da Maso Zonti. Sono circa 400 m di dislivello da fare con calma: meglio scarpe da escursione, " +
         "soprattutto in discesa dopo la pioggia.",
       difficulty: "facile-moderata",
