@@ -151,28 +151,30 @@ export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) 
           ))}
         </article>
 
-        <aside className={`${styles.sideColumn} ${mediaStyles.sideColumn}`}>
-          <div className={styles.routeCard}>
-            <p className={styles.routeKicker}>Lungo il territorio</p>
-            <h2>Il percorso</h2>
-            <p>Questo pannello fa parte di un percorso: sulla sua pagina trovi mappa, tappe e informazioni pratiche.</p>
-            <Link href={routeHref}>{routeLabel} →</Link>
-          </div>
-
-          {isChestnutHistory && (
-            <div className={styles.sourceCard}>
-              <p className={styles.metaLabel}>Dalle schede storiche</p>
-              <p>Il castagno è stato per secoli una risorsa completa: frutto, legno, fogliame e tannino entravano nella vita quotidiana delle famiglie di montagna.</p>
-              <span>I Sentieri di Roncegno · tra storia e tradizione</span>
+        {/* Audio e schede laterali in un'unica colonna che resta in vista mentre si legge:
+            separati, la colonna "appiccicosa" scorreva sopra il lettore audio. */}
+        <div className={styles.sideStack}>
+          {audioUrl && (
+            <div className={mediaStyles.audioCard}>
+              <PanelAudioPlayer src={audioUrl} title={audioTitle} autoPlay />
             </div>
           )}
-        </aside>
+          <aside className={`${styles.sideColumn} ${mediaStyles.sideColumn}`}>
+            <div className={styles.routeCard}>
+              <p className={styles.routeKicker}>Questo pannello fa parte di</p>
+              <Link href={routeHref}>{routeLabel} →</Link>
+              <p>Mappa, tappe e informazioni pratiche del percorso.</p>
+            </div>
 
-        {audioUrl && (
-          <div className={mediaStyles.audioCard}>
-            <PanelAudioPlayer src={audioUrl} title={audioTitle} autoPlay />
-          </div>
-        )}
+            {isChestnutHistory && (
+              <div className={styles.sourceCard}>
+                <p className={styles.metaLabel}>Dalle schede storiche</p>
+                <p>Il castagno è stato per secoli una risorsa completa: frutto, legno, fogliame e tannino entravano nella vita quotidiana delle famiglie di montagna.</p>
+                <span>I Sentieri di Roncegno · tra storia e tradizione</span>
+              </div>
+            )}
+          </aside>
+        </div>
       </section>
 
       {panel.relatedPanels && (
