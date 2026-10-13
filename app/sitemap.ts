@@ -19,6 +19,7 @@ const STATIC_PATHS = [
   "/festa-della-castagna",
   "/organizza-la-visita",
   "/cartina",
+  "/mappa",
 ];
 
 function entry(path: string, priority: number): MetadataRoute.Sitemap[number] {

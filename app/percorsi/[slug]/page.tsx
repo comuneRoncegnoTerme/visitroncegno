@@ -225,7 +225,7 @@ export default async function RoutePage({ params }: RoutePageProps) {
   const primaryStats = [
     route.distance_km != null ? ["Distanza", `${route.distance_km.toLocaleString("it-IT")} km`] : null,
     duration ? ["Durata", duration] : null,
-    ["Difficoltà", difficultyLabel(route.difficulty)],
+    route.difficulty ? ["Difficoltà", difficultyLabel(route.difficulty)] : null,
     route.elevation_gain_m != null ? ["Dislivello", `+${route.elevation_gain_m} m`] : null,
   ].filter(Boolean) as [string, string][];
 

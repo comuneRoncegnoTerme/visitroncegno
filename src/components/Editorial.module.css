@@ -124,8 +124,16 @@
   width:92vw;
   max-width:none;
 }
+/* Schede correlate: 3 su desktop, 2 su tablet, 1 su telefono.
+   (Questa regola viene dopo le media query sopra, quindi le ripete.) */
 .relatedGrid{
   grid-template-columns:repeat(3,minmax(0,1fr));
+}
+@media(max-width:1000px){
+  .relatedGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:640px){
+  .relatedGrid{grid-template-columns:minmax(0,1fr)}
 }
 @media(max-width:800px){
   .indexHeroInner,

@@ -13,9 +13,13 @@ services:
       DIRECTUS_PUBLIC_ASSET_URL: ${DIRECTUS_PUBLIC_ASSET_URL:-}
       CONTENT_HUB_SESSION_SECRET: ${CONTENT_HUB_SESSION_SECRET:-}
       CONTENT_HUB_ALLOWED_ROLES: ${CONTENT_HUB_ALLOWED_ROLES:-}
-      CONTENT_HUB_COOKIE_SECURE: ${CONTENT_HUB_COOKIE_SECURE:-false}
+      # Vuoto = automatico (Secure quando il proxy segnala HTTPS con X-Forwarded-Proto).
+      CONTENT_HUB_COOKIE_SECURE: ${CONTENT_HUB_COOKIE_SECURE:-}
     ports:
-      - "3000:3000"
+      # Con il server web (nginx/Caddy) sullo stesso VPS impostare WEBSITE_BIND_ADDRESS=127.0.0.1
+      # nel file .env: Next non sarà più raggiungibile direttamente sulla porta 3000.
+      # Il valore predefinito lascia invariato il comportamento attuale.
+      - "${WEBSITE_BIND_ADDRESS:-0.0.0.0}:3000:3000"
     healthcheck:
       test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://127.0.0.1:3000/api/health || exit 1"]
       interval: 30s

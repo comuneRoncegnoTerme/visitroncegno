@@ -5,8 +5,8 @@ import { getDirectusAssetUrl, getSiteSettings } from "@/lib/directus";
 import LoginForm from "./LoginForm";
 import styles from "./page.module.css";
 
-const MUNICIPAL_CREST_URL =
-  "https://commons.wikimedia.org/wiki/Special:Redirect/file/Roncegno_Terme-Stemma.svg";
+// Stemma servito dal sito (estratto dalla cartina ufficiale): nessuna richiesta a server esterni.
+const MUNICIPAL_CREST_URL = "/images/logo/stemma-roncegno.webp";
 
 export default async function ContentHubLoginPage() {
   const session = await getContentHubSession();
