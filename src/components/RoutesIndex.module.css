@@ -144,7 +144,7 @@
   opacity:.18;
   background-position:center 60%;
   background-size:cover;
-  filter:grayscale(.58) sepia(.12);
+  filter:grayscale(.29) sepia(.12);
 }
 .heroInner{
   position:relative;

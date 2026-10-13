@@ -79,8 +79,8 @@
   position:absolute;
   inset:0;
   background:
-    linear-gradient(90deg,rgba(6,29,23,.93) 0%,rgba(6,29,23,.64) 45%,rgba(6,29,23,.12) 78%),
-    linear-gradient(0deg,rgba(6,29,23,.62),transparent 56%);
+    linear-gradient(90deg,rgba(6,29,23,.71) 0%,rgba(6,29,23,.49) 45%,rgba(6,29,23,.12) 78%),
+    linear-gradient(0deg,rgba(6,29,23,.47),transparent 56%);
 }
 .featuredCopy{
   position:absolute;
@@ -350,7 +350,7 @@
   opacity:.16;
   background-position:center 52%;
   background-size:cover;
-  filter:grayscale(.6) sepia(.12);
+  filter:grayscale(.30) sepia(.12);
 }
 .heroInner{
   position:relative;

@@ -23,7 +23,7 @@ const THEMES = {
   },
   "terme-e-benessere": {
     title: "Terme e benessere",
-    intro: "La storia termale di Roncegno incontra il paesaggio, i parchi e i luoghi dedicati alla cura e al benessere.",
+    intro: "Il parco delle terme, le acque e la storia termale del paese.",
     lead: "Il parco, le acque e i luoghi legati alla storia termale del paese.",
     placeTypes: ["nature", "service", "institution", "other"],
     keywords: ["terme", "termale", "benessere", "raphael", "salute", "acqua", "parco delle terme"],
@@ -45,7 +45,7 @@ const THEMES = {
   },
   "sport-e-movimento": {
     title: "Sport e movimento",
-    intro: "Camminare, correre, pedalare e vivere gli impianti sportivi: Roncegno offre occasioni per muoversi tra fondovalle e montagna.",
+    intro: "Camminare, correre, andare in bici o usare gli impianti sportivi, tra fondovalle e montagna.",
     lead: "Percorsi, attività e appuntamenti per chi vuole muoversi all’aperto.",
     placeTypes: ["other", "service"],
     keywords: ["sport", "palestra", "tennis", "campo", "movimento"],

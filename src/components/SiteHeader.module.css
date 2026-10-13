@@ -13,7 +13,7 @@
 
 .overlay {
   color: #fff;
-  background: linear-gradient(180deg, rgba(5,18,14,.54), rgba(5,18,14,.13));
+  background: linear-gradient(180deg, rgba(5,18,14,.41), rgba(5,18,14,.13));
   backdrop-filter: blur(9px);
 }
 

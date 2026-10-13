@@ -139,7 +139,7 @@
   inset:0;
   opacity:.14;
   background:url("/images/homepage/roncegno-skyline.webp") center 58%/cover no-repeat;
-  filter:grayscale(.7) sepia(.16);
+  filter:grayscale(.35) sepia(.16);
 }
 .heroInner{
   position:relative;

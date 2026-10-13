@@ -60,12 +60,12 @@ function UtilityIcon({ name }: { name: UtilityIconName }) {
 
 
 const utilityItems: Array<{ label: string; note: string; href: string; icon: UtilityIconName }> = [
-  { label: "Sentieri e percorsi", note: "Natura da vivere", href: "/percorsi", icon: "trail" },
-  { label: "Terme e benessere", note: "Acque, parco e benessere", href: "/temi/terme-e-benessere", icon: "wellness" },
+  { label: "Sentieri e percorsi", note: "Passeggiate ed escursioni", href: "/percorsi", icon: "trail" },
+  { label: "Terme e benessere", note: "Il parco e le acque termali", href: "/temi/terme-e-benessere", icon: "wellness" },
   { label: "Luoghi e cultura", note: "Luoghi, storie e memoria", href: "/temi/cultura-e-memoria", icon: "culture" },
-  { label: "Dove mangiare", note: "Sapori del territorio", href: "/organizza-la-visita", icon: "food" },
+  { label: "Dove mangiare", note: "Ristoranti, bar e agritur", href: "/organizza-la-visita", icon: "food" },
   { label: "Eventi", note: "Cosa succede a Roncegno", href: "/eventi", icon: "events" },
-  { label: "Cartina", note: "Orientati sul territorio", href: "/cartina", icon: "map" },
+  { label: "Cartina", note: "Il paese disegnato da Fabio Vettori", href: "/cartina", icon: "map" },
 ];
 
 export default async function Home() {
@@ -118,10 +118,10 @@ export default async function Home() {
         <div className={`${styles.heroOverlay} ${refine.heroOverlay}`} />
         <div className={`${styles.heroContent} ${refine.heroContent}`}>
           <p className={styles.eyebrow}>{homepage.hero_eyebrow ?? "Trentino · Valsugana"}</p>
-          <h1>{homepage.hero_title ?? "Semplicemente, Roncegno Terme"}</h1>
+          <h1>{homepage.hero_title ?? "Roncegno Terme"}</h1>
           <p className={styles.heroIntro}>{homepage.hero_description ?? "Un paese della Valsugana tra le terme, i castagneti e la montagna."}</p>
           <div className={styles.heroActions}>
-            <Link className={styles.primaryButton} href={homepage.hero_primary_url ?? "/luoghi"}>{homepage.hero_primary_label ?? "Esplora il territorio"}</Link>
+            <Link className={styles.primaryButton} href={homepage.hero_primary_url ?? "/luoghi"}>{homepage.hero_primary_label ?? "Cosa vedere"}</Link>
             <Link className={styles.secondaryButton} href={homepage.hero_secondary_url ?? "/organizza-la-visita"}>{homepage.hero_secondary_label ?? "Organizza la visita"}</Link>
           </div>
         </div>
@@ -233,7 +233,7 @@ export default async function Home() {
                     <div className={editorial.highlightImage} style={{ backgroundImage: `url('${image}')` }} />
                     <div className={editorial.highlightShade} />
                     <div className={editorial.highlightCopy}>
-                      <small>{place.category?.name ?? place.map_label ?? "Luogo da scoprire"}</small>
+                      <small>{place.category?.name ?? place.map_label ?? "Da vedere"}</small>
                       <h3>{place.title}</h3>
                       {place.summary && <p>{place.summary}</p>}
                     </div>
@@ -280,10 +280,10 @@ export default async function Home() {
 
       <CartinaTeaser
         title={homepage.map_title ?? "La cartina di Roncegno"}
-        description={homepage.map_description ?? "Disegnata da Fabio Vettori con le sue formiche. Tocca un nome per aprirlo sulla cartina."}
+        description={homepage.map_description ?? "Disegnata da Fabio Vettori con le sue formiche. Scegli un luogo per leggerne la scheda."}
         primaryLabel={homepage.map_primary_label ?? "Apri la cartina"}
         primaryUrl={homepage.map_primary_url ?? "/cartina"}
-        secondaryLabel={homepage.map_secondary_label ?? "Mappa reale"}
+        secondaryLabel={homepage.map_secondary_label ?? "Mappa stradale"}
         secondaryUrl={homepage.map_secondary_url ?? "/mappa"}
       />
 

@@ -1,9 +1,9 @@
 .eventShade {
   background: linear-gradient(
     0deg,
-    rgba(8, 35, 28, 0.98) 0%,
-    rgba(8, 35, 28, 0.82) 38%,
-    rgba(8, 35, 28, 0.48) 62%,
+    rgba(8,35,28,.74) 0%,
+    rgba(8,35,28,.62) 38%,
+    rgba(8,35,28,.36) 62%,
     rgba(8, 35, 28, 0.14) 86%,
     rgba(8, 35, 28, 0.06) 100%
   ) !important;

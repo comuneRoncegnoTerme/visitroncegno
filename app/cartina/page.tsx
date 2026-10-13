@@ -66,7 +66,7 @@ export default async function CartinaPage({ searchParams }: PageProps<"/cartina"
           <h1 id="cartina-page-title">La cartina di Roncegno</h1>
           <p className={styles.lead}>
             Disegnata da Fabio Vettori con le sue formiche: il paese, i rifugi, le chiese,
-            i musei e le cime intorno. Tocca un punto per aprire la scheda del luogo.
+            i musei e le cime intorno. Scegli un punto per aprire la scheda del luogo.
           </p>
         </div>
         <div className={styles.introActions}>
@@ -90,7 +90,7 @@ export default async function CartinaPage({ searchParams }: PageProps<"/cartina"
         <p className={styles.attribution}>
           Illustrazione “Le Formiche” di Fabio Vettori, cartina ufficiale 2026. Il disegno è
           indicativo e non sostituisce le carte escursionistiche: per orientarti sul posto usa
-          la <Link href="/mappa">mappa reale</Link>.
+          la <Link href="/mappa">mappa stradale</Link>.
         </p>
       </section>
 

@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     locale: "it_IT",
     siteName: "Visit Roncegno",
     title: "Visit Roncegno Terme",
-    description: "Natura, percorsi, eventi, musei, memoria e informazioni utili per vivere Roncegno Terme.",
+    description: "Natura, percorsi, eventi, musei, memoria e informazioni utili per visitare Roncegno Terme.",
     images: [{ url: DEFAULT_OG_IMAGE, width: 1200, height: 630 }],
   },
   twitter: {

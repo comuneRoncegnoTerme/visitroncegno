@@ -20,7 +20,7 @@ function label(start: string, end: string | null) {
   const first = romeDay(new Date(start));
   const last = end ? romeDay(new Date(end)) : first;
   if (today > last) return null;
-  if (today >= first) return "È in corso: ci vediamo in piazza";
+  if (today >= first) return "In corso";
   const days = first - today;
   if (days === 1) return "Manca un giorno";
   return `Mancano ${days} giorni`;

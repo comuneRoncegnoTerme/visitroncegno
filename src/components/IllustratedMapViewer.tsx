@@ -315,7 +315,7 @@ export default function IllustratedMapViewer({ src, hdSrc, alt, aspect, points, 
 
         {!selected && (
           <button type="button" className={styles.tourStart} onClick={startTour}>
-            Fai il giro della cartina
+            Guarda i luoghi uno per uno
           </button>
         )}
 

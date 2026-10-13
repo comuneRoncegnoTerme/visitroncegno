@@ -153,7 +153,7 @@ export default async function FestaDellaCastagnaPage() {
           <div className={styles.momentsTitle}>
             <h2>Com’è la festa</h2>
           </div>
-          <p>Per due giorni il centro del paese diventa mercato, cucina e luogo d’incontro.</p>
+          <p>Sabato e domenica il centro del paese diventa mercato, cucina e luogo d’incontro.</p>
         </div>
         <div className={styles.photoGrid}>
           <figure className={styles.photoTall}>
@@ -179,8 +179,8 @@ export default async function FestaDellaCastagnaPage() {
         <div className={styles.programTitle}>
           <p className={styles.eyebrowLight}>Programma 2026</p>
           <h2>Il programma, giorno per giorno</h2>
-          <p>Da venerdì sera a domenica, il programma alterna comunità, passeggiate, spettacoli, musica, gastronomia e attività per famiglie.</p>
-          <div className={styles.alwaysOn}><strong>Tutti i giorni</strong><p>Servizio navetta gratuito, intrattenimento e laboratori per bambini, giardino con animali, gonfiabili, dolci di castagne, bancarelle e musica itinerante.</p></div>
+          <p>Da venerdì sera a domenica: passeggiate, spettacoli, musica, cucina e attività per bambini.</p>
+          <div className={styles.alwaysOn}><strong>Sabato e domenica</strong><p>Laboratori per bambini, giardino con animali, gonfiabili, dolci di castagne, bancarelle e musica itinerante. Domenica anche la navetta gratuita.</p></div>
         </div>
         <FestaProgramme days={programme} />
       </section>
@@ -236,7 +236,7 @@ export default async function FestaDellaCastagnaPage() {
         <div className={styles.contactBox}><span>Informazioni</span><strong>Comune di Roncegno Terme</strong><a href="tel:+390461764061">0461 764061</a><a href="mailto:comunicazione@comune.roncegnoterme.tn.it">comunicazione@comune.roncegnoterme.tn.it</a></div>
       </section>
 
-      <section className={styles.cta}><div><h2>Roncegno, anche dopo la festa</h2><p>Sentieri, musei, terme e i posti dove mangiare e dormire, tutto l’anno.</p></div><Link href="/" className={styles.lightButton}>Vai al sito di Roncegno</Link></section>
+      <section className={styles.cta}><div><h2>Roncegno tutto l’anno</h2><p>Sentieri, musei, terme e i posti dove mangiare e dormire, tutto l’anno.</p></div><Link href="/" className={styles.lightButton}>Torna alla home</Link></section>
       <SiteFooter settings={siteSettings} />
     </main>
   );

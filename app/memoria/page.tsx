@@ -47,7 +47,7 @@ export default async function MemoryPage() {
           <h2>Il progetto</h2>
           <div>
             <p>Il Progetto Memoria “Na vòlta a Ronzégno” nasce nel novembre 2022 dalla volontà di un gruppo di giovani di conservare la memoria collettiva e rafforzare il senso di comunità.</p>
-            <p>Nel 2024, grazie al bando “Turismo delle Radici”, il progetto ha proposto 22 incontri dedicati alla condivisione di storie, informazioni, fotografie e manoscritti. Questa pagina apre una porta sul patrimonio raccolto.</p>
+            <p>Nel 2024, grazie al bando “Turismo delle Radici”, il progetto ha proposto 22 incontri dedicati alla condivisione di storie, informazioni, fotografie e manoscritti. Qui trovi una parte del materiale raccolto.</p>
           </div>
         </div>
       </section>
@@ -55,7 +55,7 @@ export default async function MemoryPage() {
       <section className={styles.archive} aria-labelledby="archivio-title">
         <div className={styles.archiveHeading}>
           <div><h2 id="archivio-title">L’archivio</h2></div>
-          <p>Sei sezioni: paesaggi, volti, mestieri, edifici e parole. Ogni sezione si apre sul sito dell’archivio storico.</p>
+          <p>Sei sezioni: paesaggio, edifici, persone, eventi e tradizioni, attività tipiche, lettere e manoscritti. Ogni sezione si apre sul sito dell’archivio storico.</p>
         </div>
         <div className={styles.archiveGrid}>
           {archiveSections.map((section) => (

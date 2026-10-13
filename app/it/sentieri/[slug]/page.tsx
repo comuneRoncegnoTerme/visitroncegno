@@ -170,7 +170,7 @@ export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) 
               <div className={styles.sourceCard}>
                 <p className={styles.metaLabel}>Dalle schede storiche</p>
                 <p>Il castagno è stato per secoli una risorsa completa: frutto, legno, fogliame e tannino entravano nella vita quotidiana delle famiglie di montagna.</p>
-                <span>I Sentieri di Roncegno · tra storia e tradizione</span>
+                <span>I Sentieri di Roncegno</span>
               </div>
             )}
           </aside>

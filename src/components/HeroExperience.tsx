@@ -27,7 +27,7 @@ type Props = {
 
 const PERIOD_LABELS: Record<DayPeriod, string> = {
   morning: "mattino",
-  day: "giorno",
+  day: "pomeriggio",
   evening: "sera",
   night: "notte",
 };
@@ -261,7 +261,7 @@ export default function HeroExperience({
         <div className={styles.audioControl}>
           <audio ref={audioRef} src={ambientAudioUrl} loop preload="none" />
           <button type="button" onClick={toggleAudio} aria-pressed={playing}>
-            {playing ? "Silenzia il paesaggio" : "Ascolta il paesaggio"}
+            {playing ? "Disattiva l’audio" : "Attiva i suoni del paese"}
           </button>
         </div>
       )}

@@ -88,7 +88,7 @@ export default async function EventsIndex({ items }: { items: EditorialItem[] })
             <h1>Eventi a Roncegno</h1>
           </div>
           <p className={styles.heroIntro}>
-            Feste di paese, cultura, sport e sapori: gli appuntamenti per incontrare la comunità e vivere il territorio nel momento giusto.
+            Feste di paese, concerti, sport e mercati in programma a Roncegno.
           </p>
           {(heroPhotoA || heroPhotoB) && (
             <div className={styles.heroPhotos} aria-hidden="true">
@@ -148,7 +148,7 @@ export default async function EventsIndex({ items }: { items: EditorialItem[] })
             <div>
               <h2 id="past-events-title">Eventi passati</h2>
             </div>
-            <p>Gli appuntamenti già conclusi restano consultabili come memoria della vita del territorio.</p>
+            <p>Gli appuntamenti degli ultimi mesi.</p>
           </div>
 
           <div className={styles.pastGrid}>

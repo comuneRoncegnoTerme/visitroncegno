@@ -36,7 +36,7 @@ export default async function RoutesPage() {
             <h1>Percorsi e sentieri</h1>
           </div>
           <p className={styles.heroIntro}>
-            Itinerari tra castagneti, masi e panorami del Lagorai. Scegli il percorso in base al tempo, alla difficoltà e al tipo di uscita, poi preparati e parti con rispetto per la montagna.
+            Itinerari tra castagneti, masi e panorami del Lagorai. Scegli in base al tempo che hai, alla difficoltà e al tipo di uscita.
           </p>
           {(heroPhotoA || heroPhotoB) && (
             <div className={styles.heroPhotos} aria-hidden="true">
@@ -61,7 +61,7 @@ export default async function RoutesPage() {
           <strong>La cartina illustrata →</strong>
         </Link>
         <Link href="/mappa">
-          <small>Organizza</small>
+          <small>Sul territorio</small>
           <strong>Apri la mappa del territorio →</strong>
         </Link>
       </nav>

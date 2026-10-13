@@ -24,7 +24,7 @@ export const cinqueValliPanels: TrailPanel[] = [
       {
         title: "Le specie della torbiera",
         text: [
-          "Nel sito è stata riscontrata la presenza di alcune specie tipiche di torbiera come la Scirpus sylvaticus, una pianta di grossa taglia nei pressi della pedana, l’Eriophorum vaginatum, con la tipica infruttescenza a batuffolo bianco, e la Carex stellulata.",
+          "Nel sito è stata riscontrata la presenza di alcune specie tipiche di torbiera come lo Scirpus sylvaticus, una pianta di grossa taglia nei pressi della pedana, l’Eriophorum vaginatum, con la tipica infruttescenza a batuffolo bianco, e la Carex stellulata.",
           "Lungo il bordo della torbiera a sfagno sono presenti dei tratti di prateria umida a Molinia coerulea.",
         ],
       },

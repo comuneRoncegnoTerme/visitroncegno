@@ -8,6 +8,8 @@
   background-position: center;
   background-size: cover;
   transform: scale(1.012);
+  /* Le foto del territorio sono spesso in controluce: le schiariamo appena. */
+  filter: brightness(1.08) saturate(1.06);
   pointer-events: none;
   /* All'apertura la foto parte leggermente più vicina e si assesta. */
   animation: heroSettle 2.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;

@@ -1,5 +1,5 @@
 .hero{min-height:96vh}
-.heroOverlay{background:linear-gradient(90deg,rgba(6,31,25,.95) 0%,rgba(6,31,25,.74) 32%,rgba(6,31,25,.25) 66%,rgba(6,31,25,.04) 100%),linear-gradient(0deg,rgba(6,31,25,.72) 0%,rgba(6,31,25,.18) 46%,transparent 68%)}
+.heroOverlay{background:linear-gradient(90deg,rgba(6,31,25,.6) 0%,rgba(6,31,25,.42) 32%,rgba(6,31,25,.12) 66%,transparent 100%),linear-gradient(0deg,rgba(6,31,25,.5) 0%,rgba(6,31,25,.12) 40%,transparent 62%)}
 .heroContent{min-height:96vh;max-width:920px;padding-top:158px;padding-bottom:230px}
 .heroEvent{position:absolute;right:5vw;bottom:104px;z-index:3;display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"eyebrow eyebrow arrow" "date copy arrow";column-gap:20px;align-items:end;width:min(500px,34vw);padding:23px 0 22px;border-top:1px solid rgba(255,255,255,.54);border-bottom:1px solid rgba(255,255,255,.28);color:#fff;background:transparent}
 .heroEventEyebrow{grid-area:eyebrow;margin-bottom:15px;color:#efb083;font-size:12px;font-weight:700;letter-spacing:0;text-transform:none}
@@ -27,7 +27,7 @@
 .eventCard:not(.eventCardPrimary) .eventMeta{margin:0 44px 10px 0;color:#b65d32}
 .eventCard:not(.eventCardPrimary) .eventBody h3{font-size:30px;color:#17372e}
 .eventCard:not(.eventCardPrimary) .cardArrow{right:18px;bottom:18px;border-color:rgba(23,55,46,.22);color:#17372e}
-.eventCardPrimary .eventShade{background:linear-gradient(0deg,rgba(7,31,25,.97) 0%,rgba(7,31,25,.48) 52%,rgba(7,31,25,.07) 80%)}
+.eventCardPrimary .eventShade{background:linear-gradient(0deg,rgba(7,31,25,.74) 0%,rgba(7,31,25,.36) 52%,rgba(7,31,25,.07) 80%)}
 .eventCardPrimary .eventBody{padding:32px}
 .eventCardPrimary .eventBody h3{max-width:560px;font-size:44px;text-wrap:balance;text-shadow:0 1px 18px rgba(0,0,0,.2)}
 .eventCardPrimary .eventBody p{max-width:560px;font-size:14px;color:rgba(255,255,255,.82)}
@@ -44,7 +44,7 @@
 .storyCard{overflow:hidden;border-radius:18px;background:rgba(255,255,255,.72);border:1px solid rgba(23,55,46,.08)}
 .storyCardPrimary{grid-row:1 / 3;position:relative;display:block;min-height:520px;color:#fff;background:#17372e}
 .storyCardPrimary .storyImage{position:absolute;inset:0;min-height:0}
-.storyCardPrimary::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,35,28,.94),rgba(8,35,28,.08) 70%)}
+.storyCardPrimary::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,35,28,.71),rgba(8,35,28,.08) 70%)}
 .storyCardPrimary .storyBody{position:absolute;right:0;bottom:0;left:0;z-index:2;padding:30px;background:transparent;color:#fff}
 .storyCardPrimary .storyBody small{color:#efb083}
 .storyCardPrimary .storyBody strong{max-width:520px;font-size:36px;color:#fff}
@@ -72,7 +72,7 @@
 @media(max-width:760px){
   .hero{min-height:0;padding-bottom:56px}
   .heroContent{min-height:0;justify-content:flex-start;padding:112px 5vw 0}
-  .heroOverlay{background:linear-gradient(90deg,rgba(5,30,24,.94) 0%,rgba(5,30,24,.68) 52%,rgba(5,30,24,.20) 100%),linear-gradient(0deg,rgba(5,30,24,.78) 0%,rgba(5,30,24,.18) 58%,transparent 76%)}
+  .heroOverlay{background:linear-gradient(180deg,rgba(5,30,24,.42) 0%,rgba(5,30,24,.34) 45%,rgba(5,30,24,.58) 100%)}
   .heroEvent{position:relative;right:auto;bottom:auto;left:auto;margin:32px 5vw 0;width:auto;grid-template-columns:64px minmax(0,1fr) 46px;column-gap:14px;padding:17px 0 15px;background:transparent;backdrop-filter:none}
   .heroEventEyebrow{margin-bottom:13px}
   .heroEventDate strong{font-size:34px}
@@ -129,3 +129,6 @@
   .heroEventArrow{transition:none}
   .heroEvent:hover .heroEventArrow{transform:none}
 }
+
+/* Velatura più leggera: un'ombra morbida sotto il testo lo tiene leggibile anche sulle foto chiare. */
+.heroContent h1,.heroContent p{text-shadow:0 1px 3px rgba(0,0,0,.18),0 2px 24px rgba(0,0,0,.28)}

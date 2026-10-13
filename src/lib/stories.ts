@@ -36,7 +36,7 @@ const LEGACY_STORY_COPY: Record<string, LegacyStoryCopy> = {
       "La tempesta Vaia, oltre a provocare ingenti danni diretti, ha creato le condizioni ideali per la diffusione incontrollata del bostrico proprio sulle superfici boscate inizialmente scampate alla tempesta.",
     body: [
       "<p>La tempesta Vaia, oltre a provocare ingenti danni diretti, ha creato le condizioni ideali per la diffusione incontrollata del bostrico proprio sulle superfici boscate inizialmente scampate alla tempesta.</p>",
-      "<p>L’Ips thypographus, meglio noto come bostrico tipografo, è un piccolo insetto coleottero del gruppo degli Scolitidi, di forma cilindrica e di colore bruno, lungo circa 4-5 mm. È endemico dei boschi del Trentino e attacca prevalentemente l’abete rosso.</p>",
+      "<p>L’Ips typographus, meglio noto come bostrico tipografo, è un piccolo insetto coleottero del gruppo degli Scolitidi, di forma cilindrica e di colore bruno, lungo circa 4-5 mm. È diffuso nei boschi di abete rosso, anche in Trentino, e attacca soprattutto questa specie.</p>",
       "<p>Una volta penetrato sotto corteccia, il bostrico scava delle gallerie che interrompono il flusso di linfa nel floema. In tal modo gli zuccheri prodotti dalla chioma non raggiungono più le radici. Inoltre, quando penetrano nei tronchi, gli adulti trasportano anche funghi patogeni, che intasano i vasi di conduzione dell’acqua nell’albero (xilema). Entrambi i fattori, la distruzione del floema da parte delle larve e la ridotta conduttività dell’acqua dovuta all’infestazione fungina, portano gli abeti a morte rapida nel periodo di vegetazione.</p>",
     ].join(""),
   },
