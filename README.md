@@ -196,6 +196,25 @@ Per ottenere un exit code non-zero quando vengono trovati problemi, utile in con
 npm run directus:audit-places -- --strict
 ```
 
+### Coordinate dei luoghi
+
+Per esportare tutti i luoghi con le coordinate attuali e cercare quelle mancanti:
+
+```bash
+DIRECTUS_URL=https://directus.example.it \
+DIRECTUS_TOKEN=... \
+npm run directus:geocode-places
+```
+
+Lo script legge `places` senza modificarlo. Controlla le coordinate presenti (fuori dal territorio comunale, latitudine e longitudine invertite). Per quelle mancanti prende i punti già verificati della mappa della Festa della castagna e cerca le altre su OpenStreetMap (Nominatim, una richiesta al secondo, solo nell'area di Roncegno). Il risultato è `luoghi-coordinate.csv`, separato da punto e virgola e apribile in Excel, con un link di verifica per ogni proposta. Le proposte affidabili hanno già `si` nella colonna `applica`; le altre vanno controllate e confermate a mano.
+
+Dopo la revisione:
+
+```bash
+npm run directus:geocode-places -- --apply luoghi-coordinate.csv        # anteprima
+npm run directus:geocode-places -- --apply luoghi-coordinate.csv --yes  # scrive latitude/longitude
+```
+
 ## Controlli HTTP e compatibilità QR
 
 Smoke test in sola lettura, utilizzabile in locale, su staging o sul dominio pubblico:
