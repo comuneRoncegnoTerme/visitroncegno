@@ -33,7 +33,7 @@ export const contentHubCollections: Record<
       "start_latitude", "start_longitude", "family_friendly", "accessible",
       "public_transport", "loop_route", "featured", "recommended",
       "route_highlight", "gpx_file",
-      "season", "audience", "komoot_url", "outdooractive_url",
+      "season", "audience", "komoot_url", "outdooractive_url", "parent_route",
     ],
     sort: "sort,title",
     limit: 250,

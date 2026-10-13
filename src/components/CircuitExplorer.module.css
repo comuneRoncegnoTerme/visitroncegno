@@ -1,0 +1,197 @@
+.explorer {
+  display: grid;
+  gap: 22px;
+}
+
+.mapWrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #d8ddd6;
+}
+
+.map {
+  width: 100%;
+  height: clamp(420px, 56vw, 620px);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.mapWrap :global(.maplibregl-control-container) {
+  position: relative;
+  z-index: 4;
+}
+
+.trace path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  transition: opacity 0.2s ease, stroke-width 0.2s ease;
+}
+
+.traceShadow {
+  stroke: rgba(255, 255, 255, 0.95);
+  stroke-width: 9px;
+}
+
+.traceLine {
+  stroke-width: 4.5px;
+}
+
+/* Linea larga e invisibile: rende facile toccare il tracciato. */
+.traceHit {
+  stroke: transparent;
+  stroke-width: 22px;
+  pointer-events: stroke;
+  cursor: pointer;
+}
+
+.trace[data-state="dim"] .traceShadow,
+.trace[data-state="dim"] .traceLine {
+  opacity: 0.3;
+}
+
+.trace[data-state="active"] .traceShadow {
+  stroke-width: 12px;
+}
+
+.trace[data-state="active"] .traceLine {
+  stroke-width: 6.5px;
+}
+
+/* Sopra i tracciati SVG (z-index 2), che altrimenti coprirebbero il numero. */
+.startMarker {
+  z-index: 3;
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(13, 42, 34, 0.35);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(23, 55, 46, 0.12);
+  border-top: 5px solid var(--loop-color);
+  border-radius: 18px;
+  background: #fff;
+  color: #17372e;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.card[data-active],
+.card:hover {
+  box-shadow: 0 16px 36px rgba(23, 55, 46, 0.14);
+  transform: translateY(-2px);
+}
+
+.cardImage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #31594d center / cover;
+}
+
+.cardImage span {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: var(--loop-color);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.cardBody {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 18px 20px 20px;
+}
+
+.cardBody small {
+  color: #b65d32;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.cardBody h3 {
+  margin: 6px 0 0;
+  font: 400 26px/1.08 Georgia, "Times New Roman", serif;
+  letter-spacing: -0.02em;
+}
+
+.cardBody p {
+  margin: 10px 0 0;
+  color: #5f6b66;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+}
+
+.facts span {
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: #f1ece2;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.cardBody strong {
+  margin-top: auto;
+  padding-top: 18px;
+  font-size: 13px;
+}
+
+@media (max-width: 800px) {
+  .map {
+    height: 420px;
+  }
+
+  .cardBody h3 {
+    font-size: 23px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .trace path {
+    transition: none;
+  }
+}

@@ -210,8 +210,56 @@ export interface RouteItem {
   komoot_url: string | null;
   outdooractive_url: string | null;
   gpx_file: string | null;
+  /** Circuito di cui il percorso fa parte (campo aggiunto da scripts/directus-route-circuit-model.mjs). */
+  parent_route?: number | { id: number } | null;
   category?: { name: string } | null;
   points?: RoutePoint[];
+}
+
+export type CircuitLoop = Pick<
+  RouteItem,
+  | "id" | "title" | "slug" | "summary" | "image" | "difficulty" | "distance_km"
+  | "duration_minutes" | "elevation_gain_m" | "route_highlight" | "gpx_file" | "family_friendly"
+>;
+
+export function parentRouteId(route: Pick<RouteItem, "parent_route">) {
+  const value = route.parent_route;
+  if (typeof value === "number") return value;
+  return value && typeof value === "object" ? value.id : null;
+}
+
+/** Anelli pubblicati di un circuito. Senza il campo parent_route in Directus restituisce una lista vuota. */
+export async function getCircuitLoops(circuitId: number): Promise<CircuitLoop[]> {
+  const params = new URLSearchParams();
+  params.set("filter[status][_eq]", "published");
+  params.set("filter[parent_route][_eq]", String(circuitId));
+  params.set("sort", "sort,title");
+  params.set("limit", "20");
+  params.set(
+    "fields",
+    "id,title,slug,summary,image,difficulty,distance_km,duration_minutes,elevation_gain_m,route_highlight,gpx_file,family_friendly"
+  );
+  try {
+    const result = await directusJson<DirectusResponse<CircuitLoop[]>>(queryPath("routes", params));
+    return result.data ?? [];
+  } catch {
+    return [];
+  }
+}
+
+/** Titolo e slug di un percorso pubblicato, per il collegamento "Fa parte del circuito". */
+export async function getRouteSummaryById(id: number): Promise<Pick<RouteItem, "id" | "title" | "slug"> | null> {
+  const params = new URLSearchParams();
+  params.set("filter[status][_eq]", "published");
+  params.set("filter[id][_eq]", String(id));
+  params.set("limit", "1");
+  params.set("fields", "id,title,slug");
+  try {
+    const result = await directusJson<DirectusResponse<Pick<RouteItem, "id" | "title" | "slug">[]>>(queryPath("routes", params));
+    return result.data[0] ?? null;
+  } catch {
+    return null;
+  }
 }
 
 const EMPTY_HOMEPAGE: HomepageContent = {

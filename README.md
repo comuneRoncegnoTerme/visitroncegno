@@ -178,6 +178,18 @@ npm run directus:ensure-story-place-model
 
 Dopo la creazione della relazione, il Content Hub espone la sezione **Storie e memoria** e permette di collegare ogni storia sia a un luogo sia, quando pertinente, a un percorso. Le schede Luogo usano questi collegamenti per costruire il racconto editoriale senza duplicare testi o immagini.
 
+### Circuiti di percorsi
+
+Un circuito (es. il Circuito del Castagno) è un percorso che raccoglie più anelli, ognuno con il proprio GPX. Per aggiungere il campo `routes.parent_route` e preparare in bozza i tre anelli del Castagno:
+
+```bash
+DIRECTUS_URL=https://directus.example.it \
+DIRECTUS_TOKEN=... \
+npm run directus:ensure-route-circuit-model
+```
+
+Lo script è idempotente: crea il campo e la relazione solo se mancano e non tocca i percorsi che esistono già con lo stesso slug. Poi, nel Content Hub (Percorsi), ogni anello si completa come un percorso normale e nel campo "Fa parte del circuito" si sceglie il circuito. La pagina del circuito mostra da sola gli anelli pubblicati su un'unica mappa, con un colore e una scheda per anello. Ogni anello rimanda al circuito e agli altri anelli, e nell'elenco Percorsi circuito e anelli hanno un'etichetta.
+
 ### Audit read-only dei luoghi Directus
 
 Per elencare tutti i record di `places` e segnalare dati mancanti o incoerenti:

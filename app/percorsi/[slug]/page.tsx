@@ -3,6 +3,9 @@ import { notFound } from "next/navigation";
 import { publicDirectusCache } from "@/lib/directus-cache";
 import Link from "next/link";
 import RouteMap from "@/components/RouteMap";
+import CircuitExplorer, { type CircuitExplorerLoop } from "@/components/CircuitExplorer";
+import { CIRCUIT_COLORS } from "@/lib/circuit-colors";
+import circuitStyles from "@/components/RouteCircuit.module.css";
 import RouteElevationProfile from "@/components/RouteElevationProfile";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -12,8 +15,11 @@ import storyStyles from "@/components/RouteStories.module.css";
 import {
   DIRECTUS_URL,
   getDirectusImageUrl, getDirectusInternalAssetUrl, getDirectusShareImageUrl,
+  getCircuitLoops,
   getRouteBySlug,
+  getRouteSummaryById,
   getSiteSettings,
+  parentRouteId,
   type RoutePoint,
 } from "@/lib/directus";
 import {
@@ -211,18 +217,58 @@ export default async function RoutePage({ params }: RoutePageProps) {
 
   if (!route) notFound();
 
-  const [pointPlaceMedia, stories] = await Promise.all([
+  // Circuito: un percorso che raccoglie più anelli (routes.parent_route). Se è un circuito si mostrano
+  // gli anelli su un'unica mappa; se è un anello si collega al circuito e agli altri anelli.
+  const parentId = parentRouteId(route);
+  const [pointPlaceMedia, stories, loops, parent] = await Promise.all([
     loadPointPlaceMedia(route.points),
     loadRouteStories(route.id),
+    getCircuitLoops(route.id),
+    parentId ? getRouteSummaryById(parentId) : Promise.resolve(null),
   ]);
+  const siblings = parent ? await getCircuitLoops(parent.id) : [];
+  const isCircuit = loops.length > 0;
+  const circuitLoops: CircuitExplorerLoop[] = isCircuit
+    ? await Promise.all(
+        loops.map(async (loop) => {
+          const loopDuration = formatDuration(loop.duration_minutes);
+          return {
+            id: loop.id,
+            title: loop.title,
+            slug: loop.slug,
+            summary: loop.summary ?? loop.route_highlight,
+            imageUrl: getDirectusImageUrl(loop.image, 900),
+            difficulty: loop.difficulty ? difficultyLabel(loop.difficulty) : null,
+            facts: [
+              loop.distance_km != null ? `${loop.distance_km.toLocaleString("it-IT")} km` : null,
+              loopDuration,
+              loop.elevation_gain_m != null ? `+${loop.elevation_gain_m} m` : null,
+            ].filter((fact): fact is string => Boolean(fact)),
+            gpxText: await loadGpxText(getDirectusInternalAssetUrl(loop.gpx_file)),
+          };
+        })
+      )
+    : [];
 
   const directusHeroImage = getDirectusImageUrl(route.image);
   const heroImage = directusHeroImage ?? FALLBACK_ROUTE_IMAGE;
   const gpxUrl = getDirectusInternalAssetUrl(route.gpx_file);
-  const gpxText = await loadGpxText(gpxUrl);
+  // Per un circuito la mappa mostra gli anelli, non un tracciato unico.
+  const gpxText = isCircuit ? null : await loadGpxText(gpxUrl);
   const duration = formatDuration(route.duration_minutes);
 
-  const primaryStats = [
+  const loopDistances = loops.map((loop) => loop.distance_km).filter((value): value is number => value != null);
+  const circuitStats = [
+    ["Anelli", String(loops.length)],
+    loopDistances.length === loops.length && loopDistances.length > 0
+      ? ["Sviluppo complessivo", `${loopDistances.reduce((sum, value) => sum + value, 0).toLocaleString("it-IT", { maximumFractionDigits: 1 })} km`]
+      : null,
+    loopDistances.length > 1
+      ? ["Lunghezza degli anelli", `da ${Math.min(...loopDistances).toLocaleString("it-IT")} a ${Math.max(...loopDistances).toLocaleString("it-IT")} km`]
+      : null,
+  ].filter(Boolean) as [string, string][];
+
+  const primaryStats = isCircuit ? circuitStats : [
     route.distance_km != null ? ["Distanza", `${route.distance_km.toLocaleString("it-IT")} km`] : null,
     duration ? ["Durata", duration] : null,
     route.difficulty ? ["Difficoltà", difficultyLabel(route.difficulty)] : null,
@@ -259,7 +305,7 @@ export default async function RoutePage({ params }: RoutePageProps) {
         <div className="route-hero-overlay" />
         <div className="route-hero-content">
           <Link className="route-back" href="/percorsi">← Percorsi</Link>
-          <p className="eyebrow">{route.category?.name ?? "Percorso"}</p>
+          <p className="eyebrow">{isCircuit ? `Circuito · ${loops.length} anelli` : parent ? `Anello del ${parent.title}` : route.category?.name ?? "Percorso"}</p>
           <h1>{route.title}</h1>
           {route.route_highlight && <p className="route-highlight">{route.route_highlight}</p>}
         </div>
@@ -278,7 +324,7 @@ export default async function RoutePage({ params }: RoutePageProps) {
 
           <div className="route-story-grid">
             <article className="route-description">
-              <p className="eyebrow dark">Il percorso</p>
+              <p className="eyebrow dark">{isCircuit ? "Il circuito" : "Il percorso"}</p>
               {route.summary && <p className="route-lead">{route.summary}</p>}
               {route.description && <div>{route.description}</div>}
             </article>
@@ -297,6 +343,50 @@ export default async function RoutePage({ params }: RoutePageProps) {
           </div>
         </div>
       </section>
+
+      {parent && (
+        <section className={circuitStyles.partOf} aria-label="Circuito">
+          <div className="section-shell">
+            <div className={circuitStyles.partOfInner}>
+              <div>
+                <small>Questo anello fa parte del</small>
+                <Link href={`/percorsi/${parent.slug}`} className={circuitStyles.partOfLink}>{parent.title} →</Link>
+              </div>
+              {siblings.length > 1 && (
+                <ol className={circuitStyles.siblings} aria-label="Gli anelli del circuito">
+                  {siblings.map((sibling, index) => (
+                    <li key={sibling.id}>
+                      {sibling.id === route.id ? (
+                        <span aria-current="page" style={{ borderColor: CIRCUIT_COLORS[index % CIRCUIT_COLORS.length] }}>
+                          <i style={{ background: CIRCUIT_COLORS[index % CIRCUIT_COLORS.length] }}>{index + 1}</i>{sibling.title}
+                        </span>
+                      ) : (
+                        <Link href={`/percorsi/${sibling.slug}`}>
+                          <i style={{ background: CIRCUIT_COLORS[index % CIRCUIT_COLORS.length] }}>{index + 1}</i>{sibling.title}
+                        </Link>
+                      )}
+                    </li>
+                  ))}
+                </ol>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {isCircuit && (
+        <section className="route-map-section route-map-section-v2">
+          <div className="section-shell">
+            <div className="route-map-heading">
+              <div>
+                <h2>{loops.length === 1 ? "L’anello del circuito" : `I ${loops.length} anelli del circuito`}</h2>
+              </div>
+              <p>Ogni anello ha il suo colore: passa sopra una scheda o tocca un tracciato per evidenziarlo, poi apri il percorso per tappe, profilo e traccia GPX.</p>
+            </div>
+            <CircuitExplorer loops={circuitLoops} />
+          </div>
+        </section>
+      )}
 
       {gpxText && (
         <section className="route-map-section route-map-section-v2">
