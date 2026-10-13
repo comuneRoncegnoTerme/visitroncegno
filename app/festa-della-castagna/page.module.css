@@ -348,3 +348,11 @@
 .whereButton:hover{color:#fff}
 @media(prefers-reduced-motion:reduce){.heroImage,.officialLogo{animation:none}}
 .programTitle h2{margin-bottom:26px}
+
+/* Indice della pagina: una riga che resta in alto mentre si scorre. */
+.quickNav{position:sticky;top:0;z-index:15;display:flex;gap:6px;overflow-x:auto;padding:12px 5vw;border-bottom:1px solid rgba(76,44,27,.12);background:rgba(251,246,239,.94);backdrop-filter:blur(10px);scrollbar-width:none}
+.quickNav::-webkit-scrollbar{display:none}
+.quickNav a{flex:0 0 auto;padding:9px 16px;border:1px solid rgba(76,44,27,.16);border-radius:999px;color:#4e2517;font-size:14px;font-weight:700;white-space:nowrap;transition:background .15s ease,color .15s ease}
+.quickNav a:hover{background:#4e2517;color:#fff}
+.program,.festaMap,.flavours,.stories,.info{scroll-margin-top:64px}
+@media(max-width:760px){.quickNav{padding:10px 16px}.quickNav a{padding:8px 13px;font-size:13px}}
