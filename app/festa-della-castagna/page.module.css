@@ -335,3 +335,16 @@
 .vintagePhoto figcaption span{display:block;margin-bottom:4px;font-size:12px;font-weight:700;letter-spacing:0;text-transform:none;color:#9d4a24}
 @media(max-width:1000px){.storiesHeading{grid-template-columns:1fr;gap:34px}.vintagePhoto{max-width:520px}}
 @media(max-width:760px){.photoBanner{height:300px;margin-top:10px}.photoBanner figcaption{padding:44px 18px 18px}.photoBanner figcaption strong{font-size:20px}}
+
+/* Effetti: foto che si muove piano, logo che entra, programma "in diretta". */
+.heroImage{animation:heroDrift 22s ease-in-out infinite alternate}
+.officialLogo{animation:logoIn .9s .15s cubic-bezier(.3,1.35,.5,1) both}
+@keyframes heroDrift{from{transform:scale(1.03) translate3d(0,0,0)}to{transform:scale(1.1) translate3d(-1.5%,-1%,0)}}
+@keyframes logoIn{from{opacity:0;transform:translateY(18px) scale(.94)}to{opacity:1;transform:none}}
+.liveBadge{display:inline-block;margin-left:8px;padding:3px 8px;border-radius:999px;background:#c4541f;color:#fff;font-size:11px;font-weight:800;vertical-align:1px}
+.timeline article[data-state="now"]{margin:0 -18px;padding-right:18px;padding-left:18px;background:rgba(255,255,255,.07);box-shadow:inset 3px 0 #ff7a2f}
+.timeline article[data-state="past"]{opacity:.45}
+.whereButton{margin-top:12px;padding:0;border:0;background:none;color:#efc9a8;font:inherit;font-size:13px;font-weight:700;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.whereButton:hover{color:#fff}
+@media(prefers-reduced-motion:reduce){.heroImage,.officialLogo{animation:none}}
+.programTitle h2{margin-bottom:26px}

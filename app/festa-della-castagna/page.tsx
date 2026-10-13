@@ -7,6 +7,10 @@ import styles from "./page.module.css";
 import FestaAtmosphereVideo from "./FestaAtmosphereVideo";
 import FestaProgramme, { type ProgrammeDay } from "./FestaProgramme";
 import FestaMap, { type FestaPoint } from "./FestaMap";
+import FestaEmbers from "./FestaEmbers";
+import FestaNow from "./FestaNow";
+import FestaWeather from "./FestaWeather";
+import FestaThenNow from "./FestaThenNow";
 import festaMap from "@/data/festa-mappa.json";
 import { jsonLdString, pageMetadata, SITE_URL } from "@/lib/seo";
 
@@ -64,9 +68,9 @@ const programme = [
     day: "Venerdì 23 ottobre",
     label: "Aspettando la Festa",
     events: [
-      ["18:00", "Presentazione GSD Calcio", "Presentazione delle squadre presso il piazzale dei pompieri. Cucina aperta con panini, patatine e castagne. DJ set a cura di Erickloud DJ."],
-      ["18:00", "Apericoro", "Cicchetti e musica anni ’70 e ’80. Punto ristoro con arrosticini, patatine e crêpes a cura del Coro S. Osvaldo presso la sede del coro, nella piazzetta sotto il Municipio."],
-      ["20:30", "Presentazione del libro", "Presentazione di “Le maestre: piccole storie scolastiche d’altri tempi” di Rosanna Cavallini presso la sala riunioni del Comune di Roncegno Terme."],
+      ["18:00", "Presentazione GSD Calcio", "Presentazione delle squadre presso il piazzale dei pompieri. Cucina aperta con panini, patatine e castagne. DJ set a cura di Erickloud DJ.", "events-30"],
+      ["18:00", "Apericoro", "Cicchetti e musica anni ’70 e ’80. Punto ristoro con arrosticini, patatine e crêpes a cura del Coro S. Osvaldo presso la sede del coro, nella piazzetta sotto il Municipio.", "events-31"],
+      ["20:30", "Presentazione del libro", "Presentazione di “Le maestre: piccole storie scolastiche d’altri tempi” di Rosanna Cavallini presso la sala riunioni del Comune di Roncegno Terme.", "events-32"],
     ],
   },
   {
@@ -74,15 +78,15 @@ const programme = [
     day: "Sabato 24 ottobre",
     label: "La Festa entra nel vivo",
     events: [
-      ["09:00", "Passeggiata sul Sentiero del Castagno", "Escursione con accompagnatori forestali. Prenotazione APT Valsugana: 0461 727700 · info@visitvalsugana.it. Quota €5 adulti, €3 ragazzi fino a 12 anni."],
-      ["10:00", "Gli alberi del parco: facciamo l’erbario", "Attività per bambini dai 7 anni a cura di Gabriele Bertacchini, con ritrovo presso la Biblioteca Comunale Vitaliano Modena. Prenotazione obbligatoria: 0461 764387 · biblioteca@comune.roncegnoterme.tn.it."],
+      ["09:00", "Passeggiata sul Sentiero del Castagno", "Escursione con accompagnatori forestali. Prenotazione APT Valsugana: 0461 727700 · info@visitvalsugana.it. Quota €5 adulti, €3 ragazzi fino a 12 anni.", "events-33"],
+      ["10:00", "Gli alberi del parco: facciamo l’erbario", "Attività per bambini dai 7 anni a cura di Gabriele Bertacchini, con ritrovo presso la Biblioteca Comunale Vitaliano Modena. Prenotazione obbligatoria: 0461 764387 · biblioteca@comune.roncegnoterme.tn.it.", "events-34"],
       ["10:00–19:00", "Mercatino della Castagna e degli hobbisti", "Bancarelle, prodotti dell’artigianato e dell’agricoltura locale nel centro di Roncegno."],
       ["14:00", "Inaugurazione ufficiale", "Apertura della Festa della Castagna 2026 e taglio della tradizionale Torta Gigante in Piazza A. De Giovanni."],
-      ["15:00", "Pentolina pentoletta pentolaccia", "Spettacolo di burattini per famiglie a cura di Luciano Gottardi presso il parco giochi in Piazza Montebello. In caso di maltempo, in teatro."],
-      ["16:30", "Forno di comunità", "Inaugurazione del forno di comunità presso il parco giochi di Piazza Montebello."],
-      ["18:00", "Apericoro", "Cicchetti e musica anni ’70 e ’80 a cura del Coro S. Osvaldo presso la sede del coro, piazzetta sotto il Municipio."],
-      ["20:30", "The Capston", "Concerto rock anni ’70 e ’80 presso il piazzale dei pompieri."],
-      ["21:00", "DJ Set Stefano Cenci", "Musica e serata in Piazza Montebello."],
+      ["15:00", "Pentolina pentoletta pentolaccia", "Spettacolo di burattini per famiglie a cura di Luciano Gottardi presso il parco giochi in Piazza Montebello. In caso di maltempo, in teatro.", "events-38"],
+      ["16:30", "Forno di comunità", "Inaugurazione del forno di comunità presso il parco giochi di Piazza Montebello.", "events-35"],
+      ["18:00", "Apericoro", "Cicchetti e musica anni ’70 e ’80 a cura del Coro S. Osvaldo presso la sede del coro, piazzetta sotto il Municipio.", "events-31"],
+      ["20:30", "The Capston", "Concerto rock anni ’70 e ’80 presso il piazzale dei pompieri.", "events-36"],
+      ["21:00", "DJ Set Stefano Cenci", "Musica e serata in Piazza Montebello.", "events-37"],
     ],
   },
   {
@@ -90,9 +94,9 @@ const programme = [
     day: "Domenica 25 ottobre",
     label: "La domenica della Castagna",
     events: [
-      ["09:00", "Passeggiata sul Sentiero del Castagno", "Escursione con accompagnatori forestali. Prenotazione APT Valsugana: 0461 727700 · info@visitvalsugana.it. Quota €5 adulti, €3 ragazzi fino a 12 anni."],
+      ["09:00", "Passeggiata sul Sentiero del Castagno", "Escursione con accompagnatori forestali. Prenotazione APT Valsugana: 0461 727700 · info@visitvalsugana.it. Quota €5 adulti, €3 ragazzi fino a 12 anni.", "events-33"],
       ["10:00–19:00", "Mercatino della Castagna e degli hobbisti", "Bancarelle, prodotti dell’artigianato e dell’agricoltura locale nel centro di Roncegno."],
-      ["13:00", "Musica con i Trifisa", "Musica dal vivo presso il piazzale dei pompieri."],
+      ["13:00", "Musica con i Trifisa", "Musica dal vivo presso il piazzale dei pompieri.", "events-29"],
     ],
   },
 ] as const satisfies readonly ProgrammeDay[];
@@ -112,6 +116,7 @@ export default async function FestaDellaCastagnaPage() {
       <section className={styles.hero}>
         <div className={styles.heroImage} />
         <div className={styles.heroOverlay} />
+        <FestaEmbers />
         <div className={styles.heroContent}>
           <p className={styles.kicker}>23–25 ottobre 2026 · Roncegno Terme</p>
           <h1 className={styles.title}>
@@ -122,6 +127,7 @@ export default async function FestaDellaCastagnaPage() {
             <a href="#programma" className={styles.primaryButton}>Il programma</a>
             <a href="#come-arrivare" className={styles.secondaryButton}>Come arrivare</a>
           </div>
+          <FestaNow days={programme} />
         </div>
         <div className={styles.heroNote}><span>Festa: sabato 24 e domenica 25</span><strong>Aspettando la Festa: venerdì 23</strong></div>
       </section>
@@ -130,6 +136,8 @@ export default async function FestaDellaCastagnaPage() {
         <div className={styles.practicalIntro}><h2>Informazioni utili</h2></div>
         <div className={styles.practicalGrid}>{practical.map(([label, href]) => <a href={href} className={styles.practicalCard} key={label}><strong>{label}</strong></a>)}</div>
       </section>
+
+      <FestaWeather />
 
       <section className={styles.storyIntro} id="atmosfera">
         <div className={styles.storyPhoto} />
@@ -201,10 +209,7 @@ export default async function FestaDellaCastagnaPage() {
       <section className={styles.stories} id="storie">
         <div className={styles.storiesHeading}>
           <div className={styles.sectionHeading}><p className={styles.eyebrow}>Circuito del Castagno</p><h2>I castagneti intorno al paese</h2><p>Prima delle caldarroste in piazza ci sono i castagneti: un paesaggio curato da generazioni, che il Circuito del Castagno racconta in quattro tappe.</p></div>
-          <figure className={styles.vintagePhoto}>
-            <img src="/images/festa-castagna/castagno-foto-epoca.webp" width={1060} height={1280} loading="lazy" alt="Foto d’epoca: un uomo con il cappello accanto a un grande castagno, su un pendio erboso con le montagne sullo sfondo" />
-            <figcaption><span>Foto d’epoca</span>Un grande castagno sul pendio: il paesaggio dei castagneti.</figcaption>
-          </figure>
+          <div className={styles.vintagePhoto}><FestaThenNow /></div>
         </div>
         <div className={styles.storyGrid}>{stories.map(([number, title, href, text]) => <Link href={href} className={styles.storyCard} key={href}><span>{number}</span><h3>{title}</h3><p>{text}</p><strong>Apri la storia →</strong></Link>)}</div>
       </section>
