@@ -13,7 +13,7 @@ import FestaThenNow from "./FestaThenNow";
 import festaMap from "@/data/festa-mappa.json";
 import { jsonLdString, pageMetadata, SITE_URL } from "@/lib/seo";
 
-const FESTA_DESCRIPTION = "Programma, sapori, musica e informazioni utili per la Festa della Castagna di Roncegno Terme, dal 23 al 25 ottobre 2026.";
+const FESTA_DESCRIPTION = "Programma, musica, laboratori e informazioni utili per la 46ª Festa della Castagna di Roncegno Terme: sabato 24 e domenica 25 ottobre 2026, con le anteprime di venerdì 23.";
 const FESTA_OG_IMAGE = "/images/og/festa-della-castagna.jpg";
 
 export const metadata: Metadata = pageMetadata({
@@ -68,9 +68,12 @@ const programme = [
     day: "Venerdì 23 ottobre",
     label: "Aspettando la Festa",
     events: [
-      ["18:00", "Presentazione GSD Calcio", "Presentazione delle squadre presso il piazzale dei pompieri. Cucina aperta con panini, patatine e castagne. DJ set a cura di Erickloud DJ.", "events-30"],
-      ["18:00", "Apericoro", "Cicchetti e musica anni ’70 e ’80. Punto ristoro con arrosticini, patatine e crêpes a cura del Coro S. Osvaldo presso la sede del coro, nella piazzetta sotto il Municipio.", "events-31"],
-      ["20:30", "Presentazione del libro", "Presentazione di “Le maestre: piccole storie scolastiche d’altri tempi” di Rosanna Cavallini presso la sala riunioni del Comune di Roncegno Terme.", "events-32"],
+      ["10:00–17:00", "Scultori del legno: le leggende di Roncegno", "Piazzale di Villa Waiz."],
+      ["18:00", "Presentazione del libro", "“Vocabolario della parlata dialettale di Stivor”, a cura dell’associazione Stivor ETS. Sala Camino, Casa Raphael."],
+      ["18:00", "Apericoro", "Cicchetti in compagnia di Juri e della sua musica nella piazzetta del coro. Punto ristoro con arrosticini, patatine e crêpes a cura del Coro S. Osvaldo nel piazzale del Municipio.", "events-31"],
+      ["18:30", "Presentazione delle squadre del GSD Roncegno", "Le squadre e lo staff tecnico del GSD Roncegno calcio.", "events-30"],
+      ["20:30", "GlockenThurm in concerto", "Piazzale dei Vigili del Fuoco."],
+      ["20:30", "Concerto dei Valsugana Singers", "Salone delle Feste, Casa Raphael."],
     ],
   },
   {
@@ -78,15 +81,18 @@ const programme = [
     day: "Sabato 24 ottobre",
     label: "La Festa entra nel vivo",
     events: [
-      ["09:00", "Passeggiata sul Sentiero del Castagno", "Escursione con accompagnatori forestali. Prenotazione APT Valsugana: 0461 727700 · info@visitvalsugana.it. Quota €5 adulti, €3 ragazzi fino a 12 anni.", "events-33"],
-      ["10:00", "Gli alberi del parco: facciamo l’erbario", "Attività per bambini dai 7 anni a cura di Gabriele Bertacchini, con ritrovo presso la Biblioteca Comunale Vitaliano Modena. Prenotazione obbligatoria: 0461 764387 · biblioteca@comune.roncegnoterme.tn.it.", "events-34"],
-      ["10:00–19:00", "Mercatino della Castagna e degli hobbisti", "Bancarelle, prodotti dell’artigianato e dell’agricoltura locale nel centro di Roncegno."],
-      ["14:00", "Inaugurazione ufficiale", "Apertura della Festa della Castagna 2026 e taglio della tradizionale Torta Gigante in Piazza A. De Giovanni."],
-      ["15:00", "Pentolina pentoletta pentolaccia", "Spettacolo di burattini per famiglie a cura di Luciano Gottardi presso il parco giochi in Piazza Montebello. In caso di maltempo, in teatro.", "events-38"],
-      ["16:30", "Forno di comunità", "Inaugurazione del forno di comunità presso il parco giochi di Piazza Montebello.", "events-35"],
-      ["18:00", "Apericoro", "Cicchetti e musica anni ’70 e ’80 a cura del Coro S. Osvaldo presso la sede del coro, piazzetta sotto il Municipio.", "events-31"],
-      ["20:30", "The Capston", "Concerto rock anni ’70 e ’80 presso il piazzale dei pompieri.", "events-36"],
-      ["21:00", "DJ Set Stefano Cenci", "Musica e serata in Piazza Montebello.", "events-37"],
+      ["09:30", "Passeggiata tra i castagni", "Partenza dal Municipio. Percorso accompagnato dai custodi forestali e dagli accompagnatori di media montagna. Durata 2 ore.", "events-33"],
+      ["10:00–17:00", "Scultori del legno: le leggende di Roncegno", "Piazzale di Villa Waiz."],
+      ["10:00–18:30", "Il Bosco Incantato", "Laboratorio e caccia al tesoro a cura di Studio Irydea. Parco delle Terme."],
+      ["13:30–17:30", "Musica con i Trifisa", "Piazzale dei Vigili del Fuoco.", "events-29"],
+      ["14:00", "Inaugurazione della Festa", "Taglio della Torta Gigante al Parco delle Terme."],
+      ["14:00–18:00", "Animazione e spettacoli per bambini", "Con AniMacri. Parco delle Terme."],
+      ["14:30", "Il bambino amico dei ricci", "Una favola sulle castagne per famiglie, con Giuliano e Dante Libero Comin. Parco giochi sopra Piazza Montebello."],
+      ["15:00", "Prova lo strumento", "A cura della Banda Civica Lagorai. Parco giochi sopra Piazza Montebello."],
+      ["18:00", "Apericoro", "Cicchetti in compagnia del Duo Euphonia nella piazzetta del coro. Punto ristoro con arrosticini, patatine e crêpes a cura del Coro S. Osvaldo nel piazzale del Municipio.", "events-31"],
+      ["20:30", "The Capston", "Rock anni ’70 e ’80. Piazzale dei Vigili del Fuoco.", "events-36"],
+      ["21:00", "DJ set Stefano Cenci", "Piazza Montebello.", "events-37"],
+      ["22:30", "DJ set ErickLoud", "Piazzale dei Vigili del Fuoco."],
     ],
   },
   {
@@ -94,9 +100,13 @@ const programme = [
     day: "Domenica 25 ottobre",
     label: "La domenica della Castagna",
     events: [
-      ["09:00", "Passeggiata sul Sentiero del Castagno", "Escursione con accompagnatori forestali. Prenotazione APT Valsugana: 0461 727700 · info@visitvalsugana.it. Quota €5 adulti, €3 ragazzi fino a 12 anni.", "events-33"],
-      ["10:00–19:00", "Mercatino della Castagna e degli hobbisti", "Bancarelle, prodotti dell’artigianato e dell’agricoltura locale nel centro di Roncegno."],
-      ["13:00", "Musica con i Trifisa", "Musica dal vivo presso il piazzale dei pompieri.", "events-29"],
+      ["09:30", "Passeggiata tra i castagni", "Partenza dal Municipio. Percorso accompagnato dai custodi forestali e dagli accompagnatori di media montagna. Durata 2 ore.", "events-33"],
+      ["10:00–17:00", "Scultori del legno: le leggende di Roncegno", "Piazzale di Villa Waiz."],
+      ["10:00–18:30", "Il Bosco Incantato", "Laboratorio e caccia al tesoro a cura di Studio Irydea. Parco delle Terme."],
+      ["11:30–13:00", "Scorribanda dei Piccoli Grandi Violinisti", "Musica classica e folk per tutte le età, itinerante per le vie del centro e nel Parco delle Terme."],
+      ["12:00–17:00", "Giro in elicottero", "Nella zona del piazzale dei Vigili del Fuoco."],
+      ["13:00–17:30", "Musica con i Trifisa", "Piazzale dei Vigili del Fuoco.", "events-29"],
+      ["14:00–18:00", "Animazione e spettacoli per bambini", "Con AniMacri. Parco delle Terme."],
     ],
   },
 ] as const satisfies readonly ProgrammeDay[];
@@ -117,11 +127,11 @@ export default async function FestaDellaCastagnaPage() {
         <div className={styles.heroImage} />
         <div className={styles.heroOverlay} />
         <div className={styles.heroContent}>
-          <p className={styles.kicker}>23–25 ottobre 2026 · Roncegno Terme</p>
+          <p className={styles.kicker}>46ª edizione · 24 e 25 ottobre 2026 · Roncegno Terme</p>
           <h1 className={styles.title}>
             <img className={styles.officialLogo} src="/images/festa-castagna/logo-festa-ufficiale.webp" width={1200} height={614} alt="Festa della Castagna 2026 a Roncegno Terme" />
           </h1>
-          <p className={styles.lead}>Caldarroste sul fuoco, bancarelle, musica e il paese che si ritrova in piazza. Da venerdì sera a domenica.</p>
+          <p className={styles.lead}>Caldarroste sul fuoco, bancarelle, musica e il paese che si ritrova in piazza. Sabato e domenica dalle 9:00, con le anteprime di venerdì.</p>
           <div className={styles.heroActions}>
             <a href="#programma" className={styles.primaryButton}>Il programma</a>
             <a href="#come-arrivare" className={styles.secondaryButton}>Come arrivare</a>
@@ -140,9 +150,9 @@ export default async function FestaDellaCastagnaPage() {
         <div className={styles.storyPhoto} />
         <div className={styles.storyIntroCopy}>
           <h2>Una festa di paese</h2>
-          <p>Sabato 24 e domenica 25 ottobre, dalle 10:00 alle 19:00, il centro si riempie del tradizionale mercatino della castagna e degli hobbisti, con artigianato e prodotti dell’agricoltura locale.</p>
-          <p>Per tutto il fine settimana ci saranno intrattenimenti per bambini, gonfiabili, laboratori creativi, musica itinerante, un giardino con animali e punti ristoro con piatti tipici, dolci alla castagna e prodotti locali.</p>
-          <p>Ristoranti e agritur del paese proporranno menù a tema e torna anche lo stand gastronomico degli amici di Praga 6, distretto della città ceca gemellato con Roncegno Terme.</p>
+          <p>Sabato 24 e domenica 25 ottobre, dalle 9:00, Roncegno si riempie di bancarelle, dolci di castagne e stand gastronomici. La novità di quest’anno: lo spazio famiglie e il mercatino si spostano al Parco delle Terme.</p>
+          <p>Per tutto il fine settimana ci sono il Bosco Incantato, con laboratorio e caccia al tesoro, l’animazione per bambini al Parco delle Terme, gli scultori del legno a Villa Waiz e la musica dei Trifisa.</p>
+          <p>Ci sono le escursioni tra i castagni con i custodi forestali, la musica nei piazzali e, la domenica, anche il giro in elicottero.</p>
         </div>
       </section>
 
@@ -180,7 +190,7 @@ export default async function FestaDellaCastagnaPage() {
           <p className={styles.eyebrowLight}>Programma 2026</p>
           <h2>Il programma, giorno per giorno</h2>
           <p>Da venerdì sera a domenica: passeggiate, spettacoli, musica, cucina e attività per bambini.</p>
-          <div className={styles.alwaysOn}><strong>Sabato e domenica</strong><p>Laboratori per bambini, giardino con animali, gonfiabili, dolci di castagne, bancarelle e musica itinerante. Domenica anche la navetta gratuita.</p></div>
+          <div className={styles.alwaysOn}><strong>Sabato e domenica, dalle 9:00</strong><p>Spazio famiglie e mercatino al Parco delle Terme, escursione tra i castagni, bancarelle, dolci di castagne, laboratori per bambini e stand gastronomici.</p></div>
         </div>
         <FestaProgramme days={programme} />
       </section>
@@ -197,8 +207,7 @@ export default async function FestaDellaCastagnaPage() {
         <div className={styles.flavourImage} />
         <div className={styles.flavourCopy}>
           <h2>Cosa si mangia</h2>
-          <p>Durante la manifestazione saranno disponibili punti di ristoro con piatti tipici, dolci alla castagna e prodotti locali. Ristoranti e agritur di Roncegno Terme proporranno menù a tema per tutto il fine settimana.</p>
-          <p>Tra i sapori della festa torna anche lo stand gastronomico degli amici di Praga 6, nel segno del gemellaggio con il Comune di Roncegno Terme.</p>
+          <p>Caldarroste, dolci di castagne e stand gastronomici per tutto il fine settimana. Venerdì e sabato sera c’è anche il punto ristoro del Coro S. Osvaldo, con arrosticini, patatine e crêpes nel piazzale del Municipio.</p>
           <a href="#storie" className={styles.lightButton}>Il Circuito del Castagno</a>
         </div>
       </section>
@@ -216,9 +225,9 @@ export default async function FestaDellaCastagnaPage() {
         <div className={styles.infoGrid}>
           <article>
             <h3>Dove</h3>
-            <p>Nel centro di Roncegno Terme. Inaugurazione e Torta Gigante in Piazza A. De Giovanni; burattini, forno di comunità e DJ set in Piazza Montebello.</p>
+            <p>Nel centro di Roncegno Terme e al Parco delle Terme, dove ci sono lo spazio famiglie, il mercatino e l’inaugurazione con la Torta Gigante. Concerti al piazzale dei Vigili del Fuoco, DJ set in Piazza Montebello.</p>
             <div className={styles.mapLinks}>
-              <a href={mapsSearch("Piazza A. De Giovanni, Roncegno Terme")} target="_blank" rel="noopener noreferrer">Piazza A. De Giovanni su Maps ↗</a>
+              <a href={mapsSearch("Parco delle Terme, Roncegno Terme")} target="_blank" rel="noopener noreferrer">Parco delle Terme su Maps ↗</a>
               <a href={mapsSearch("Piazza Montebello, Roncegno Terme")} target="_blank" rel="noopener noreferrer">Piazza Montebello su Maps ↗</a>
             </div>
           </article>
