@@ -60,6 +60,16 @@ const NAMES = {
   "PENTOLINA, PENTOLETTA, PENTOLACCIA": "Pentolina, pentoletta, pentolaccia",
   "PREMIAZIONE DISEGNI BAMBINI": "Premiazione dei disegni dei bambini",
   "WC": "Servizi igienici",
+  // Edizione 2026
+  "SCULTORI DEL LEGNO: LE LEGGENDE DI RONCEGNO": "Scultori del legno: le leggende di Roncegno",
+  "CASA RAPHAEL": "Casa Raphael",
+  "PIAZZALE DEI VIGILI DEL FUOCO": "Piazzale dei Vigili del Fuoco",
+  "GIRO IN ELICOTTERO": "Giro in elicottero",
+  "INAUGURAZIONE E TORTA GIGANTE": "Inaugurazione e Torta Gigante",
+  "SPAZIO FAMIGLIE E MERCATINO": "Spazio famiglie e mercatino",
+  "IL BOSCO INCANTATO": "Il Bosco Incantato",
+  "ANIMACRI": "AniMacri",
+  "PARCO GIOCHI SOPRA PIAZZA MONTEBELLO": "Parco giochi sopra Piazza Montebello",
 };
 
 function cleanName(raw) {
@@ -104,8 +114,9 @@ function sentence(value) {
   // Frasi intere in maiuscolo dentro un testo normale ("IN CASO DI MALTEMPO IN TEATRO").
   text = text.replace(/(?<![\p{L}])\p{Lu}{2,}(?:\s+\p{Lu}{2,}){2,}(?![\p{L}])/gu, (run) => run.toLocaleLowerCase("it-IT"));
   return text
-    .replace(/(?<![\p{L}])(venerdì|sabato|domenica)\s+\d{1,2}(?!\d)/giu, "$1")
-    .replace(WEEKDAYS, (d) => d.charAt(0).toUpperCase() + d.slice(1).toLowerCase())
+    .replace(/(?<![\p{L}])(venerdì|sabato|domenica)\s+\d{1,2}(?![\d:.])/giu, "$1")
+    // In italiano i giorni della settimana vanno in minuscolo (a inizio frase li rialza la regola sotto).
+    .replace(WEEKDAYS, (d) => d.toLowerCase())
     .replace(/(^|[.!?]\s+)(\p{Ll})/gu, (m, p, c) => p + c.toLocaleUpperCase("it-IT"))
     .replace(/\s+([.!?,;:])/g, "$1")
     .replace(/\.\.$/, ".")
