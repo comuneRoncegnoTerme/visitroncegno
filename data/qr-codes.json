@@ -1,0 +1,263 @@
+{
+  "source": "Gestionale QR del sito precedente (export del 15/10/2026)",
+  "codes": [
+    {
+      "id": 1,
+      "name": "Festival albero 2025",
+      "code": "vr2nga7pd42nrvad3e2k",
+      "path": "/it/sentieri/festival-albero-2025"
+    },
+    {
+      "id": 2,
+      "name": "Passeggiata festa della Castagna",
+      "code": "vr2dwrj7amhzjrfzvjyb",
+      "path": "/it/iscrizione-passeggiate"
+    },
+    {
+      "id": 3,
+      "name": "Pannello 35",
+      "code": "vr2r259dgc5qrc2huvby",
+      "path": null
+    },
+    {
+      "id": 4,
+      "name": "Pannello 34",
+      "code": "vr2urmupf6npbcchj83p",
+      "path": null
+    },
+    {
+      "id": 5,
+      "name": "Pannello 33",
+      "code": "vr2excc237zc32p2wn35",
+      "path": null
+    },
+    {
+      "id": 6,
+      "name": "Pannello 32",
+      "code": "vr2u36jpa2xjed7ndkc7",
+      "path": "/it/sentieri/ricostruzione-bosco-11-3"
+    },
+    {
+      "id": 7,
+      "name": "Pannello 31",
+      "code": "vr2rhxdndq6qbr2697kp",
+      "path": "/it/sentieri/bostrico-tipografo-11-2"
+    },
+    {
+      "id": 8,
+      "name": "Pannello 30",
+      "code": "vr2r66eexekpahv3dmur",
+      "path": "/it/sentieri/la-tempesta-vaia-11-1"
+    },
+    {
+      "id": 9,
+      "name": "Pannello 29",
+      "code": "vr28bukyppr99nr85xpj",
+      "path": "/it/sentieri/camminamento-austriaco-10"
+    },
+    {
+      "id": 10,
+      "name": "Pannello 28",
+      "code": "vr2bb3e4y65h73pd7uvy",
+      "path": "/it/sentieri/localita-cinque-valli-9"
+    },
+    {
+      "id": 11,
+      "name": "Pannello 27",
+      "code": "vr25ccap5pc4wchx4p84",
+      "path": "/it/sentieri/miniera-di-cinque-valli-8"
+    },
+    {
+      "id": 12,
+      "name": "Pannello 26",
+      "code": "vr2xbg3pqe4hfdmcxgg7",
+      "path": "/it/sentieri/miniera-di-cinque-valli-8"
+    },
+    {
+      "id": 13,
+      "name": "Pannello 25",
+      "code": "vr28bcdvgh2p967aq476",
+      "path": "/it/sentieri/fauna-7-2"
+    },
+    {
+      "id": 14,
+      "name": "Pannello 24",
+      "code": "vr2zd8y464rm5a6zze2g",
+      "path": "/it/sentieri/flora-7-1"
+    },
+    {
+      "id": 15,
+      "name": "Pannello 23",
+      "code": "vr2n5dm6hv6c84pd2peb",
+      "path": "/it/sentieri/storia-terme-roncegno-6"
+    },
+    {
+      "id": 16,
+      "name": "Pannello 21",
+      "code": "vr2gnkdwc2gd9d8kgcxq",
+      "path": "/it/sentieri/maso-montibelleri-5-5"
+    },
+    {
+      "id": 17,
+      "name": "Pannello 20",
+      "code": "vr2vadkqbxv5hvnaec92",
+      "path": "/it/sentieri/maso-postai-5-4"
+    },
+    {
+      "id": 18,
+      "name": "Pannello 19",
+      "code": "vr23p45hhmcvpcahx7en",
+      "path": "/it/sentieri/maso-rozza-5-3"
+    },
+    {
+      "id": 19,
+      "name": "Pannello 18",
+      "code": "vr2bqbbpadpqdegbdq5u",
+      "path": "/it/sentieri/maso-bebberi-5-2"
+    },
+    {
+      "id": 20,
+      "name": "Pannello 17",
+      "code": "vr2uumc52ykpkr4acpe3",
+      "path": "/it/sentieri/maso-roneri-5-1"
+    },
+    {
+      "id": 21,
+      "name": "Pannello 16",
+      "code": "vr2p6j4h6vppgehyp8yw",
+      "path": "/it/sentieri/torbiera-di-cinque-valli-4"
+    },
+    {
+      "id": 22,
+      "name": "Pannello 15",
+      "code": "vr2gf28jzvmvxurv3kz5",
+      "path": "/it/sentieri/conservazione-castagneti-3-4"
+    },
+    {
+      "id": 23,
+      "name": "Pannello 14",
+      "code": "vr2wr2erx3kkd8gyk4eh",
+      "path": "/it/sentieri/conservazione-castagneti-3-4"
+    },
+    {
+      "id": 24,
+      "name": "Pannello 13",
+      "code": "vr2vhcufvadq3r89jpar",
+      "path": "/it/sentieri/utilizzo-delle-castagne-3-3"
+    },
+    {
+      "id": 25,
+      "name": "Pannello 12",
+      "code": "vr2e35p93z2dxezna22n",
+      "path": "/it/sentieri/utilizzo-delle-castagne-3-3"
+    },
+    {
+      "id": 26,
+      "name": "Pannello 11",
+      "code": "vr2jfhw3exe8hx5v9ndr",
+      "path": "/it/sentieri/utilizzo-delle-castagne-3-3"
+    },
+    {
+      "id": 27,
+      "name": "Pannello 10",
+      "code": "vr2pamdxb4vmwhrwhaeq",
+      "path": "/it/sentieri/aspetti-botanici-3-2"
+    },
+    {
+      "id": 28,
+      "name": "Pannello 09",
+      "code": "vr2fjxepca7yeng8zd6a",
+      "path": "/it/sentieri/aspetti-botanici-3-2"
+    },
+    {
+      "id": 29,
+      "name": "Pannello 08",
+      "code": "vr2w87pugpu7qadbqp3r",
+      "path": "/it/sentieri/il-castagno-nella-storia-3-1"
+    },
+    {
+      "id": 30,
+      "name": "Pannello 07",
+      "code": "vr2ype6ec6a5ppyc3hvy",
+      "path": "/it/sentieri/il-castagno-nella-storia-3-1"
+    },
+    {
+      "id": 31,
+      "name": "Pannello 06",
+      "code": "vr2c7hkppw9uag36fex3",
+      "path": "/it/sentieri/il-castagno-nella-storia-3-1"
+    },
+    {
+      "id": 32,
+      "name": "Pannello 05",
+      "code": "vr29dmarqqfu5b374zxc",
+      "path": "/it/sentieri/acque-termali-2-2"
+    },
+    {
+      "id": 33,
+      "name": "Pannello 04",
+      "code": "vr2bwpqhfq2qvnazpda5",
+      "path": "/it/sentieri/le-fonti-2-1"
+    },
+    {
+      "id": 34,
+      "name": "Pannello 03",
+      "code": "vr2d5kjwbp9zjpcvqbpb",
+      "path": "/it/sentieri/sentieri-di-roncegno-1"
+    },
+    {
+      "id": 35,
+      "name": "Pannello 02",
+      "code": "vr2gzah6pjp36b2n973r",
+      "path": "/it/sentieri/sentieri-di-roncegno-1"
+    },
+    {
+      "id": 36,
+      "name": "Pannello 01",
+      "code": "vr2pcd8ema2jaew64ham",
+      "path": "/it/sentieri/sentieri-di-roncegno-1"
+    },
+    {
+      "id": 37,
+      "name": "Libretto 7",
+      "code": "xp2g9ngqzp6ca83pyyzf",
+      "path": null
+    },
+    {
+      "id": 38,
+      "name": "Libretto 6",
+      "code": "xp2j8pj4t6bu8fp7afjf",
+      "path": null
+    },
+    {
+      "id": 39,
+      "name": "Libretto 5",
+      "code": "xp23satus2aqtxf4kcat",
+      "path": null
+    },
+    {
+      "id": 40,
+      "name": "Libretto 4",
+      "code": "xp2v96qpxxa37dsg7gfj",
+      "path": null
+    },
+    {
+      "id": 41,
+      "name": "Libretto 3 Percorsi",
+      "code": "xp2xhtp2pfvz3cxfhstm",
+      "path": "/it/roncegno-terme/percorsi"
+    },
+    {
+      "id": 42,
+      "name": "Libretto 2 Baite",
+      "code": "xp2g4t2uusuqwudcq59x",
+      "path": "/it/roncegno-terme/le-baite"
+    },
+    {
+      "id": 43,
+      "name": "Libretto 1 Roncegno",
+      "code": "xp23bexj4ce6kjkm3zef",
+      "path": "/it/roncegno-terme/"
+    }
+  ]
+}
