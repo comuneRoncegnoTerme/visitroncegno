@@ -23,3 +23,8 @@
   .article{font-size:19px}
 }
 .sideStack>*{align-self:stretch}
+
+/* Nota sul progetto finanziato, prima della fascia finale. */
+.projectNote{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 28px;padding:22px 5vw;border-top:1px solid rgba(23,50,42,.12);background:#efe7da;color:#4d5c56;font-size:13px;line-height:1.55}
+.projectNote p{max-width:760px;margin:0}
+.projectNote a{color:#17382f;font-weight:700;white-space:nowrap}

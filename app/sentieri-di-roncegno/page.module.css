@@ -1,0 +1,194 @@
+.page {
+  min-height: 100vh;
+  background: #f7f3ea;
+  color: #17372e;
+}
+
+.hero {
+  padding: 150px 5vw 56px;
+  background: linear-gradient(135deg, #14372e 0%, #234b3d 60%, #5b3a1d 100%);
+  color: #fff;
+}
+
+.hero h1 {
+  max-width: 900px;
+  margin: 0;
+  font: 400 clamp(42px, 5.4vw, 80px) / 0.95 Georgia, "Times New Roman", serif;
+  letter-spacing: -0.045em;
+}
+
+.eyebrow {
+  margin: 0 0 16px;
+  color: #e6c5a0;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.lead {
+  max-width: 760px;
+  margin: 24px 0 0;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: clamp(17px, 1.4vw, 20px);
+  line-height: 1.6;
+}
+
+.itineraries {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  width: min(1280px, 90vw);
+  margin: 0 auto;
+  padding: 64px 0;
+}
+
+.itinerary {
+  padding: 30px;
+  border: 1px solid rgba(23, 55, 46, 0.12);
+  border-radius: 20px;
+  background: #fff;
+}
+
+.itineraryHeader {
+  display: grid;
+  gap: 16px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid rgba(23, 55, 46, 0.12);
+}
+
+.itineraryHeader h2 {
+  margin: 0;
+  font: 400 clamp(30px, 2.8vw, 40px) / 1.02 Georgia, "Times New Roman", serif;
+  letter-spacing: -0.03em;
+}
+
+.itineraryHeader p {
+  margin: 12px 0 0;
+  color: #5f6b66;
+  line-height: 1.6;
+}
+
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+}
+
+.facts span {
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: #f1ece2;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.routeLink {
+  justify-self: start;
+  padding: 11px 16px;
+  border-radius: 999px;
+  background: #17382f;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.routeLink:hover {
+  background: #225144;
+}
+
+.panels {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.panels li + li {
+  border-top: 1px solid rgba(23, 55, 46, 0.08);
+}
+
+.panels a {
+  display: grid;
+  grid-template-columns: 112px 1fr auto;
+  align-items: baseline;
+  gap: 12px;
+  padding: 13px 2px;
+}
+
+.panels a::after {
+  color: #b65d32;
+  content: "→";
+}
+
+.panels a:hover strong {
+  color: #b65d32;
+}
+
+.number {
+  color: #7b4c2c;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.panels strong {
+  font: 400 18px / 1.3 Georgia, "Times New Roman", serif;
+}
+
+.funding {
+  width: min(900px, 90vw);
+  margin: 0 auto;
+  padding: 8px 0 80px;
+  color: #3d4f48;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.funding h2 {
+  margin: 0 0 6px;
+  color: #17372e;
+  font: 400 32px / 1.1 Georgia, "Times New Roman", serif;
+}
+
+.funding h3 {
+  margin: 22px 0 6px;
+  color: #17372e;
+  font-size: 15px;
+}
+
+.funding p {
+  margin: 0 0 12px;
+}
+
+.funding a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.taxId {
+  color: #6f766f;
+}
+
+@media (max-width: 900px) {
+  .itineraries {
+    grid-template-columns: 1fr;
+    padding: 40px 0;
+  }
+
+  .hero {
+    padding: 124px 22px 44px;
+  }
+}
+
+@media (max-width: 560px) {
+  .itinerary {
+    padding: 22px 18px;
+  }
+
+  .panels a {
+    grid-template-columns: 1fr auto;
+  }
+
+  .number {
+    grid-column: 1 / -1;
+  }
+}
