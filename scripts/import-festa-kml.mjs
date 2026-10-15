@@ -139,6 +139,11 @@ const FIXES = [
   ["piazzale VF", "piazzale dei Vigili del Fuoco"], ["Lagorai Aps", "Lagorai APS"],
   ["scultori trentini, Le leggende", "scultori trentini: le leggende"], ["Venerdì - domenica", "Da venerdì a domenica"],
   ["Ore 14:00. Inaugurazione", "Sabato ore 14:00. Inaugurazione"], ["18:30 A cura", "18:30. A cura"],
+  // Orari 2026 allineati al programma ufficiale della pagina.
+  ["Venerdì ore 20:30. Presentazione libro", "Venerdì ore 18:00. Presentazione libro"],
+  ["Venerdì ore 18:00. Cucina aperta", "Venerdì ore 18:30. Cucina aperta"],
+  ["Sabato e domenica ore 13:00", "Sabato 13:30–17:30 e domenica 13:00–17:30"],
+  ["Laboratorio Musicale a cura", "Sabato ore 15:00. Laboratorio musicale a cura"],
 ];
 const fix = (text) => FIXES.reduce((acc, [from, to]) => acc.split(from).join(to), text);
 

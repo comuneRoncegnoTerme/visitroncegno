@@ -301,7 +301,7 @@
       "id": "events-27",
       "category": "events",
       "name": "Musica con i Trifisa",
-      "text": "Sabato e domenica ore 13:00",
+      "text": "Sabato 13:30–17:30 e domenica 13:00–17:30",
       "menu": [],
       "lng": 11.411525,
       "lat": 46.049542
@@ -310,7 +310,7 @@
       "id": "events-28",
       "category": "events",
       "name": "Presentazione delle squadre del GSD Calcio",
-      "text": "Venerdì ore 18:00. Cucina aperta con panini, patatine e castagne",
+      "text": "Venerdì ore 18:30. Cucina aperta con panini, patatine e castagne",
       "menu": [],
       "lng": 11.411587,
       "lat": 46.049384
@@ -328,7 +328,7 @@
       "id": "events-30",
       "category": "events",
       "name": "Presentazione del libro",
-      "text": "Venerdì ore 20:30. Presentazione libro \"Vocabolario della parlata dialettale di Stivor\" a cura dell'associazione Stivor ETS. Sala Camino - Casa Raphael",
+      "text": "Venerdì ore 18:00. Presentazione libro \"Vocabolario della parlata dialettale di Stivor\" a cura dell'associazione Stivor ETS. Sala Camino - Casa Raphael",
       "menu": [],
       "lng": 11.40929,
       "lat": 46.049823
@@ -382,7 +382,7 @@
       "id": "events-36",
       "category": "events",
       "name": "Gioca la musica",
-      "text": "Laboratorio Musicale a cura della Banda Civica Lagorai APS. Prova lo strumento insieme alla Banda!",
+      "text": "Sabato ore 15:00. Laboratorio musicale a cura della Banda Civica Lagorai APS. Prova lo strumento insieme alla Banda!",
       "menu": [],
       "lng": 11.411607,
       "lat": 46.05334
