@@ -54,7 +54,7 @@ async function inBatches(items, size, task) {
 // 1. Pagine principali
 const pages = [
   "/", "/luoghi", "/percorsi", "/eventi", "/musei", "/musei/mulino-angeli", "/musei/museo-della-musica",
-  "/memoria", "/festa-della-castagna", "/organizza-la-visita", "/cartina", "/robots.txt", "/sitemap.xml", "/api/health",
+  "/memoria", "/festa-della-castagna", "/sentieri-di-roncegno", "/organizza-la-visita", "/cartina", "/robots.txt", "/sitemap.xml", "/api/health",
 ];
 await inBatches(pages, 4, (path) => expectOk(path));
 
@@ -91,7 +91,6 @@ const legacy = {
   "/it/roncegno-terme/luoghi-da-non-perdere": "/luoghi",
   "/it/roncegno-terme/sentieri-e-percorsi-outd": "/percorsi",
   "/it/sentieri/sentieri-di-roncegno-1": "/percorsi/circuito-del-castagno",
-  "/it/sentieri/localita-cinque-valli-9": "/percorsi",
   "/it/sentieri/novita-in-arrivo": "/percorsi",
   "/sentieri": "/percorsi",
   "/natura-e-montagna": "/temi/natura-e-montagna",

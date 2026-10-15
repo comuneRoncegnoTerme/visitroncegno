@@ -194,6 +194,15 @@ export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) 
         </section>
       )}
 
+      {/* Obbligo di pubblicità del contributo FEASR: i pannelli sono il contenuto del progetto finanziato. */}
+      <aside className={styles.projectNote}>
+        <p>
+          Questo pannello fa parte del progetto “I Sentieri di Roncegno tra storia e tradizione”, cofinanziato dal
+          Fondo europeo agricolo per lo sviluppo rurale (PSR 2014–2020, GAL Trentino Orientale).
+        </p>
+        <Link href="/sentieri-di-roncegno">Il progetto e i contributi →</Link>
+      </aside>
+
       <section className={styles.footerCta}>
         <div>
           <h2>Torna al percorso</h2>
