@@ -97,6 +97,14 @@ export default async function SentieriProjectPage() {
           l’esistenza di aiuti oggetto di obbligo di pubblicazione nel{" "}
           <a href="https://www.rna.gov.it/" target="_blank" rel="noopener noreferrer">Registro nazionale degli aiuti di Stato</a>.
         </p>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          className={styles.logos}
+          src="/images/loghi/psr-2014-2020-feasr-leader.png"
+          width={638}
+          height={128}
+          alt="Loghi: PSR 2014-2020 Provincia Autonoma di Trento, FEASR – Unione Europea, Repubblica Italiana, Provincia Autonoma di Trento, LEADER"
+        />
         <p className={styles.taxId}>Comune di Roncegno Terme · C.F./P.IVA 00296510225</p>
       </section>
 

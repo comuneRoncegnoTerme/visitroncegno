@@ -200,7 +200,15 @@ export default async function LegacyTrailPage({ params }: LegacyTrailPageProps) 
           Questo pannello fa parte del progetto “I Sentieri di Roncegno tra storia e tradizione”, cofinanziato dal
           Fondo europeo agricolo per lo sviluppo rurale (PSR 2014–2020, GAL Trentino Orientale).
         </p>
-        <Link href="/sentieri-di-roncegno">Il progetto e i contributi →</Link>
+        <Link href="/sentieri-di-roncegno#contributi">Il progetto e i contributi →</Link>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/loghi/psr-2014-2020-feasr-leader.png"
+          width={638}
+          height={128}
+          loading="lazy"
+          alt="Loghi: PSR 2014-2020 Provincia Autonoma di Trento, FEASR – Unione Europea, Repubblica Italiana, Provincia Autonoma di Trento, LEADER"
+        />
       </aside>
 
       <section className={styles.footerCta}>
