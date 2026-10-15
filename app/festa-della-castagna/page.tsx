@@ -107,6 +107,7 @@ const programme = [
       ["12:00–17:00", "Giro in elicottero", "Nella zona del piazzale dei Vigili del Fuoco."],
       ["13:00–17:30", "Musica con i Trifisa", "Piazzale dei Vigili del Fuoco.", "events-27"],
       ["14:00–18:00", "Animazione e spettacoli per bambini", "Con AniMacri. Parco delle Terme."],
+      ["16:00", "Premiazione del concorso “La castagna del mio cuor”", "La premiazione del concorso della Festa.", "events-34"],
     ],
   },
 ] as const satisfies readonly ProgrammeDay[];
