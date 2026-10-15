@@ -183,7 +183,7 @@ export default function PannelliEditor() {
               <>
                 <label className={styles.full}>
                   <span>File audioguida</span>
-                  <MediaField value={draft.audio_file ?? ""} kind="file" onChange={(value) => setField("audio_file", value)} />
+                  <MediaField value={draft.audio_file ?? ""} kind="audio" onChange={(value) => setField("audio_file", value)} />
                 </label>
                 <label className={styles.full}>
                   <span>Titolo audioguida</span>

@@ -31,7 +31,7 @@ const fields: EditorField[] = [
   { name: "komoot_url", label: "Link Komoot", type: "url", full: true },
   { name: "outdooractive_url", label: "Link Outdooractive", type: "url", full: true },
   { name: "parent_route", label: "Fa parte del circuito", type: "relation", relationCollection: "routes", full: true, help: "Solo per gli anelli di un circuito (es. i tre anelli del Circuito del Castagno): scegli il percorso circuito. La sua pagina mostrerà tutti gli anelli sulla stessa mappa. Lascia vuoto per i percorsi singoli." },
-  { name: "gpx_file", label: "File GPX", type: "media", mediaKind: "file", full: true, help: "Scegli un GPX esistente oppure caricalo direttamente dalla scheda del percorso." },
+  { name: "gpx_file", label: "File GPX", type: "media", mediaKind: "gpx", full: true, help: "Scegli un GPX esistente oppure caricalo direttamente dalla scheda del percorso." },
 ];
 
 export default async function ContentHubRoutesPage() {

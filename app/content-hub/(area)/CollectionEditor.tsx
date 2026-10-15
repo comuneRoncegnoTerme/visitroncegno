@@ -2,7 +2,7 @@
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import MediaField from "./MediaField";
+import MediaField, { type MediaKind } from "./MediaField";
 import styles from "./collection-editor.module.css";
 
 type FieldType =
@@ -26,7 +26,7 @@ export type EditorField = {
   required?: boolean;
   step?: string;
   help?: string;
-  mediaKind?: "image" | "file";
+  mediaKind?: MediaKind;
   options?: { label: string; value: string }[];
   relationCollection?: "places" | "routes" | "events" | "stories";
 };
