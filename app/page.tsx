@@ -79,7 +79,8 @@ export default async function Home() {
     getEditorialList("places"),
   ]);
 
-  const heroImage = getDirectusImageUrl(homepage.hero_image) ?? "/images/hero/roncegno-hero.jpg";
+  // La foto di apertura copre tutto lo schermo: a 1600 px si vede sgranata sui monitor larghi.
+  const heroImage = getDirectusImageUrl(homepage.hero_image, 2560) ?? "/images/hero/roncegno-hero.jpg";
   const heroConfig = homepage as typeof homepage & HomepageHeroConfig;
   const heroHotspots = parseHeroHotspots(heroConfig.hero_hotspots);
   const visibleEvents = events.slice(0, 4);
@@ -181,7 +182,7 @@ export default async function Home() {
 
             <div className={editorial.routesGrid}>
               {visibleRoutes.map((route, index) => {
-                const image = getDirectusImageUrl(route.image) ?? heroImage;
+                const image = getDirectusImageUrl(route.image);
                 const hours = route.duration_minutes ? Math.floor(route.duration_minutes / 60) : 0;
                 const minutes = route.duration_minutes ? route.duration_minutes % 60 : 0;
                 const duration = route.duration_minutes
@@ -195,7 +196,7 @@ export default async function Home() {
 
                 return (
                   <Link className={editorial.routeCard} href={`/percorsi/${route.slug}`} key={route.id}>
-                    <div className={editorial.routeImage} style={{ backgroundImage: `url('${image}')` }} />
+                    <div className={editorial.routeImage} style={image ? { backgroundImage: `url('${image}')` } : undefined} />
                     <div className={editorial.routeShade} />
                     {routeTraces[index] && <RouteTraceDraw trace={routeTraces[index]} className={editorial.routeTrace} />}
                     <div className={editorial.routeCopy}>
@@ -227,10 +228,10 @@ export default async function Home() {
 
             <div className={editorial.highlightsGrid}>
               {visibleFeaturedPlaces.map((place) => {
-                const image = getDirectusImageUrl(place.image) ?? heroImage;
+                const image = getDirectusImageUrl(place.image);
                 return (
                   <Link className={editorial.highlightCard} href={placeHref(place)} key={place.id}>
-                    <div className={editorial.highlightImage} style={{ backgroundImage: `url('${image}')` }} />
+                    <div className={editorial.highlightImage} style={image ? { backgroundImage: `url('${image}')` } : undefined} />
                     <div className={editorial.highlightShade} />
                     <div className={editorial.highlightCopy}>
                       <small>{place.category?.name ?? place.map_label ?? "Da vedere"}</small>
@@ -255,13 +256,13 @@ export default async function Home() {
           <div className={`${styles.eventsGrid} ${refine.eventsGrid} ${feedback.eventsGrid}${visibleEvents.length === 3 ? ` ${refine.eventsGridThree}` : ""}`}>
             {visibleEvents.map((event, index) => {
               const date = eventDayBadge(event.start_date) ?? { day: "", month: "" };
-              const image = getDirectusImageUrl(event.image) ?? heroImage;
+              const image = getDirectusImageUrl(event.image);
               const location = event.location_name ?? event.place?.title ?? "Roncegno Terme";
               const time = eventTimeLabel(event);
               const primary = index === 0;
               return (
                 <Link className={`${styles.eventCard} ${refine.eventCard} ${feedback.eventCard}${primary ? ` ${styles.eventCardPrimary} ${refine.eventCardPrimary} ${feedback.eventCardPrimary}` : ""}`} href={`/eventi/${event.slug}`} key={event.id}>
-                  <div className={`${styles.eventImage} ${refine.eventImage}`} style={{ backgroundImage: `url('${image}')` }} />
+                  <div className={`${styles.eventImage} ${refine.eventImage}`} style={image ? { backgroundImage: `url('${image}')` } : undefined} />
                   <div className={`${styles.eventShade} ${refine.eventShade} ${feedback.eventShade}`} />
                   {primary && <span className={styles.featuredLabel}>Evento in evidenza</span>}
                   <div className={`${styles.eventBody} ${refine.eventBody} ${feedback.eventBody}`}>

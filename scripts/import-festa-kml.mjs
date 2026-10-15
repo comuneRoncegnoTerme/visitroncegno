@@ -70,6 +70,14 @@ const NAMES = {
   "IL BOSCO INCANTATO": "Il Bosco Incantato",
   "ANIMACRI": "AniMacri",
   "PARCO GIOCHI SOPRA PIAZZA MONTEBELLO": "Parco giochi sopra Piazza Montebello",
+  "PARCHEGGIO VIA PER RONCEGNO": "Parcheggio di via per Roncegno",
+  "SCULTORI DEL LEGNO": "Scultori del legno: le leggende di Roncegno",
+  "PREMIAZIONE CONCORSO": "Premiazione del concorso “La castagna del mio cuor”",
+  "TAGLIO DELLA TORTA GIGANTE": "Taglio della Torta Gigante",
+  "GIOCA LA MUSICA": "Gioca la musica",
+  "GLOCKENTHURM IN CONCERTO": "GlockenThurm in concerto",
+  "BANCARELLE A CURE DEGLI HOBBISTI": "Mercatino dell’hobbista",
+  "BANCARELLE A CURA DEGLI HOBBISTI": "Mercatino dell’hobbista",
 };
 
 function cleanName(raw) {
@@ -89,7 +97,8 @@ function category(folder, name) {
     return "parking";
   }
   if (f.includes("STAND") || f.includes("GASTRONOM")) return "food";
-  if (f.includes("BAMBINI")) return /SELFIE|NA VOLTA/.test(n) ? "see" : "kids";
+  if (f.includes("BAMBINI")) return /SELFIE|NA VOLTA|SCULTORI/.test(n) ? "see" : "kids";
+  if (f.includes("MERCATINO") || f.includes("HOBBIST")) return "see";
   if (f.includes("EVENTI")) return "events";
   if (f.includes("BAGNI")) return "services";
   return "events";
@@ -123,8 +132,14 @@ function sentence(value) {
     .trim();
 }
 
-// Refusi della My Maps 2025.
-const FIXES = [["Sci Club Fravor.", "Sci Club Fravort."], ["Crèpes", "crêpes"], ["crepes", "crêpes"]];
+// Refusi della My Maps (2025 e 2026).
+const FIXES = [
+  ["Sci Club Fravor.", "Sci Club Fravort."], ["Crèpes", "crêpes"], ["crepes", "crêpes"],
+  ["caldarroIrylab attirato", "caldarroste ha attirato"], ["Venerdi ", "Venerdì "], ["Glockenthurm", "GlockenThurm"],
+  ["piazzale VF", "piazzale dei Vigili del Fuoco"], ["Lagorai Aps", "Lagorai APS"],
+  ["scultori trentini, Le leggende", "scultori trentini: le leggende"], ["Venerdì - domenica", "Da venerdì a domenica"],
+  ["Ore 14:00. Inaugurazione", "Sabato ore 14:00. Inaugurazione"], ["18:30 A cura", "18:30. A cura"],
+];
 const fix = (text) => FIXES.reduce((acc, [from, to]) => acc.split(from).join(to), text);
 
 function parseDescription(raw) {
