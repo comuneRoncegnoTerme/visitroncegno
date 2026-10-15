@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { connection } from "next/server";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { getSiteSettings } from "@/lib/directus";
+import { getEditorialList } from "@/lib/editorial";
 import { SENTIERI_ITINERARIES } from "@/lib/sentieri-project";
 import { pageMetadata } from "@/lib/seo";
 import styles from "./page.module.css";
@@ -15,7 +17,21 @@ export const metadata: Metadata = pageMetadata({
 });
 
 export default async function SentieriProjectPage() {
-  const settings = await getSiteSettings();
+  await connection();
+  const [settings, routes] = await Promise.all([getSiteSettings(), getEditorialList("routes")]);
+  // Lo slug del percorso viene da Directus: se il titolo corrisponde si usa quello, altrimenti l'indirizzo previsto.
+  const routeHref = (match: RegExp, fallback: string) => {
+    const route = routes.find((item) => match.test(item.title));
+    return route ? `/percorsi/${route.slug}` : fallback;
+  };
+  const itineraries = SENTIERI_ITINERARIES.map((itinerary) => {
+    const href = routeHref(itinerary.routeMatch, itinerary.routeHref);
+    return {
+      ...itinerary,
+      routeHref: href,
+      panels: itinerary.panels.map((item) => (item.href === itinerary.routeHref ? { ...item, href } : item)),
+    };
+  });
 
   return (
     <main className={styles.page}>
@@ -27,12 +43,12 @@ export default async function SentieriProjectPage() {
         <p className={styles.lead}>
           Due itinerari con pannelli informativi. In quota raccontano la Grande Guerra, le vecchie miniere e gli
           ambienti naturali; sopra l’abitato di Roncegno la coltura dei castagneti, le tradizioni dei masi e la storia
-          delle acque termali. Ogni pannello ha un QR che apre la sua scheda, spesso con l’audioguida.
+          delle acque termali. Ogni pannello ha un QR che apre la sua scheda su questo sito.
         </p>
       </section>
 
       <section className={styles.itineraries} aria-label="Gli itinerari">
-        {SENTIERI_ITINERARIES.map((itinerary) => (
+        {itineraries.map((itinerary) => (
           <article className={styles.itinerary} key={itinerary.id} id={itinerary.id}>
             <header className={styles.itineraryHeader}>
               <div>

@@ -51,8 +51,9 @@ const nextConfig: NextConfig = {
       { source: "/it/sentieri/sentieri-di-roncegno-1", destination: "/percorsi/circuito-del-castagno", permanent: true },
       // QR "Passeggiata festa della Castagna": iscrizioni alle passeggiate, ora nel programma della Festa.
       { source: "/it/iscrizione-passeggiate", destination: "/festa-della-castagna#programma", permanent: false },
-      // QR del pannello 28: la pagina del vecchio sito era quella del Sentiero Cinque Valli.
-      { source: "/it/sentieri/localita-cinque-valli-9", destination: "/percorsi/sentiero-cinque-valli", permanent: true },
+      // QR del pannello 28: la pagina del vecchio sito era quella del Sentiero Cinque Valli. Va alla sua sezione
+      // nella pagina del progetto, che esiste sempre (lo slug del percorso dipende da Directus).
+      { source: "/it/sentieri/localita-cinque-valli-9", destination: "/sentieri-di-roncegno#cinque-valli", permanent: false },
       { source: "/it/sentieri/novita-in-arrivo", destination: "/percorsi", permanent: true },
       { source: "/natura-e-montagna", destination: "/temi/natura-e-montagna", permanent: true },
       { source: "/terme-e-benessere", destination: "/temi/terme-e-benessere", permanent: true },

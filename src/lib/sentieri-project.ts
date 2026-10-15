@@ -6,6 +6,8 @@ export type ProjectPanel = { numbers: string; title: string; href: string };
 export type ProjectItinerary = {
   id: string;
   title: string;
+  /** Parola che identifica il percorso in Directus (titolo), per trovarne lo slug reale. */
+  routeMatch: RegExp;
   routeHref: string;
   summary: string;
   facts: string[];
@@ -22,6 +24,7 @@ export const SENTIERI_ITINERARIES: ProjectItinerary[] = [
   {
     id: "castagno",
     title: "Circuito del Castagno",
+    routeMatch: /circuito del castagno/i,
     routeHref: "/percorsi/circuito-del-castagno",
     summary:
       "Lungo i sentieri e le stradine sopra l’abitato di Roncegno: la coltura dei castagneti, le tradizioni legate ai masi e la storia delle acque termali.",
@@ -45,6 +48,7 @@ export const SENTIERI_ITINERARIES: ProjectItinerary[] = [
   {
     id: "cinque-valli",
     title: "Sentiero Cinque Valli",
+    routeMatch: /cinque valli/i,
     routeHref: "/percorsi/sentiero-cinque-valli",
     summary:
       "In quota, con partenza e arrivo a Erterle: gli ambienti naturali, le vecchie miniere, la Grande Guerra e i segni della tempesta Vaia.",

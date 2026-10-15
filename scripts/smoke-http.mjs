@@ -91,7 +91,6 @@ const legacy = {
   "/it/roncegno-terme/luoghi-da-non-perdere": "/luoghi",
   "/it/roncegno-terme/sentieri-e-percorsi-outd": "/percorsi",
   "/it/sentieri/sentieri-di-roncegno-1": "/percorsi/circuito-del-castagno",
-  "/it/sentieri/localita-cinque-valli-9": "/percorsi/sentiero-cinque-valli",
   "/it/sentieri/novita-in-arrivo": "/percorsi",
   "/sentieri": "/percorsi",
   "/natura-e-montagna": "/temi/natura-e-montagna",
