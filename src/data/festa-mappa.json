@@ -1,6 +1,6 @@
 {
-  "edition": 2025,
-  "source": "mymaps-2025.kml",
+  "edition": 2026,
+  "source": "mymaps-2026.kml",
   "points": [
     {
       "id": "parking-1",
@@ -23,7 +23,7 @@
     {
       "id": "parking-3",
       "category": "parking",
-      "name": "Parcheggio località Ferme",
+      "name": "Parcheggio di via per Roncegno",
       "text": null,
       "menu": [],
       "lng": 11.421422,
@@ -71,8 +71,8 @@
       "name": "Fermata della navetta",
       "text": null,
       "menu": [],
-      "lng": 11.411197,
-      "lat": 46.049647
+      "lng": 11.409994,
+      "lat": 46.047525
     },
     {
       "id": "services-9",
@@ -87,12 +87,12 @@
       "id": "food-10",
       "category": "food",
       "name": "Praga 6",
-      "text": "Simigastro: lo stand di Praga 6, quartiere della città ceca gemellato con Roncegno Terme da oltre 20 anni.",
+      "text": "Simigastro. Stand a cura di Praga 6, quartiere della città ceca, gemellata con Roncegno Terme da oltre 20 anni.",
       "menu": [
         "Cucina tipica boema"
       ],
-      "lng": 11.409717,
-      "lat": 46.050693
+      "lng": 11.409568,
+      "lat": 46.050635
     },
     {
       "id": "food-11",
@@ -201,29 +201,11 @@
         "Prosecco",
         "Caffè turco"
       ],
-      "lng": 11.410721,
-      "lat": 46.051648
+      "lng": 11.410142,
+      "lat": 46.052374
     },
     {
       "id": "food-18",
-      "category": "food",
-      "name": "Vigili del Fuoco di Roncegno",
-      "text": "Stand gastronomico a cura del Corpo Vigili del Fuoco Volontari di Roncegno.",
-      "menu": [
-        "Crema alla zucca",
-        "Tortel de patata da passeggio farcito",
-        "Panna cotta con castagne",
-        "Birra",
-        "Birra analcolica",
-        "Bibite",
-        "Acqua",
-        "Parampampoli"
-      ],
-      "lng": 11.410281,
-      "lat": 46.050414
-    },
-    {
-      "id": "food-19",
       "category": "food",
       "name": "GSD Roncegno Calcio",
       "text": "Stand gastronomico a cura del GSD Roncegno Calcio.",
@@ -236,7 +218,7 @@
       "lat": 46.049398
     },
     {
-      "id": "food-20",
+      "id": "food-19",
       "category": "food",
       "name": "Dolci della Festa",
       "text": "Punto per la vendita dei prodotti dolciari di castagne a cura dell'associazione produttori di castagne di Roncegno",
@@ -245,7 +227,7 @@
       "lat": 46.049504
     },
     {
-      "id": "food-21",
+      "id": "food-20",
       "category": "food",
       "name": "Coro Sant’Osvaldo",
       "text": "Stand gastronomico a cura dell’Associazione Coro Sant’Osvaldo.",
@@ -262,38 +244,16 @@
       "lat": 46.050796
     },
     {
-      "id": "food-22",
+      "id": "food-21",
       "category": "food",
       "name": "Bar Tre Venezie",
-      "text": "Il Bar Tre Venezie resta aperto tutto il giorno durante la festa.",
+      "text": "Bar Tre Venezie aperto tutto il giorno durante la festa!",
       "menu": [],
       "lng": 11.410288,
       "lat": 46.052914
     },
     {
-      "id": "food-23",
-      "category": "food",
-      "name": "Bocciofila Tor Tonda",
-      "text": "Stand gastronomico a cura dell’Associazione Marter C’è.",
-      "menu": [
-        "Tosella dell’azienda agricola Montibeller Leopolda",
-        "Polenta",
-        "Fagioli"
-      ],
-      "lng": 11.410132,
-      "lat": 46.052362
-    },
-    {
-      "id": "kids-24",
-      "category": "kids",
-      "name": "Gonfiabili",
-      "text": null,
-      "menu": [],
-      "lng": 11.408971,
-      "lat": 46.050391
-    },
-    {
-      "id": "kids-25",
+      "id": "kids-22",
       "category": "kids",
       "name": "Fattoria degli animali",
       "text": null,
@@ -302,106 +262,97 @@
       "lat": 46.050826
     },
     {
-      "id": "kids-26",
-      "category": "kids",
-      "name": "Laboratorio del Mulino Lenzi",
-      "text": "Laboratorio a cura del Mulino Lenzi di Palù del Fersina",
+      "id": "see-23",
+      "category": "see",
+      "name": "Scultori del legno: le leggende di Roncegno",
+      "text": "Tre giorni di scultura con gli scultori trentini: le leggende di Roncegno. Da venerdì a domenica dalle 10 alle 17.00",
       "menu": [],
       "lng": 11.409114,
       "lat": 46.050917
     },
     {
-      "id": "see-27",
+      "id": "see-24",
       "category": "see",
       "name": "Cantón dei selfie",
-      "text": "Un angolo allestito per le foto ricordo.",
+      "text": "Scatta la foto più bella del tuo rullino di oggi!",
       "menu": [],
       "lng": 11.411107,
       "lat": 46.053005
     },
     {
-      "id": "see-28",
+      "id": "see-25",
       "category": "see",
       "name": "Ronzégno de na volta",
-      "text": "Fotografie di Roncegno com’era una volta.",
+      "text": "Le foto più iconiche di una Roncegno che fu",
       "menu": [],
       "lng": 11.410884,
       "lat": 46.052897
     },
     {
-      "id": "events-29",
+      "id": "kids-26",
+      "category": "kids",
+      "name": "Il Bosco Incantato",
+      "text": "Caccia al Tesoro & Laboratori! Il delizioso profumo delle caldarroste ha attirato 5 gnomi golosi che si sono persi nel Parco di Roncegno, spezzando l'incantesimo dell'invisibilità! Prendi la mappa, scopri i 5 gnomi e i 5 Esseri Incantati nascosti tra gli alberi e usa i bollini magici per riportarli a casa! Nell'area troverai anche giochi e laboratori dedicati ai bambini! Orario: 10:00 – 18:30. A cura di: Irylab - Studio Irydea",
+      "menu": [],
+      "lng": 11.409862,
+      "lat": 46.048011
+    },
+    {
+      "id": "events-27",
       "category": "events",
       "name": "Musica con i Trifisa",
-      "text": "Domenica ore 13:00",
+      "text": "Sabato 13:30–17:30 e domenica 13:00–17:30",
       "menu": [],
       "lng": 11.411525,
       "lat": 46.049542
     },
     {
-      "id": "events-30",
+      "id": "events-28",
       "category": "events",
       "name": "Presentazione delle squadre del GSD Calcio",
-      "text": "Venerdì ore 18:00. Cucina aperta con panini, patatine e castagne",
+      "text": "Venerdì ore 18:30. Cucina aperta con panini, patatine e castagne",
       "menu": [],
       "lng": 11.411587,
       "lat": 46.049384
     },
     {
-      "id": "events-31",
+      "id": "events-29",
       "category": "events",
       "name": "Piazzetta del Coro",
-      "text": "Venerdì e Sabato ore 18:00. Apericoro con cicchetti e musica anni '70 e '80. Punto Ristoro con arrosticini, patatine e crêpes a cura del Coro S. Osvaldo.",
+      "text": "Venerdì ore 18:00. Apericoro con cicchetti in compagnia di Juri e la sua musica. Punto ristoro: Con arrosticini, patatine e crêpes a cura del coro S. Osvaldo nel piazzale del municipio. Sabato: cucina aperta in compagnia del Duo Euphonia.",
       "menu": [],
       "lng": 11.410036,
       "lat": 46.050776
     },
     {
-      "id": "events-32",
+      "id": "events-30",
       "category": "events",
       "name": "Presentazione del libro",
-      "text": "Venerdì ore 20:30. Presentazione libro \"Le maestre: piccole storie scolastiche d'altri tempi\" di Rosanna Cavallini.",
+      "text": "Venerdì ore 18:00. Presentazione libro \"Vocabolario della parlata dialettale di Stivor\" a cura dell'associazione Stivor ETS. Sala Camino - Casa Raphael",
       "menu": [],
-      "lng": 11.409827,
-      "lat": 46.050948
+      "lng": 11.40929,
+      "lat": 46.049823
     },
     {
-      "id": "events-33",
+      "id": "events-31",
       "category": "events",
       "name": "Partenza della passeggiata",
-      "text": "Sabato e Domenica ore 9:00. Passeggiata sul sentiero del castagno con accompagnatori forestali e castagnata tra i masi di Roncegno. Info e prenotazione 0461 727700",
+      "text": "Sabato e domenica ore 9:30. Passeggiata sul sentiero del castagno con accompagnatori forestali e castagnata tra i masi di Roncegno. Info e prenotazione 0461 727700",
       "menu": [],
       "lng": 11.409795,
       "lat": 46.050987
     },
     {
-      "id": "events-34",
-      "category": "events",
-      "name": "Gli alberi del parco: facciamo l’erbario",
-      "text": "Sabato ore 10:00. Attività per bambini dai 7 anni",
-      "menu": [],
-      "lng": 11.409768,
-      "lat": 46.05091
-    },
-    {
-      "id": "events-35",
-      "category": "events",
-      "name": "Inaugurazione del forno di comunità",
-      "text": "Sabato ore 16:30.",
-      "menu": [],
-      "lng": 11.412476,
-      "lat": 46.053111
-    },
-    {
-      "id": "events-36",
+      "id": "events-32",
       "category": "events",
       "name": "The Capston · rock anni ’70 e ’80",
-      "text": null,
+      "text": "Sabato, ore 20.30",
       "menu": [],
       "lng": 11.411545,
       "lat": 46.04944
     },
     {
-      "id": "events-37",
+      "id": "events-33",
       "category": "events",
       "name": "DJ set Stefano Cenci",
       "text": "Sabato ore 21:00",
@@ -410,25 +361,43 @@
       "lat": 46.052876
     },
     {
-      "id": "events-38",
+      "id": "events-34",
       "category": "events",
-      "name": "Pentolina, pentoletta, pentolaccia",
-      "text": "Sabato ore 15:00. Spettacolo per famiglie con i burattini a cura di Luciano Gottardi. In caso di maltempo in teatro.",
-      "menu": [],
-      "lng": 11.411725,
-      "lat": 46.053529
-    },
-    {
-      "id": "events-39",
-      "category": "events",
-      "name": "Premiazione dei disegni dei bambini",
-      "text": "Ore 16:00 di Domenica. Premiazione dei disegni dei bambini della scuola materna di Roncegno.",
+      "name": "Premiazione del concorso “La castagna del mio cuor”",
+      "text": "Domenica, ore 16.00. Premiazione concorso \"la castagna del mio cuor\".",
       "menu": [],
       "lng": 11.409774,
       "lat": 46.050877
     },
     {
-      "id": "services-40",
+      "id": "events-35",
+      "category": "events",
+      "name": "Taglio della Torta Gigante",
+      "text": "Sabato ore 14:00. Inaugurazione della Festa con il taglio della Torta Gigante. Accompagnati dalla Banda Civica Lagorai APS.",
+      "menu": [],
+      "lng": 11.41024,
+      "lat": 46.049478
+    },
+    {
+      "id": "events-36",
+      "category": "events",
+      "name": "Gioca la musica",
+      "text": "Sabato ore 15:00. Laboratorio musicale a cura della Banda Civica Lagorai APS. Prova lo strumento insieme alla Banda!",
+      "menu": [],
+      "lng": 11.411607,
+      "lat": 46.05334
+    },
+    {
+      "id": "events-37",
+      "category": "events",
+      "name": "GlockenThurm in concerto",
+      "text": "Venerdì sera in compagnia della band folkloristica di Roncegno! Ore 20.30 piazzale dei Vigili del Fuoco",
+      "menu": [],
+      "lng": 11.411562,
+      "lat": 46.049468
+    },
+    {
+      "id": "services-38",
       "category": "services",
       "name": "Servizi igienici",
       "text": null,
@@ -437,16 +406,16 @@
       "lat": 46.050896
     },
     {
-      "id": "services-41",
+      "id": "services-39",
       "category": "services",
       "name": "Servizi igienici",
       "text": null,
       "menu": [],
-      "lng": 11.409151,
-      "lat": 46.050544
+      "lng": 11.410596,
+      "lat": 46.049623
     },
     {
-      "id": "services-42",
+      "id": "services-40",
       "category": "services",
       "name": "Servizi igienici",
       "text": null,
@@ -455,7 +424,7 @@
       "lat": 46.049423
     },
     {
-      "id": "services-43",
+      "id": "services-41",
       "category": "services",
       "name": "Servizi igienici",
       "text": null,
@@ -464,13 +433,40 @@
       "lat": 46.05307
     },
     {
-      "id": "services-44",
+      "id": "services-42",
       "category": "services",
       "name": "Servizi igienici",
       "text": null,
       "menu": [],
       "lng": 11.410629,
       "lat": 46.050456
+    },
+    {
+      "id": "see-43",
+      "category": "see",
+      "name": "Mercatino dell’hobbista",
+      "text": null,
+      "menu": [],
+      "lng": 11.409183,
+      "lat": 46.049145
+    },
+    {
+      "id": "see-44",
+      "category": "see",
+      "name": "Mercatino dell’hobbista",
+      "text": null,
+      "menu": [],
+      "lng": 11.409924,
+      "lat": 46.049193
+    },
+    {
+      "id": "see-45",
+      "category": "see",
+      "name": "Mercatino dell’hobbista",
+      "text": null,
+      "menu": [],
+      "lng": 11.410165,
+      "lat": 46.050405
     }
   ]
 }
