@@ -40,11 +40,16 @@ const nextConfig: NextConfig = {
       { source: "/it/dormire/:path+", destination: "/organizza-la-visita#dormire", permanent: true },
       { source: "/it/contacts/:path*", destination: "/organizza-la-visita", permanent: true },
       { source: "/it/roncegno-terme/sentieri-e-percorsi-outd", destination: "/percorsi", permanent: true },
-      { source: "/it/roncegno-terme", destination: "/luoghi", permanent: true },
+      // QR dei libretti stampati: "Libretto 1 Roncegno" e "Libretto 3 Percorsi".
+      { source: "/it/roncegno-terme", destination: "/", permanent: true },
+      { source: "/it/roncegno-terme/percorsi", destination: "/percorsi", permanent: true },
       { source: "/it/roncegno-terme/:path+", destination: "/luoghi", permanent: true },
       // Pagine indice dei sentieri del vecchio sito (non sono pannelli): portano all'elenco dei percorsi.
       { source: "/it/sentieri", destination: "/percorsi", permanent: true },
-      { source: "/it/sentieri/sentieri-di-roncegno-1", destination: "/percorsi", permanent: true },
+      // QR dei pannelli 01–03: la pagina del vecchio sito era "Il circuito del Castagno".
+      { source: "/it/sentieri/sentieri-di-roncegno-1", destination: "/percorsi/circuito-del-castagno", permanent: true },
+      // QR "Passeggiata festa della Castagna": iscrizioni alle passeggiate, ora nel programma della Festa.
+      { source: "/it/iscrizione-passeggiate", destination: "/festa-della-castagna#programma", permanent: false },
       { source: "/it/sentieri/localita-cinque-valli-9", destination: "/percorsi", permanent: true },
       { source: "/it/sentieri/novita-in-arrivo", destination: "/percorsi", permanent: true },
       { source: "/natura-e-montagna", destination: "/temi/natura-e-montagna", permanent: true },
