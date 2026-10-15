@@ -108,6 +108,8 @@
   display: grid;
   max-height: 400px;
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  /* Senza questo, con l'altezza massima, le righe si schiacciano fino a tagliare i nomi. */
+  grid-auto-rows: max-content;
   gap: 8px;
   overflow: auto;
   padding: 2px;
@@ -155,6 +157,43 @@
   line-height: 1.3;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* File (GPX, audio): elenco a una colonna con nome e formato. */
+.fileList {
+  display: grid;
+  max-height: 360px;
+  grid-auto-rows: max-content;
+  gap: 6px;
+  overflow: auto;
+  padding: 2px;
+}
+
+.fileList .media,
+.fileList .activeMedia {
+  gap: 2px;
+  padding: 9px 12px;
+}
+
+.fileList span {
+  padding: 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.fileList small {
+  overflow: hidden;
+  color: var(--hub-faint);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.noResults {
+  margin: 0;
+  padding: 10px 2px;
+  color: var(--hub-muted);
+  font-size: 13px;
 }
 
 .error {

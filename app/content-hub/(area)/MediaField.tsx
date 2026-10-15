@@ -13,11 +13,39 @@ type MediaItem = {
   height?: number | null;
 };
 
+export type MediaKind = "image" | "gpx" | "audio" | "file";
+
 type Props = {
   value: string;
   onChange: (value: string | null) => void;
-  kind?: "image" | "file";
+  kind?: MediaKind;
 };
+
+const ACCEPT: Record<MediaKind, string> = {
+  image: "image/jpeg,image/png,image/webp",
+  gpx: ".gpx,application/gpx+xml",
+  audio: ".mp3,.m4a,.wav,audio/mpeg,audio/mp4,audio/wav",
+  file: ".gpx,.mp3,.m4a,.wav,.pdf,audio/mpeg,audio/mp4,audio/wav,application/pdf",
+};
+
+function extension(item: MediaItem) {
+  return String(item.filename_download ?? "").split(".").pop()?.toLowerCase() ?? "";
+}
+
+// La libreria mostra solo i file adatti al campo: foto per le immagini, GPX per i tracciati, audio per le audioguide.
+function matchesKind(item: MediaItem, kind: MediaKind) {
+  const type = String(item.type ?? "");
+  const ext = extension(item);
+  if (kind === "image") return type.startsWith("image/");
+  if (kind === "gpx") return ext === "gpx" || type.includes("gpx");
+  if (kind === "audio") return type.startsWith("audio/") || ["mp3", "m4a", "wav", "ogg"].includes(ext);
+  return !type.startsWith("image/");
+}
+
+function formatLabel(item: MediaItem) {
+  const ext = extension(item);
+  return ext ? ext.toUpperCase() : String(item.type ?? "File");
+}
 
 type MediaResult = { data?: MediaItem[]; error?: string };
 
@@ -43,9 +71,7 @@ export default function MediaField({ value, onChange, kind = "image" }: Props) {
   const filtered = useMemo(() => {
     const normalized = query.trim().toLocaleLowerCase("it-IT");
     return items.filter((item) => {
-      if (kind === "image" && !String(item.type ?? "").startsWith("image/")) {
-        return false;
-      }
+      if (!matchesKind(item, kind)) return false;
       if (!normalized) return true;
       return [item.title, item.filename_download, item.id]
         .filter(Boolean)
@@ -183,11 +209,7 @@ export default function MediaField({ value, onChange, kind = "image" }: Props) {
           {uploading ? "Caricamento…" : "Carica nuovo"}
           <input
             type="file"
-            accept={
-              kind === "image"
-                ? "image/jpeg,image/png,image/webp"
-                : ".gpx,.mp3,.m4a,.wav,audio/mpeg,audio/mp4,audio/wav"
-            }
+            accept={ACCEPT[kind]}
             disabled={uploading}
             onChange={upload}
           />
@@ -208,7 +230,7 @@ export default function MediaField({ value, onChange, kind = "image" }: Props) {
           {loading ? (
             <p>Caricamento…</p>
           ) : (
-            <div className={styles.grid}>
+            <div className={kind === "image" ? styles.grid : styles.fileList}>
               {filtered.map((item) => (
                 <button
                   type="button"
@@ -228,9 +250,19 @@ export default function MediaField({ value, onChange, kind = "image" }: Props) {
                     />
                   )}
                   <span>{item.title || item.filename_download || item.id}</span>
+                  {kind !== "image" && (
+                    <small>
+                      {formatLabel(item)}
+                      {item.title && item.filename_download && item.title !== item.filename_download ? ` · ${item.filename_download}` : ""}
+                    </small>
+                  )}
                 </button>
               ))}
-              {!filtered.length && <p>Nessun file trovato.</p>}
+              {!filtered.length && (
+                <p className={styles.noResults}>
+                  {kind === "gpx" ? "Nessun file GPX trovato." : kind === "audio" ? "Nessun file audio trovato." : "Nessun file trovato."}
+                </p>
+              )}
             </div>
           )}
         </div>

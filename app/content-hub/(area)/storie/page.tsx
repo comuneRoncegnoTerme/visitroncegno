@@ -14,7 +14,7 @@ const fields: EditorField[] = [
   { name: "excerpt", label: "Testo breve", type: "textarea", full: true },
   { name: "body", label: "Testo completo", type: "textarea", full: true },
   { name: "image", label: "Immagine", type: "media", mediaKind: "image", full: true },
-  { name: "audio_file", label: "Audio", type: "media", mediaKind: "file", full: true },
+  { name: "audio_file", label: "Audio", type: "media", mediaKind: "audio", full: true },
   { name: "audio_title", label: "Titolo audio", full: true },
   {
     name: "place",

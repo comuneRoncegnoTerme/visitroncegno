@@ -70,12 +70,38 @@ export function logContentHubUpstreamError(
   });
 }
 
-export function upstreamFailureResponse(
+// Motivo restituito da Directus (es. "Value for field \"distance_km\" in collection \"routes\" has to be numeric").
+async function directusErrorDetail(response: Response) {
+  const body = (await response.clone().json().catch(() => null)) as
+    | { errors?: Array<{ message?: string; extensions?: { code?: string; field?: string } }> }
+    | null;
+  const first = body?.errors?.[0];
+  if (!first?.message) return null;
+  return { message: first.message, code: first.extensions?.code, field: first.extensions?.field };
+}
+
+export async function upstreamFailureResponse(
   operation: string,
   response: Response,
   metadata: Record<string, string | number | null | undefined> = {}
 ) {
-  logContentHubUpstreamError(operation, response, metadata);
+  const detail = await directusErrorDetail(response);
+  logContentHubUpstreamError(operation, response, {
+    ...metadata,
+    directusCode: detail?.code,
+    directusField: detail?.field,
+    directusMessage: detail?.message,
+  });
+
+  // Errori di validazione (4xx): chi compila deve sapere quale campo correggere.
+  if (detail && response.status < 500 && response.status !== 401) {
+    const field = detail.field ? ` (campo "${detail.field}")` : "";
+    return NextResponse.json(
+      { error: `Salvataggio rifiutato da Directus${field}: ${detail.message}` },
+      { status: 422 }
+    );
+  }
+
   return NextResponse.json(
     { error: "Operazione non riuscita. Riprova tra poco." },
     { status: response.status >= 500 ? 503 : 502 }
