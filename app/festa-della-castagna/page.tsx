@@ -83,7 +83,7 @@ const programme = [
     events: [
       ["09:30", "Passeggiata tra i castagni", "Partenza dal Municipio. Sul sentiero del castagno con accompagnatori e forestali, e castagnata tra i masi di Roncegno. 5 € adulti, 3 € ragazzi fino a 12 anni. Info e prenotazioni: APT Valsugana, 0461 727700, info@visitvalsugana.it.", "events-31"],
       ["10:00–17:00", "Scultori del legno: le leggende di Roncegno", "Piazzale di Villa Waiz.", "see-23"],
-      ["10:00–18:30", "Il Bosco Incantato", "Laboratorio e caccia al tesoro a cura di Studio Irydea. Parco delle Terme.", "kids-26"],
+      ["10:00–18:00", "Il Bosco Incantato", "Caccia agli gnomi golosi, spazio gioco e laboratori a cura di Irylab e Studio Irydea. Parco delle Terme.", "kids-26"],
       ["13:00–17:30", "Musica con i Trifisa", "Piazzale dei Vigili del Fuoco.", "events-27"],
       ["14:00", "Inaugurazione della Festa", "Taglio della Torta Gigante al Parco delle Terme.", "events-35"],
       ["14:00–18:00", "Animazione e spettacoli per bambini", "Con AniMacri. Parco delle Terme."],
@@ -103,7 +103,7 @@ const programme = [
     events: [
       ["09:30", "Passeggiata tra i castagni", "Partenza dal Municipio. Sul sentiero del castagno con accompagnatori e forestali, e castagnata tra i masi di Roncegno. 5 € adulti, 3 € ragazzi fino a 12 anni. Info e prenotazioni: APT Valsugana, 0461 727700, info@visitvalsugana.it.", "events-31"],
       ["10:00–17:00", "Scultori del legno: le leggende di Roncegno", "Piazzale di Villa Waiz.", "see-23"],
-      ["10:00–18:30", "Il Bosco Incantato", "Laboratorio e caccia al tesoro a cura di Studio Irydea. Parco delle Terme.", "kids-26"],
+      ["10:00–18:00", "Il Bosco Incantato", "Caccia agli gnomi golosi, spazio gioco e laboratori a cura di Irylab e Studio Irydea. Parco delle Terme.", "kids-26"],
       ["11:30–13:00", "Scorribanda dei Piccoli Grandi Violinisti", "Musica classica e folk per tutte le altezze, itinerante per le vie del centro e nel Parco delle Terme."],
       ["12:00–17:00", "Giro in elicottero", "Nella zona del piazzale dei Vigili del Fuoco."],
       ["13:00–17:30", "Musica con i Trifisa", "Piazzale dei Vigili del Fuoco.", "events-27"],
@@ -153,7 +153,7 @@ export default async function FestaDellaCastagnaPage() {
         <div className={styles.storyIntroCopy}>
           <h2>Una festa di paese</h2>
           <p>Sabato 24 e domenica 25 ottobre, dalle 9:00, Roncegno si riempie di bancarelle, dolci di castagne e stand gastronomici. La novità di quest’anno: lo spazio famiglie e il mercatino si spostano al Parco delle Terme.</p>
-          <p>Per tutto il fine settimana ci sono il Bosco Incantato, con laboratorio e caccia al tesoro, l’animazione per bambini al Parco delle Terme, gli scultori del legno a Villa Waiz e la musica dei Trifisa.</p>
+          <p>Per tutto il fine settimana ci sono il Bosco Incantato, con la caccia agli gnomi golosi e i laboratori, l’animazione per bambini al Parco delle Terme, gli scultori del legno a Villa Waiz e la musica dei Trifisa. Per il Bosco Incantato ci si può <a href="https://event.inpergine.it/e.php?id=86c85657e4d9f20fdd45" target="_blank" rel="noopener noreferrer">iscrivere alle attività</a>: per i bambini c’è una sorpresa assicurata.</p>
           <p>Ci sono le escursioni tra i castagni con i custodi forestali, la musica nei piazzali e, la domenica, anche il giro in elicottero.</p>
         </div>
       </section>

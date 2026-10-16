@@ -356,3 +356,4 @@
 .quickNav a:hover{background:#4e2517;color:#fff}
 .program,.festaMap,.flavours,.stories,.info{scroll-margin-top:64px}
 @media(max-width:760px){.quickNav{padding:10px 16px}.quickNav a{padding:8px 13px;font-size:13px}}
+.storyIntroCopy a{color:#9d4a24;font-weight:700;text-decoration:underline;text-underline-offset:3px}

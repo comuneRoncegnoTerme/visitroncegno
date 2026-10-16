@@ -143,6 +143,7 @@ const FIXES = [
   ["Venerdì ore 20:30. Presentazione libro", "Venerdì ore 18:00. Presentazione libro"],
   ["Venerdì ore 18:00. Cucina aperta", "Venerdì ore 18:30. Cucina aperta"],
   ["Laboratorio Musicale a cura", "Sabato ore 15:00. Laboratorio musicale a cura"],
+  ["Orario: 10:00 – 18:30. A cura di: Irylab - Studio Irydea", "Sabato e domenica, 10:00–18:00. A cura di Irylab e Studio Irydea. Iscrizioni alle attività: event.inpergine.it"],
   ['Premiazione concorso "la castagna del mio cuor".', "Premiazione del concorso “La castagna del mio cuor” in Piazza A. de Giovanni."],
   ["Info e prenotazione 0461 727700", "5 € adulti, 3 € ragazzi fino a 12 anni. Info e prenotazioni: APT Valsugana, 0461 727700, info@visitvalsugana.it"],
 ];
