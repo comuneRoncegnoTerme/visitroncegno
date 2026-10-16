@@ -81,14 +81,15 @@ const programme = [
     day: "Sabato 24 ottobre",
     label: "La Festa entra nel vivo",
     events: [
-      ["09:30", "Passeggiata tra i castagni", "Partenza dal Municipio. Percorso accompagnato dai custodi forestali e dagli accompagnatori di media montagna. Durata 2 ore.", "events-31"],
+      ["09:30", "Passeggiata tra i castagni", "Partenza dal Municipio. Sul sentiero del castagno con accompagnatori e forestali, e castagnata tra i masi di Roncegno. 5 € adulti, 3 € ragazzi fino a 12 anni. Info e prenotazioni: APT Valsugana, 0461 727700, info@visitvalsugana.it.", "events-31"],
       ["10:00–17:00", "Scultori del legno: le leggende di Roncegno", "Piazzale di Villa Waiz.", "see-23"],
       ["10:00–18:30", "Il Bosco Incantato", "Laboratorio e caccia al tesoro a cura di Studio Irydea. Parco delle Terme.", "kids-26"],
-      ["13:30–17:30", "Musica con i Trifisa", "Piazzale dei Vigili del Fuoco.", "events-27"],
+      ["13:00–17:30", "Musica con i Trifisa", "Piazzale dei Vigili del Fuoco.", "events-27"],
       ["14:00", "Inaugurazione della Festa", "Taglio della Torta Gigante al Parco delle Terme.", "events-35"],
       ["14:00–18:00", "Animazione e spettacoli per bambini", "Con AniMacri. Parco delle Terme."],
       ["14:30", "Il bambino amico dei ricci", "Una favola sulle castagne per famiglie, con Giuliano e Dante Libero Comin. Parco giochi sopra Piazza Montebello."],
-      ["15:00", "Prova lo strumento", "A cura della Banda Civica Lagorai. Parco giochi sopra Piazza Montebello.", "events-36"],
+      ["15:00", "Gioca la musica", "Con la Banda Civica Lagorai. Parco giochi sopra Piazza Montebello.", "events-36"],
+      ["16:30", "Il bambino amico dei ricci", "Seconda lettura della favola sulle castagne per famiglie, con Giuliano e Dante Libero Comin. Parco giochi sopra Piazza Montebello."],
       ["18:00", "Apericoro", "Cicchetti in compagnia del Duo Euphonia nella piazzetta del coro. Punto ristoro con arrosticini, patatine e crêpes a cura del Coro S. Osvaldo nel piazzale del Municipio.", "events-29"],
       ["20:30", "The Capston", "Rock anni ’70 e ’80. Piazzale dei Vigili del Fuoco.", "events-32"],
       ["21:00", "DJ set Stefano Cenci", "Piazza Montebello.", "events-33"],
@@ -100,14 +101,14 @@ const programme = [
     day: "Domenica 25 ottobre",
     label: "La domenica della Castagna",
     events: [
-      ["09:30", "Passeggiata tra i castagni", "Partenza dal Municipio. Percorso accompagnato dai custodi forestali e dagli accompagnatori di media montagna. Durata 2 ore.", "events-31"],
+      ["09:30", "Passeggiata tra i castagni", "Partenza dal Municipio. Sul sentiero del castagno con accompagnatori e forestali, e castagnata tra i masi di Roncegno. 5 € adulti, 3 € ragazzi fino a 12 anni. Info e prenotazioni: APT Valsugana, 0461 727700, info@visitvalsugana.it.", "events-31"],
       ["10:00–17:00", "Scultori del legno: le leggende di Roncegno", "Piazzale di Villa Waiz.", "see-23"],
       ["10:00–18:30", "Il Bosco Incantato", "Laboratorio e caccia al tesoro a cura di Studio Irydea. Parco delle Terme.", "kids-26"],
-      ["11:30–13:00", "Scorribanda dei Piccoli Grandi Violinisti", "Musica classica e folk per tutte le età, itinerante per le vie del centro e nel Parco delle Terme."],
+      ["11:30–13:00", "Scorribanda dei Piccoli Grandi Violinisti", "Musica classica e folk per tutte le altezze, itinerante per le vie del centro e nel Parco delle Terme."],
       ["12:00–17:00", "Giro in elicottero", "Nella zona del piazzale dei Vigili del Fuoco."],
       ["13:00–17:30", "Musica con i Trifisa", "Piazzale dei Vigili del Fuoco.", "events-27"],
       ["14:00–18:00", "Animazione e spettacoli per bambini", "Con AniMacri. Parco delle Terme."],
-      ["16:00", "Premiazione del concorso “La castagna del mio cuor”", "La premiazione del concorso della Festa.", "events-34"],
+      ["16:00", "Premiazione del concorso “La castagna del mio cuor”", "In Piazza A. de Giovanni.", "events-34"],
     ],
   },
 ] as const satisfies readonly ProgrammeDay[];
@@ -191,7 +192,7 @@ export default async function FestaDellaCastagnaPage() {
           <p className={styles.eyebrowLight}>Programma 2026</p>
           <h2>Il programma, giorno per giorno</h2>
           <p>Da venerdì sera a domenica: passeggiate, spettacoli, musica, cucina e attività per bambini.</p>
-          <div className={styles.alwaysOn}><strong>Sabato e domenica, dalle 9:00</strong><p>Spazio famiglie e mercatino al Parco delle Terme, escursione tra i castagni, bancarelle, dolci di castagne, laboratori per bambini e stand gastronomici.</p></div>
+          <div className={styles.alwaysOn}><strong>Sabato e domenica, dalle 9:00</strong><p>Spazio famiglie e mercatino al Parco delle Terme, intrattenimento e laboratori per bambini, giardino con gli animali, bancarelle, dolci di castagne, musica itinerante e stand gastronomici.</p></div>
         </div>
         <FestaProgramme days={programme} />
       </section>
