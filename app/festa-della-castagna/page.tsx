@@ -81,14 +81,15 @@ const programme = [
     day: "Sabato 24 ottobre",
     label: "La Festa entra nel vivo",
     events: [
-      ["09:30", "Passeggiata tra i castagni", "Partenza dal Municipio. Percorso accompagnato dai custodi forestali e dagli accompagnatori di media montagna. Durata 2 ore.", "events-31"],
+      ["09:30", "Passeggiata tra i castagni", "Partenza dal Municipio. Sul sentiero del castagno con accompagnatori e forestali, e castagnata tra i masi di Roncegno. 5 € adulti, 3 € ragazzi fino a 12 anni. Info e prenotazioni: APT Valsugana, 0461 727700, info@visitvalsugana.it.", "events-31"],
       ["10:00–17:00", "Scultori del legno: le leggende di Roncegno", "Piazzale di Villa Waiz.", "see-23"],
-      ["10:00–18:30", "Il Bosco Incantato", "Laboratorio e caccia al tesoro a cura di Studio Irydea. Parco delle Terme.", "kids-26"],
-      ["13:30–17:30", "Musica con i Trifisa", "Piazzale dei Vigili del Fuoco.", "events-27"],
+      ["10:00–18:00", "Il Bosco Incantato", "Caccia agli gnomi golosi, spazio gioco e laboratori a cura di Irylab e Studio Irydea. Parco delle Terme.", "kids-26"],
+      ["13:00–17:30", "Musica con i Trifisa", "Piazzale dei Vigili del Fuoco.", "events-27"],
       ["14:00", "Inaugurazione della Festa", "Taglio della Torta Gigante al Parco delle Terme.", "events-35"],
       ["14:00–18:00", "Animazione e spettacoli per bambini", "Con AniMacri. Parco delle Terme."],
       ["14:30", "Il bambino amico dei ricci", "Una favola sulle castagne per famiglie, con Giuliano e Dante Libero Comin. Parco giochi sopra Piazza Montebello."],
-      ["15:00", "Prova lo strumento", "A cura della Banda Civica Lagorai. Parco giochi sopra Piazza Montebello.", "events-36"],
+      ["15:00", "Gioca la musica", "Con la Banda Civica Lagorai. Parco giochi sopra Piazza Montebello.", "events-36"],
+      ["16:30", "Il bambino amico dei ricci", "Seconda lettura della favola sulle castagne per famiglie, con Giuliano e Dante Libero Comin. Parco giochi sopra Piazza Montebello."],
       ["18:00", "Apericoro", "Cicchetti in compagnia del Duo Euphonia nella piazzetta del coro. Punto ristoro con arrosticini, patatine e crêpes a cura del Coro S. Osvaldo nel piazzale del Municipio.", "events-29"],
       ["20:30", "The Capston", "Rock anni ’70 e ’80. Piazzale dei Vigili del Fuoco.", "events-32"],
       ["21:00", "DJ set Stefano Cenci", "Piazza Montebello.", "events-33"],
@@ -100,14 +101,14 @@ const programme = [
     day: "Domenica 25 ottobre",
     label: "La domenica della Castagna",
     events: [
-      ["09:30", "Passeggiata tra i castagni", "Partenza dal Municipio. Percorso accompagnato dai custodi forestali e dagli accompagnatori di media montagna. Durata 2 ore.", "events-31"],
+      ["09:30", "Passeggiata tra i castagni", "Partenza dal Municipio. Sul sentiero del castagno con accompagnatori e forestali, e castagnata tra i masi di Roncegno. 5 € adulti, 3 € ragazzi fino a 12 anni. Info e prenotazioni: APT Valsugana, 0461 727700, info@visitvalsugana.it.", "events-31"],
       ["10:00–17:00", "Scultori del legno: le leggende di Roncegno", "Piazzale di Villa Waiz.", "see-23"],
-      ["10:00–18:30", "Il Bosco Incantato", "Laboratorio e caccia al tesoro a cura di Studio Irydea. Parco delle Terme.", "kids-26"],
-      ["11:30–13:00", "Scorribanda dei Piccoli Grandi Violinisti", "Musica classica e folk per tutte le età, itinerante per le vie del centro e nel Parco delle Terme."],
+      ["10:00–18:00", "Il Bosco Incantato", "Caccia agli gnomi golosi, spazio gioco e laboratori a cura di Irylab e Studio Irydea. Parco delle Terme.", "kids-26"],
+      ["11:30–13:00", "Scorribanda dei Piccoli Grandi Violinisti", "Musica classica e folk per tutte le altezze, itinerante per le vie del centro e nel Parco delle Terme."],
       ["12:00–17:00", "Giro in elicottero", "Nella zona del piazzale dei Vigili del Fuoco."],
       ["13:00–17:30", "Musica con i Trifisa", "Piazzale dei Vigili del Fuoco.", "events-27"],
       ["14:00–18:00", "Animazione e spettacoli per bambini", "Con AniMacri. Parco delle Terme."],
-      ["16:00", "Premiazione del concorso “La castagna del mio cuor”", "La premiazione del concorso della Festa.", "events-34"],
+      ["16:00", "Premiazione del concorso “La castagna del mio cuor”", "In Piazza A. de Giovanni.", "events-34"],
     ],
   },
 ] as const satisfies readonly ProgrammeDay[];
@@ -152,7 +153,7 @@ export default async function FestaDellaCastagnaPage() {
         <div className={styles.storyIntroCopy}>
           <h2>Una festa di paese</h2>
           <p>Sabato 24 e domenica 25 ottobre, dalle 9:00, Roncegno si riempie di bancarelle, dolci di castagne e stand gastronomici. La novità di quest’anno: lo spazio famiglie e il mercatino si spostano al Parco delle Terme.</p>
-          <p>Per tutto il fine settimana ci sono il Bosco Incantato, con laboratorio e caccia al tesoro, l’animazione per bambini al Parco delle Terme, gli scultori del legno a Villa Waiz e la musica dei Trifisa.</p>
+          <p>Per tutto il fine settimana ci sono il Bosco Incantato, con la caccia agli gnomi golosi e i laboratori, l’animazione per bambini al Parco delle Terme, gli scultori del legno a Villa Waiz e la musica dei Trifisa. Per il Bosco Incantato ci si può <a href="https://event.inpergine.it/e.php?id=86c85657e4d9f20fdd45" target="_blank" rel="noopener noreferrer">iscrivere alle attività</a>: per i bambini c’è una sorpresa assicurata.</p>
           <p>Ci sono le escursioni tra i castagni con i custodi forestali, la musica nei piazzali e, la domenica, anche il giro in elicottero.</p>
         </div>
       </section>
@@ -191,7 +192,7 @@ export default async function FestaDellaCastagnaPage() {
           <p className={styles.eyebrowLight}>Programma 2026</p>
           <h2>Il programma, giorno per giorno</h2>
           <p>Da venerdì sera a domenica: passeggiate, spettacoli, musica, cucina e attività per bambini.</p>
-          <div className={styles.alwaysOn}><strong>Sabato e domenica, dalle 9:00</strong><p>Spazio famiglie e mercatino al Parco delle Terme, escursione tra i castagni, bancarelle, dolci di castagne, laboratori per bambini e stand gastronomici.</p></div>
+          <div className={styles.alwaysOn}><strong>Sabato e domenica, dalle 9:00</strong><p>Spazio famiglie e mercatino al Parco delle Terme, intrattenimento e laboratori per bambini, giardino con gli animali, bancarelle, dolci di castagne, musica itinerante e stand gastronomici.</p></div>
         </div>
         <FestaProgramme days={programme} />
       </section>
@@ -234,16 +235,25 @@ export default async function FestaDellaCastagnaPage() {
           </article>
           <article>
             <h3>Parcheggi</h3>
-            <p>Parcheggi disponibili nei pressi della festa, presso l’oratorio parrocchiale di Roncegno e in via Ferme, arrivando da Borgo Valsugana.</p>
+            <p><strong>Sabato 24</strong>: all’oratorio parrocchiale di Roncegno, al campo sportivo in via Ferme e in via per Roncegno, arrivando da Borgo Valsugana.</p>
+            <p><strong>Domenica 25</strong>: lungo la SP65 in direzione Marter, in via per Roncegno arrivando da Borgo Valsugana e all’oratorio parrocchiale.</p>
+            <p>Parcheggio riservato alle persone con disabilità in prossimità del centro.</p>
             <div className={styles.mapLinks}>
               <a href={mapsSearch("Oratorio parrocchiale, Roncegno Terme")} target="_blank" rel="noopener noreferrer">Oratorio su Maps ↗</a>
               <a href={mapsSearch("Via Ferme, Roncegno Terme")} target="_blank" rel="noopener noreferrer">Via Ferme su Maps ↗</a>
             </div>
           </article>
-          <article><h3>Navetta domenicale</h3><p>Domenica 25 saranno disponibili parcheggi organizzati a 600–800 metri in direzione Marter e Borgo Valsugana, con bus navetta gratuito verso il centro dalle 11:00 alle 18:30.</p></article>
-          <article><h3>Accessibilità</h3><p>Parcheggio riservato alle persone con disabilità in prossimità del centro della manifestazione.</p></article>
+          <article><h3>Navetta gratuita</h3><p>Sabato e domenica, dalle 11:00 alle 18:30, un bus navetta gratuito collega i parcheggi al centro della festa. Le fermate sono sulla mappa.</p></article>
+          <article>
+            <h3>Camper</h3>
+            <p>Parcheggio camper in località Ferme. Area sosta camper a pagamento all’Agri-Campeggio Montibeller, in via Prose 1.</p>
+            <div className={styles.mapLinks}>
+              <a href={mapsSearch("Agri-Campeggio Montibeller, Via Prose 1, Roncegno Terme")} target="_blank" rel="noopener noreferrer">Agri-Campeggio su Maps ↗</a>
+            </div>
+          </article>
         </div>
         <div className={styles.contactBox}><span>Informazioni</span><strong>Comune di Roncegno Terme</strong><a href="tel:+390461764061">0461 764061</a><a href="mailto:comunicazione@comune.roncegnoterme.tn.it">comunicazione@comune.roncegnoterme.tn.it</a></div>
+        <div className={styles.contactBox}><span>Passeggiate e turismo</span><strong>APT Valsugana Lagorai Terme Laghi</strong><a href="tel:+390461727700">0461 727700</a><a href="mailto:info@visitvalsugana.it">info@visitvalsugana.it</a></div>
       </section>
 
       <section className={styles.cta}><div><h2>Roncegno tutto l’anno</h2><p>Sentieri, musei, terme e i posti dove mangiare e dormire, tutto l’anno.</p></div><Link href="/" className={styles.lightButton}>Torna alla home</Link></section>

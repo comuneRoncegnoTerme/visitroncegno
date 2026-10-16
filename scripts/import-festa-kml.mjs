@@ -139,11 +139,13 @@ const FIXES = [
   ["piazzale VF", "piazzale dei Vigili del Fuoco"], ["Lagorai Aps", "Lagorai APS"],
   ["scultori trentini, Le leggende", "scultori trentini: le leggende"], ["Venerdì - domenica", "Da venerdì a domenica"],
   ["Ore 14:00. Inaugurazione", "Sabato ore 14:00. Inaugurazione"], ["18:30 A cura", "18:30. A cura"],
-  // Orari 2026 allineati al programma ufficiale della pagina.
+  // Orari e dettagli 2026 allineati al volantino ufficiale.
   ["Venerdì ore 20:30. Presentazione libro", "Venerdì ore 18:00. Presentazione libro"],
   ["Venerdì ore 18:00. Cucina aperta", "Venerdì ore 18:30. Cucina aperta"],
-  ["Sabato e domenica ore 13:00", "Sabato 13:30–17:30 e domenica 13:00–17:30"],
   ["Laboratorio Musicale a cura", "Sabato ore 15:00. Laboratorio musicale a cura"],
+  ["Orario: 10:00 – 18:30. A cura di: Irylab - Studio Irydea", "Sabato e domenica, 10:00–18:00. A cura di Irylab e Studio Irydea. Iscrizioni alle attività: event.inpergine.it"],
+  ['Premiazione concorso "la castagna del mio cuor".', "Premiazione del concorso “La castagna del mio cuor” in Piazza A. de Giovanni."],
+  ["Info e prenotazione 0461 727700", "5 € adulti, 3 € ragazzi fino a 12 anni. Info e prenotazioni: APT Valsugana, 0461 727700, info@visitvalsugana.it"],
 ];
 const fix = (text) => FIXES.reduce((acc, [from, to]) => acc.split(from).join(to), text);
 

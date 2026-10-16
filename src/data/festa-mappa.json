@@ -292,7 +292,7 @@
       "id": "kids-26",
       "category": "kids",
       "name": "Il Bosco Incantato",
-      "text": "Caccia al Tesoro & Laboratori! Il delizioso profumo delle caldarroste ha attirato 5 gnomi golosi che si sono persi nel Parco di Roncegno, spezzando l'incantesimo dell'invisibilità! Prendi la mappa, scopri i 5 gnomi e i 5 Esseri Incantati nascosti tra gli alberi e usa i bollini magici per riportarli a casa! Nell'area troverai anche giochi e laboratori dedicati ai bambini! Orario: 10:00 – 18:30. A cura di: Irylab - Studio Irydea",
+      "text": "Caccia al Tesoro & Laboratori! Il delizioso profumo delle caldarroste ha attirato 5 gnomi golosi che si sono persi nel Parco di Roncegno, spezzando l'incantesimo dell'invisibilità! Prendi la mappa, scopri i 5 gnomi e i 5 Esseri Incantati nascosti tra gli alberi e usa i bollini magici per riportarli a casa! Nell'area troverai anche giochi e laboratori dedicati ai bambini! Sabato e domenica, 10:00–18:00. A cura di Irylab e Studio Irydea. Iscrizioni alle attività: event.inpergine.it",
       "menu": [],
       "lng": 11.409862,
       "lat": 46.048011
@@ -301,7 +301,7 @@
       "id": "events-27",
       "category": "events",
       "name": "Musica con i Trifisa",
-      "text": "Sabato 13:30–17:30 e domenica 13:00–17:30",
+      "text": "Sabato e domenica ore 13:00",
       "menu": [],
       "lng": 11.411525,
       "lat": 46.049542
@@ -337,7 +337,7 @@
       "id": "events-31",
       "category": "events",
       "name": "Partenza della passeggiata",
-      "text": "Sabato e domenica ore 9:30. Passeggiata sul sentiero del castagno con accompagnatori forestali e castagnata tra i masi di Roncegno. Info e prenotazione 0461 727700",
+      "text": "Sabato e domenica ore 9:30. Passeggiata sul sentiero del castagno con accompagnatori forestali e castagnata tra i masi di Roncegno. 5 € adulti, 3 € ragazzi fino a 12 anni. Info e prenotazioni: APT Valsugana, 0461 727700, info@visitvalsugana.it",
       "menu": [],
       "lng": 11.409795,
       "lat": 46.050987
@@ -364,7 +364,7 @@
       "id": "events-34",
       "category": "events",
       "name": "Premiazione del concorso “La castagna del mio cuor”",
-      "text": "Domenica, ore 16.00. Premiazione concorso \"la castagna del mio cuor\".",
+      "text": "Domenica, ore 16.00. Premiazione del concorso “La castagna del mio cuor” in Piazza A. de Giovanni.",
       "menu": [],
       "lng": 11.409774,
       "lat": 46.050877
