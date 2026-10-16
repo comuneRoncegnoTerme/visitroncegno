@@ -235,16 +235,25 @@ export default async function FestaDellaCastagnaPage() {
           </article>
           <article>
             <h3>Parcheggi</h3>
-            <p>Parcheggi disponibili nei pressi della festa, presso l’oratorio parrocchiale di Roncegno e in via Ferme, arrivando da Borgo Valsugana.</p>
+            <p><strong>Sabato 24</strong>: all’oratorio parrocchiale di Roncegno, al campo sportivo in via Ferme e in via per Roncegno, arrivando da Borgo Valsugana.</p>
+            <p><strong>Domenica 25</strong>: lungo la SP65 in direzione Marter, in via per Roncegno arrivando da Borgo Valsugana e all’oratorio parrocchiale.</p>
+            <p>Parcheggio riservato alle persone con disabilità in prossimità del centro.</p>
             <div className={styles.mapLinks}>
               <a href={mapsSearch("Oratorio parrocchiale, Roncegno Terme")} target="_blank" rel="noopener noreferrer">Oratorio su Maps ↗</a>
               <a href={mapsSearch("Via Ferme, Roncegno Terme")} target="_blank" rel="noopener noreferrer">Via Ferme su Maps ↗</a>
             </div>
           </article>
-          <article><h3>Navetta domenicale</h3><p>Domenica 25 saranno disponibili parcheggi organizzati a 600–800 metri in direzione Marter e Borgo Valsugana, con bus navetta gratuito verso il centro dalle 11:00 alle 18:30.</p></article>
-          <article><h3>Accessibilità</h3><p>Parcheggio riservato alle persone con disabilità in prossimità del centro della manifestazione.</p></article>
+          <article><h3>Navetta gratuita</h3><p>Sabato e domenica, dalle 11:00 alle 18:30, un bus navetta gratuito collega i parcheggi al centro della festa. Le fermate sono sulla mappa.</p></article>
+          <article>
+            <h3>Camper</h3>
+            <p>Parcheggio camper in località Ferme. Area sosta camper a pagamento all’Agri-Campeggio Montibeller, in via Prose 1.</p>
+            <div className={styles.mapLinks}>
+              <a href={mapsSearch("Agri-Campeggio Montibeller, Via Prose 1, Roncegno Terme")} target="_blank" rel="noopener noreferrer">Agri-Campeggio su Maps ↗</a>
+            </div>
+          </article>
         </div>
         <div className={styles.contactBox}><span>Informazioni</span><strong>Comune di Roncegno Terme</strong><a href="tel:+390461764061">0461 764061</a><a href="mailto:comunicazione@comune.roncegnoterme.tn.it">comunicazione@comune.roncegnoterme.tn.it</a></div>
+        <div className={styles.contactBox}><span>Passeggiate e turismo</span><strong>APT Valsugana Lagorai Terme Laghi</strong><a href="tel:+390461727700">0461 727700</a><a href="mailto:info@visitvalsugana.it">info@visitvalsugana.it</a></div>
       </section>
 
       <section className={styles.cta}><div><h2>Roncegno tutto l’anno</h2><p>Sentieri, musei, terme e i posti dove mangiare e dormire, tutto l’anno.</p></div><Link href="/" className={styles.lightButton}>Torna alla home</Link></section>
