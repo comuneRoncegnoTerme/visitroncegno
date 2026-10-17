@@ -160,33 +160,6 @@ export default async function FestaDellaCastagnaPage() {
 
       <FestaAtmosphereVideo />
 
-      <section className={styles.moments}>
-        <div className={styles.momentsHeading}>
-          <div className={styles.momentsTitle}>
-            <h2>Com’è la festa</h2>
-          </div>
-          <p>Sabato e domenica il centro del paese diventa mercato, cucina e luogo d’incontro.</p>
-        </div>
-        <div className={styles.photoGrid}>
-          <figure className={styles.photoTall}>
-            <img src="/images/festa-castagna/caldarroste-fuoco-piazza.webp" width={1066} height={1600} loading="lazy" alt="Il fuoco sotto il tamburo delle caldarroste, con la piazza piena di gente sullo sfondo" />
-            <figcaption><span>Il fuoco</span><strong>Caldarroste cotte in piazza</strong></figcaption>
-          </figure>
-          <figure className={styles.photoWide}>
-            <img src="/images/festa-castagna/festa-folla-centro.webp" width={1600} height={1066} loading="lazy" alt="La folla della Festa nel centro di Roncegno, davanti all’Hotel Semiramis" />
-            <figcaption><span>In centro</span><strong>Il centro del paese pieno di gente</strong></figcaption>
-          </figure>
-          <figure className={styles.photoCake}>
-            <img src="/images/festa-castagna/festa-casette-albergo-vittoria.webp" width={1600} height={1200} loading="lazy" alt="Le casette di legno delle caldarroste davanti all’Albergo Vittoria, con la piazza affollata" />
-            <figcaption><span>In piazza</span><strong>Le casette delle caldarroste e la gente del paese</strong></figcaption>
-          </figure>
-        </div>
-        <figure className={styles.photoBanner}>
-          <img src="/images/festa-castagna/caldarroste-pronte.webp" width={1197} height={1600} loading="lazy" alt="Le caldarroste appena cotte scendono dal bordo del tamburo" />
-          <figcaption><span>Pronte</span><strong>Le caldarroste appena tolte dal fuoco</strong></figcaption>
-        </figure>
-      </section>
-
       <section className={styles.program} id="programma">
         <div className={styles.programTitle}>
           <p className={styles.eyebrowLight}>Programma 2026</p>
