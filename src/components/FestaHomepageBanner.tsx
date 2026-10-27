@@ -15,28 +15,35 @@ type Props = {
   /** Date della festa prese dall'evento in Directus: abilitano il conto alla rovescia. */
   eventStart?: string | null;
   eventEnd?: string | null;
+  /** Festa conclusa: il banner ringrazia e dà appuntamento alla prossima edizione. */
+  ended?: boolean;
 };
 
-export default function FestaHomepageBanner({
-  eyebrow,
-  title,
-  description,
-  primaryLabel,
-  primaryUrl,
-  secondaryLabel,
-  secondaryUrl,
-  noteSmall,
-  noteStrong,
-  eventStart,
-  eventEnd,
-}: Props) {
+// Testi del dopo-Festa: quelli in Directus parlano della Festa in arrivo, quindi qui non si usano.
+const AFTER_FESTA = {
+  eyebrow: "23–25 ottobre 2026 · Grazie a tutti",
+  title: "Ci vediamo nel 2027",
+  description:
+    "Grazie a chi ha cucinato, suonato e allestito, e a chi è venuto a trovarci. La Festa della Castagna torna il prossimo autunno; i castagneti di Roncegno si possono visitare tutto l’anno.",
+  primaryLabel: "Rivivi la Festa",
+  primaryUrl: "/festa-della-castagna",
+  secondaryLabel: "Il circuito del Castagno",
+  secondaryUrl: "/percorsi/circuito-del-castagno",
+  noteSmall: "46ª Festa della Castagna",
+  noteStrong: "Arrivederci all’autunno 2027",
+};
+
+export default function FestaHomepageBanner(props: Props) {
+  const { eventStart, eventEnd, ended } = props;
+  const { eyebrow, title, description, primaryLabel, primaryUrl, secondaryLabel, secondaryUrl, noteSmall, noteStrong } =
+    ended ? AFTER_FESTA : props;
   return (
     <section className={styles.wrapper} aria-labelledby="festa-home-title">
       <div className={styles.image} />
       <div className={styles.overlay} />
 
       <div className={styles.content}>
-        {eventStart && <EventCountdown start={eventStart} end={eventEnd ?? null} className={styles.countdown} />}
+        {!ended && eventStart && <EventCountdown start={eventStart} end={eventEnd ?? null} className={styles.countdown} />}
         <p className={styles.eyebrow}>{eyebrow ?? "23–25 ottobre 2026 · Roncegno Terme"}</p>
         <h2 id="festa-home-title">{title ?? "Festa della Castagna 2026"}</h2>
         <p className={styles.lead}>

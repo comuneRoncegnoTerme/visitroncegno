@@ -92,6 +92,11 @@ export function romeDayKey(instant: number) {
   return `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
 }
 
+/** Il giorno "YYYY-MM-DD" è già finito a Roncegno. */
+export function isRomeDayOver(day: string, now = Date.now()) {
+  return romeDayKey(now) > day;
+}
+
 export function eventStartInstant(item: EventDateInput) {
   return parseEventDate(item.start_date)?.instant ?? null;
 }

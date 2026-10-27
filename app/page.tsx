@@ -16,7 +16,7 @@ import {
   getUpcomingEvents,
 } from "@/lib/directus";
 import { placeHref } from "@/lib/place-detail";
-import { eventDayBadge, eventTimeLabel, isEventOngoing } from "@/lib/event-dates";
+import { eventDayBadge, eventTimeLabel, isEventOngoing, isRomeDayOver } from "@/lib/event-dates";
 import { getEditorialList } from "@/lib/editorial";
 import { isEatingPlace, isServicePlace, isSleepingPlace } from "@/lib/place-taxonomy";
 import styles from "./home-v2.module.css";
@@ -59,6 +59,9 @@ function UtilityIcon({ name }: { name: UtilityIconName }) {
 }
 
 
+// Ultimo giorno della Festa della Castagna 2026 (stessa data di app/festa-della-castagna/festa-time.ts).
+const FESTA_2026_END = "2026-10-25";
+
 const utilityItems: Array<{ label: string; note: string; href: string; icon: UtilityIconName }> = [
   { label: "Sentieri e percorsi", note: "Passeggiate ed escursioni", href: "/percorsi", icon: "trail" },
   { label: "Terme e benessere", note: "Il parco e le acque termali", href: "/temi/terme-e-benessere", icon: "wellness" },
@@ -89,6 +92,8 @@ export default async function Home() {
   const visibleFeaturedPlaces = featuredPlaces.slice(0, 3);
   const nextEvent = visibleEvents[0] ?? null;
   const festaEvent = events.find((event) => /castagn/i.test(event.title)) ?? null;
+  // Finita la Festa l'evento esce dai "prossimi": la data di chiusura serve anche senza l'evento.
+  const festaEnded = isRomeDayOver(FESTA_2026_END);
   const nextEventDate = nextEvent ? eventDayBadge(nextEvent.start_date) : null;
   const nextEventTime = nextEvent ? eventTimeLabel(nextEvent) : null;
   const sleepingImage = getDirectusImageUrl(allPlaces.find(isSleepingPlace)?.image) ?? "/images/homepage/roncegno-skyline.webp";
@@ -151,7 +156,8 @@ export default async function Home() {
         </nav>
       </div>
 
-      {/* Banner stagionale subito dopo l’apertura: si spegne da Content Hub (seasonal_enabled). */}
+      {/* Banner stagionale subito dopo l’apertura: si spegne da Content Hub (seasonal_enabled).
+          Dopo la Festa diventa il saluto "Ci vediamo nel 2027". */}
       {(homepage.seasonal_enabled ?? true) && (
         <FestaHomepageBanner
           eyebrow={homepage.seasonal_eyebrow}
@@ -165,6 +171,7 @@ export default async function Home() {
           noteStrong={homepage.seasonal_note_strong}
           eventStart={festaEvent?.start_date}
           eventEnd={festaEvent?.end_date}
+          ended={festaEnded}
         />
       )}
 
