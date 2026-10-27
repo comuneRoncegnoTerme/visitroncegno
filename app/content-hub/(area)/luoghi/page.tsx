@@ -41,7 +41,7 @@ const fields: EditorField[] = [
   { name: "email", label: "Email", type: "email" },
   { name: "website_url", label: "Sito web", type: "url", full: true },
   { name: "booking_url", label: "Prenotazione / contatto online", type: "url", full: true },
-  { name: "opening_hours", label: "Orari", type: "textarea", full: true },
+  { name: "opening_hours", label: "Orari", type: "textarea", full: true, help: "Una riga per periodo, ad esempio «18/04/2026 – 14/06/2026: sab, dom 09:00–12:00» oppure «mar–dom 10:00–12:00, 15:30–18:00» (senza date vale tutto l’anno). Così le pagine dei musei mostrano «Aperto ora» e la settimana. Le altre righe compaiono come note." },
   { name: "ticket_info", label: "Biglietti / ingresso", type: "textarea", full: true },
   { name: "visit_duration", label: "Durata indicativa visita" },
   { name: "services_notes", label: "Servizi", type: "textarea", full: true },

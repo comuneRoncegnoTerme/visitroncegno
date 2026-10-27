@@ -54,6 +54,20 @@ Funzioni principali:
 
 I luoghi compaiono in mappa quando sono pubblicati e configurati con `show_on_map` e coordinate valide.
 
+## Musei
+
+`/musei`, `/musei/mulino-angeli` e `/musei/museo-della-musica` restano pagine dedicate, ma i dati pratici vengono dalla scheda del museo in `places` (Content Hub → Luoghi): orari, ingresso, durata, contatti, prenotazione, indirizzo, note di accesso, parcheggio e trasporto pubblico, coordinate. La scheda si riconosce dal `canonical_path` (`/musei/...`) o dal nome; i campi vuoti usano i valori di `src/lib/museums.ts`.
+
+Il campo **Orari** si scrive una riga per periodo, ad esempio:
+
+```text
+18/04/2026 – 14/06/2026: sab, dom 09:00–12:00
+16/06/2026 – 13/09/2026: mar, gio 15:30–18:30; sab, dom 09:00–12:00
+mar–dom 10:00–12:00, 15:30–18:00
+```
+
+Le righe riconosciute alimentano lo stato «Aperto ora / Chiuso · apre sabato alle 09:00», la settimana e la tabella degli orari (`src/lib/opening-hours.ts`, con test). Le altre righe compaiono come note. Con le coordinate compaiono anche la mappa dei dintorni e la distanza tra i due musei; gli eventi collegati al museo (luogo o nome del luogo) compaiono nella sua pagina.
+
 ## Organizza la visita
 
 La landing `/organizza-la-visita` raccoglie in un unico punto le informazioni utili alla visita e sostituisce i precedenti collegamenti a sezioni isolate della homepage.
