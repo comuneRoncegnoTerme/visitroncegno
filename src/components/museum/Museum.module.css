@@ -1,0 +1,178 @@
+/* Parti comuni alle pagine dei musei. Ogni pagina imposta i propri colori:
+   --museum-ink (testo e fondi scuri), --museum-accent (etichette), --museum-band (fascia orari),
+   --museum-paper (carta chiara). */
+
+/* Stato di apertura */
+.status{display:inline-flex;align-items:center;gap:9px;margin:0;padding:7px 14px 7px 12px;border-radius:999px;font-size:.86rem;font-weight:800;line-height:1.3;animation:statusIn .4s ease both}
+.status::before{flex:none;width:9px;height:9px;border-radius:50%;background:currentColor;content:""}
+.status_open{background:#dff1e2;color:#1d6b3a}
+.status_open::before{animation:statusPulse 1.8s ease-in-out infinite}
+.status_closed{background:#f3e3d8;color:#8a3f1d}
+.heroStatus{margin-top:22px;font-size:.9rem!important;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+@keyframes statusIn{from{opacity:0;transform:translateY(4px)}}
+@keyframes statusPulse{50%{opacity:.3}}
+
+/* Azioni nell'apertura */
+.heroActions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.heroPrimary,.heroSecondary{display:inline-flex;align-items:center;min-height:46px;padding:0 20px;border-radius:999px;font-weight:800;font-size:.92rem;text-decoration:none;transition:transform .2s ease,background .2s ease}
+.heroPrimary{background:#f6efe2;color:var(--museum-ink,#173c31)}
+.heroSecondary{border:1px solid rgba(255,255,255,.6);color:#fff;backdrop-filter:blur(6px)}
+.heroPrimary:hover,.heroSecondary:hover{transform:translateY(-1px)}
+.heroPrimary:focus-visible,.heroSecondary:focus-visible{outline:3px solid #f0c28e;outline-offset:4px}
+
+/* Menu del museo */
+.subnav{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--museum-paper,#f1ede2) 92%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid rgba(23,60,49,.12)}
+.subnavInner{max-width:1320px;margin:0 auto;padding:0 28px;display:flex;align-items:center;gap:28px;min-height:58px}
+.subnavTitle{flex:none;font-family:Georgia,'Times New Roman',serif;font-size:1.15rem;color:var(--museum-ink,#173c31);text-decoration:none}
+.subnav ul{display:flex;gap:4px;margin:0;padding:0;list-style:none;overflow-x:auto;scrollbar-width:none}
+.subnav ul::-webkit-scrollbar{display:none}
+.subnav li a{display:block;padding:9px 13px;border-radius:999px;color:var(--museum-ink,#173c31);font-size:.86rem;font-weight:700;text-decoration:none;white-space:nowrap;transition:background .2s ease,color .2s ease}
+.subnav li a:hover{background:rgba(23,60,49,.08)}
+.subnav li a[aria-current]{background:var(--museum-ink,#173c31);color:#fff}
+.subnav a:focus-visible{outline:3px solid var(--museum-accent,#9b673e);outline-offset:2px}
+.subnav ~ section[id]{scroll-margin-top:66px}
+
+/* Numeri su fondo chiaro */
+.statsLight{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px;padding-top:24px;border-top:1px solid rgba(23,60,49,.16)}
+.statsLight strong{display:block;font-family:Georgia,'Times New Roman',serif;font-size:2rem;color:var(--museum-ink,#173c31)}
+.statsLight span{display:block;margin-top:6px;font-size:.78rem;line-height:1.4;color:#6a7770}
+.hint{margin-top:18px!important;font-size:.86rem!important;color:var(--museum-accent,#9b673e)!important;font-weight:700}
+
+/* Galleria */
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:150px;gap:10px;margin:0;padding:0;list-style:none}
+.gallery li{min-width:0}
+.galleryLead{grid-column:span 2;grid-row:span 2}
+.gallery button{position:relative;display:block;width:100%;height:100%;padding:0;border:0;overflow:hidden;background:#d9d1c3;cursor:zoom-in}
+.gallery img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .45s ease}
+.gallery button:hover img{transform:scale(1.04)}
+.gallery button span{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 9px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.6));color:#fff;font-size:.76rem;font-weight:700;text-align:left;opacity:0;transform:translateY(6px);transition:opacity .25s ease,transform .25s ease}
+.galleryLead button span,.gallery button:hover span,.gallery button:focus-visible span{opacity:1;transform:none}
+.gallery button:focus-visible{outline:3px solid var(--museum-accent,#9b673e);outline-offset:3px}
+.lightbox{width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;margin:0;padding:0;border:0;background:rgba(10,14,12,.94);color:#fff}
+.lightbox::backdrop{background:rgba(10,14,12,.7)}
+.lightbox figure{display:grid;grid-template-rows:1fr auto;height:100%;margin:0;padding:56px 72px 20px}
+.lightbox img{width:100%;height:100%;min-height:0;object-fit:contain}
+.lightbox figcaption{display:flex;justify-content:space-between;gap:16px;padding-top:14px;font-size:.92rem}
+.lightbox figcaption small{color:rgba(255,255,255,.6)}
+.lightbox button{position:absolute;display:grid;place-items:center;width:48px;height:48px;border:1px solid rgba(255,255,255,.3);border-radius:50%;background:rgba(0,0,0,.35);color:#fff;font-size:1.3rem;cursor:pointer}
+.lightbox button:hover{background:rgba(255,255,255,.16)}
+.lightbox button:focus-visible{outline:3px solid #f0c28e;outline-offset:2px}
+.lightboxPrev{left:14px;top:50%;transform:translateY(-50%)}
+.lightboxNext{right:14px;top:50%;transform:translateY(-50%)}
+.lightboxClose{right:14px;top:12px;font-size:1.7rem!important}
+
+/* Percorso del grano e scelta della visita (su fondo scuro) */
+.journey,.chooser{margin-top:30px}
+.toggle{display:inline-flex;flex-wrap:wrap;gap:4px;padding:4px;border-radius:999px;background:rgba(255,255,255,.1)}
+.toggle button{min-height:40px;padding:0 16px;border:0;border-radius:999px;background:transparent;color:rgba(255,255,255,.8);font:inherit;font-size:.88rem;font-weight:800;cursor:pointer;transition:background .2s ease,color .2s ease}
+.toggle button[aria-pressed="true"]{background:#f6efe2;color:var(--museum-ink,#173c31)}
+.toggle button:focus-visible,.steps button:focus-visible,.stepNav button:focus-visible{outline:3px solid #f0c28e;outline-offset:2px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:22px 0 0;padding:0;list-style:none;counter-reset:step}
+.steps button{display:flex;flex-direction:column;align-items:flex-start;gap:8px;width:100%;padding:12px 0 0;border:0;border-top:3px solid rgba(255,255,255,.2);background:none;color:rgba(255,255,255,.66);font:inherit;font-size:.84rem;font-weight:700;text-align:left;cursor:pointer;transition:color .2s ease,border-color .2s ease}
+.steps button span{display:grid;place-items:center;width:28px;height:28px;border:1px solid currentColor;border-radius:50%;font-size:.78rem}
+.steps button[data-done]{border-top-color:rgba(240,194,142,.6);color:rgba(255,255,255,.85)}
+.steps button[aria-selected="true"]{border-top-color:#f0c28e;color:#fff}
+.steps button[aria-selected="true"] span{background:#f0c28e;border-color:#f0c28e;color:var(--museum-ink,#173c31)}
+.stepPanel{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:start;margin-top:22px;padding:24px;background:rgba(255,255,255,.07);border-radius:14px;min-height:150px}
+.stepNumber{font-family:Georgia,'Times New Roman',serif;font-size:3rem;line-height:.9;color:#f0c28e}
+.stepPanel h3{margin:0 0 8px;font-family:Georgia,'Times New Roman',serif;font-size:1.6rem;font-weight:400}
+.stepPanel p{margin:0;line-height:1.7;color:#d6e0db}
+.stepNav{display:flex;justify-content:space-between;gap:10px;margin-top:14px}
+.stepNav button{min-height:40px;padding:0 4px;border:0;background:none;color:#fff;font:inherit;font-size:.88rem;font-weight:700;cursor:pointer}
+.stepNav button:disabled{opacity:.35;cursor:default}
+.chooserList{display:grid;gap:10px;margin:20px 0 0;padding:0;list-style:none}
+.chooserList li{position:relative;padding-left:26px;line-height:1.6;color:#e4eaee;animation:statusIn .3s ease both}
+.chooserList li::before{position:absolute;left:0;top:.45em;width:12px;height:12px;border-radius:50%;background:#efc984;content:""}
+.chooserCta{display:inline-flex;align-items:center;min-height:44px;margin-top:20px;padding:0 20px;border-radius:999px;background:#efc984;color:var(--museum-ink,#182f3c);font-weight:800;text-decoration:none}
+.chooserCta:focus-visible{outline:3px solid #fff;outline-offset:3px}
+
+/* Orari e visite */
+.visit{background:var(--museum-band,#d7c0a1);padding:105px max(28px,8vw);display:grid;grid-template-columns:.9fr 1.1fr;gap:80px;align-items:start}
+.kicker{margin:0;font-size:.82rem;font-weight:800;color:var(--museum-accent,#9b673e)}
+.visit h2,.arrive h2,.events h2{font-family:Georgia,'Times New Roman',serif;font-size:clamp(3rem,5.6vw,6rem);font-weight:400;line-height:.95;letter-spacing:-.05em;margin:14px 0 26px;color:var(--museum-ink,#173c31)}
+.visitIntro>p,.arriveCopy>p{font-size:1.06rem;line-height:1.8;color:#4f5d57}
+.visitCard{background:var(--museum-paper,#f8f4eb);padding:36px;box-shadow:0 24px 60px rgba(55,43,30,.08);display:grid;gap:26px}
+.hours{display:grid;gap:22px;justify-items:start}
+.hoursText p{margin:0 0 8px;line-height:1.7;color:var(--museum-ink,#173c31);font-weight:600}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;width:100%;margin:0;padding:0;list-style:none}
+.week li{display:flex;flex-direction:column;gap:4px;min-width:0;padding:10px 6px;border-radius:10px;background:rgba(0,0,0,.035);text-align:center;font-size:.72rem;color:#7a7f7a}
+.week li span{font-weight:800;text-transform:capitalize}
+.week li strong{font-size:.72rem;line-height:1.25;color:var(--museum-ink,#173c31);overflow-wrap:anywhere}
+.week li em{font-style:normal;opacity:.7}
+.weekOpen{background:#e7efe6!important}
+.weekToday{outline:2px solid var(--museum-ink,#173c31);outline-offset:-2px}
+.seasons{display:grid;gap:0;width:100%;margin:0}
+.seasons div{display:grid;grid-template-columns:minmax(150px,.8fr) 1.2fr;gap:4px 20px;padding:14px 0;border-bottom:1px solid rgba(0,0,0,.1)}
+.seasons dt{font-size:.84rem;color:#7a6251}
+.seasons dd{grid-column:2;margin:0;font-weight:700;line-height:1.5;color:var(--museum-ink,#173c31)}
+.hoursNote{margin:0;font-size:.9rem;line-height:1.6;color:#5b6660}
+.facts{display:grid;gap:0;margin:0}
+.facts div{display:grid;grid-template-columns:minmax(150px,.8fr) 1.2fr;gap:20px;padding:14px 0;border-top:1px solid rgba(0,0,0,.1)}
+.facts dt{font-size:.84rem;color:#7a6251}
+.facts dd{margin:0;font-weight:700;line-height:1.5;color:var(--museum-ink,#173c31)}
+.contacts{display:flex;flex-wrap:wrap;gap:10px}
+.contacts a{display:inline-flex;align-items:center;min-height:42px;padding:0 16px;border:1px solid rgba(0,0,0,.16);border-radius:999px;color:var(--museum-ink,#173c31);font-size:.9rem;font-weight:700;text-decoration:none;overflow-wrap:anywhere;transition:background .2s ease}
+.contacts a:hover{background:rgba(0,0,0,.05)}
+.contacts a:focus-visible{outline:3px solid var(--museum-accent,#9b673e);outline-offset:3px}
+.contacts .contactPrimary{background:var(--museum-ink,#173c31);border-color:var(--museum-ink,#173c31);color:#fff}
+
+/* Eventi */
+.events{max-width:1320px;margin:0 auto;padding:100px 28px}
+.eventsHead h2{font-size:clamp(2.4rem,4.4vw,4.4rem)}
+.eventList{display:grid;gap:10px;margin:0 0 24px;padding:0;list-style:none}
+.eventList a{display:grid;grid-template-columns:auto 1fr auto;gap:22px;align-items:center;padding:18px 22px;background:#fff;color:var(--museum-ink,#173c31);text-decoration:none;transition:transform .2s ease,box-shadow .2s ease}
+.eventList a:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(0,0,0,.08)}
+.eventDate{display:grid;place-items:center;width:58px;font-size:.72rem;font-weight:800;color:var(--museum-accent,#9b673e)}
+.eventDate strong{font-family:Georgia,'Times New Roman',serif;font-size:1.9rem;font-weight:400;line-height:1;color:var(--museum-ink,#173c31)}
+.eventCopy{display:grid;gap:4px}
+.eventCopy em{font-style:normal;font-size:.76rem;font-weight:800;color:#1d6b3a}
+.eventCopy strong{font-size:1.08rem}
+.eventCopy small{color:#66716c;line-height:1.5}
+
+/* Come arrivare */
+.arrive{display:grid;grid-template-columns:.85fr 1.15fr;min-height:560px;background:var(--museum-paper,#f8f4eb)}
+.arriveCopy{padding:90px max(28px,6vw)}
+.address{font-family:Georgia,'Times New Roman',serif;font-size:1.4rem!important;color:var(--museum-ink,#173c31)!important}
+.directions{display:inline-flex;align-items:center;min-height:46px;padding:0 20px;border-radius:999px;background:var(--museum-ink,#173c31);color:#fff;font-weight:800;text-decoration:none}
+.directions:focus-visible,.textLink:focus-visible{outline:3px solid var(--museum-accent,#9b673e);outline-offset:4px}
+.arriveNotes{margin:28px 0 0}
+.arriveNotes div{padding:14px 0;border-top:1px solid rgba(0,0,0,.1)}
+.arriveNotes dt{font-size:.84rem;color:#7a6251}
+.arriveNotes dd{margin:4px 0 0;line-height:1.6;color:var(--museum-ink,#173c31)}
+.textLink{display:inline-block;margin-top:28px;color:var(--museum-ink,#173c31);font-weight:800;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:4px}
+.arriveMap{position:relative;min-height:460px;display:grid}
+.mapCaption{position:absolute;z-index:3;left:16px;bottom:16px;max-width:320px;margin:0;padding:9px 12px;border-radius:8px;background:rgba(255,255,255,.92);font-size:.78rem;line-height:1.45;color:#3e4a45;pointer-events:none}
+
+@media(max-width:900px){
+  .subnavTitle{display:none}
+  .subnavInner{padding:0 12px}
+  .visit,.arrive{grid-template-columns:1fr;gap:42px}
+  .arrive{gap:0}
+  .arriveCopy{padding:68px 24px 42px}
+  .gallery{grid-auto-rows:120px}
+}
+@media(max-width:560px){
+  .visit{padding:68px 20px}
+  .visitCard{padding:22px}
+  .week{grid-template-columns:repeat(4,1fr)}
+  .seasons div,.facts div{grid-template-columns:1fr;gap:4px}
+  .seasons dd{grid-column:1}
+  .statsLight{grid-template-columns:1fr 1fr 1fr;gap:10px}
+  .statsLight strong{font-size:1.6rem}
+  .gallery{grid-template-columns:repeat(2,1fr);grid-auto-rows:130px}
+  .galleryLead{grid-row:span 2}
+  .steps{grid-template-columns:repeat(2,1fr);row-gap:14px}
+  .stepPanel{grid-template-columns:1fr;gap:6px;padding:18px}
+  .stepNumber{font-size:2.2rem}
+  .lightbox figure{padding:60px 12px 16px}
+  .lightboxPrev,.lightboxNext{top:auto!important;bottom:56px;transform:none!important}
+  .events{padding:70px 20px}
+  .eventList a{grid-template-columns:auto 1fr;padding:16px}
+  .eventList a>span:last-child{display:none}
+  .arriveMap{min-height:380px}
+}
+@media(prefers-reduced-motion:reduce){
+  .status,.status_open::before,.chooserList li{animation:none}
+  .gallery img,.heroPrimary,.heroSecondary,.eventList a{transition:none}
+  .gallery button:hover img,.heroPrimary:hover,.heroSecondary:hover,.eventList a:hover{transform:none}
+}
