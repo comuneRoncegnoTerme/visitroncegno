@@ -9,7 +9,6 @@ import MuseumSubnav from "@/components/museum/MuseumSubnav";
 import { getSiteSettings } from "@/lib/directus";
 import { getMuseum, getMuseumEvents, getMuseumNearby, museumJsonLd } from "@/lib/museums";
 import { jsonLdString, pageMetadata, SITE_URL } from "@/lib/seo";
-import { mulinoFonts } from "./fonts";
 import GrainJourney from "./GrainJourney";
 import MillTimeline from "./MillTimeline";
 import Scarecrow from "./Scarecrow";
@@ -52,7 +51,7 @@ export default async function MulinoAngeliPage() {
   ];
 
   return (
-    <main className={`${styles.page} ${mulinoFonts}`} id="top">
+    <main className={styles.page} id="top">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdString(museumJsonLd(mulino, DESCRIPTION, SITE_URL)) }} />
       <SiteHeader settings={settings} />
 

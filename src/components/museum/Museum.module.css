@@ -1,6 +1,8 @@
 /* Parti comuni alle pagine dei musei. Ogni pagina imposta i propri colori:
    --museum-ink (testo e fondi scuri), --museum-accent (etichette), --museum-band (fascia orari),
-   --museum-paper (carta chiara). */
+   --museum-paper (carta chiara). I caratteri invece sono quelli del sito per tutti i musei:
+   titoli in Georgia, testo nel carattere di base, etichette brevi in grassetto (vedi .kicker).
+   Ogni museo si distingue per colori, immagini e interazioni, non per i caratteri. */
 
 /* Stato di apertura */
 .status{display:inline-flex;align-items:center;gap:9px;margin:0;padding:7px 14px 7px 12px;border-radius:999px;font-size:.86rem;font-weight:800;line-height:1.3;animation:statusIn .4s ease both}
