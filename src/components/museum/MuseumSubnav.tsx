@@ -25,8 +25,13 @@ export default function MuseumSubnav({ title, items }: { title: string; items: I
   }, [items]);
 
   // La voce attiva resta visibile anche quando il menu scorre in orizzontale (smartphone).
+  // Si sposta solo la lista: scrollIntoView farebbe scorrere anche la pagina.
   useEffect(() => {
-    document.querySelector(`[data-subnav-id="${active}"]`)?.scrollIntoView({ block: "nearest", inline: "center" });
+    const link = document.querySelector<HTMLElement>(`[data-subnav-id="${active}"]`);
+    const list = link?.closest("ul");
+    if (!link || !list) return;
+    const left = link.offsetLeft - list.offsetLeft - (list.clientWidth - link.offsetWidth) / 2;
+    list.scrollTo({ left, behavior: "smooth" });
   }, [active]);
 
   return (
