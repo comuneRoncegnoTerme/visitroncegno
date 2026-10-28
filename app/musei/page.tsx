@@ -112,6 +112,7 @@ export default async function MuseumsPage() {
           <ol className={styles.plan}>
             <li><strong>Controlla gli orari</strong><span>Gli orari dei due musei sono diversi e cambiano con le stagioni.</span></li>
             <li><strong>Prenota la guida</strong><span>Al Museo degli Strumenti Musicali la visita guidata permette di provare alcuni strumenti.</span></li>
+            <li><strong>Con la classe</strong><span>Per le scuole c’è la doppia visita guidata, Mulino e Museo degli Strumenti, a 6 € a bambino. <Link href="/musei/mulino-angeli#scuole">Proposte per le scuole</Link></span></li>
             <li><strong>Resta per la giornata</strong><span>Sentieri, terme e posti dove mangiare sono a pochi minuti.</span></li>
           </ol>
           <div className={styles.bridgeActions}>
