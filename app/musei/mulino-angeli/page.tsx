@@ -3,6 +3,7 @@ import { connection } from "next/server";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import MuseumGallery from "@/components/museum/MuseumGallery";
+import MuseumKeyInfo from "@/components/museum/MuseumKeyInfo";
 import { MuseumEvents, MuseumGettingThere, MuseumVisit } from "@/components/museum/MuseumSections";
 import { MuseumStatusBadge } from "@/components/museum/MuseumStatus";
 import MuseumSubnav from "@/components/museum/MuseumSubnav";
@@ -27,6 +28,18 @@ export const metadata = pageMetadata({
 
 const IMG = "/images/musei/mulino-angeli";
 
+// Proposte per gruppi e scuole, dalla pagina "Le attività" di mulinoangeli.com.
+const schoolOffers = [
+  { name: "Visita guidata", detail: "Visita guidata interattiva, circa un’ora.", price: "4,00 €" },
+  { name: "Doppia visita", detail: "Visita al mulino più visita guidata al Museo degli Strumenti Musicali Popolari di Santa Brigida.", price: "6,00 €" },
+  { name: "Visita e laboratorio", detail: "Visita guidata interattiva di circa un’ora, poi un laboratorio a scelta.", price: "6,00 €" },
+];
+
+const workshops = [
+  { when: "Tutto l’anno", items: ["Un piccolo spaventapasseri", "Un piccolo giocattolo", "Mandala naturale", "Pasta modellabile di mais"] },
+  { when: "In primavera", items: ["Un erbario", "Pittura con tinture naturali"] },
+];
+
 const museumPhotos = [
   { src: `${IMG}/spaventapasseri-1.jpg`, alt: "Uno spaventapasseri seduto al tavolo nella cucina del mugnaio", caption: "Nella casa del mugnaio" },
   { src: `${IMG}/spaventapasser-3.jpg`, alt: "Spaventapasseri esposti accanto alle fotografie dei campi trentini", caption: "Spaventapasseri e fotografie" },
@@ -41,11 +54,13 @@ export default async function MulinoAngeliPage() {
   const [events, nearby] = await Promise.all([getMuseumEvents(mulino), getMuseumNearby(mulino)]);
 
   const sections = [
+    { id: "info", label: "In breve" },
     { id: "ruota", label: "La ruota" },
     { id: "chicco", label: "Il viaggio del chicco" },
     { id: "spaventapasseri", label: "Spaventapasseri" },
     { id: "storia", label: "Storia" },
     { id: "visita", label: "Orari e visite" },
+    { id: "scuole", label: "Scuole e gruppi" },
     ...(events.length ? [{ id: "eventi", label: "Eventi" }] : []),
     { id: "come-arrivare", label: "Come arrivare" },
   ];
@@ -66,7 +81,7 @@ export default async function MulinoAngeliPage() {
             <div className={styles.where}>
               <span className={styles.label}>{mulino.address}</span>
               <span className={styles.label}>Accanto alla ciclabile della Valsugana</span>
-              <a className={styles.label} href="#visita">Orari e ingresso ↓</a>
+              <a className={styles.infoLink} href="#info">Orari e informazioni ↓</a>
             </div>
           </div>
           <div className={styles.postcardHolder}>
@@ -87,6 +102,7 @@ export default async function MulinoAngeliPage() {
       </section>
 
       <MuseumSubnav title="Mulino Angeli" items={sections} />
+      <MuseumKeyInfo museum={mulino} id="info" />
 
       <section className={styles.gears} id="ruota" aria-labelledby="mulino-ruota">
         <div className={styles.wrap}>
@@ -150,7 +166,7 @@ export default async function MulinoAngeliPage() {
           <div className={styles.ledger}>
             <div>
               <p>Fra il 1998 e il 2001 la raccolta fu esposta a Trento, nel Nord Italia e in Austria. Dal 2006 vive qui, nelle stanze della casa del mugnaio, insieme all’archivio fotografico della ricerca.</p>
-              <p>Oltre agli spaventapasseri il museo conserva attrezzi agricoli, strumenti del lavoro femminile come le vecchie macchine da cucire e gli arcolai, e una stanza dedicata ai giocattoli.</p>
+              <p>Oltre agli spaventapasseri il museo conserva attrezzi agricoli, strumenti del lavoro femminile come le vecchie macchine da cucire e gli arcolai, e la sala dei giocattoli di Rosanna Cavallini: il mulino è stato lavoro, ma anche casa.</p>
             </div>
             <dl aria-label="La collezione in numeri">
               <div><dt>50</dt><dd>spaventapasseri: antropomorfi, girandole e meccanismi vari</dd></div>
@@ -183,11 +199,47 @@ export default async function MulinoAngeliPage() {
 
       <MuseumVisit
         museum={mulino}
-        intro="Il mulino apre in primavera, estate e autunno. Per gruppi e scuole si prenota: il mulino è Centro di Esperienza della Rete trentina di educazione ambientale e organizza laboratori per tutte le età."
+        intro="Il mulino apre in primavera, estate e autunno. Fuori dagli orari di apertura gruppi e scuole possono prenotare una visita guidata, anche con un laboratorio: le proposte sono qui sotto."
       >
         {/* eslint-disable-next-line @next/next/no-img-element -- schizzo dai pannelli del museo */}
         <img className={styles.sketchMulino} src={`${IMG}/schizzo_mulino.webp`} width={865} height={665} loading="lazy" alt="Schizzo del mulino con il canale, il muro in pietra e la ruota coperta." />
       </MuseumVisit>
+
+      <section className={styles.school} id="scuole" aria-labelledby="mulino-scuole">
+        <div className={styles.wrap}>
+          <div className={styles.secHead}>
+            <div>
+              <span className={`${styles.label} ${styles.kicker}`}>Progetto Giovani al museo</span>
+              <h2 id="mulino-scuole">Scuole e <em>gruppi</em></h2>
+            </div>
+            <p>Il mulino è Centro di Esperienza della Rete trentina di educazione ambientale. Con le classi la visita è interattiva: si segue il chicco tra le macchine, si incontrano gli spaventapasseri e si entra nella sala dei giocattoli. Si prenota, anche fuori dagli orari di apertura.</p>
+          </div>
+          <ul className={styles.offers}>
+            {schoolOffers.map((offer) => (
+              <li key={offer.name}>
+                <h3>{offer.name}</h3>
+                <p>{offer.detail}</p>
+                <p className={styles.price}><strong>{offer.price}</strong> a bambino</p>
+              </li>
+            ))}
+          </ul>
+          <p className={styles.note}>Gratis per insegnanti, educatori e alunni certificati. Ai prezzi si aggiunge l’IVA quando serve la fattura.</p>
+          <div className={styles.workshops}>
+            <h3>I laboratori</h3>
+            {workshops.map((group) => (
+              <div key={group.when}>
+                <p className={styles.label}>{group.when}</p>
+                <ul>{group.items.map((item) => <li key={item}>{item}</li>)}</ul>
+              </div>
+            ))}
+          </div>
+          {mulino.email && (
+            <a className={styles.schoolCta} href={`mailto:${mulino.email}?subject=${encodeURIComponent("Visita al Mulino Angeli con la classe")}`}>
+              Chiedi informazioni e prenota: {mulino.email}
+            </a>
+          )}
+        </div>
+      </section>
 
       <MuseumEvents events={events} title="Al Mulino Angeli" />
 

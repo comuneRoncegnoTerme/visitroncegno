@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { openingStatus, parseOpeningHours, upcomingWeek } from "../src/lib/opening-hours.ts";
+import { openingStatus, parseOpeningHours, seasonInFocus, upcomingWeek } from "../src/lib/opening-hours.ts";
 
 // Orari 2026 del Mulino Angeli, come si scrivono in Directus.
 const MULINO = `18/04/2026 – 14/06/2026: sab, dom 09:00–12:00
@@ -62,4 +62,23 @@ test("settimana a partire da oggi", () => {
   assert.equal(week[0].label, "Oggi");
   assert.deepEqual(week.map((day) => day.slots.length), [0, 0, 0, 0, 0, 1, 1]);
   assert.equal(week[5].label, "sab 24");
+});
+
+test("periodo in evidenza: in corso, prossimo o concluso", () => {
+  const hours = parseOpeningHours(MULINO);
+  const summer = seasonInFocus(hours, at("2026-07-01T08:00:00Z"));
+  assert.equal(summer.state, "current");
+  assert.equal(summer.when, "fino al 13 settembre");
+  // Fra la stagione estiva e quella autunnale
+  const gap = seasonInFocus(hours, at("2026-09-15T08:00:00Z"));
+  assert.equal(gap.state, "upcoming");
+  assert.equal(gap.when, "dal 19 settembre");
+  const over = seasonInFocus(hours, at("2026-10-28T08:00:00Z"));
+  assert.equal(over.state, "past");
+  assert.equal(over.when, "conclusa il 25 ottobre 2026");
+  // Senza anno il periodo torna l'anno dopo
+  const yearly = seasonInFocus(parseOpeningHours("1 maggio – 30 settembre: sab, dom 10:00–12:00"), at("2026-10-28T08:00:00Z"));
+  assert.equal(yearly.state, "upcoming");
+  assert.equal(yearly.when, "dal 1 maggio 2027");
+  assert.equal(seasonInFocus(parseOpeningHours("Su prenotazione")), null);
 });
