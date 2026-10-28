@@ -44,7 +44,7 @@ const FALLBACKS: Record<MuseumId, MuseumFallback> = {
       "Per gruppi e visite speciali verificare disponibilità e aperture prima della visita.",
     ].join("\n"),
     ticketInfo: "Offerta libera",
-    visitDuration: null,
+    visitDuration: "Circa un’ora",
     servicesNotes: null,
     image: "/images/musei/mulino-angeli/hero.jpg",
   },

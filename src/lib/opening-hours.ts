@@ -238,3 +238,36 @@ function describeDays(days: number[]) {
 function capitalize(value: string) {
   return value.charAt(0).toUpperCase() + value.slice(1);
 }
+
+export type SeasonFocus = { season: Season; state: "current" | "upcoming" | "past"; when: string | null };
+
+function seasonStart(season: Season, today: RomeDay) {
+  if (!season.from) return null;
+  if (season.from.length === 10) return season.from;
+  // Senza anno: il prossimo inizio, quest'anno o l'anno dopo.
+  const thisYear = `${today.year}-${season.from}`;
+  const full = `${today.year}-${pad(today.month)}-${pad(today.day)}`;
+  return thisYear >= full ? thisYear : `${today.year + 1}-${season.from}`;
+}
+
+function formatKey(key: string, withYear: boolean) {
+  const [year, month, day] = key.length === 10 ? key.split("-").map(Number) : [null, ...key.split("-").map(Number)];
+  return `${day} ${MONTHS[month! - 1]}${withYear && year ? ` ${year}` : ""}`;
+}
+
+/** Il periodo che interessa adesso: quello in corso, altrimenti il prossimo, altrimenti l'ultimo concluso. */
+export function seasonInFocus(hours: OpeningHours, now = Date.now()): SeasonFocus | null {
+  if (!hours.seasons.length) return null;
+  const today = shiftDay(romeNow(now), 0);
+  const current = hours.seasons.find((season) => inSeason(season, today));
+  if (current) return { season: current, state: "current", when: current.to ? `fino al ${formatKey(current.to, false)}` : null };
+
+  const upcoming = hours.seasons
+    .map((season) => ({ season, start: seasonStart(season, today) }))
+    .filter((item): item is { season: Season; start: string } => item.start !== null && item.start > `${today.year}-${pad(today.month)}-${pad(today.day)}`)
+    .sort((a, b) => a.start.localeCompare(b.start))[0];
+  if (upcoming) return { season: upcoming.season, state: "upcoming", when: `dal ${formatKey(upcoming.start, upcoming.start.slice(0, 4) !== String(today.year))}` };
+
+  const last = [...hours.seasons].sort((a, b) => (a.to ?? "").localeCompare(b.to ?? "")).at(-1)!;
+  return { season: last, state: "past", when: last.to ? `conclusa il ${formatKey(last.to, true)}` : null };
+}

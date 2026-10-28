@@ -3,6 +3,7 @@ import { connection } from "next/server";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import MuseumGallery from "@/components/museum/MuseumGallery";
+import MuseumKeyInfo from "@/components/museum/MuseumKeyInfo";
 import { MuseumEvents, MuseumGettingThere, MuseumVisit } from "@/components/museum/MuseumSections";
 import { MuseumStatusBadge } from "@/components/museum/MuseumStatus";
 import MuseumSubnav from "@/components/museum/MuseumSubnav";
@@ -41,6 +42,7 @@ export default async function MulinoAngeliPage() {
   const [events, nearby] = await Promise.all([getMuseumEvents(mulino), getMuseumNearby(mulino)]);
 
   const sections = [
+    { id: "info", label: "In breve" },
     { id: "ruota", label: "La ruota" },
     { id: "chicco", label: "Il viaggio del chicco" },
     { id: "spaventapasseri", label: "Spaventapasseri" },
@@ -66,7 +68,7 @@ export default async function MulinoAngeliPage() {
             <div className={styles.where}>
               <span className={styles.label}>{mulino.address}</span>
               <span className={styles.label}>Accanto alla ciclabile della Valsugana</span>
-              <a className={styles.label} href="#visita">Orari e ingresso ↓</a>
+              <a className={styles.infoLink} href="#info">Orari e informazioni ↓</a>
             </div>
           </div>
           <div className={styles.postcardHolder}>
@@ -87,6 +89,7 @@ export default async function MulinoAngeliPage() {
       </section>
 
       <MuseumSubnav title="Mulino Angeli" items={sections} />
+      <MuseumKeyInfo museum={mulino} id="info" />
 
       <section className={styles.gears} id="ruota" aria-labelledby="mulino-ruota">
         <div className={styles.wrap}>
@@ -183,7 +186,7 @@ export default async function MulinoAngeliPage() {
 
       <MuseumVisit
         museum={mulino}
-        intro="Il mulino apre in primavera, estate e autunno. Per gruppi e scuole si prenota: il mulino è Centro di Esperienza della Rete trentina di educazione ambientale e organizza laboratori per tutte le età."
+        intro="Il mulino apre in primavera, estate e autunno; fuori dagli orari di apertura gruppi e scuole possono prenotare una visita. Per le classi c’è una visita guidata di circa un’ora. Il mulino è Centro di Esperienza della Rete trentina di educazione ambientale: laboratori e attività per bambini si chiedono per email."
       >
         {/* eslint-disable-next-line @next/next/no-img-element -- schizzo dai pannelli del museo */}
         <img className={styles.sketchMulino} src={`${IMG}/schizzo_mulino.webp`} width={865} height={665} loading="lazy" alt="Schizzo del mulino con il canale, il muro in pietra e la ruota coperta." />

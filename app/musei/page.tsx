@@ -3,6 +3,7 @@ import { connection } from "next/server";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import HomeMap from "@/components/HomeMap";
+import MuseumKeyInfo from "@/components/museum/MuseumKeyInfo";
 import { MuseumStatusBadge } from "@/components/museum/MuseumStatus";
 import museumStyles from "@/components/museum/Museum.module.css";
 import { getSiteSettings } from "@/lib/directus";
@@ -22,9 +23,9 @@ const cards: { id: Museum["id"]; visual: string; reverse?: boolean; text: string
   {
     id: "mulino-angeli",
     visual: "mill",
-    text: "Un mulino documentato dal 1909, con il sistema tradizionale a palmenti e quello a cilindri. Negli spazi dell’abitazione del mugnaio vive anche la collezione di spaventapasseri di Flavio Faganello.",
+    text: "Il mulino ad acqua sul Brenta che ha macinato granoturco e cereali fino agli anni Cinquanta. Le macchine sono ancora al loro posto su tre piani, e nella casa del mugnaio abitano i cinquanta spaventapasseri raccolti dal fotografo Flavio Faganello.",
     cta: "Entra nel Mulino",
-    highlights: ["Due sistemi molitori", "Casa Museo degli Spaventapasseri", "Visite per scuole e gruppi"],
+    highlights: ["La ruota e le macine", "Cinquanta spaventapasseri", "Laboratori per scuole e famiglie"],
   },
   {
     id: "museo-della-musica",
@@ -65,21 +66,16 @@ export default async function MuseumsPage() {
             {[mulino, musica].map((item) => (
               <a key={item.id} href={`#${item.id}`} className={styles.heroStatusItem}>
                 <strong>{item.title}</strong>
-                <MuseumStatusBadge hours={item.openingHours} />
+                <MuseumStatusBadge hours={item.openingHours} fallback="Orari variabili · verifica il calendario" />
               </a>
             ))}
           </div>
-          <a href="#musei" className={styles.heroCta}>I due musei ↓</a>
+          <a href="#musei" className={styles.heroCta}>Orari e informazioni dei due musei ↓</a>
         </div>
         <div className={styles.heroCollage} aria-hidden="true">
           <div className={styles.heroPhotoOne}><span>Mulino Angeli</span></div>
           <div className={styles.heroPhotoTwo}><span>Museo degli Strumenti Musicali Popolari</span></div>
         </div>
-      </section>
-
-      <section className={styles.intro}>
-        <h2>Cosa c’è da vedere</h2>
-        <p>Il Mulino Angeli conserva due sistemi molitori e ospita la Casa Museo degli Spaventapasseri. Il Museo degli Strumenti Musicali Popolari accompagna invece in un viaggio tra culture e continenti attraverso circa mille strumenti.</p>
       </section>
 
       <section className={styles.cards} id="musei">
@@ -96,10 +92,11 @@ export default async function MuseumsPage() {
                 <ul className={styles.highlights}>
                   {card.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}
                 </ul>
+                <MuseumKeyInfo museum={item} compact />
                 <p className={styles.cardAddress}>{item.address}</p>
                 <div className={styles.cardActions}>
                   <Link href={item.path} className={styles.link}>{card.cta} <span>→</span></Link>
-                  <Link href={`${item.path}#visita`} className={styles.secondaryLink}>Orari e visite</Link>
+                  <Link href={`${item.path}#visita`} className={styles.secondaryLink}>Orari completi e visite</Link>
                 </div>
               </div>
             </article>

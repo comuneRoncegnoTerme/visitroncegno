@@ -6,11 +6,15 @@ import { useMinute } from "./useMinute";
 import styles from "./Museum.module.css";
 
 /** Pallino "Aperto ora / Chiuso · apre sabato alle 09:00", calcolato con l'ora di Roncegno. */
-export function MuseumStatusBadge({ hours, className }: { hours: string; className?: string }) {
+/** `fallback` compare quando dagli orari non si ricava uno stato (testo libero). */
+export function MuseumStatusBadge({ hours, className, fallback }: { hours: string; className?: string; fallback?: string }) {
   const parsed = useMemo(() => parseOpeningHours(hours), [hours]);
   const now = useMinute();
   const status = parsed && now !== null ? openingStatus(parsed, now) : null;
-  if (!status) return null;
+  if (!status) {
+    if (!fallback || parsed?.seasons.length) return null;
+    return <p className={`${styles.status} ${styles.status_unknown} ${className ?? ""}`}>{fallback}</p>;
+  }
   return (
     <p className={`${styles.status} ${styles[`status_${status.state}`]} ${className ?? ""}`} aria-live="polite">
       {status.label}

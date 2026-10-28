@@ -3,6 +3,7 @@ import { connection } from "next/server";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import MuseumGallery from "@/components/museum/MuseumGallery";
+import MuseumKeyInfo from "@/components/museum/MuseumKeyInfo";
 import { MuseumEvents, MuseumGettingThere, MuseumVisit } from "@/components/museum/MuseumSections";
 import { MuseumStatusBadge } from "@/components/museum/MuseumStatus";
 import MuseumSubnav from "@/components/museum/MuseumSubnav";
@@ -41,6 +42,7 @@ export default async function MusicMuseumPage() {
   const bookingHref = musica.bookingUrl ?? (musica.phones[0] ? telHref(musica.phones[0]) : musica.email ? `mailto:${musica.email}` : null);
 
   const sections = [
+    { id: "info", label: "In breve" },
     { id: "scopri", label: "Il museo" },
     { id: "collezione", label: "La collezione" },
     { id: "parco", label: "Parco Musicale" },
@@ -63,13 +65,14 @@ export default async function MusicMuseumPage() {
           <p className={styles.heroLead}>Un museo da vedere e da suonare.</p>
           <MuseumStatusBadge hours={musica.openingHours} className={museum.heroStatus} />
           <div className={museum.heroActions}>
-            <a href="#visita" className={museum.heroPrimary}>Orari e visite</a>
+            <a href="#info" className={museum.heroPrimary}>Orari e informazioni</a>
             <a href="#scopri" className={museum.heroSecondary}>Entra nel museo ↓</a>
           </div>
         </div>
       </section>
 
       <MuseumSubnav title="Museo degli Strumenti Musicali" items={sections} />
+      <MuseumKeyInfo museum={musica} id="info" />
 
       <section className={styles.manifesto} id="scopri">
         <div>
