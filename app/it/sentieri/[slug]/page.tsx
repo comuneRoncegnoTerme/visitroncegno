@@ -8,6 +8,7 @@ import { getDirectusAssetUrl, getDirectusImageUrl, getSiteSettings } from "@/lib
 import { getStoryByLegacySlug, storyParagraphs } from "@/lib/stories";
 import { getTrailPanel, trailPanels, type TrailPanel } from "@/lib/trail-panels";
 import { cinqueValliPanels, getCinqueValliPanel } from "@/lib/cinque-valli-panels";
+import { getMasoPanel, masiPanels } from "@/lib/masi-panels";
 import { getPanelAudioFileId } from "@/lib/panel-audio";
 import { getPanelStoryMedia } from "@/lib/panel-story-media";
 import styles from "./page.module.css";
@@ -18,8 +19,17 @@ interface LegacyTrailPageProps {
   params: Promise<{ slug: string }>;
 }
 
+// Numeri dei pannelli il cui testo arriva solo dalle storie Directus (dal gestionale QR, data/qr-codes.json).
 const LEGACY_PANEL_NUMBERS: Record<string, string> = {
+  "le-fonti-2-1": "04",
+  "acque-termali-2-2": "05",
+  "storia-terme-roncegno-6": "23",
+  "flora-7-1": "24",
+  "fauna-7-2": "25",
   "miniera-di-cinque-valli-8": "26–27",
+  "camminamento-austriaco-10": "29",
+  "bostrico-tipografo-11-2": "31",
+  "ricostruzione-bosco-11-3": "32",
 };
 
 async function getDirectusTrailPanel(slug: string): Promise<TrailPanel | null> {
@@ -44,7 +54,7 @@ async function getDirectusTrailPanel(slug: string): Promise<TrailPanel | null> {
 }
 
 function getStaticTrailPanel(slug: string) {
-  return getTrailPanel(slug) ?? getCinqueValliPanel(slug);
+  return getTrailPanel(slug) ?? getCinqueValliPanel(slug) ?? getMasoPanel(slug);
 }
 
 function mergePanelContent(staticPanel: TrailPanel | null, directusPanel: TrailPanel | null) {
@@ -64,7 +74,7 @@ function mergePanelContent(staticPanel: TrailPanel | null, directusPanel: TrailP
 }
 
 export function generateStaticParams() {
-  return [...trailPanels, ...cinqueValliPanels].map((panel) => ({ slug: panel.slug }));
+  return [...trailPanels, ...cinqueValliPanels, ...masiPanels].map((panel) => ({ slug: panel.slug }));
 }
 
 export async function generateMetadata({ params }: LegacyTrailPageProps): Promise<Metadata> {

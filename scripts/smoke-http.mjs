@@ -6,7 +6,7 @@
  *   SMOKE_BASE_URL=http://localhost:3000 npm run smoke
  *
  * Controlla: pagine principali, URL dei pannelli QR (/it/sentieri/*) ricavati dal codice, tutti i QR stampati
- * (data/qr-codes.json),
+ * (/qrx/<codice> da data/qr-codes.json),
  * redirect degli URL storici, tutte le voci della sitemap, link dell'archivio memoria e video.
  * Esce con codice 1 se qualcosa non risponde come previsto.
  */
@@ -59,13 +59,13 @@ const pages = [
 await inBatches(pages, 4, (path) => expectOk(path));
 
 // 2. Pannelli QR: inventario statico nel codice + storie con percorso legacy esplicito
-const panelSlugs = [read("src/lib/trail-panels.ts"), read("src/lib/cinque-valli-panels.ts")]
+const panelSlugs = [read("src/lib/trail-panels.ts"), read("src/lib/cinque-valli-panels.ts"), read("src/lib/masi-panels.ts")]
   .flatMap((source) => [...source.matchAll(/^\s{4}slug:\s*"([^"]+)"/gm)].map((match) => match[1]));
 const storyPaths = [...read("src/lib/stories.ts").matchAll(/:\s*"(\/it\/sentieri\/[^"]+)"/g)].map((match) => match[1]);
 const panelPaths = [...new Set([...panelSlugs.map((slug) => `/it/sentieri/${slug}`), ...storyPaths])].sort();
 await inBatches(panelPaths, 4, (path) => expectOk(path, `QR ${path}`));
 
-// 2b. Tutti i QR stampati (data/qr-codes.json): seguendo i redirect devono arrivare a una pagina 200.
+// 2b. Tutti i QR stampati (data/qr-codes.json) codificano /qrx/<codice>: seguendo i redirect devono arrivare a una pagina 200.
 async function expectReachable(path, label, hops = 0) {
   const response = await request(path);
   const location = response.headers.get("location");
@@ -75,7 +75,7 @@ async function expectReachable(path, label, hops = 0) {
   note(response.status === 200, label, `HTTP ${response.status || response.error?.message}${hops ? ` dopo ${hops} redirect (${path})` : ""}`);
 }
 const qrCodes = JSON.parse(read("data/qr-codes.json")).codes;
-await inBatches(qrCodes.filter((qr) => qr.path), 4, (qr) => expectReachable(qr.path, `QR ${qr.name} ${qr.path}`));
+await inBatches(qrCodes, 4, (qr) => expectReachable(`/qrx/${qr.code}`, `QR ${qr.name} ${qr.path ?? "/"}`));
 const unassigned = qrCodes.filter((qr) => !qr.path).map((qr) => qr.name);
 if (unassigned.length) console.log(`QR senza indirizzo nel gestionale: ${unassigned.join(", ")}`);
 

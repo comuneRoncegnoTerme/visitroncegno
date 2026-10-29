@@ -40,8 +40,10 @@ const nextConfig: NextConfig = {
       { source: "/it/dormire/:path+", destination: "/organizza-la-visita#dormire", permanent: true },
       { source: "/it/contacts/:path*", destination: "/organizza-la-visita", permanent: true },
       { source: "/it/roncegno-terme/sentieri-e-percorsi-outd", destination: "/percorsi", permanent: true },
-      // QR dei libretti stampati: "Libretto 1 Roncegno" e "Libretto 3 Percorsi".
+      // QR dei libretti stampati: "Libretto 1 Roncegno", "Libretto 2 Baite" e "Libretto 3 Percorsi".
+      // La pagina delle baite era "Le baite e il trekking": porta all'elenco dei percorsi.
       { source: "/it/roncegno-terme", destination: "/", permanent: true },
+      { source: "/it/roncegno-terme/le-baite", destination: "/percorsi", permanent: true },
       { source: "/it/roncegno-terme/percorsi", destination: "/percorsi", permanent: true },
       { source: "/it/roncegno-terme/:path+", destination: "/luoghi", permanent: true },
       // Pagine indice dei sentieri del vecchio sito (non sono pannelli): portano all'elenco dei percorsi.

@@ -10,6 +10,7 @@ const root = resolve(import.meta.dirname, "..");
 const read = (path) => readFileSync(resolve(root, path), "utf8");
 const trail = read("src/lib/trail-panels.ts");
 const valleys = read("src/lib/cinque-valli-panels.ts");
+const masi = read("src/lib/masi-panels.ts");
 const stories = read("src/lib/stories.ts");
 const page = read("app/it/sentieri/[slug]/page.tsx");
 const nextConfig = read("next.config.ts");
@@ -18,7 +19,7 @@ const warnings = [];
 
 const panelEntries = (source) =>
   [...source.matchAll(/^\s{4}slug:\s*"([^"]+)"/gm)].map((match) => match[1]);
-const panelSlugs = [...panelEntries(trail), ...panelEntries(valleys)];
+const panelSlugs = [...panelEntries(trail), ...panelEntries(valleys), ...panelEntries(masi)];
 const panelPaths = panelSlugs.map((slug) => `/it/sentieri/${slug}`);
 
 const seen = new Set();

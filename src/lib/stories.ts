@@ -18,9 +18,15 @@ type StoryLinkInput = Pick<StoryItem, "slug" | "source_url">;
 type LegacyStoryCopy = { excerpt?: string; body?: string };
 type StoryResponse = { data?: StoryItem[] };
 
+// Storie Directus che sono il testo di un pannello QR ma non riportano il vecchio indirizzo in source_url.
 const LEGACY_PATH_BY_STORY_SLUG: Record<string, string> = {
+  "fonti-roncegno": "/it/sentieri/le-fonti-2-1",
+  "acque-termali-roncegno": "/it/sentieri/acque-termali-2-2",
+  "fauna-cinque-valli": "/it/sentieri/fauna-7-2",
+  "camminamento-austriaco-sant-osvaldo-cinque-valli": "/it/sentieri/camminamento-austriaco-10",
   "tempesta-vaia-cinque-valli": "/it/sentieri/la-tempesta-vaia-11-1",
   "bostrico-tipografo-cinque-valli": "/it/sentieri/bostrico-tipografo-11-2",
+  "bosco-vaia-ricostituzione": "/it/sentieri/ricostruzione-bosco-11-3",
 };
 
 const STORY_SLUG_BY_LEGACY_SLUG = Object.fromEntries(
