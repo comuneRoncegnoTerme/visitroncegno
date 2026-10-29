@@ -151,6 +151,20 @@ export default async function OrganizzaLaVisitaPage() {
         <PlaceStrip places={services} emptyText="I servizi utili saranno disponibili presto." />
       </section>
 
+      <section className={styles.nearbySection} id="dintorni">
+        <div className={styles.nearbyText}>
+          <h2>Nei dintorni</h2>
+          <h3>Arte Sella</h3>
+          <p>
+            In Val di Sella, dimora preferita di Alcide Degasperi, un’esposizione a cielo aperto di opere fatte di foglie,
+            rami e tronchi, che col tempo si fondono con il bosco. Il simbolo è la Cattedrale Vegetale.
+          </p>
+          <a href="https://www.artesella.it/" target="_blank" rel="noreferrer">Il sito di Arte Sella ↗</a>
+        </div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/images/inforoncegno/arte-sella.jpg" width={341} height={286} alt="Un viale di alberi ad Arte Sella" loading="lazy" />
+      </section>
+
       <section className={styles.practicalGrid}>
         <article className={styles.practicalCard}><h2>Orari e avvisi</h2><p>Orari ferroviari e autobus, deviazioni e avvisi possono cambiare. Per il viaggio usa sempre le informazioni aggiornate degli operatori ufficiali.</p><a href={OFFICIAL_TRAVEL_LINKS.trentinoTrasporti} target="_blank" rel="noreferrer">Apri Trentino Trasporti <ArrowIcon /></a></article>
         <article className={styles.practicalCard}><h2>Contatti utili</h2><p>Per informazioni scrivi o chiama:</p>{siteSettings.contact_email ? <a href={`mailto:${siteSettings.contact_email}`}>Scrivi a {siteSettings.contact_email} <ArrowIcon /></a> : siteSettings.contact_phone ? <a href={`tel:${siteSettings.contact_phone.replace(/\s+/g, "")}`}>Chiama {siteSettings.contact_phone} <ArrowIcon /></a> : <Link href="/luoghi">Esplora i luoghi <ArrowIcon /></Link>}</article>

@@ -229,3 +229,10 @@
 .mapPreview:hover img{transform:scale(1.03)}
 @media(prefers-reduced-motion:reduce){.mapPreview img{transition:none}}
 .inlineLink{color:#163d32;font-weight:700;border-bottom:1px solid rgba(22,61,50,.55)}
+.nearbySection{display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,420px);gap:52px;align-items:center;width:92vw;margin:0 auto 96px;padding:clamp(30px,4vw,56px);border:1px solid rgba(23,55,46,.09);border-radius:24px;background:#f8f5ee}
+.nearbyText h2{margin:0;color:#b85e35;font-size:13px;font-weight:800}
+.nearbyText h3{margin:10px 0 0;color:#163d32;font:400 clamp(38px,4.4vw,58px)/1 Georgia,"Times New Roman",serif;letter-spacing:-.04em}
+.nearbyText p{max-width:640px;margin:18px 0 26px;color:#5d6762;font-size:15px;line-height:1.7}
+.nearbyText a{display:inline-flex;padding-bottom:5px;color:#163d32;border-bottom:1px solid rgba(22,61,50,.55);font-size:12px;font-weight:700}
+.nearbySection img{display:block;width:100%;height:auto;border-radius:18px}
+@media(max-width:800px){.nearbySection{grid-template-columns:1fr;gap:26px;width:90vw;margin-bottom:70px;padding:28px 24px}}
