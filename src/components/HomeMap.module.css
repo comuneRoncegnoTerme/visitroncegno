@@ -155,7 +155,11 @@
 /* Segnaposto (creati nel DOM da MapLibre, quindi con le classi del modulo) */
 
 .marker {
-  position: relative;
+  /* MapLibre posiziona il segnaposto con transform partendo da top/left 0: con position: relative
+     ogni segnaposto restava anche nel flusso, spostato di 30px per ogni segnaposto precedente. */
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 30px;
   height: 30px;
   padding: 0;
