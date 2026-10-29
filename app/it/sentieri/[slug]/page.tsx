@@ -5,9 +5,11 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import PanelAudioPlayer from "@/components/PanelAudioPlayer";
 import { getDirectusAssetUrl, getDirectusImageUrl, getSiteSettings } from "@/lib/directus";
+import { EXTRA_PANEL_NUMBERS } from "@/lib/content-semantics";
 import { getStoryByLegacySlug, storyParagraphs } from "@/lib/stories";
 import { getTrailPanel, trailPanels, type TrailPanel } from "@/lib/trail-panels";
 import { cinqueValliPanels, getCinqueValliPanel } from "@/lib/cinque-valli-panels";
+import { getMasoPanel, masiPanels } from "@/lib/masi-panels";
 import { getPanelAudioFileId } from "@/lib/panel-audio";
 import { getPanelStoryMedia } from "@/lib/panel-story-media";
 import styles from "./page.module.css";
@@ -18,10 +20,6 @@ interface LegacyTrailPageProps {
   params: Promise<{ slug: string }>;
 }
 
-const LEGACY_PANEL_NUMBERS: Record<string, string> = {
-  "miniera-di-cinque-valli-8": "26–27",
-};
-
 async function getDirectusTrailPanel(slug: string): Promise<TrailPanel | null> {
   const story = await getStoryByLegacySlug(slug);
   if (!story) return null;
@@ -31,7 +29,7 @@ async function getDirectusTrailPanel(slug: string): Promise<TrailPanel | null> {
 
   return {
     slug,
-    panelNumber: LEGACY_PANEL_NUMBERS[slug] ?? "Approfondimento",
+    panelNumber: EXTRA_PANEL_NUMBERS[slug] ?? "Approfondimento",
     qrCodes: [],
     title: story.title,
     eyebrow: story.category?.name ?? "Storie lungo il cammino",
@@ -44,7 +42,7 @@ async function getDirectusTrailPanel(slug: string): Promise<TrailPanel | null> {
 }
 
 function getStaticTrailPanel(slug: string) {
-  return getTrailPanel(slug) ?? getCinqueValliPanel(slug);
+  return getTrailPanel(slug) ?? getCinqueValliPanel(slug) ?? getMasoPanel(slug);
 }
 
 function mergePanelContent(staticPanel: TrailPanel | null, directusPanel: TrailPanel | null) {
@@ -64,7 +62,7 @@ function mergePanelContent(staticPanel: TrailPanel | null, directusPanel: TrailP
 }
 
 export function generateStaticParams() {
-  return [...trailPanels, ...cinqueValliPanels].map((panel) => ({ slug: panel.slug }));
+  return [...trailPanels, ...cinqueValliPanels, ...masiPanels].map((panel) => ({ slug: panel.slug }));
 }
 
 export async function generateMetadata({ params }: LegacyTrailPageProps): Promise<Metadata> {

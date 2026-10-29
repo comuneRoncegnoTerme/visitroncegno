@@ -64,6 +64,10 @@ export default async function RoutesPage() {
           <small>Sul territorio</small>
           <strong>Apri la mappa del territorio →</strong>
         </Link>
+        <Link href="/e-bike">
+          <small>In bici</small>
+          <strong>Ciclabile e ricarica e-bike →</strong>
+        </Link>
       </nav>
 
       <SiteFooter settings={settings} />

@@ -147,8 +147,22 @@ export default async function OrganizzaLaVisitaPage() {
       </section>
 
       <section className={`${styles.contentSection} ${styles.alt}`} id="servizi">
-        <div className={styles.sectionHeading}><div><h2>Servizi utili</h2></div><p>Parcheggi, punti informativi, stazione e altri servizi pratici raccolti in un unico elenco e, quando disponibili, anche sulla mappa.</p></div>
+        <div className={styles.sectionHeading}><div><h2>Servizi utili</h2></div><p>Parcheggi, punti informativi, stazione e altri servizi pratici raccolti in un unico elenco e, quando disponibili, anche sulla mappa. In bici elettrica? <Link className={styles.inlineLink} href="/e-bike">I cinque punti di ricarica e-bike →</Link></p></div>
         <PlaceStrip places={services} emptyText="I servizi utili saranno disponibili presto." />
+      </section>
+
+      <section className={styles.nearbySection} id="dintorni">
+        <div className={styles.nearbyText}>
+          <h2>Nei dintorni</h2>
+          <h3>Arte Sella</h3>
+          <p>
+            In Val di Sella, dimora preferita di Alcide Degasperi, un’esposizione a cielo aperto di opere fatte di foglie,
+            rami e tronchi, che col tempo si fondono con il bosco. Il simbolo è la Cattedrale Vegetale.
+          </p>
+          <a href="https://www.artesella.it/" target="_blank" rel="noreferrer">Il sito di Arte Sella ↗</a>
+        </div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/images/inforoncegno/arte-sella.jpg" width={341} height={286} alt="Un viale di alberi ad Arte Sella" loading="lazy" />
       </section>
 
       <section className={styles.practicalGrid}>

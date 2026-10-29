@@ -251,6 +251,19 @@ npm run directus:geocode-places -- --apply luoghi-coordinate.csv        # antepr
 npm run directus:geocode-places -- --apply luoghi-coordinate.csv --yes  # scrive latitude/longitude
 ```
 
+### Contenuti dell'opuscolo InfoRoncegno 2026
+
+`data/inforoncegno-2026/contenuti.json` raccoglie i contenuti dell'opuscolo che mancavano in Directus: locali, strutture, Malga Trenca, Panchina Gigante, Centralina, Chiesa dei Santi Pietro e Paolo, Sentiero Purlait, Strada del Castagno e tre storie. Lo script crea solo i record con uno slug non ancora presente e, sui record esistenti, completa i campi vuoti (contatti, ricarica e-bike) più due correzioni puntuali dei percorsi. Senza `--yes` mostra soltanto l'anteprima.
+
+```bash
+DIRECTUS_URL=... DIRECTUS_TOKEN=... npm run directus:inforoncegno-2026          # anteprima
+DIRECTUS_URL=... DIRECTUS_TOKEN=... npm run directus:inforoncegno-2026 -- --yes  # scrive (aggiungere --draft per creare bozze)
+```
+
+Le foto dell'opuscolo (`public/images/inforoncegno/`) vengono caricate nella libreria di Directus e collegate ai record; le coordinate vengono da OpenStreetMap. Restano senza foto i locali, le strutture, la Centralina e il Sentiero Purlait: si aggiungono dal Content Hub.
+
+Dall'opuscolo derivano anche due pagine: `/scopri-roncegno` (storia, terme, arte, chiese e luoghi da non perdere) e `/e-bike` (punti di ricarica da `src/lib/ebike.ts`, mappa e ciclabile). I collegamenti verso schede e storie compaiono solo quando quelle schede sono pubblicate in Directus. Gli appuntamenti fissi dell'anno (Carnevale, sagre, Festa della Polenta) sono in `src/lib/annual-events.ts`, mostrati nella pagina Eventi.
+
 ## Controlli HTTP e compatibilità QR
 
 Smoke test in sola lettura, utilizzabile in locale, su staging o sul dominio pubblico:

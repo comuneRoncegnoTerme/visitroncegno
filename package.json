@@ -18,6 +18,7 @@
     "directus:fill-castagno-loops": "node scripts/directus-castagno-loops.mjs",
     "directus:audit-places": "node scripts/directus-audit-places.mjs",
     "directus:geocode-places": "node scripts/directus-geocode-places.mjs",
+    "directus:inforoncegno-2026": "node scripts/directus-inforoncegno-2026.mjs",
     "directus:audit-route-images": "node scripts/directus-audit-route-images.mjs",
     "directus:audit-routes": "node scripts/directus-audit-routes.mjs",
     "directus:ensure-home-full-model": "node scripts/directus-home-full-model.mjs",

@@ -1,0 +1,154 @@
+/* Pagine guida tratte dall'opuscolo InfoRoncegno (/e-bike, /scopri-roncegno): stesso sistema di "Organizza la visita". */
+.page{background:#faf9f5;color:#17201d}
+.hero,.section{width:92vw;margin:0 auto}
+.hero{
+  display:grid;
+  grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);
+  gap:6vw;
+  align-items:end;
+  padding:72px 0 64px;
+}
+.hero h1{
+  margin:0;
+  color:#163d32;
+  font:400 clamp(3.4rem,6.4vw,6.6rem)/.9 Georgia,"Times New Roman",serif;
+  letter-spacing:-.055em;
+}
+.hero>div{min-width:0}
+.lead{max-width:620px;margin:22px 0 0;color:#4f5b56;font-size:1.05rem;line-height:1.65}
+.jumpNav{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.jumpNav a{padding:9px 14px;color:#163d32;border:1px solid rgba(22,61,50,.25);border-radius:999px;font-size:12px;font-weight:700}
+.jumpNav a:hover{color:#fff;background:#163d32}
+.heroImage{
+  width:100%;
+  height:100%;
+  min-height:320px;
+  max-height:520px;
+  object-fit:cover;
+  border-radius:24px;
+  box-shadow:0 16px 42px rgba(23,55,46,.12);
+}
+.section{padding:84px 0;border-top:1px solid rgba(23,55,46,.12)}
+.sectionHeading{
+  display:grid;
+  grid-template-columns:1fr minmax(300px,.7fr);
+  gap:8vw;
+  align-items:end;
+  margin-bottom:34px;
+}
+.sectionHeading h2,.chapter h2{
+  margin:0;
+  color:#163d32;
+  font:400 clamp(40px,4.8vw,64px)/.98 Georgia,"Times New Roman",serif;
+  letter-spacing:-.045em;
+}
+.sectionHeading>p{margin:0;color:#5d6762;font-size:15px;line-height:1.7}
+.kicker{margin:0 0 12px;color:#b85e35;font-size:13px;font-weight:800}
+
+/* Mappa stampata con i punti numerati */
+.figure{margin:0}
+.figure img{display:block;width:100%;height:auto;border-radius:24px;box-shadow:0 16px 42px rgba(23,55,46,.08)}
+.figure figcaption{margin-top:10px;color:#67706c;font-size:13px}
+
+/* Elenco numerato dei punti */
+.points{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:14px;
+  margin:28px 0 0;
+  padding:0;
+  list-style:none;
+}
+.point{
+  display:flex;
+  flex-direction:column;
+  padding:22px;
+  border:1px solid rgba(23,55,46,.09);
+  border-radius:22px;
+  background:#fff;
+  scroll-margin-top:96px;
+}
+.pointNumber{
+  display:grid;
+  place-items:center;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:#f0a03c;
+  color:#fff;
+  font-size:20px;
+  font-weight:800;
+}
+.point h3{margin:16px 0 8px;color:#163d32;font:400 24px/1.05 Georgia,"Times New Roman",serif}
+.point h3 a:hover{text-decoration:underline}
+.point p{margin:0 0 18px;color:#5d6762;font-size:13px;line-height:1.55}
+.point .directions{margin-top:auto}
+.directions,.textLink{
+  display:inline-flex;
+  width:fit-content;
+  padding-bottom:4px;
+  color:#163d32;
+  border-bottom:1px solid rgba(22,61,50,.55);
+  font-size:12px;
+  font-weight:700;
+}
+.mapFrame{display:grid;min-height:480px;margin-top:34px;overflow:hidden;border-radius:24px;box-shadow:0 16px 42px rgba(23,55,46,.08)}
+
+/* Capitoli: testo e foto affiancati */
+.chapter{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(280px,.8fr);
+  gap:6vw;
+  align-items:center;
+  scroll-margin-top:80px;
+}
+.chapterReverse .chapterImage{order:-1}
+.chapterText p{max-width:680px;margin:18px 0 0;color:#38433f;font-size:16px;line-height:1.75}
+.chapterText .kicker{margin:0 0 12px;color:#b85e35;font-size:13px;line-height:1.4}
+.chapterImage{
+  width:100%;
+  max-height:460px;
+  object-fit:cover;
+  border-radius:24px;
+  box-shadow:0 16px 42px rgba(23,55,46,.1);
+}
+.links{display:flex;flex-wrap:wrap;gap:12px 22px;margin-top:26px}
+
+/* Schede "da non perdere" */
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.card{
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  border:1px solid rgba(23,55,46,.08);
+  border-radius:24px;
+  background:#fff;
+  box-shadow:0 12px 32px rgba(23,55,46,.05);
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+a.card:hover{transform:translateY(-4px);box-shadow:0 20px 48px rgba(23,55,46,.1)}
+.cardImage{display:block;width:100%;height:230px;object-fit:cover;background:#2d594c}
+.cardCopy{display:flex;flex:1;flex-direction:column;padding:24px 26px 26px}
+.cardCopy small{color:#b85e35;font-size:13px;font-weight:700}
+.cardCopy strong{margin-top:7px;color:#163d32;font:400 27px/1.05 Georgia,"Times New Roman",serif}
+.cardCopy p{margin:10px 0 0;color:#67706c;font-size:13px;line-height:1.55}
+
+@media(max-width:1100px){
+  .points{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:800px){
+  .hero,.section{width:min(100% - 32px,1240px)}
+  .hero,.sectionHeading,.chapter{grid-template-columns:1fr;gap:26px}
+  .hero{padding:54px 0 46px}
+  .hero h1{font-size:clamp(3rem,13vw,4.6rem)}
+  .heroImage{min-height:220px;max-height:320px}
+  .chapterReverse .chapterImage{order:0}
+  .chapterImage{max-height:360px}
+  .section{padding:60px 0}
+  .points,.cards{grid-template-columns:minmax(0,1fr)}
+  .mapFrame{min-height:380px}
+  .jumpNav{flex-wrap:nowrap;margin-right:-16px;padding-right:16px;overflow-x:auto;scrollbar-width:none}
+  .jumpNav::-webkit-scrollbar{display:none}
+  .jumpNav a{flex:0 0 auto}
+}

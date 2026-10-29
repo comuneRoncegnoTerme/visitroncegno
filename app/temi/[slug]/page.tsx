@@ -6,7 +6,10 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { getDirectusImageUrl, getHomepage, getSiteSettings, getUpcomingEvents } from "@/lib/directus";
 import { getEditorialList, type EditorialItem } from "@/lib/editorial";
+import { getLegacyPanelNumber } from "@/lib/content-semantics";
 import { placeHref } from "@/lib/place-detail";
+import { getLegacyStoryPath, getStories, type StoryItem } from "@/lib/stories";
+import { THEME_HIGHLIGHTS, THEME_STORY_KEYWORDS } from "@/lib/theme-highlights";
 import styles from "./theme.module.css";
 
 const THEMES = {
@@ -114,6 +117,39 @@ function eventCards(events: EditorialItem[], config: ThemeConfig): CardItem[] {
     }));
 }
 
+// I "da non perdere" con il loro link e la foto: link solo verso schede pubblicate.
+function highlightCards(slug: string, places: EditorialItem[], routes: EditorialItem[], stories: StoryItem[]) {
+  const placesBySlug = new Map(places.map((place) => [place.slug, place]));
+  return (THEME_HIGHLIGHTS[slug] ?? []).map((item) => {
+    const place = item.place ? placesBySlug.get(item.place) : undefined;
+    const route = item.route ? routes.find((candidate) => candidate.slug === item.route) : undefined;
+    const story = item.story ? stories.find((candidate) => candidate.slug === item.story) : undefined;
+    const href =
+      item.href ??
+      (place ? placeHref(place) : null) ??
+      (route ? `/percorsi/${route.slug}` : null) ??
+      (story ? getLegacyStoryPath(story) ?? `/storie/${story.slug}` : null);
+    const image = item.image ?? getDirectusImageUrl(place?.image ?? route?.image ?? story?.image ?? null);
+    return { ...item, href, image };
+  });
+}
+
+function themeStories(slug: string, stories: StoryItem[]) {
+  const keywords = THEME_STORY_KEYWORDS[slug] ?? [];
+  if (!keywords.length) return [];
+  return stories
+    .filter((story) => {
+      const text = [story.title, story.excerpt, story.category?.name].filter(Boolean).join(" ").toLowerCase();
+      return keywords.some((keyword) => text.includes(keyword));
+    })
+    .slice(0, 6)
+    .map((story) => {
+      const href = getLegacyStoryPath(story) ?? `/storie/${story.slug}`;
+      const panelNumber = getLegacyPanelNumber(href);
+      return { id: story.id, title: story.title, href, label: panelNumber ? `Pannello ${panelNumber}` : "Storia" };
+    });
+}
+
 export function generateStaticParams() {
   return Object.keys(THEMES).map((slug) => ({ slug }));
 }
@@ -135,13 +171,16 @@ export default async function ThemePage({ params }: { params: Promise<{ slug: st
   const theme = THEMES[slug as ThemeSlug];
   if (!theme) notFound();
 
-  const [places, routes, events, homepage, siteSettings] = await Promise.all([
+  const [places, routes, events, homepage, siteSettings, stories] = await Promise.all([
     getEditorialList("places"),
     getEditorialList("routes"),
     getUpcomingEvents(),
     getHomepage(),
     getSiteSettings(),
+    getStories().catch(() => [] as StoryItem[]),
   ]);
+  const highlights = highlightCards(slug, places, routes, stories);
+  const relatedStories = themeStories(slug, stories);
 
   const cards = [...placeCards(places, theme), ...routeCards(routes, theme)].slice(0, 6);
   const relatedEvents = eventCards(events as EditorialItem[], theme);
@@ -172,8 +211,37 @@ export default async function ThemePage({ params }: { params: Promise<{ slug: st
         </div>
       </section>
 
-      {cards.length > 0 && (
+      {highlights.length > 0 && (
         <section className={styles.discoverySection}>
+          <div className={styles.sectionInner}>
+            <div className={styles.sectionHeading}>
+              <div><h2>Da non perdere</h2></div>
+            </div>
+            <div className={styles.highlightGrid}>
+              {highlights.map((item) => {
+                const body = (
+                  <>
+                    {item.image && <div className={styles.cardImage} style={{ backgroundImage: `url('${item.image}')` }} />}
+                    <div className={styles.cardShade} />
+                    <div className={styles.cardBody}>
+                      <small>{item.label}</small>
+                      <h3>{item.title}</h3>
+                      <p>{item.text}</p>
+                      {item.href && <span>Apri →</span>}
+                    </div>
+                  </>
+                );
+                return item.href
+                  ? <Link className={styles.card} href={item.href} key={item.title}>{body}</Link>
+                  : <article className={styles.card} key={item.title}>{body}</article>;
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {cards.length > 0 && (
+        <section className={`${styles.discoverySection}${highlights.length ? ` ${styles.followingSection}` : ""}`}>
           <div className={styles.sectionInner}>
             <div className={styles.sectionHeading}>
               <div><h2>Da vedere</h2></div>
@@ -195,6 +263,23 @@ export default async function ThemePage({ params }: { params: Promise<{ slug: st
                   </Link>
                 );
               })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {relatedStories.length > 0 && (
+        <section className={styles.eventsSection}>
+          <div className={styles.sectionInner}>
+            <div className={styles.sectionHeading}>
+              <div><h2>Storie e pannelli</h2></div>
+            </div>
+            <div className={styles.eventList}>
+              {relatedStories.map((story) => (
+                <Link href={story.href} className={styles.eventRow} key={story.id}>
+                  <span>{story.label}</span><strong>{story.title}</strong><span aria-hidden="true">→</span>
+                </Link>
+              ))}
             </div>
           </div>
         </section>

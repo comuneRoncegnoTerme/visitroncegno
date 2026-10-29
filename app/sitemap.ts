@@ -21,6 +21,8 @@ const STATIC_PATHS = [
   "/cartina",
   "/mappa",
   "/sentieri-di-roncegno",
+  "/scopri-roncegno",
+  "/e-bike",
 ];
 
 function entry(path: string, priority: number): MetadataRoute.Sitemap[number] {
