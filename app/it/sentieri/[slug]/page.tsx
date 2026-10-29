@@ -5,6 +5,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import PanelAudioPlayer from "@/components/PanelAudioPlayer";
 import { getDirectusAssetUrl, getDirectusImageUrl, getSiteSettings } from "@/lib/directus";
+import { EXTRA_PANEL_NUMBERS } from "@/lib/content-semantics";
 import { getStoryByLegacySlug, storyParagraphs } from "@/lib/stories";
 import { getTrailPanel, trailPanels, type TrailPanel } from "@/lib/trail-panels";
 import { cinqueValliPanels, getCinqueValliPanel } from "@/lib/cinque-valli-panels";
@@ -19,19 +20,6 @@ interface LegacyTrailPageProps {
   params: Promise<{ slug: string }>;
 }
 
-// Numeri dei pannelli il cui testo arriva solo dalle storie Directus (dal gestionale QR, data/qr-codes.json).
-const LEGACY_PANEL_NUMBERS: Record<string, string> = {
-  "le-fonti-2-1": "04",
-  "acque-termali-2-2": "05",
-  "storia-terme-roncegno-6": "23",
-  "flora-7-1": "24",
-  "fauna-7-2": "25",
-  "miniera-di-cinque-valli-8": "26–27",
-  "camminamento-austriaco-10": "29",
-  "bostrico-tipografo-11-2": "31",
-  "ricostruzione-bosco-11-3": "32",
-};
-
 async function getDirectusTrailPanel(slug: string): Promise<TrailPanel | null> {
   const story = await getStoryByLegacySlug(slug);
   if (!story) return null;
@@ -41,7 +29,7 @@ async function getDirectusTrailPanel(slug: string): Promise<TrailPanel | null> {
 
   return {
     slug,
-    panelNumber: LEGACY_PANEL_NUMBERS[slug] ?? "Approfondimento",
+    panelNumber: EXTRA_PANEL_NUMBERS[slug] ?? "Approfondimento",
     qrCodes: [],
     title: story.title,
     eyebrow: story.category?.name ?? "Storie lungo il cammino",
