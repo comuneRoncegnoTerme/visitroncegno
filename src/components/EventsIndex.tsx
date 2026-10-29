@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ANNUAL_EVENTS } from "@/lib/annual-events";
 import { getDirectusImageUrl, getSiteSettings } from "@/lib/directus";
 import type { EditorialItem } from "@/lib/editorial";
 import EditorialHeader from "./EditorialHeader";
@@ -140,6 +141,28 @@ export default async function EventsIndex({ items }: { items: EditorialItem[] })
         ) : (
           <p className={styles.empty}>Non ci sono altri eventi futuri pubblicati in questo momento.</p>
         )}
+      </section>
+
+      <section className={styles.yearSection} aria-labelledby="year-events-title">
+        <div className={styles.sectionHeading}>
+          <div>
+            <h2 id="year-events-title">Durante l’anno</h2>
+          </div>
+          <p>
+            Le feste che tornano ogni anno. Le associazioni del paese, più di venti, organizzano anche concerti
+            natalizi, rassegne di canti popolari e spettacoli: le date di ogni edizione compaiono qui sopra quando sono note.
+          </p>
+        </div>
+
+        <ul className={styles.yearList}>
+          {ANNUAL_EVENTS.map((event) => (
+            <li key={event.title}>
+              <small>{event.period}</small>
+              {event.href ? <Link href={event.href}><h3>{event.title} →</h3></Link> : <h3>{event.title}</h3>}
+              {event.text && <p>{event.text}</p>}
+            </li>
+          ))}
+        </ul>
       </section>
 
       {past.length ? (
