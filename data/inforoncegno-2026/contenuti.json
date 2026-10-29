@@ -10,7 +10,10 @@
         "summary": "Pizzeria a Roncegno Terme.",
         "phone": "0461 764301",
         "map_label": "Pizzeria",
-        "show_on_map": false
+        "show_on_map": true,
+        "latitude": 46.049677,
+        "longitude": 11.410913,
+        "address": "Via Cesare Battisti 26, Roncegno Terme"
       },
       {
         "slug": "ristorante-bar-alle-pozze",
@@ -21,7 +24,9 @@
         "phone": "353 4317632",
         "services_notes": "Punto di ricarica per e-bike.",
         "map_label": "Ristorante · Bar",
-        "show_on_map": false
+        "show_on_map": true,
+        "latitude": 46.068395,
+        "longitude": 11.380604
       },
       {
         "slug": "bar-tre-venezie",
@@ -68,7 +73,9 @@
         "email": "info@rifugioserot.eu",
         "map_label": "Rifugio · Ristorante",
         "map_icon": "hotel",
-        "show_on_map": false
+        "show_on_map": true,
+        "latitude": 46.073466,
+        "longitude": 11.388187
       },
       {
         "slug": "associazione-vacanze-in-baita",
@@ -101,7 +108,10 @@
         "services_notes": "Punto di ricarica per e-bike.",
         "map_label": "Malga",
         "map_icon": "mountain",
-        "show_on_map": false
+        "show_on_map": true,
+        "latitude": 46.078144,
+        "longitude": 11.391479,
+        "image_file": "public/images/inforoncegno/segnavia-malga-trenca.jpg"
       },
       {
         "slug": "panchina-gigante",
@@ -113,7 +123,10 @@
         "visit_duration": "10 minuti a piedi da Malga Trenca",
         "map_label": "Panchina gigante",
         "map_icon": "mountain",
-        "show_on_map": false
+        "show_on_map": true,
+        "latitude": 46.080002,
+        "longitude": 11.395972,
+        "image_file": "public/images/inforoncegno/panchina-gigante.jpg"
       },
       {
         "slug": "centralina-idroelettrica",
@@ -135,7 +148,10 @@
         "description": "<p>La chiesa dei Santi Pietro e Paolo custodisce la preziosa pala settecentesca di Francesco Guardi, <em>La Santissima Trinità appare ai santi Pietro e Paolo</em>, realizzata per la chiesa di Roncegno nel 1779.</p><p>Le opere del pittore veneziano, che raffigurano in larga parte vedute e paesaggi, sono conservate in musei di tutto il mondo: dalla National Gallery di Washington all’Alte Pinakothek di Monaco di Baviera.</p>",
         "map_label": "Chiesa",
         "map_icon": "church",
-        "show_on_map": false
+        "show_on_map": true,
+        "latitude": 46.049906,
+        "longitude": 11.406403,
+        "image_file": "public/images/inforoncegno/chiesa-santi-pietro-e-paolo.jpg"
       },
       {
         "slug": "maso-roneri",
@@ -146,7 +162,9 @@
         "description": "<p>La montagna di Roncegno è costellata da più di 40 masi, frutto dell’attività dei roncadori bavarotirolesi, che colonizzarono il versante a partire dal XII secolo. Il toponimo “Ròneri” sembra derivare da “Roner”, dal medio alto tedesco RON(E), “tronco d’albero”.</p><p>Qui si trova il pannello 17 del Circuito del Castagno.</p>",
         "map_label": "Maso storico",
         "map_icon": "place",
-        "show_on_map": false
+        "show_on_map": true,
+        "latitude": 46.059247,
+        "longitude": 11.421171
       },
       {
         "slug": "ricarica-e-bike-via-san-giuseppe",
@@ -157,7 +175,9 @@
         "address": "Via San Giuseppe, Roncegno Terme",
         "services_notes": "Punto di ricarica per e-bike.",
         "map_label": "Ricarica e-bike",
-        "show_on_map": false
+        "show_on_map": true,
+        "latitude": 46.05162,
+        "longitude": 11.409851
       }
     ],
     "routes": [
@@ -177,7 +197,8 @@
         "description": "La Strada del Castagno attraversa il versante esposto a sud della Valsugana, costellato di castagneti, da Roncegno a Castel Ivano. Si snoda tra i masi sparsi e le vie selciate con cui, nel tardo Medioevo, minatori e contadini provenienti dall’Alta Baviera hanno plasmato il paesaggio. Lungo tutto il percorso si trovano tabelle che raccontano il ruolo del castagno nella vita in montagna e la storia dei masi che fondavano anche su di esso la propria economia.",
         "route_highlight": "Castagneti secolari e masi tra Roncegno Terme e Castel Ivano.",
         "loop_route": false,
-        "experience_type": "storia e natura"
+        "experience_type": "storia e natura",
+        "image_file": "public/images/inforoncegno/strada-del-castagno.jpg"
       }
     ],
     "stories": [
@@ -187,7 +208,8 @@
         "place": "casa-di-salute-raphael-parco-terme",
         "source_label": "InfoRoncegno 2026",
         "excerpt": "L’acqua che dalla Valle del Diavolo, sul monte Tesobbo, rese Roncegno celebre in tutto il mondo: dalla scoperta di un contadino al terremoto del 1976.",
-        "body": "<p>L’acqua più famosa di Roncegno è quella ferruginosa-arsenicale che proviene dalla Valle del Diavolo, sul monte Tesobbo. Quest’acqua ha reso Roncegno celebre in tutto il mondo.</p><p>Secondo la storia locale, un giorno un contadino che lavorava in quel bosco prestò particolare attenzione a un rigagnolo d’acqua rossastra che sgorgava da una fenditura nella roccia. La assaggiò e fece subito grandi boccacce, poiché era amara come l’arsenico. Quando non si sentiva tanto bene, ogni tanto andava a prenderne un po’. Faceva fatica a berla, però poi si sentiva meglio.</p><p>Un giorno raccontò tutto al dottore del paese, il quale, dopo aver svolto indagini più approfondite, scoprì che quell’acqua aveva proprietà terapeutiche e benefiche per diverse malattie, soprattutto della pelle, e per gli esaurimenti nervosi.</p><p>Quel dottore è oggi ricordato con un monumento nella piazza principale del paese: si tratta del dottor Achille De Giovanni. Dopo essersi consultato con i suoi colleghi, egli pensò di realizzare un albergo dove i clienti potessero bere quell’acqua come cura e fare bagni terapeutici.</p><p>Così nacquero, a poco a poco, gli splendidi edifici che ora formano il complesso termale che tutti ammirano. Nel paese sorsero alberghi e cominciarono ad arrivare da tutta Europa ricchi signori dell’epoca: nacque così il turismo termale a Roncegno. Il paese venne abbellito con parchi e viali e molti abitanti trovarono lavoro senza dover emigrare.</p><p>Alle Fonti, luogo vicino alle sorgenti, venne costruita una galleria rivestita di piastrelle e con un lavandino di marmo, ancora visibile, per raccogliere la preziosa acqua.</p><p>Il destino fu però avverso con Roncegno: dal 1915 al 1918 la Prima guerra mondiale distrusse tutto ciò che era stato costruito. Naturalmente, in seguito si ricostruirono case e alberghi, ma non tornarono mai allo splendore originario. Nel frattempo, anche la famosa sorgente dava preoccupanti segni di esaurimento. Gli operai tentarono di alimentarla con l’acqua del torrente Argento, ma la situazione non migliorò.</p><p>Il terremoto del Friuli del 1976 le diede infine il colpo di grazia: l’acqua si perse definitivamente nelle viscere della terra.</p>"
+        "body": "<p>L’acqua più famosa di Roncegno è quella ferruginosa-arsenicale che proviene dalla Valle del Diavolo, sul monte Tesobbo. Quest’acqua ha reso Roncegno celebre in tutto il mondo.</p><p>Secondo la storia locale, un giorno un contadino che lavorava in quel bosco prestò particolare attenzione a un rigagnolo d’acqua rossastra che sgorgava da una fenditura nella roccia. La assaggiò e fece subito grandi boccacce, poiché era amara come l’arsenico. Quando non si sentiva tanto bene, ogni tanto andava a prenderne un po’. Faceva fatica a berla, però poi si sentiva meglio.</p><p>Un giorno raccontò tutto al dottore del paese, il quale, dopo aver svolto indagini più approfondite, scoprì che quell’acqua aveva proprietà terapeutiche e benefiche per diverse malattie, soprattutto della pelle, e per gli esaurimenti nervosi.</p><p>Quel dottore è oggi ricordato con un monumento nella piazza principale del paese: si tratta del dottor Achille De Giovanni. Dopo essersi consultato con i suoi colleghi, egli pensò di realizzare un albergo dove i clienti potessero bere quell’acqua come cura e fare bagni terapeutici.</p><p>Così nacquero, a poco a poco, gli splendidi edifici che ora formano il complesso termale che tutti ammirano. Nel paese sorsero alberghi e cominciarono ad arrivare da tutta Europa ricchi signori dell’epoca: nacque così il turismo termale a Roncegno. Il paese venne abbellito con parchi e viali e molti abitanti trovarono lavoro senza dover emigrare.</p><p>Alle Fonti, luogo vicino alle sorgenti, venne costruita una galleria rivestita di piastrelle e con un lavandino di marmo, ancora visibile, per raccogliere la preziosa acqua.</p><p>Il destino fu però avverso con Roncegno: dal 1915 al 1918 la Prima guerra mondiale distrusse tutto ciò che era stato costruito. Naturalmente, in seguito si ricostruirono case e alberghi, ma non tornarono mai allo splendore originario. Nel frattempo, anche la famosa sorgente dava preoccupanti segni di esaurimento. Gli operai tentarono di alimentarla con l’acqua del torrente Argento, ma la situazione non migliorò.</p><p>Il terremoto del Friuli del 1976 le diede infine il colpo di grazia: l’acqua si perse definitivamente nelle viscere della terra.</p>",
+        "image_file": "public/images/inforoncegno/le-fonti.jpg"
       },
       {
         "slug": "arte-guardi-soffici",
@@ -195,7 +217,8 @@
         "place": "chiesa-santi-pietro-e-paolo",
         "source_label": "InfoRoncegno 2026",
         "excerpt": "La pala di Francesco Guardi per la chiesa parrocchiale e il dipinto di Ardengo Soffici commissionato dai fratelli Waiz.",
-        "body": "<p><strong>La Santissima Trinità appare ai santi Pietro e Paolo</strong>, realizzata per la chiesa di Roncegno nel 1779, è opera del famoso pittore Francesco Guardi. Le sue opere, che raffigurano in larga parte vedute e paesaggi, sono conservate in musei di tutto il mondo: dalla National Gallery di Washington all’Alte Pinakothek di Monaco di Baviera.</p><p><strong>Incontro di Dante e Beatrice</strong> (1906) è stato realizzato dall’artista toscano Ardengo Soffici. Il dipinto riuscì a superare il periodo della Grande Guerra, ma il ciclo di cui era parte, commissionato dai fratelli Waiz, andò quasi totalmente distrutto.</p>"
+        "body": "<p><strong>La Santissima Trinità appare ai santi Pietro e Paolo</strong>, realizzata per la chiesa di Roncegno nel 1779, è opera del famoso pittore Francesco Guardi. Le sue opere, che raffigurano in larga parte vedute e paesaggi, sono conservate in musei di tutto il mondo: dalla National Gallery di Washington all’Alte Pinakothek di Monaco di Baviera.</p><p><strong>Incontro di Dante e Beatrice</strong> (1906) è stato realizzato dall’artista toscano Ardengo Soffici. Il dipinto riuscì a superare il periodo della Grande Guerra, ma il ciclo di cui era parte, commissionato dai fratelli Waiz, andò quasi totalmente distrutto.</p>",
+        "image_file": "public/images/inforoncegno/chiesa-santi-pietro-e-paolo.jpg"
       },
       {
         "slug": "chiese-di-roncegno",
@@ -203,20 +226,54 @@
         "place": "chiesa-santi-pietro-e-paolo",
         "source_label": "InfoRoncegno 2026",
         "excerpt": "Chiese e capitelli di epoche diverse, da Marter al centro del paese fino alle chiesette sparse sulla montagna.",
-        "body": "<p>Il visitatore sarà sorpreso dalla numerosità delle chiese e dei capitelli, appartenenti a epoche diverse e che raccontano storie diverse.</p><p>Partendo da Marter, è possibile visitare la Chiesa di San Silvestro e la Chiesa di Santa Margherita, mentre a Roncegno si trovano la Chiesa dei Santi Pietro e Paolo e la Chiesa di San Giuseppe.</p><p>Sono numerosissime le chiese e chiesette sparse sulla montagna: la Chiesa di Santa Brigida, la chiesetta della Madonna del Carmelo, la Chiesa della Sacra Famiglia, la chiesetta di San Nicolò, la Chiesa di Sant’Anna, la Chiesa di San Biagio, la Chiesa di Sant’Osvaldo e la Chiesa di Santa Maria Assunta di Serot.</p>"
+        "body": "<p>Il visitatore sarà sorpreso dalla numerosità delle chiese e dei capitelli, appartenenti a epoche diverse e che raccontano storie diverse.</p><p>Partendo da Marter, è possibile visitare la Chiesa di San Silvestro e la Chiesa di Santa Margherita, mentre a Roncegno si trovano la Chiesa dei Santi Pietro e Paolo e la Chiesa di San Giuseppe.</p><p>Sono numerosissime le chiese e chiesette sparse sulla montagna: la Chiesa di Santa Brigida, la chiesetta della Madonna del Carmelo, la Chiesa della Sacra Famiglia, la chiesetta di San Nicolò, la Chiesa di Sant’Anna, la Chiesa di San Biagio, la Chiesa di Sant’Osvaldo e la Chiesa di Santa Maria Assunta di Serot.</p>",
+        "image_file": "public/images/inforoncegno/chiesetta-di-montagna.jpg"
       }
     ]
   },
   "update": {
     "places": [
-      { "slug": "ristorante-coronata-haus", "fill": { "phone": "0461 1851508", "email": "info@coronatahaus.it" } },
-      { "slug": "agritur-la-casa-nel-bosco", "fill": { "email": "info@agriturlacasanelbosco.it" } },
-      { "slug": "rifugio-erterle", "fill": { "services_notes": "Punto di ricarica per e-bike." } },
-      { "slug": "mulino-angeli-casa-degli-spaventapasseri", "fill": { "services_notes": "Punto di ricarica per e-bike." } }
+      {
+        "slug": "ristorante-coronata-haus",
+        "fill": {
+          "phone": "0461 1851508",
+          "email": "info@coronatahaus.it"
+        }
+      },
+      {
+        "slug": "agritur-la-casa-nel-bosco",
+        "fill": {
+          "email": "info@agriturlacasanelbosco.it"
+        }
+      },
+      {
+        "slug": "rifugio-erterle",
+        "fill": {
+          "services_notes": "Punto di ricarica per e-bike."
+        }
+      },
+      {
+        "slug": "mulino-angeli-casa-degli-spaventapasseri",
+        "fill": {
+          "services_notes": "Punto di ricarica per e-bike.",
+          "image_file": "public/images/inforoncegno/mulino-angeli.jpg"
+        }
+      }
     ],
     "routes": [
-      { "slug": "passeggiata-biotopo-palude-roncegno", "set": { "title": "Sentiero dell’Airone: passeggiata al Biotopo" } },
-      { "slug": "da-maso-zonti-a-maso-montibelleri", "set": { "difficulty": "Media" } }
+      {
+        "slug": "passeggiata-biotopo-palude-roncegno",
+        "set": {
+          "title": "Sentiero dell’Airone: passeggiata al Biotopo"
+        }
+      },
+      {
+        "slug": "da-maso-zonti-a-maso-montibelleri",
+        "set": {
+          "difficulty": "Media"
+        }
+      }
     ]
-  }
+  },
+  "coordinates_source": "OpenStreetMap (Nominatim), 29/10/2026; Bar Tre Venezie e Bar Villa Rosa dalla mappa della Festa della Castagna; Via San Giuseppe: punto della via, non della colonnina"
 }

@@ -260,7 +260,9 @@ DIRECTUS_URL=... DIRECTUS_TOKEN=... npm run directus:inforoncegno-2026          
 DIRECTUS_URL=... DIRECTUS_TOKEN=... npm run directus:inforoncegno-2026 -- --yes  # scrive (aggiungere --draft per creare bozze)
 ```
 
-I nuovi record non hanno foto né coordinate (tranne Bar Tre Venezie e Bar Villa Rosa): vanno aggiunte dal Content Hub. Gli appuntamenti fissi dell'anno (Carnevale, sagre, Festa della Polenta) sono in `src/lib/annual-events.ts`, mostrati nella pagina Eventi.
+Le foto dell'opuscolo (`public/images/inforoncegno/`) vengono caricate nella libreria di Directus e collegate ai record; le coordinate vengono da OpenStreetMap. Restano senza foto i locali, le strutture, la Centralina e il Sentiero Purlait: si aggiungono dal Content Hub.
+
+Dall'opuscolo derivano anche due pagine: `/scopri-roncegno` (storia, terme, arte, chiese e luoghi da non perdere) e `/e-bike` (punti di ricarica da `src/lib/ebike.ts`, mappa e ciclabile). I collegamenti verso schede e storie compaiono solo quando quelle schede sono pubblicate in Directus. Gli appuntamenti fissi dell'anno (Carnevale, sagre, Festa della Polenta) sono in `src/lib/annual-events.ts`, mostrati nella pagina Eventi.
 
 ## Controlli HTTP e compatibilità QR
 

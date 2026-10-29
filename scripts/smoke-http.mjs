@@ -54,7 +54,7 @@ async function inBatches(items, size, task) {
 // 1. Pagine principali
 const pages = [
   "/", "/luoghi", "/percorsi", "/eventi", "/musei", "/musei/mulino-angeli", "/musei/museo-della-musica",
-  "/memoria", "/festa-della-castagna", "/sentieri-di-roncegno", "/organizza-la-visita", "/cartina", "/robots.txt", "/sitemap.xml", "/api/health",
+  "/memoria", "/festa-della-castagna", "/sentieri-di-roncegno", "/organizza-la-visita", "/scopri-roncegno", "/e-bike", "/cartina", "/robots.txt", "/sitemap.xml", "/api/health",
 ];
 await inBatches(pages, 4, (path) => expectOk(path));
 

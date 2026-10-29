@@ -223,3 +223,4 @@
   }
 }
 .circuitTag{padding:3px 9px;border-radius:999px;background:#17372e;color:#fff;letter-spacing:0}
+@media(min-width:901px){.footerNav{grid-template-columns:repeat(3,1fr)}}

@@ -35,7 +35,7 @@ type HomepageHeroConfig = {
   hero_ambient_audio_url?: string | null;
 };
 
-type UtilityIconName = "trail" | "wellness" | "culture" | "food" | "events" | "map";
+type UtilityIconName = "trail" | "wellness" | "culture" | "food" | "events" | "bike";
 
 function parseHeroHotspots(value: HomepageHeroConfig["hero_hotspots"]): HeroHotspot[] {
   if (Array.isArray(value)) return value;
@@ -55,7 +55,7 @@ function UtilityIcon({ name }: { name: UtilityIconName }) {
   if (name === "culture") return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 9 8-4 8 4M6 10v7M10 10v7M14 10v7M18 10v7M4 19h16" fill="none" {...common}/></svg>;
   if (name === "food") return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v7M4.5 4v4.5A2.5 2.5 0 0 0 7 11v9M9.5 4v4.5A2.5 2.5 0 0 1 7 11M16 4c3 2 3 7 0 9v7" fill="none" {...common}/></svg>;
   if (name === "events") return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14v12H5zM8 4v5M16 4v5M5 11h14" fill="none" {...common}/></svg>;
-  return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 6 5-2 6 2 5-2v14l-5 2-6-2-5 2zM9 4v14M15 6v14" fill="none" {...common}/></svg>;
+  return <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="16" r="3.5" fill="none" {...common}/><circle cx="18" cy="16" r="3.5" fill="none" {...common}/><path d="M6 16l4-7h6l2 7M10 9l2 7h-6M9 6h3M14 9l1-3h2" fill="none" {...common}/></svg>;
 }
 
 
@@ -65,10 +65,10 @@ const FESTA_2026_END = "2026-10-25";
 const utilityItems: Array<{ label: string; note: string; href: string; icon: UtilityIconName }> = [
   { label: "Sentieri e percorsi", note: "Passeggiate ed escursioni", href: "/percorsi", icon: "trail" },
   { label: "Terme e benessere", note: "Il parco e le acque termali", href: "/temi/terme-e-benessere", icon: "wellness" },
-  { label: "Luoghi e cultura", note: "Luoghi, storie e memoria", href: "/temi/cultura-e-memoria", icon: "culture" },
+  { label: "Scopri Roncegno", note: "Storia, arte e luoghi da non perdere", href: "/scopri-roncegno", icon: "culture" },
   { label: "Dove mangiare", note: "Ristoranti, bar e agritur", href: "/organizza-la-visita", icon: "food" },
   { label: "Eventi", note: "Cosa succede a Roncegno", href: "/eventi", icon: "events" },
-  { label: "Cartina", note: "Il paese disegnato da Fabio Vettori", href: "/cartina", icon: "map" },
+  { label: "In e-bike", note: "Ciclabile e punti di ricarica", href: "/e-bike", icon: "bike" },
 ];
 
 export default async function Home() {

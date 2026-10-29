@@ -3,14 +3,15 @@
 //
 // Crea luoghi, percorsi e storie che non esistono ancora (confronto per slug: quelli già presenti non
 // vengono toccati) e completa alcuni record esistenti: i campi "fill" si scrivono solo se vuoti, i campi
-// "set" sostituiscono il valore attuale. Senza `--yes` mostra soltanto cosa farebbe.
+// "set" sostituiscono il valore attuale. `image_file` è una foto del repository (dall'opuscolo): viene caricata
+// nella libreria di Directus e collegata come `image`. Senza `--yes` mostra soltanto cosa farebbe.
 //
 //   DIRECTUS_URL=... DIRECTUS_TOKEN=... npm run directus:inforoncegno-2026
 //   DIRECTUS_URL=... DIRECTUS_TOKEN=... npm run directus:inforoncegno-2026 -- --yes
 //   ... -- --yes --draft      # crea i nuovi record come bozza invece che pubblicati
 
-import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { existsSync, readFileSync } from "node:fs";
+import { basename, resolve } from "node:path";
 
 const DIRECTUS_URL = (process.env.DIRECTUS_URL ?? "").replace(/\/+$/, "");
 const DIRECTUS_TOKEN = process.env.DIRECTUS_TOKEN ?? "";
@@ -26,7 +27,8 @@ if (confirmed && !DIRECTUS_TOKEN) {
   process.exit(1);
 }
 
-const content = JSON.parse(readFileSync(resolve(import.meta.dirname, "../data/inforoncegno-2026/contenuti.json"), "utf8"));
+const root = resolve(import.meta.dirname, "..");
+const content = JSON.parse(readFileSync(resolve(root, "data/inforoncegno-2026/contenuti.json"), "utf8"));
 const headers = DIRECTUS_TOKEN ? { Authorization: `Bearer ${DIRECTUS_TOKEN}` } : {};
 
 async function directus(path, init = {}) {
@@ -44,6 +46,18 @@ async function bySlug(collection, fields = "id,slug") {
   const params = new URLSearchParams({ limit: "-1", fields });
   const response = await directus(`/items/${collection}?${params}`);
   return new Map((response?.data ?? []).map((item) => [item.slug, item]));
+}
+
+async function uploadImage(path, title) {
+  const file = resolve(root, path);
+  if (!existsSync(file)) throw new Error(`Foto non trovata: ${path}`);
+  if (!confirmed) return null;
+  const form = new FormData();
+  form.append("title", title);
+  form.append("file", new Blob([readFileSync(file)], { type: "image/jpeg" }), basename(file));
+  const response = await fetch(`${DIRECTUS_URL}/files`, { method: "POST", headers, body: form });
+  if (!response.ok) throw new Error(`Upload ${path} failed (${response.status}): ${await response.text()}`);
+  return (await response.json()).data.id;
 }
 
 const isEmpty = (value) => value === null || value === undefined || String(value).trim() === "";
@@ -68,14 +82,16 @@ for (const collection of ["places", "routes", "stories"]) {
       console.log(`= ${collection}/${item.slug} esiste già, lasciato com'è`);
       continue;
     }
-    const record = { ...item, status };
+    const { image_file: imageFile, ...fields } = item;
+    const record = { ...fields, status };
     if (collection === "stories" && item.place) {
       const place = existing.places?.get(item.place);
       if (!place && confirmed) throw new Error(`Luogo "${item.place}" non trovato per la storia ${item.slug}`);
       record.place = place?.id ?? null;
     }
     planned += 1;
-    console.log(`+ ${collection}/${item.slug} — ${item.title}${collection === "stories" && item.place ? ` (luogo: ${item.place})` : ""}`);
+    console.log(`+ ${collection}/${item.slug} — ${item.title}${collection === "stories" && item.place ? ` (luogo: ${item.place})` : ""}${imageFile ? ` (foto: ${basename(imageFile)})` : ""}`);
+    if (imageFile) record.image = await uploadImage(imageFile, item.title);
     if (!confirmed) continue;
     const created = await directus(`/items/${collection}`, { method: "POST", body: JSON.stringify(record) });
     existing[collection]?.set(item.slug, created.data);
@@ -91,9 +107,10 @@ for (const [collection, updates] of Object.entries(content.update ?? {})) {
       continue;
     }
     const changes = {};
-    for (const [field, value] of Object.entries(fill)) {
-      if (isEmpty(current[field])) changes[field] = value;
-      else if (current[field] !== value) console.log(`= ${collection}/${slug}.${field} già valorizzato ("${current[field]}"), lasciato com'è`);
+    for (const [key, value] of Object.entries(fill)) {
+      const field = key === "image_file" ? "image" : key;
+      if (isEmpty(current[field])) changes[field] = key === "image_file" ? await uploadImage(value, current.title ?? slug) ?? `(foto: ${basename(value)})` : value;
+      else if (key !== "image_file" && current[field] !== value) console.log(`= ${collection}/${slug}.${field} già valorizzato ("${current[field]}"), lasciato com'è`);
     }
     for (const [field, value] of Object.entries(set)) {
       if (current[field] !== value) changes[field] = value;

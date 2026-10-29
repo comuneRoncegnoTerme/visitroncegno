@@ -147,7 +147,7 @@ export default async function OrganizzaLaVisitaPage() {
       </section>
 
       <section className={`${styles.contentSection} ${styles.alt}`} id="servizi">
-        <div className={styles.sectionHeading}><div><h2>Servizi utili</h2></div><p>Parcheggi, punti informativi, stazione e altri servizi pratici raccolti in un unico elenco e, quando disponibili, anche sulla mappa.</p></div>
+        <div className={styles.sectionHeading}><div><h2>Servizi utili</h2></div><p>Parcheggi, punti informativi, stazione e altri servizi pratici raccolti in un unico elenco e, quando disponibili, anche sulla mappa. In bici elettrica? <Link className={styles.inlineLink} href="/e-bike">I cinque punti di ricarica e-bike →</Link></p></div>
         <PlaceStrip places={services} emptyText="I servizi utili saranno disponibili presto." />
       </section>
 
