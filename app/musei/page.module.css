@@ -1,27 +1,85 @@
-.page{background:#f5f1e7;color:#173c31}.hero{min-height:78vh;display:grid;grid-template-columns:1fr 1fr;gap:48px;padding:110px 6vw 70px;align-items:center;background:linear-gradient(135deg,#173c31 0%,#234f41 56%,#2e5e4e 100%);color:#fff;overflow:hidden}.heroInner{max-width:760px}.eyebrow{text-transform:none;letter-spacing:0;font-size:0.82rem;font-weight:800}.eyebrow{color:#e7c8a4}.hero h1{font-family:Georgia,'Times New Roman',serif;font-size:clamp(3.5rem,7vw,7.6rem);line-height:.9;letter-spacing:-.055em;margin:18px 0 30px}.lead{max-width:680px;font-size:1.14rem;line-height:1.75;color:#e8eee9}.heroCta{display:inline-block;margin-top:24px;color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.6);padding-bottom:6px}.heroCta:focus-visible,.link:focus-visible{outline:3px solid #e7c8a4;outline-offset:5px}.heroCollage{position:relative;min-height:560px}.heroPhotoOne,.heroPhotoTwo{position:absolute;background-size:cover;background-position:center;box-shadow:0 28px 70px rgba(0,0,0,.28);transition:transform .35s ease}.heroPhotoOne{inset:0 26% 10% 0;background-image:linear-gradient(180deg,transparent 52%,rgba(0,0,0,.44)),url('/images/musei/mulino-angeli/hero.jpg')}.heroPhotoTwo{right:0;top:17%;width:42%;height:58%;background-image:linear-gradient(180deg,transparent 52%,rgba(0,0,0,.47)),url('/images/musei/museo-della-musica/hero.jpg');transform:rotate(3deg)}.hero:hover .heroPhotoOne{transform:translateY(-4px)}.hero:hover .heroPhotoTwo{transform:rotate(3deg) translateY(4px)}.heroPhotoOne span,.heroPhotoTwo span{position:absolute;left:16px;bottom:14px;font-family:Georgia,'Times New Roman',serif;font-size:0.78rem;letter-spacing:0;text-transform:none;color:#fff}.bridge h2{font-family:Georgia,'Times New Roman',serif;font-size:clamp(2.6rem,5vw,5.2rem);line-height:1;letter-spacing:-.045em;margin:16px 0 28px}.cards{max-width:1320px;margin:0 auto;padding:90px 28px 110px;display:grid;gap:24px}.card{display:grid;grid-template-columns:1.1fr .9fr;min-height:570px;background:#fff;overflow:hidden}.reverse{grid-template-columns:.9fr 1.1fr}.reverse .cardVisual{order:2}.cardVisual{position:relative;background-size:cover;background-position:center;min-height:420px;transition:transform .35s ease}.card:hover .cardVisual{transform:scale(1.012)}.mill{background-image:linear-gradient(180deg,rgba(20,25,20,.02),rgba(20,25,20,.36)),url('/images/musei/mulino-angeli/meccanismi.jpg')}.music{background-image:linear-gradient(180deg,rgba(20,25,20,.02),rgba(20,25,20,.36)),url('/images/musei/museo-della-musica/strumenti.jpg')}.cardCopy{padding:70px 56px;display:flex;flex-direction:column;justify-content:center}.cardCopy h2{font-family:Georgia,'Times New Roman',serif;font-size:clamp(2.5rem,4vw,4.3rem);line-height:1;letter-spacing:-.04em;margin:12px 0 24px}.cardCopy p{line-height:1.75;color:#52635d}.link{margin-top:24px;color:#173c31;text-decoration:none;font-weight:800;display:inline-flex;gap:10px;align-items:center}.link span{transition:transform .2s ease}.link:hover span{transform:translateX(4px)}@media(max-width:900px){.hero{grid-template-columns:1fr;padding-top:92px}.heroCollage{min-height:420px}.card,.reverse{grid-template-columns:1fr}.reverse .cardVisual{order:0}}@media(max-width:560px){.hero{padding:86px 20px 48px}.hero h1{font-size:clamp(3rem,16vw,3.65rem)}.heroCollage{min-height:300px}.cards{padding:56px 16px 80px}.cardCopy{padding:42px 26px}}@media(prefers-reduced-motion:reduce){.heroPhotoOne,.heroPhotoTwo,.cardVisual,.link span{transition:none}.hero:hover .heroPhotoOne,.hero:hover .heroPhotoTwo,.card:hover .cardVisual,.link:hover span{transform:none}}
+/* Pagina dei due musei. Ogni museo porta qui i colori della sua pagina:
+   il Mulino carta di farina, sanguigna e granoturco; il Museo della Musica blu notte e ottone. */
+.page{
+  --paper:#f2eee6;
+  --ink:#1f2a26;
+  --ink-soft:#5a625e;
+  --mill-ink:#231c17;
+  --mill-accent:#8c2f27;
+  --mill-gold:#c4932f;
+  --music-ink:#182f3c;
+  --music-accent:#8f593f;
+  --music-gold:#efc984;
+  background:var(--paper);
+  color:var(--ink);
+  overflow-x:clip;
+}
+.page h1,.page h2,.page h3{font-family:Georgia,'Times New Roman',serif;font-weight:400;text-wrap:balance}
+.eyebrow,.eyebrowDark{margin:0;font-size:.82rem;font-weight:800}
+.eyebrow{color:var(--mill-accent)}
+.eyebrowDark{color:var(--music-accent)}
 
-/* Stato dei due musei nell'apertura */
-.heroStatusList{display:grid;gap:10px;margin-top:30px;max-width:620px}
-.heroStatusItem{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;padding:12px 16px;border:1px solid rgba(255,255,255,.18);border-radius:14px;background:rgba(255,255,255,.06);color:#fff;text-decoration:none;transition:background .2s ease}
-.heroStatusItem:hover{background:rgba(255,255,255,.12)}
-.heroStatusItem:focus-visible{outline:3px solid #e7c8a4;outline-offset:3px}
-.heroStatusItem strong{font-family:Georgia,'Times New Roman',serif;font-weight:400;font-size:1.08rem}
+/* ───── apertura ───── */
+.intro{max-width:1440px;margin:0 auto;padding:clamp(36px,4.5vw,64px) max(16px,4vw) clamp(24px,3vw,40px);display:grid;grid-template-columns:1.1fr .9fr;gap:24px 64px;align-items:end}
+.intro h1{margin:14px 0 0;font-size:clamp(3rem,6.4vw,6.2rem);line-height:.9;letter-spacing:-.055em;color:var(--ink)}
+.lead{margin:0 0 .6em;max-width:520px;font-size:1.14rem;line-height:1.7;color:var(--ink-soft)}
 
-/* Schede dei musei */
-.card{scroll-margin-top:24px}
-.cardVisual{display:block}
-.cardArea{margin:0;font-size:.82rem;color:#9b673e;font-weight:800}
-.cardStatus{align-self:flex-start;margin:-8px 0 18px}
-.highlights{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 22px;padding:0;list-style:none}
-.highlights li{padding:7px 12px;border-radius:999px;background:#f1ece1;font-size:.82rem;font-weight:700;color:#173c31}
-.cardAddress{margin:14px 0 0;font-size:.9rem;color:#6a7770!important}
-.cardActions{display:flex;flex-wrap:wrap;align-items:center;gap:8px 26px}
-.secondaryLink{margin-top:24px;color:#52635d;font-weight:700;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:2px}
-.secondaryLink:focus-visible{outline:3px solid #e7c8a4;outline-offset:5px}
+/* ───── le due porte ───── */
+.doors{display:flex;gap:10px;padding:0 10px;height:min(86svh,860px);min-height:600px}
+.door{position:relative;flex:1 1 0;min-width:0;display:flex;align-items:flex-end;overflow:hidden;color:#fff;text-decoration:none;isolation:isolate;transition:flex-grow .6s cubic-bezier(.2,.7,.2,1);scroll-margin-top:24px}
+.doors:hover .door{flex-grow:.82}
+.doors .door:hover,.doors .door:focus-visible{flex-grow:1.18}
+.door:focus-visible{outline:3px solid var(--music-gold);outline-offset:-6px}
+.doorImage{position:absolute;inset:0;z-index:-2;background-size:cover;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.door:hover .doorImage{transform:scale(1.04)}
+.door::after{content:"";position:absolute;inset:0;z-index:-1}
+.mill .doorImage{background-image:url('/images/musei/mulino-angeli/ingranaggi.webp');background-position:40% 60%}
+.mill::after{background:linear-gradient(180deg,rgba(35,28,23,.08) 20%,rgba(35,28,23,.55) 55%,rgba(35,28,23,.92)),linear-gradient(90deg,rgba(140,47,39,.28),transparent 60%)}
+.music .doorImage{background-image:url('/images/musei/museo-della-musica/gioiello-1.jpg');background-position:30% 40%}
+.music::after{background:linear-gradient(180deg,rgba(24,47,60,.1) 20%,rgba(24,47,60,.6) 55%,rgba(14,30,40,.94)),linear-gradient(270deg,rgba(143,89,63,.25),transparent 60%)}
 
-/* Visitarli tutti e due */
+/* uno spaventapasseri si affaccia dal bordo, come nella pagina del Mulino */
+.scarecrow{position:absolute;right:clamp(12px,3vw,48px);top:clamp(28px,6%,64px);z-index:0;width:clamp(90px,9vw,140px);aspect-ratio:337/870;background:url('/images/musei/mulino-angeli/sp_giacca.webp') top/contain no-repeat;filter:drop-shadow(0 18px 22px rgba(0,0,0,.5));transform:rotate(-5deg);transform-origin:top center;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.door:hover .scarecrow{transform:rotate(3deg)}
+
+.doorBody{position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-start;width:100%;max-width:600px;padding:clamp(28px,4vw,56px)}
+.doorArea{font-size:.82rem;font-weight:800}
+.mill .doorArea{color:var(--mill-gold)}
+.music .doorArea{color:var(--music-gold)}
+.door h2{margin:12px 0 18px;font-size:clamp(2.6rem,4.6vw,5rem);line-height:.92;letter-spacing:-.045em}
+.door h2 em{display:block}
+.mill h2 em{color:#f0c9a8}
+.music h2 em{color:var(--music-gold);font-style:normal}
+.doorHook{max-width:440px;font-size:1.06rem;line-height:1.6;color:rgba(255,255,255,.86)}
+.doorSenses{margin-top:16px;font-size:.84rem;font-weight:700;color:rgba(255,255,255,.66)}
+.doorFoot{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin-top:28px}
+.doorCta{display:inline-flex;align-items:center;gap:10px;min-height:46px;padding:0 20px;border-radius:999px;font-weight:800;font-size:.95rem}
+.doorCta span{transition:transform .25s ease}
+.door:hover .doorCta span{transform:translateX(4px)}
+.mill .doorCta{background:#f6efe2;color:var(--mill-ink)}
+.music .doorCta{background:var(--music-gold);color:var(--music-ink)}
+
+/* ───── prima di partire ───── */
+.practical{max-width:1320px;margin:0 auto;padding:clamp(72px,9vw,120px) max(16px,4vw);scroll-margin-top:24px}
+.practicalHead{display:grid;grid-template-columns:1fr 1fr;gap:12px 64px;align-items:end;margin-bottom:40px}
+.practicalHead .eyebrowDark{grid-column:1/-1}
+.practicalHead h2{margin:0;font-size:clamp(2.4rem,4.4vw,4.4rem);line-height:.98;letter-spacing:-.045em;color:var(--ink)}
+.practicalHead p:last-child{margin:0;line-height:1.7;color:var(--ink-soft)}
+.practicalGrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.practicalCard{display:flex;flex-direction:column;align-items:flex-start;padding:clamp(26px,3.4vw,44px);background:#fffdf8;border-top:6px solid}
+.millCard{border-color:var(--mill-accent);--museum-ink:var(--mill-ink);--museum-accent:var(--mill-accent)}
+.musicCard{border-color:var(--music-ink);--museum-ink:var(--music-ink);--museum-accent:var(--music-accent)}
+.practicalCard h3{margin:8px 0 20px;font-size:clamp(1.7rem,2.4vw,2.3rem);line-height:1.05;letter-spacing:-.03em}
+.practicalCard h3 a{color:var(--museum-ink);text-decoration:none}
+.practicalCard h3 a:hover{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px}
+.practicalCard>div{align-self:stretch}
+.cardArea{margin:0;font-size:.82rem;font-weight:800;color:var(--museum-accent)}
+.cardAddress{margin:14px 0 0;font-size:.9rem;color:#6a7770}
+
+/* ───── visitarli tutti e due ───── */
 .bridge{background:#d9c5aa;display:grid;grid-template-columns:1fr 1fr;min-height:560px}
 .bridgeCopy{padding:90px max(28px,6vw)}
+.bridge h2{font-size:clamp(2.6rem,5vw,5.2rem);line-height:1;letter-spacing:-.045em;margin:14px 0 28px;color:var(--ink)}
 .bridgeCopy>p{font-size:1.08rem;line-height:1.8;color:#3e4e47}
 .distance{display:flex;align-items:baseline;gap:12px}
 .distance strong{font-family:Georgia,'Times New Roman',serif;font-size:2.6rem;font-weight:400;color:#173c31}
@@ -33,5 +91,33 @@
 .plan a{color:#173c31;font-weight:700}
 .bridgeActions{display:flex;flex-wrap:wrap;align-items:center;gap:8px 26px}
 .bridgeMap{min-height:460px}
-@media(max-width:900px){.bridge{grid-template-columns:1fr}.bridgeCopy{padding:64px 24px}}
-@media(max-width:560px){.heroStatusItem{padding:10px 12px}.bridgeCopy{padding:56px 20px}}
+.bridgePhoto{min-height:460px;background:url('/images/musei/museo-della-musica/parco-musicale.jpg') center/cover}
+
+.link{margin-top:24px;color:#173c31;text-decoration:none;font-weight:800;display:inline-flex;gap:10px;align-items:center}
+.link span{transition:transform .2s ease}
+.link:hover span{transform:translateX(4px)}
+.secondaryLink{margin-top:24px;color:#52635d;font-weight:700;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:2px}
+.link:focus-visible,.secondaryLink:focus-visible,.practicalCard h3 a:focus-visible{outline:3px solid #c4932f;outline-offset:5px}
+
+@media(max-width:900px){
+  .intro,.practicalHead,.practicalGrid,.bridge{grid-template-columns:1fr}
+  .doors{flex-direction:column;height:auto;min-height:0}
+  .door{min-height:72svh}
+  .doors:hover .door,.doors .door:hover{flex-grow:1}
+  .bridgeCopy{padding:64px 24px}
+}
+@media(max-width:560px){
+  .doors{padding:0;gap:0}
+  .door{min-height:78svh}
+  .doorBody{padding:28px 16px 32px}
+  .scarecrow{width:64px;right:14px;top:18px}
+  .practical{padding-inline:16px}
+  .practicalCard{padding:24px 18px}
+  .bridgeCopy{padding:56px 16px}
+}
+@media(prefers-reduced-motion:reduce){
+  .door,.doorImage,.scarecrow,.doorCta span,.link span{transition:none}
+  .doors:hover .door,.doors .door:hover{flex-grow:1}
+  .door:hover .doorImage,.door:hover .doorCta span,.link:hover span{transform:none}
+  .door:hover .scarecrow{transform:rotate(-5deg)}
+}
